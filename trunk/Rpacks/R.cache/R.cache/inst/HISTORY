@@ -1,0 +1,24 @@
+
+Package: R.cache
+================
+
+Version: 0.1.2 [2005-05-25]
+o Added argument 'pathname' to loadCache() in order to load
+  "unknown" cache files for which the key is unknown.
+o BUG FIX: Work around for not saving "promises" (non-evaluated arguments)
+  in base::save(), which otherwise includes all of the surrounding 
+  environment if 'sources' is not evaluated/missing.  For more details 
+  see code and my email to r-devel on 2006-05-25.  Thanks to Brian Ripley
+  for explaining what was going on.
+
+Version: 0.1.1 [2005-05-22]
+o Added header comment for file format > v0.1.
+o Added detection of file format version.
+o Added readCacheHeader().
+
+Version: 0.1.0 [2005-12-16]
+o Using a special binary file format now.  It allows you to
+  check if cache is up-to-date to a source file.  If not,
+  the rest of the cache binary file is not loaded.
+o Added loadCache() and saveCache() methods.
+o Created.
