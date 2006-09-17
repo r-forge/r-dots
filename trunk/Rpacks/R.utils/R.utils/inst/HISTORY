@@ -2,6 +2,11 @@
 Package: R.utils
 ================
 
+Version: 0.8.1 [2006-09-16]
+o BUG FIX: sourceDirectory(..., onError="error") would quietly ignore
+  errors in source().
+o Added methods more() and less() to the Verbose class.
+
 Version: 0.8.0 [2006-08-21]
 o Added isOpen() to check if there is another connection opened to 
   a specific file.

@@ -784,9 +784,31 @@ setMethodS3("exit", "Verbose", function(this, ..., indent=-this$indentStep, sep=
     level <- lastLevel;
 
   cat(this, msg, suffix, sep="", level=level);
+
   invisible(TRUE);
 })
 
+setMethodS3("more", "Verbose", function(this, ..., dThreshold=1) {
+  # Clone first!
+  res <- clone(this);
+
+  # Decrease the threshold
+  res$threshold <- res$threshold - dThreshold;
+
+  # Return the clone
+  res;
+})
+
+setMethodS3("less", "Verbose", function(this, ..., dThreshold=1) {
+  # Clone first!
+  res <- clone(this);
+
+  # Increase the threshold
+  res$threshold <- res$threshold + dThreshold;
+
+  # Return the clone
+  res;
+})
 
 
 ###########################################################################/**
@@ -1436,6 +1458,9 @@ setMethodS3("popState", "Verbose", function(this, ...) {
 
 ############################################################################
 # HISTORY: 
+# 2006-09-14
+# o Added trial versions of less() and more().  Have not though about 
+#   side-effects of cloning the Verbose object, e.g. writing to file etc.
 # 2006-09-12
 # o Created a list with an empty list() in pushState().  This generated
 #   warnings, but not errors.
