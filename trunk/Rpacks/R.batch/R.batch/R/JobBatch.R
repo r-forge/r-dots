@@ -1489,6 +1489,7 @@ setMethodS3("main", "JobBatch", function(static, root="jobs", reset=FALSE, sink=
   sink <- Arguments$getLogical(sink);
 
   # Argument 'details':
+  details <- as.character(details);
   if (toupper(details) %in% c("TRUE", "FALSE")) {
     details <- as.logical(details);
   } else {
@@ -1529,6 +1530,9 @@ setMethodS3("main", "JobBatch", function(static, root="jobs", reset=FALSE, sink=
 
 ###########################################################################
 # HISTORY: 
+# 2006-09-19
+# o BUG FIX: Argument 'details' must be converted explicitly to a character
+#   before calling toupper().  This must be due to a change in R.
 # 2006-01-31
 # o Rdoc bug fix: 'example' instead of 'examples' tag.
 # 2005-12-05

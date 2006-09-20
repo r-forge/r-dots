@@ -1,6 +1,11 @@
 Package: R.batch
 ================
 
+Version: 0.4.5 [2006-09-xx]
+o BUG FIX: Argument 'details' in main() of JobBatch must be converted
+  explicitly to a character before calling toupper().  This must be 
+  due to a change in R.
+
 Version: 0.4.4 [2006-09-12]
 o Removed the code that patched capabilities() temporarily while
   loading job scripts.  See source of Job.R for more details.

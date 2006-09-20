@@ -1,6 +1,6 @@
 Package: R.batch
-Version: 0.4.4
-Date: 2006-09-12
+Version: 0.4.5
+Date: 2006-09-19
 Title: Methods to run batch jobs in R
 Author: Henrik Bengtsson <henrikb@braju.com>
 Maintainer: Henrik Bengtsson <henrikb@braju.com>
