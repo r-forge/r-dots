@@ -123,6 +123,8 @@
 # @alias header
 # @alias isOn
 # @alias isVisible
+# @alias less
+# @alias more
 # @alias newline
 # @alias on
 # @alias off

@@ -788,7 +788,38 @@ setMethodS3("exit", "Verbose", function(this, ..., indent=-this$indentStep, sep=
   invisible(TRUE);
 })
 
-setMethodS3("more", "Verbose", function(this, ..., dThreshold=1) {
+
+
+###########################################################################/**
+# @RdocMethod more
+#
+# @title "Creates a cloned instance with a lower threshold"
+#
+# \description{
+#   @get "title".
+# }
+# 
+# @synopsis
+#
+# \arguments{
+#  \item{dThreshold}{The amount the threshold should be lowered.}
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a cloned @see "Verbose" object.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seemethod "less"
+#   @seeclass
+# }
+#
+# @keyword programming
+#*/###########################################################################
+setMethodS3("more", "Verbose", function(this, dThreshold=1, ...) {
   # Clone first!
   res <- clone(this);
 
@@ -799,6 +830,36 @@ setMethodS3("more", "Verbose", function(this, ..., dThreshold=1) {
   res;
 })
 
+
+###########################################################################/**
+# @RdocMethod less
+#
+# @title "Creates a cloned instance with a higher threshold"
+#
+# \description{
+#   @get "title".
+# }
+# 
+# @synopsis
+#
+# \arguments{
+#  \item{dThreshold}{The amount the threshold should be raised.}
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a cloned @see "Verbose" object.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seemethod "more"
+#   @seeclass
+# }
+#
+# @keyword programming
+#*/###########################################################################
 setMethodS3("less", "Verbose", function(this, ..., dThreshold=1) {
   # Clone first!
   res <- clone(this);
@@ -1458,6 +1519,8 @@ setMethodS3("popState", "Verbose", function(this, ...) {
 
 ############################################################################
 # HISTORY: 
+# 2006-09-19
+# o Added Rdoc comments for the less() and the more() methods.
 # 2006-09-14
 # o Added trial versions of less() and more().  Have not though about 
 #   side-effects of cloning the Verbose object, e.g. writing to file etc.
