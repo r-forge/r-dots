@@ -129,7 +129,14 @@ setMethodS3("as.character", "Object", function(this, ...) {
     ans
   }
 
-  paste(class(this)[1], ": 0x", intToHex(getInternalAddress(this), width=8), sep="");
+  addr <- getInternalAddress(this);
+  hex <- c(addr %/% 2^32, addr %% 2^32);
+  hex[2] <- intToHex(hex[2], width=8);
+  hex[1] <- intToHex(hex[1]);
+  if (nchar(hex[1]) %% 2 == 1)
+    hex[1] <- paste("0", hex[1], sep="");
+  hex <- paste(hex, collapse="");
+  paste(class(this)[1], ": 0x", addr, sep="");
 }) # as.character()
 
 
@@ -445,7 +452,8 @@ setMethodS3("hashCode", "Object", function(this, ...) {
 # }
 #
 # \value{
-#   Returns a @double (2^64 bytes, cf an @integer addresses 2^32 bytes).
+#   Returns a @double (\eqn{2^64} bytes, cf an @integer 
+#   addresses \eqn{2^32} bytes).
 # }
 #
 # \examples{
@@ -1925,6 +1933,8 @@ setMethodS3("gc", "Object", function(this, ...) {
 ############################################################################
 # HISTORY:
 # 2006-10-03
+# o Updated as.character() to display hexadecimal addresses longer than
+#   2^32 bytes.
 # o BUG FIX: Since getInternalAddress() coerced the address to an integer,
 #   addresses about 2^32 bytes = 4GB got address NA. Now 
 #   getInternalAddress() and the default hashCode() return a double.

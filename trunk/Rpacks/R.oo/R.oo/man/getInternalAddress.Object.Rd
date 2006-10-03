@@ -26,7 +26,8 @@
 }
 
 \value{
-  Returns an \code{\link[base]{integer}}.
+  Returns a \code{\link[base]{double}} (\eqn{2^64} bytes, cf an \code{\link[base]{integer}}
+  addresses \eqn{2^32} bytes).
 }
 
 \examples{

@@ -41,7 +41,7 @@
 }
 
 \value{
-  Returns an \code{\link[base]{integer}}.
+  Returns a \code{\link[base]{double}}.
 }
 
 \examples{
