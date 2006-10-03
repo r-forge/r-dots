@@ -1,6 +1,11 @@
 Package: R.oo
 =============
 
+Version: 1.2.4 [2006-10-xx]
+o BUG FIX: Since getInternalAddress() coerced the address to an integer,
+  addresses about 2^32 bytes = 4GB got address NA. Now 
+  getInternalAddress() and the default hashCode() return a double.
+
 Version: 1.2.3 [2006-09-07]
 o Added package 'utils' as a package this one depends on.  This
   is required for package without a namespace in the upcoming 

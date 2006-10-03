@@ -401,7 +401,7 @@ setMethodS3("finalize", "Object", function(this, ...) {
 # }
 #
 # \value{
-#   Returns an @integer.
+#   Returns a @double.
 # }
 #
 # \examples{
@@ -445,7 +445,7 @@ setMethodS3("hashCode", "Object", function(this, ...) {
 # }
 #
 # \value{
-#   Returns an @integer.
+#   Returns a @double (2^64 bytes, cf an @integer addresses 2^32 bytes).
 # }
 #
 # \examples{
@@ -463,12 +463,16 @@ setMethodS3("hashCode", "Object", function(this, ...) {
 # \keyword{methods}
 #*/###########################################################################
 setMethodS3("getInternalAddress", "Object", function(this, ...) {
-  hexStringToInt <- function(hex) {
+  hexStringToDouble <- function(hex) {
     hexDigits <- unlist(strsplit("0123456789ABCDEF", ""));
     digits16 <- unlist(strsplit(toupper(hex), ""));
     digits10 <- match(digits16, hexDigits) - 1;
     bases10 <- rev(16^(seq(along=digits10)-1));
-    as.integer(sum(digits10 * bases10));
+    sum(digits10 * bases10);
+  }
+
+  hexStringToInt <- function(hex) {
+    as.integer(hexStringToDouble(hex));
   }
 
   con <- textConnection(".R.oo.getInternalAddress.pointer", open="w");
@@ -485,7 +489,7 @@ setMethodS3("getInternalAddress", "Object", function(this, ...) {
   pointer <- gsub("0x", "", pointer);
   pointer <- gsub("(.*environment:[ ]*)([0-9a-f]*)(.*)", "\\2", pointer[1]);
   
-  hexStringToInt(pointer); 
+  hexStringToDouble(pointer); 
 }, private=TRUE) # getInternalAddress()
 
 
@@ -1920,6 +1924,10 @@ setMethodS3("gc", "Object", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2006-10-03
+# o BUG FIX: Since getInternalAddress() coerced the address to an integer,
+#   addresses about 2^32 bytes = 4GB got address NA. Now 
+#   getInternalAddress() and the default hashCode() return a double.
 # 2006-08-11
 # o Added support for specifying field modifiers in the name of the fields,
 #   e.g. "cached:foo" is specifies that the field "foo" is a cached field.
