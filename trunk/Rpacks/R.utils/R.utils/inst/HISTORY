@@ -2,6 +2,11 @@
 Package: R.utils
 ================
 
+Version: 0.8.2 [2006-10-xx]
+o Added argument 'modifiedOnly' to sourceTo() so that a file is only 
+  sourced if it has been modified since the last call.  Note that this
+  argument is passed on by sourceDirectory() too.
+
 Version: 0.8.1 [2006-09-16]
 o BUG FIX: sourceDirectory(..., onError="error") would quietly ignore
   errors in source().
