@@ -70,7 +70,6 @@ setMethodS3("sourceTo", "default", function(file, chdir=FALSE, ..., local=TRUE, 
     lastSourced <- list();
     options("R.utils::sourceTo/lastSourced"=lastSourced);
   }
-  absPathname <- getAbsolutePath(file);
 
   if (is.character(file)) {
     if (!isFile(file))
@@ -79,6 +78,7 @@ setMethodS3("sourceTo", "default", function(file, chdir=FALSE, ..., local=TRUE, 
     if (!isReadable)
       throw("Argument 'file' is a non-readable file: ", file);
 
+    absPathname <- getAbsolutePath(file);
     if (modifiedOnly) {
       # Check if file has been modified since last time.
       lastModified <- file.info(file)$mtime;
