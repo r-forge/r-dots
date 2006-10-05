@@ -15,7 +15,7 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods
+#  @allmethods  
 # }
 #
 # @examples "../incl/GString.Rex"

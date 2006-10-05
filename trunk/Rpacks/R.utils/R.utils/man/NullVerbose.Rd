@@ -66,6 +66,7 @@ as.character, as.double, as.logical, capture, cat, enter, equals, evaluate, exit
 \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
+
 }
 
 \examples{

@@ -28,7 +28,7 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods
+#  @allmethods  
 # }
 #
 # \section{Output levels}{
