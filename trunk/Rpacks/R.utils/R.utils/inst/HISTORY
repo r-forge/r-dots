@@ -3,6 +3,7 @@ Package: R.utils
 ================
 
 Version: 0.8.2 [2006-10-xx]
+o Added popMessage() to TextStatusBar. See example().
 o Added argument 'modifiedOnly' to sourceTo() so that a file is only 
   sourced if it has been modified since the last call.  Note that this
   argument is passed on by sourceDirectory() too.
