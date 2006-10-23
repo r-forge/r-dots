@@ -31,7 +31,7 @@
  Returns the value of the parameter, or the default value.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson \url{http://www.braju.com/R/}}
 
 \seealso{
   \code{\link[R.rsp:hasParameter.HttpRequest]{*hasParameter}()}.

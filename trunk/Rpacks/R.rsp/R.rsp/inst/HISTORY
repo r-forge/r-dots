@@ -1,6 +1,9 @@
 Package: R.rsp
 ==============
 
+Version: 0.3.1 [2006-10-xx]
+o Added rspToHtml() in order to simplify RSP-to-HTML compilations.
+
 Version: 0.3.0 [2006-07-20]
 o Package has now been verified to compile not only HTML input files,
   but also TeX files.  This make RSP a very power tool to write 

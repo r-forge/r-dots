@@ -35,6 +35,7 @@
 \section{To get started}{
   To get started, see:
   \enumerate{
+    \item \code{\link{rspToHtml}}() - To compile an RSP file to HTML.
     \item \code{\link{browseRsp}}() - To start the internal \R web server and
       launch the RSP main menu in the default web browser.
       From this page you access not only help pages and demos on how
@@ -79,7 +80,7 @@
   "release" license above.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson \url{http://www.braju.com/R/}}
 
 \section{How to cite this package}{
   Not available.

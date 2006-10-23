@@ -62,7 +62,7 @@ flush, getAbsolutePath, getName, getOutput, getPath, write
 flush, import, write
 
 \bold{Methods inherited from Object}:\cr
-$, $<-, [[, [[<-, as.character, attach, attachLocally, clone, detach, equals, extend, finalize, getEnvironment, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
  }
 
@@ -79,7 +79,7 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clone, detach, equals, ex
   }
  }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson \url{http://www.braju.com/R/}}
 
  \seealso{
    \code{\link{HttpDaemon}}.
