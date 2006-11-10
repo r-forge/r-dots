@@ -3,6 +3,8 @@
 % 
 %  TextStatusBar.R
 % 
+% on Fri Nov 10 16:59:17 2006.
+% 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

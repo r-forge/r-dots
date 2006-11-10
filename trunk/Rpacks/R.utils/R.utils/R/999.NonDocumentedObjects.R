@@ -106,6 +106,7 @@
 # @alias setLabel
 #
 # % The TextStatusBar class
+# @alias popMessage
 # @alias setLabels
 # @alias updateLabels
 #

@@ -1,5 +1,5 @@
-#########################################################################
-# @RdocFunction "arrayIndex"
+###########################################################################/**
+# @RdocDefault arrayIndex
 #
 # @title "Converts vector indices to array indices"
 #
@@ -23,7 +23,7 @@
 #  \code{length(dim)} columns.
 # }
 #
-# @examples "arrayIndex.Rex"
+# @examples "../incl/arrayIndex.Rex"
 #
 # \references{
 #  [1] H. Bengtsson, \emph{Bayesian Networks - a self-contained 
@@ -32,8 +32,13 @@
 #      Technology, 1999.\cr
 # }
 #
-# @keyword "utils"
-#########################################################################
+# \seealso{
+#   @see "base::which" with argument \code{arr.ind=TRUE}.
+# }
+#
+# @keyword manip
+# @keyword utilities
+#*/########################################################################### 
 setMethodS3("arrayIndex", "default", function(i, dim, ...) {
   ndim <- length(dim);      # number of dimension
   pi <- cumprod(c(1,dim));  # base

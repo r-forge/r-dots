@@ -2,7 +2,11 @@
 Package: R.utils
 ================
 
-Version: 0.8.2 [2006-10-xx]
+Version: 0.8.3 [2006-11-10]
+o Added arrayIndex() to get the multi-dimensional index of an array
+  from a one-dimensional index.
+
+Version: 0.8.2 [2006-10-05]
 o Added popMessage() to TextStatusBar. See example().
 o Added argument 'modifiedOnly' to sourceTo() so that a file is only 
   sourced if it has been modified since the last call.  Note that this
