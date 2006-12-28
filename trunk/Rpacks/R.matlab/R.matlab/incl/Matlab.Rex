@@ -1,17 +1,26 @@
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-# This example will try to connect to the Matlab server running on the
-# same machine, e.g. Matlab$startServer(port=9998)
+# This example will try to start the Matlab server on the local machine,
+# and then setup a Matlab object in R for communicating data between R
+# and Matlab and for sending commands from R to Matlab.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-# Create a Matlab client
-matlab <- Matlab(host="localhost", port=9998)
+# Start Matlab server on the local machine (if this fails, 
+# see help(Matlab) for alternatives).
+Matlab$startServer()
 
-# Connect to the Matlab server
+# Create a Matlab client object used to communicate with Matlab
+matlab <- Matlab()
+
+# If you experience any problems, ask for detailed outputs
+# by uncommenting the next line
+# setVerbose(matlab, -2)
+
+# Connect to the Matlab server, which must already be running
 if (!open(matlab))
   throw("Matlab server is not running: waited 30 seconds.")
 
 # Run Matlab expressions on the Matlab server
-res <- evaluate(matlab, "A=1+2;", "B=ones(2,20);")
+evaluate(matlab, "A=1+2;", "B=ones(2,20);")
 
 # Get Matlab variables
 data <- getVariable(matlab, c("A", "B"))

@@ -60,8 +60,7 @@ extends \link[R.oo]{Object}\cr
 
 
 \bold{Methods inherited from Object}:\cr
-$, $<-, [[, [[<-, as.character, attach, attachLocally, clone, detach, equals, extend, finalize, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
-
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
  }
 
@@ -183,7 +182,8 @@ Trying to open server socket (port 9999)...done.
    This package has been confirmed to work \emph{successfully} out of
    the box together with Matlab v6.1.0.450 (R12.1),
    Matlab v6.5.0.180913a (R13), Matlab v7.0.0.19901 (R14),
-   Matlab v7.0.1.24704 (R14SP1), and Matlab v7.0.4.365 (R14SP2).
+   Matlab v7.0.1.24704 (R14SP1), Matlab v7.0.4.365 (R14SP2),
+   and Matlab v7.2.0.232 (R2006a).
    [If you successfully use a higher Matlab version, please tell us, so
     we can share it here.]
 
@@ -201,15 +201,31 @@ Trying to open server socket (port 9999)...done.
    is not possible for others to connect to the Matlab server.
  }
 
+ \section{Matlab server is timing out}{
+   It might be that an \code{\link[R.matlab:evaluate.Matlab]{*evaluate}()} call to the Matlab server
+   takes a long time for the server to finish resulting in a time-out
+   exception.  By default this happens after 30 seconds, but it can
+   be changed by modifying options, cf. \code{\link{setOption}}().
+ }
+
  \examples{\dontrun{
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# This example will try to connect to the Matlab server running on the
-# same machine, e.g. Matlab$startServer(port=9998)
+# This example will try to start the Matlab server on the local machine,
+# and then setup a Matlab object in R for communicating data between R
+# and Matlab and for sending commands from R to Matlab.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Create a Matlab client
-matlab <- Matlab(host="localhost", port=9998)
+# Start Matlab server on the local machine (if this fails,
+# see help(Matlab) for alternatives).
+Matlab$startServer()
 
-# Connect to the Matlab server
+# Create a Matlab client object used to communicate with Matlab
+matlab <- Matlab()
+
+# If you experience any problems, ask for detailed outputs
+# by uncommenting the next line
+# setVerbose(matlab, -2)
+
+# Connect to the Matlab server, which must already be running
 if (!open(matlab))
   throw("Matlab server is not running: waited 30 seconds.")
 

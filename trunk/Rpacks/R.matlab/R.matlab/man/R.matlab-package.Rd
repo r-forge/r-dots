@@ -60,8 +60,8 @@
  \section{To get started}{
    To get started, see:
    \enumerate{
-     \item \code{\link{readMat}}() and \code{\link{writeMat}}().
-     \item \code{\link{Matlab}}.
+     \item \code{\link{readMat}}() and \code{\link{writeMat}}() - For reading and writing MAT files (Matlab is \emph{not} needed).
+     \item \code{\link{Matlab}} - To start Matlab and communicate with it from \R.
    }
  }
 
@@ -93,16 +93,24 @@
  }
 
  \section{Troubleshooting}{
-   \bold{In general.}:\cr
+   \bold{In general}:\cr
    For trouble shooting in general, rerun erroneous function with
    verbose/debug messages turned on. For \code{readMat()} and \code{writeMat()}
    see their help. For communication with a Matlab server, use
    \preformatted{
     matlab <- Matlab()
-    setOption(matlab, "verbose", Verbose(threshold=-10))
+    setVerbose(matlab, threshold=-2)
    }
    The lower the threshold is the more information you will see.\cr
 
+   \bold{Cannot connect to Matlab}:\cr
+   If R fails to connect to Matlab, make sure to try the the example in
+   help(Matlab) first.  Make sure that the Matlab server is running
+   before trying to connect to it from R first.  If Matlab is running
+   but \code{open()} times out, make sure Matlab is listening to the
+   same port that R is trying to connect to.  If that does not help,
+   try to increase the time-out limit, see help(open.Matlab).\cr
+ 
    \bold{Expected an 'answer' from Matlab, but kept receiving nothing.}:\cr
      When spawning a really long Matlab process by \code{evaluate()}, you
    may get the above error message.\cr

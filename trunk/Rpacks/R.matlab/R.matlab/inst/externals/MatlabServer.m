@@ -105,8 +105,8 @@ end
 
 % Ports 1-1023 are reserved for the Internet Assigned Numbers Authority.
 % Ports 49152-65535 are dynamic ports for the OS. [3]
-if (port < 1023 | port > 49151)
-  error('Cannot not open connection. Port (''MATLABSERVER_PORT'') is out of range [1023,49151]: %d', port);
+if (port < 1023 | port > 65535)
+  error('Cannot not open connection. Port (''MATLABSERVER_PORT'') is out of range [1023,65535]: %d', port);
 end
 
 fprintf(1, 'Trying to open server socket (port %d)...', port);
@@ -317,9 +317,9 @@ close(is);
 close(server);
 
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % HISTORY:
+% o Extended the accepted range of ports from [1023,49151] to [1023,66535].
 % 2006-05-08
 % o BUG FIX: The error message string for reporting port out of range
 %   was invalid and gave the error '... Line: 109 Column: 45 ")" expected, 
@@ -337,7 +337,7 @@ close(server);
 %   will simplify life for Matlab v7 users.
 % 2005-02-22
 % o Added javaaddpath() to include InputStreamByteWrapper.class.
-%   Thanks Yichun Wei forfeedback and great suggestions.
+%   Thanks Yichun Wei for feedback and great suggestions.
 % 2005-02-11
 % o If Matlab v7 or higher is detected, all MAT structures are saved with
 %   option '-V6' so readMat() in R.matlab can read them.

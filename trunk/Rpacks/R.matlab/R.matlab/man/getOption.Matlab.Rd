@@ -17,7 +17,9 @@
 
 \description{
   Gets the value of an option where the option is specified like a file pathname, e.g.
-  "readResult/maxTries". See the \link[R.utils]{Options} class for details.
+  "readResult/maxTries".  See \code{\link[R.matlab:setOption.Matlab]{*setOption}()} for what options
+  are available.
+  See the \link[R.utils]{Options} class for details.
 }
 
 \usage{\method{getOption}{Matlab}(this, ...)}

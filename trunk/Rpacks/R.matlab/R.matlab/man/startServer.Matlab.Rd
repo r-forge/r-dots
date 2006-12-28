@@ -21,14 +21,14 @@
  Java.
 }
 
-\synopsis{startServer.Matlab(this, matlab=getOption("matlab"), port=NULL, minimize=TRUE, ...)}
-\usage{Matlab$startServer(matlab=getOption("matlab"), port=NULL, minimize=TRUE, ...)}
+\synopsis{startServer.Matlab(this, matlab=getOption("matlab"), port=9999, minimize=TRUE, options=c("nodesktop", "nodisplay", "nosplash"), ...)}
+\usage{Matlab$startServer(matlab=getOption("matlab"), port=9999, minimize=TRUE, options=c("nodesktop", "nodisplay", "nosplash"), ...)}
 
 \arguments{
  \item{matlab}{An optional \code{\link[base]{character}} string specifying the name of
    the matlab command, if different from \code{"matlab"}. An absolute
    path are possible.}
- \item{port}{An optional \code{\link[base]{integer}} in [1023,49151].
+ \item{port}{An optional \code{\link[base]{integer}} in [1023,65535].
    If given, the environment variable \code{MATLABSERVER_PORT} is
    set specifying which port the Matlab server should listen to for
    clients trying to connect.  The default port is 9999.}
@@ -36,6 +36,8 @@
    in a new window (see \code{\link{1. The Matlab server running in Matlab}}).
    If this argument is \code{\link[base:logical]{TRUE}}, the new window is minimized, otherwise not.
    This argument is ignored on non-Windows systems.}
+ \item{options}{A \code{\link[base]{character}} \code{\link[base]{vector}} of options used to call the
+   Matlab application.}
  \item{...}{Not used.}
 }
 
