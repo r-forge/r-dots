@@ -1,7 +1,12 @@
 Package: R.oo
 =============
 
-Version: 1.2.4 [2006-10-xx]
+Version: 1.2.5 [2007-01-05]
+o BUG FIX: getMethods() for Class would sometimes give error message:
+  "Error in result[[k]] : subscript out of bounds".  This in turn would
+  cause Rdoc to fail.
+
+Version: 1.2.4 [2006-10-03]
 o BUG FIX: Since getInternalAddress() coerced the address to an integer,
   addresses about 2^32 bytes = 4GB got address NA. Now 
   getInternalAddress() and the default hashCode() return a double.

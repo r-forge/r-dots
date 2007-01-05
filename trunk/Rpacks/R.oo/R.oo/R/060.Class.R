@@ -993,16 +993,16 @@ setMethodS3("getMethods", "Class", function(this, private=FALSE, deprecated=TRUE
 
   if (private) {
     # For each class...
-    for (k in seq(result)) {
+    for (k in seq(along=result)) {
       # For each method...
       if (length(result[[k]]) > 0) {
         resultOne <- c();
-      	for (l in seq(result[[k]])) {
+      	for (l in seq(along=result[[k]])) {
       	  fcn <- get(result[[k]][l], mode="function");
       	  if (!is.element("private", attr(fcn, "modifiers")))
       	    resultOne <- c(resultOne, result[[k]][l]);
       	}
-      	result[[k]] <- resultOne;
+      	result[[k]] <- as.list(resultOne);
       }
     }
   } #   if (private)
@@ -1010,16 +1010,16 @@ setMethodS3("getMethods", "Class", function(this, private=FALSE, deprecated=TRUE
   # Remove deprecated methods
   if (!deprecated) {
     # For each class...
-    for (k in seq(result)) {
+    for (k in seq(along=result)) {
       if (length(result[[k]]) > 0) {
         resultOne <- c();
         # For each method...
-      	for (l in seq(result[[k]])) {
+      	for (l in seq(along=result[[k]])) {
       	  fcn <- get(result[[k]][l], mode="function");
       	  if (!is.element("deprecated", attr(fcn, "modifiers")))
       	    resultOne <- c(resultOne, result[[k]][l]);
       	}
-      	result[[k]] <- resultOne;
+      	result[[k]] <- as.list(resultOne);
       }
     }
   } #   if (private)
@@ -1439,6 +1439,10 @@ setMethodS3("[[<-", "Class", function(this, name, value) {
 
 ############################################################################
 # HISTORY:
+# 2007-01-05
+# o BUG FIX: getMethods() for Class would sometimes give error message:
+#   "Error in result[[k]] : subscript out of bounds".  This in turn would
+#   cause Rdoc to fail.
 # 2006-05-30
 # o Added isBeingCreated() to Class.  This was done after a request from
 #   Omar Lakkis, University of Sussex.
