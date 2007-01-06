@@ -1909,24 +1909,34 @@ setMethodS3("declaration", "Rdoc", function(this, class, ...) {
 setMethodS3("methodsInheritedFrom", "Rdoc", function(this, class, visibility=c("public", "protected", "private"), showDeprecated=FALSE, inheritedFrom=NULL, sort=TRUE, trial=FALSE, ...) {
   s <- "";
 
+  private <- ("private" %in% visibility);
+
   # Classes
   for (extend in getSuperclasses(class)) {
-    s <- paste(s, "\\bold{Methods inherited from ", extend, "}:\\cr\n", sep="");
-    s <- tryCatch({
-      cls <- Class$forName(extend);
-      methods <- getMethods(cls, private=TRUE, deprecated=showDeprecated);
-      methods <- methods[[extend]];
-      methods <- names(methods);
-      list <- paste(methods, collapse=", ");
-      paste(s, list, "\n\n", sep="");
-    }, error = function(ex) {
+    # Try to find a Class object with this name.
+    clazz <- NULL;
+    tryCatch({
+      clazz <- Class$forName(extend);
+    }, error = function(ex) {})
+
+    if (is.null(clazz)) {
+      # Use methods() to find methods
       methods <- methods(class=extend);
       pattern <- paste("[.]", extend, "$", sep="");
       methods <- gsub(pattern, "", methods);
-      list <- paste(methods, collapse=", ");
-      paste(s, list, "\n\n", sep="");
-    })
+    } else {
+      # Get all methods of this Class
+      methods <- getMethods(clazz, private=private, deprecated=showDeprecated);
+      methods <- methods[[extend]];
+      methods <- names(methods);
+    }
+    if (length(methods) > 0) {
+      methods <- paste(methods, collapse=", ");
+      s <- paste(s, sprintf("\\bold{Methods inherited from %s}:\\cr\n", extend));
+      s <- paste(s, methods, "\n\n", sep="");
+    }
   }
+
   s;
 }, private=TRUE, static=TRUE);
 
@@ -2402,6 +2412,8 @@ setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) 
 
 #########################################################################
 # HISTORY:
+# 2007-01-06
+# o Now getMethodsInheritedFrom() recognizes visiblity private.
 # 2006-09-12
 # o Prepared the Rdoc compiler to no longer generating the \synopsis{} 
 #   statement for the @synopsis tag, which was the case for static 

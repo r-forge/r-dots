@@ -2,6 +2,9 @@ Package: R.oo
 =============
 
 Version: 1.2.5 [2007-01-05]
+o BUG FIX: getMethods(..., private=FALSE) for class Class would return 
+  private methods, and private=TRUE would remove them.  It should be 
+  the otherway around.
 o BUG FIX: getMethods() for Class would sometimes give error message:
   "Error in result[[k]] : subscript out of bounds".  This in turn would
   cause Rdoc to fail.

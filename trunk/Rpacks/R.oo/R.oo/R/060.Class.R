@@ -977,52 +977,45 @@ setMethodS3("getMethods", "Class", function(this, private=FALSE, deprecated=TRUE
   if (unique) {
     names <- lapply(result, FUN=names);
     classes <- class(getStaticInstance(this));
-    for (k in seq(length.out=length(classes)-1)) {
-      if (length(names[[k]]) != 0) {
-  	for (l in (k+1):length(classes)) {
-  	  if (length(names[[l]]) != 0) {
-  	    uniqueNames <- setdiff(names[[l]], names[[k]]);
-  	    unique <- match(uniqueNames, names[[l]]);
-  	    result[[l]] <- result[[l]][unique];
-  	    names[[l]] <- names[[l]][unique];
-  	  }
-  	}
-      } # if (length(names[[k]]) != 0)
+    for (kk in seq(length.out=length(classes)-1)) {
+      if (length(names[[kk]]) != 0) {
+      	for (ll in (kk+1):length(classes)) {
+      	  if (length(names[[ll]]) != 0) {
+      	    uniqueNames <- setdiff(names[[ll]], names[[kk]]);
+      	    unique <- match(uniqueNames, names[[ll]]);
+      	    result[[ll]] <- result[[ll]][unique];
+      	    names[[ll]] <- names[[ll]][unique];
+      	  }
+      	}
+      } # if (length(names[[kk]]) != 0)
     }
   } # if (unique)
 
-  if (private) {
-    # For each class...
-    for (k in seq(along=result)) {
-      # For each method...
-      if (length(result[[k]]) > 0) {
-        resultOne <- c();
-      	for (l in seq(along=result[[k]])) {
-      	  fcn <- get(result[[k]][l], mode="function");
-      	  if (!is.element("private", attr(fcn, "modifiers")))
-      	    resultOne <- c(resultOne, result[[k]][l]);
-      	}
-      	result[[k]] <- as.list(resultOne);
-      }
-    }
-  } #   if (private)
+  # Exclude methods with certain modifiers?
+  exclMods <- NULL;
+  if (!private)
+    exclMods <- c(exclMods, "private");
+  if (!deprecated)
+    exclMods <- c(exclMods, "deprecated");
 
-  # Remove deprecated methods
-  if (!deprecated) {
+  if (!is.null(exclMods)) {
     # For each class...
-    for (k in seq(along=result)) {
-      if (length(result[[k]]) > 0) {
-        resultOne <- c();
-        # For each method...
-      	for (l in seq(along=result[[k]])) {
-      	  fcn <- get(result[[k]][l], mode="function");
-      	  if (!is.element("deprecated", attr(fcn, "modifiers")))
-      	    resultOne <- c(resultOne, result[[k]][l]);
-      	}
-      	result[[k]] <- as.list(resultOne);
-      }
+    for (className in names(result)) {
+      result0 <- result[[className]];
+      if (length(result0) == 0)
+        next;
+      # Keep only non-private methods
+      keep <- sapply(result0, FUN=function(name) {
+    	  fcn <- get(name, mode="function");
+        modifiers <- attr(fcn, "modifiers");
+    	  !any(is.element(exclMods, modifiers));
+     	})
+      result[[className]] <- result0[keep];
     }
-  } #   if (private)
+  }
+
+  # Remove classes with no methods
+  result <- result[sapply(result, FUN=function(x) (length(x) > 0))];
 
   result;
 }) # getMethods()
@@ -1440,6 +1433,8 @@ setMethodS3("[[<-", "Class", function(this, name, value) {
 ############################################################################
 # HISTORY:
 # 2007-01-05
+# o BUG FIX: getMethods(..., private=FALSE) would return private methods,
+#   and private=TRUE would remove them.  It should be the otherway around.
 # o BUG FIX: getMethods() for Class would sometimes give error message:
 #   "Error in result[[k]] : subscript out of bounds".  This in turn would
 #   cause Rdoc to fail.

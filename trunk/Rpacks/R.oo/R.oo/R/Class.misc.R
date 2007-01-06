@@ -96,13 +96,16 @@ setMethodS3("getRdDeclaration", "Class", function(this, ...) {
 # @keyword documentation
 #*/###########################################################################
 setMethodS3("getRdMethods", "Class", function(class, visibilities=c("private", "protected", "public"), ...) {
-  methods <- names(getMethods(class, private=TRUE)[[1]]);
+  className <- getName(class);
+  methods <- getMethods(class, private=TRUE);  # Excludes empty classes!
+  methods <- methods[[className]];
+  methods <- names(methods);
   src <- "\\bold{Methods:}\\cr\n";
-  
+
   tmpsrc <- "\\tabular{rll}{\n";
   count <- 0;
   for (method in methods) {
-    fcnName <- paste(method, getName(class), sep=".");
+    fcnName <- paste(method, className, sep=".");
     if (!exists(fcnName, mode="function"))
       throw(RdocException("Method definition not found: ", fcnName));
     fcn <- get(fcnName, mode="function");
