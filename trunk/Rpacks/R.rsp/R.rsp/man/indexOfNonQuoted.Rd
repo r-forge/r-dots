@@ -29,7 +29,7 @@
   the search string in the main string.  If not found, -1 is returned.
 }
 
-\author{Henrik Bengtsson \url{http://www.braju.com/R/}}
+\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
   \code{\link[base]{grep}}().

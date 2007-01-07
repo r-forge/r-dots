@@ -16,7 +16,7 @@
  Compiles an RSP file to an HTML file.
 }
 
-\usage{\method{rspToHtml}{default}(file="", path=getParent(file), outFile=NULL, outPath=NULL, extension="html", overwrite=TRUE, ...)}
+\usage{\method{rspToHtml}{default}(file=NULL, path=NULL, outFile=NULL, outPath=NULL, extension="html", overwrite=TRUE, ...)}
 
 \arguments{
   \item{file}{The filename of the RSP file to be compiled.}
@@ -33,7 +33,7 @@
   Returns the pathname to the generated document.
 }
 
-\author{Henrik Bengtsson \url{http://www.braju.com/R/}}
+\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
   \code{\link{sourceRsp}}().

@@ -33,7 +33,7 @@
 # @keyword file
 # @keyword IO
 #*/###########################################################################
-setMethodS3("rspToHtml", "default", function(file="", path=getParent(file), outFile=NULL, outPath=NULL, extension="html", overwrite=TRUE, ...) {
+setMethodS3("rspToHtml", "default", function(file=NULL, path=NULL, outFile=NULL, outPath=NULL, extension="html", overwrite=TRUE, ...) {
   # Argument 'file' and 'path':
   pathname <- Arguments$getReadablePathname(file, path=path, mustExist=FALSE);
 
@@ -63,7 +63,9 @@ setMethodS3("rspToHtml", "default", function(file="", path=getParent(file), outF
 
 ############################################################################
 # HISTORY:
-# 2007-08-06
+# 2007-01-07
+# o BUG FIX: Argument 'path' was set to the directory of the 'file'.
+# 2006-08-06
 # o Created for conveniency.
 ############################################################################
 
