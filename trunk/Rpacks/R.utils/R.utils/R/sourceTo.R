@@ -54,7 +54,7 @@
 # 
 # \seealso{
 #  @see "sourceDirectory".
-#  Compare to @see "base::source".
+#  @see "base::sys.source" and @see "base::source".
 # }
 #
 # @keyword programming
@@ -166,6 +166,8 @@ setMethodS3("sourceTo", "default", function(file, chdir=FALSE, ..., local=TRUE, 
 
 #############################################################################
 # HISTORY: 
+# 2007-01-11
+# o Added Rdoc link to sys.source().
 # 2006-10-04
 # o Added argument 'modifiedOnly' to sourceTo() so that a file is only 
 #   sourced if it has been modified since the last call.
