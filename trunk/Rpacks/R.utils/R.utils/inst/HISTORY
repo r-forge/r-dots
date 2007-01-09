@@ -2,6 +2,10 @@
 Package: R.utils
 ================
 
+Version: 0.8.4 [2007-01-10xx]
+o Now System$findGhostscript() searches all 'Program Files' directories
+  too, if on Windows.
+
 Version: 0.8.3 [2006-11-10]
 o Added arrayIndex() to get the multi-dimensional index of an array
   from a one-dimensional index.

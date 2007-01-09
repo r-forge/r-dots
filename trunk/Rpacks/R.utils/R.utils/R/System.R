@@ -485,28 +485,41 @@ setMethodS3("openBrowser", "System", function(this, query, ...) {
 setMethodS3("findGhostscript", "System", function(static, updateRGSCMD=TRUE, ...) {
   pathname <- NULL;
 
+  paths0 <- NULL;
+
   OST <- .Platform$OS.type;
   if (OST == "windows") {
     # Default installation is "C:\gs\gs8.15\bin\gswin32c.exe";
-    drives <- "C:";
-    paths <- "gs";
-    pattern <- "gswin32c.exe$";
 
-    for (drive in drives) {
-      for (path in paths) {
-        path0 <- file.path(drive, path);
-        pathname <- list.files(pattern=pattern, path=path0, recursive=TRUE, 
-                                                           full.names=TRUE);
-        if (length(pathname) > 0)
-          break;
-      } # for (path ...)
+    # Look for GS in <some path>/gs/, where <some path> is:
+
+    # ...C:/ and/or whatever the system drive is...
+    systemDrives <- unique(c("C:", Sys.getenv("SystemDrive")));
+    systemDrives <- systemDrives[nchar(systemDrives) > 0];
+
+    # ...or some of the 'Program Files' directories...
+    pfDirs <- Sys.getenv(c("ProgramFiles", "PROGRAMFILES_SHORT", 
+                                                   "CommonProgramFiles"));
+
+    # Get all paths
+    paths0 <- file.path(c(systemDrives, pfDirs), "gs");
+
+    # Keep only those that are directories
+    paths <- paths0[file.exists(paths)];  # Avoids warnings
+    paths <- paths[sapply(paths, FUN=isDirectory)];
+
+    # Now search each of them for an ghostscript executable
+    pattern <- "gswin32c.exe$";
+    for (path in paths) {
+      pathname <- list.files(pattern=pattern, path=path, recursive=TRUE, 
+                                                          full.names=TRUE);
       if (length(pathname) > 0)
         break;
-    } # for (drive ...)
+    } # for (path ...)
   } else if (OST == "unix") {
     pathname <- system("which gs", intern=TRUE);
   } else {
-    warning("Unsupported operating system: ", OST);
+    warning("Unsupported operating system: ", OST);   
     return(NULL);
   }
 
@@ -515,7 +528,12 @@ setMethodS3("findGhostscript", "System", function(static, updateRGSCMD=TRUE, ...
       pathname <- pathname[1];
     Sys.putenv("R_GSCMD"=pathname);
   } else if (updateRGSCMD) {
-    warning("Ghostscript not found.");
+    if (!is.null(paths0)) {
+      warning("Ghostscript not found. Searched directories: ", 
+                                               paste(path0, collapse=", "));
+    } else {
+      warning("Ghostscript not found.");
+    }
   }
 
   pathname;
@@ -673,6 +691,9 @@ setMethodS3("findGraphicsDevice", "System", function(static, devices=list(png2, 
 
 ############################################################################
 # HISTORY:
+# 2007-01-10
+# o Now findGhostscript() searches all 'Program Files' directories too, if
+#   on Windows.
 # 2005-12-12
 # o Updated getHostname() and getUsername() in System to check details also
 #   using Sys.info().
