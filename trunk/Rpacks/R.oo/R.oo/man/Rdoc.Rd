@@ -37,21 +37,30 @@ extends \link[R.oo]{Object}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
+ \tab \code{\link[R.oo:argsToString.Rdoc]{argsToString}} \tab Gets the arguments signature of a function.\cr
  \tab \code{\link[R.oo:check.Rdoc]{check}} \tab Checks the compiled Rd files.\cr
  \tab \code{\link[R.oo:compile.Rdoc]{compile}} \tab Compile source code files containing Rdoc comments into Rd files.\cr
  \tab \code{\link[R.oo:createManPath.Rdoc]{createManPath}} \tab Creates the directory where the Rd files should be saved.\cr
+ \tab \code{\link[R.oo:createName.Rdoc]{createName}} \tab Creates a class-method name.\cr
+ \tab \code{\link[R.oo:declaration.Rdoc]{declaration}} \tab Gets the class declaration.\cr
  \tab \code{\link[R.oo:escapeRdFilename.Rdoc]{escapeRdFilename}} \tab Escape non-valid characters in a filename.\cr
+ \tab \code{\link[R.oo:getClassS4Usage.Rdoc]{getClassS4Usage}} \tab Gets the usage of a S4 class.\cr
  \tab \code{\link[R.oo:getKeywords.Rdoc]{getKeywords}} \tab Gets the keywords defined in R with descriptions.\cr
  \tab \code{\link[R.oo:getManPath.Rdoc]{getManPath}} \tab Gets the path to the directory where the Rd files will be saved.\cr
  \tab \code{\link[R.oo:getNameFormat.Rdoc]{getNameFormat}} \tab Gets the current name format.\cr
+ \tab \code{\link[R.oo:getPackageNameOf.Rdoc]{getPackageNameOf}} \tab Gets the package of a method or an object.\cr
+ \tab \code{\link[R.oo:getRdTitle.Rdoc]{getRdTitle}} \tab Extracts the title string of a Rd file.\cr
+ \tab \code{\link[R.oo:getUsage.Rdoc]{getUsage}} \tab Gets the usage of a method.\cr
+ \tab \code{\link[R.oo:hierarchy.Rdoc]{hierarchy}} \tab Gets the class hierarchy.\cr
  \tab \code{\link[R.oo:isKeyword.Rdoc]{isKeyword}} \tab Checks if a word is a Rd keyword.\cr
  \tab \code{\link[R.oo:isVisible.Rdoc]{isVisible}} \tab Checks if a member is visible given its modifiers.\cr
+ \tab \code{\link[R.oo:methodsInheritedFrom.Rdoc]{methodsInheritedFrom}} \tab Gets all methods inherited from a class in Rd format.\cr
  \tab \code{\link[R.oo:setManPath.Rdoc]{setManPath}} \tab Sets the path to the directory where the Rd files should be saved.\cr
  \tab \code{\link[R.oo:setNameFormat.Rdoc]{setNameFormat}} \tab Sets the current name format.\cr
 }
 
 
-\bold{Methods inherited from Object}:\cr
+ \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
  }

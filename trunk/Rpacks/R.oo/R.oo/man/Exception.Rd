@@ -58,6 +58,7 @@ extends simpleError\cr
  \tab \code{\link[R.oo:getLastException.Exception]{getLastException}} \tab Static method to get the last Exception thrown.\cr
  \tab \code{\link[R.oo:getMessage.Exception]{getMessage}} \tab Gets the message of the Exception.\cr
  \tab \code{\link[R.oo:getStackTrace.Exception]{getStackTrace}} \tab Gets the stack trace saved when the exception was created.\cr
+ \tab \code{\link[R.oo:getStackTraceString.Exception]{getStackTraceString}} \tab Gets the stack trace as a string.\cr
  \tab \code{\link[R.oo:getWhen.Exception]{getWhen}} \tab Gets the time when the Exception was created.\cr
  \tab \code{\link[R.oo:print.Exception]{print}} \tab Prints the Exception.\cr
  \tab \code{\link[R.oo:printStackTrace.Exception]{printStackTrace}} \tab Prints the stack trace saved when the exception was created.\cr
@@ -65,19 +66,16 @@ extends simpleError\cr
 }
 
 
-\bold{Methods inherited from simpleError}:\cr
+ \bold{Methods inherited from simpleError}:\cr
 showAndWait
 
-\bold{Methods inherited from error}:\cr
+ \bold{Methods inherited from error}:\cr
 as.character, throw
 
-\bold{Methods inherited from condition}:\cr
+ \bold{Methods inherited from condition}:\cr
 as.character, conditionCall, conditionMessage, print
 
-\bold{Methods inherited from try-error}:\cr
-
-
-\bold{Methods inherited from Object}:\cr
+ \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
 

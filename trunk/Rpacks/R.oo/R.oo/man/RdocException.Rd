@@ -58,22 +58,19 @@ extends \link[R.oo]{Exception}\cr
 }
 
 
-\bold{Methods inherited from Exception}:\cr
+ \bold{Methods inherited from Exception}:\cr
 as.character, getCall, getLastException, getMessage, getStackTrace, getWhen, print, printStackTrace, throw
 
-\bold{Methods inherited from simpleError}:\cr
+ \bold{Methods inherited from simpleError}:\cr
 showAndWait
 
-\bold{Methods inherited from error}:\cr
+ \bold{Methods inherited from error}:\cr
 as.character, throw
 
-\bold{Methods inherited from condition}:\cr
+ \bold{Methods inherited from condition}:\cr
 as.character, conditionCall, conditionMessage, print
 
-\bold{Methods inherited from try-error}:\cr
-
-
-\bold{Methods inherited from Object}:\cr
+ \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
  }

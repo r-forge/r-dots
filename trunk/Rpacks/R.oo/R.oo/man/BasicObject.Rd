@@ -48,7 +48,7 @@
 }
 
 
-\bold{Methods inherited from logical}:\cr
+ \bold{Methods inherited from logical}:\cr
 as.data.frame
 
  }

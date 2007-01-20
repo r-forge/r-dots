@@ -354,9 +354,16 @@ setMethodS3("equals", "Object", function(this, other, ...) {
 #   MyClass: 0x01BE602C is about to be removed from the memory!
 #   MyClass: 0x01BFF634 is about to be removed from the memory!
 #   MyClass: 0x01C13584 is about to be removed from the memory!
-#   MyClass: 0x01C578B0 is about to be removed from the memory!
 #            used (Mb) gc trigger (Mb)
 #   Ncells 229903  6.2     467875 12.5
+#   Vcells  53725  0.5     786432  6.0
+#   }
+#
+#   rm(o)
+#   \dontrun{
+#   MyClass: 0x01C578B0 is about to be removed from the memory!
+#            used (Mb) gc trigger (Mb)
+#   Ncells 229903  6.1     467875 12.3
 #   Vcells  53725  0.5     786432  6.0
 #   }
 # }

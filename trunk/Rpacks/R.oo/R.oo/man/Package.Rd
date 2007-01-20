@@ -49,10 +49,12 @@ extends \link[R.oo]{Object}\cr
  \tab \code{\link[R.oo:getChangeLog.Package]{getChangeLog}} \tab Gets the change log of this package.\cr
  \tab \code{\link[R.oo:getClasses.Package]{getClasses}} \tab Gets all classes of a package.\cr
  \tab \code{\link[R.oo:getContents.Package]{getContents}} \tab Gets the contents of this package.\cr
+ \tab \code{\link[R.oo:getContribUrl.Package]{getContribUrl}} \tab Gets the URL(s) from where this package can be installed.\cr
  \tab \code{\link[R.oo:getDataPath.Package]{getDataPath}} \tab Gets the path to the data (data/) directory of this package.\cr
  \tab \code{\link[R.oo:getDate.Package]{getDate}} \tab Gets the date when package was build.\cr
  \tab \code{\link[R.oo:getDescription.Package]{getDescription}} \tab Gets the description of the package.\cr
  \tab \code{\link[R.oo:getDescriptionFile.Package]{getDescriptionFile}} \tab Gets the description file of this package.\cr
+ \tab \code{\link[R.oo:getDevelUrl.Package]{getDevelUrl}} \tab Gets the URL(s) from where the developers version of this package can be installed.\cr
  \tab \code{\link[R.oo:getDocPath.Package]{getDocPath}} \tab Gets the path to the accompanying documentation (doc/) directory of this package.\cr
  \tab \code{\link[R.oo:getEnvironment.Package]{getEnvironment}} \tab Gets the environment of a loaded package.\cr
  \tab \code{\link[R.oo:getExamplePath.Package]{getExamplePath}} \tab Gets the path to the example (R-ex/) directory of this package.\cr
@@ -79,7 +81,7 @@ extends \link[R.oo]{Object}\cr
 }
 
 
-\bold{Methods inherited from Object}:\cr
+ \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
  }

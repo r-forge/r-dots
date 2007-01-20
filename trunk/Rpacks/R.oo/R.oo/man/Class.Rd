@@ -48,13 +48,18 @@ extends \link[R.oo]{Object}\cr
  \tab \code{\link[R.oo:DOLLARLT_-.Class]{$<-}} \tab Makes the fields and methods of an Class assignable via the \$<- and the [[<- operator.\cr
  \tab \code{[[} \tab  -\cr
  \tab \code{[[<-} \tab  -\cr
+ \tab \code{\link[R.oo:argsToString.Class]{argsToString}} \tab Gets the arguments of a function as a character string.\cr
  \tab \code{\link[R.oo:as.character.Class]{as.character}} \tab Returns a short string describing the class.\cr
  \tab \code{\link[R.oo:forName.Class]{forName}} \tab Gets a Class object by a name of a class.\cr
+ \tab \code{\link[R.oo:getDetails.Class]{getDetails}} \tab Lists the fields and methods of a class.\cr
  \tab \code{\link[R.oo:getFields.Class]{getFields}} \tab Returns the field names of a class.\cr
  \tab \code{\link[R.oo:getKnownSubclasses.Class]{getKnownSubclasses}} \tab Gets all subclasses that are currently loaded.\cr
  \tab \code{\link[R.oo:getMethods.Class]{getMethods}} \tab Returns the method names of class and its super classes.\cr
  \tab \code{\link[R.oo:getName.Class]{getName}} \tab Gets the name of the class.\cr
  \tab \code{\link[R.oo:getPackage.Class]{getPackage}} \tab Gets the package to which the class belongs.\cr
+ \tab \code{\link[R.oo:getRdDeclaration.Class]{getRdDeclaration}} \tab Gets the class declaraction in Rd format.\cr
+ \tab \code{\link[R.oo:getRdHierarchy.Class]{getRdHierarchy}} \tab Gets the class hierarchy in Rd format.\cr
+ \tab \code{\link[R.oo:getRdMethods.Class]{getRdMethods}} \tab Gets the methods of a class in Rd format.\cr
  \tab \code{\link[R.oo:getStaticInstance.Class]{getStaticInstance}} \tab Gets the static instance of this class.\cr
  \tab \code{\link[R.oo:getSuperclasses.Class]{getSuperclasses}} \tab Gets the super classes of this class.\cr
  \tab \code{\link[R.oo:isAbstract.Class]{isAbstract}} \tab Checks if a class is abstract or not.\cr
@@ -69,7 +74,7 @@ extends \link[R.oo]{Object}\cr
 }
 
 
-\bold{Methods inherited from Object}:\cr
+ \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
  }

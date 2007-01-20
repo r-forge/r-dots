@@ -55,14 +55,20 @@
  \tab \code{\link[R.oo:getEnvironment.Object]{getEnvironment}} \tab Gets the environment of this object.\cr
  \tab \code{\link[R.oo:getFields.Object]{getFields}} \tab Returns the field names of an Object.\cr
  \tab \code{\link[R.oo:getInstanciationTime.Object]{getInstanciationTime}} \tab Gets the time when the object was instanciated.\cr
+ \tab \code{\link[R.oo:getInternalAddress.Object]{getInternalAddress}} \tab Gets the memory location where the Object resides.\cr
  \tab \code{\link[R.oo:getStaticInstance.Object]{getStaticInstance}} \tab Gets the static instance of this objects class.\cr
  \tab \code{\link[R.oo:hasField.Object]{hasField}} \tab Checks if a field exists or not.\cr
  \tab \code{\link[R.oo:hashCode.Object]{hashCode}} \tab Gets a hash code for the Object.\cr
+ \tab \code{\link[R.oo:isReferable.Object]{isReferable}} \tab Checks if the object is referable or not.\cr
  \tab \code{\link[R.oo:ll.Object]{ll}} \tab Generates a list of informative properties of all members of an Object.\cr
  \tab \code{\link[R.oo:load.Object]{load}} \tab Static method to load an Object from a file or a connection.\cr
+ \tab \code{names} \tab  -\cr
+ \tab \code{\link[R.oo:newInstance.Object]{newInstance}} \tab Creates a new instance of the same class as this object.\cr
+ \tab \code{\link[R.oo:novirtual.Object]{novirtual}} \tab Returns a reference to the same Object with virtual fields turned off.\cr
  \tab \code{\link[R.oo:objectSize.Object]{objectSize}} \tab Gets the size of the Object in bytes.\cr
  \tab \code{\link[R.oo:print.Object]{print}} \tab Prints an Object.\cr
  \tab \code{\link[R.oo:save.Object]{save}} \tab Saves an Object to a file or a connection.\cr
+ \tab \code{\link[R.oo:staticCode.Object]{staticCode}} \tab Method that will be call each time a new instance of a class is created.\cr
 }
 
 

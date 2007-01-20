@@ -59,25 +59,23 @@ extends \link[R.oo]{Exception}\cr
 \tabular{rll}{
  \tab \code{\link[R.oo:getMessage.InternalErrorException]{getMessage}} \tab Gets the message of the exception.\cr
  \tab \code{\link[R.oo:getPackage.InternalErrorException]{getPackage}} \tab Gets the suspicious package likely to contain an error.\cr
+ \tab \code{\link[R.oo:reportBug.InternalErrorException]{reportBug}} \tab Send a bug report.\cr
 }
 
 
-\bold{Methods inherited from Exception}:\cr
+ \bold{Methods inherited from Exception}:\cr
 as.character, getCall, getLastException, getMessage, getStackTrace, getWhen, print, printStackTrace, throw
 
-\bold{Methods inherited from simpleError}:\cr
+ \bold{Methods inherited from simpleError}:\cr
 showAndWait
 
-\bold{Methods inherited from error}:\cr
+ \bold{Methods inherited from error}:\cr
 as.character, throw
 
-\bold{Methods inherited from condition}:\cr
+ \bold{Methods inherited from condition}:\cr
 as.character, conditionCall, conditionMessage, print
 
-\bold{Methods inherited from try-error}:\cr
-
-
-\bold{Methods inherited from Object}:\cr
+ \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
  }
