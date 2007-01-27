@@ -1,23 +1,51 @@
-setMethodS3("setCachePath", "default", function(path=file.path(getwd(), ".Rcache"), create=TRUE, ...) {
-  path <- as.character(path);
-
-  if (!isDirectory(path)) {
-    if (create) {
-      mkdirs(path);
-      if (!isDirectory(path))
-        throw("Could not create cache directory: ", path);
-    } else {
-      throw("Path is not an existing directory: ", path);
-    }
-  }
-
-  ovalue <- options("R.cache.path"=path);
+#########################################################################/**
+# @RdocDefault setCachePath
+#
+# @title "Sets the path to the file cache directory"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{dirs}{A @character @vector constituting the path to the
+#      cache subdirectory of interest.}
+#   \item{path}{The path to override the path according to the 
+#      \code{dirs} argument.}
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns nothing.
+# }
+#
+# \details{
+# }
+#
+# @author
+#
+# \seealso{
+#   @see "getCachePath".
+# }
+#
+# @keyword "programming"
+# @keyword "IO"
+# @keyword "internal"
+#*/######################################################################### 
+setMethodS3("setCachePath", "default", function(dirs=NULL, path=NULL, ...) {
+  subname <- paste(dirs, collapse="/");
+  name <- paste("R.cache:cachePath", subname, sep=":");
+  opts <- list(path);
+  names(opts) <- name;
+  ovalue <- options(opts);
   invisible(ovalue);
 })
 
 
 ############################################################################
 # HISTORY:
-# 2005-12-07
+# 2007-01-24
 # o Created.
 ############################################################################

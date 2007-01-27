@@ -16,7 +16,7 @@
  Saves data to file cache, which is unique for an optional key object.
 }
 
-\usage{\method{saveCache}{default}(object, key=NULL, sources=NULL, suffix=".Rcache", comment=NULL, ...)}
+\usage{\method{saveCache}{default}(object, key=NULL, sources=NULL, suffix=".Rcache", comment=NULL, dirs=NULL, ...)}
 
 \arguments{
   \item{object}{The object to be saved to file.}
@@ -28,11 +28,13 @@
     filename.}
   \item{comment}{An optional \code{\link[base]{character}} string written in ASCII at the
     beginning of the file.}
+  \item{dirs}{A \code{\link[base]{character}} \code{\link[base]{vector}} constituting the path to the
+     cache subdirectory to be used. If \code{\link[base]{NULL}}, the root path is used.}
   \item{...}{Additional argument passed to \code{\link[base]{save}}().}
 }
 
 \value{
-  Returns nothing.
+  Returns (invisible) the pathname of the cache file.
 }
 
 \section{Requirements}{

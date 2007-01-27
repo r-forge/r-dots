@@ -14,14 +14,6 @@
 % File cache
 \alias{clearCache}
 \alias{clearCache.default}
-\alias{getCachePath}
-\alias{getCachePath.default}
-\alias{generateCache}
-\alias{generateCache.default}
-\alias{findCache}
-\alias{findCache.default}
-\alias{setCachePath}
-\alias{setCachePath.default}
 
 \description{
   This page contains aliases for all "non-documented" objects that

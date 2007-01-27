@@ -2,6 +2,11 @@
 Package: R.cache
 ================
 
+Version: 0.1.3 [2007-01-24]
+o Now saveCache() and loadCache() takes optional argument 'dirs' for
+  caching data to subdirectories of the root cache directory.
+o Added setCacheRootPath() to set the root cache directory.
+
 Version: 0.1.2 [2005-05-25]
 o Added argument 'pathname' to loadCache() in order to load
   "unknown" cache files for which the key is unknown.

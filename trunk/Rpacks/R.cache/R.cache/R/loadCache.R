@@ -24,6 +24,8 @@
 #     this is only needed in order to read a cache file for which
 #     the key is unknown, for instance, in order to investigate
 #     an unknown cache file.}
+#   \item{dirs}{A @character @vector constituting the path to the
+#      cache subdirectory to be used. If @NULL, the root path is used.}
 #   \item{...}{Additional argument passed to @see "base::load".}
 # }
 #
@@ -54,8 +56,8 @@
 #
 # @keyword "programming"
 # @keyword "IO"
-#*/######################################################################### 
-setMethodS3("loadCache", "default", function(key=NULL, sources=NULL, suffix=".Rcache", removeOldCache=TRUE, pathname=NULL, ...) {
+#*/#########################################################################
+setMethodS3("loadCache", "default", function(key=NULL, sources=NULL, suffix=".Rcache", removeOldCache=TRUE, pathname=NULL, dirs=NULL, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Load functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -78,7 +80,7 @@ setMethodS3("loadCache", "default", function(key=NULL, sources=NULL, suffix=".Rc
   # Find cached file
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (is.null(pathname))
-    pathname <- findCache(key=key, suffix=suffix);
+    pathname <- findCache(key=key, suffix=suffix, dirs=dirs);
   if (is.null(pathname))
     return(NULL);
 
@@ -128,7 +130,8 @@ setMethodS3("loadCache", "default", function(key=NULL, sources=NULL, suffix=".Rc
     # 4. Load cached object:
     vars <- baseLoad(con=fh, ...);  # 'vars' holds names of loaded objects
     if (!identical(vars, "object")) {
-      throw("Rcache file format error. Expected 'object' object: ", paste(vars, collapse=", "));
+      throw("Rcache file format error. Expected 'object' object: ", 
+                                                paste(vars, collapse=", "));
     }
 
     # 5. Return cached object

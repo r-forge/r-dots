@@ -19,11 +19,13 @@
 #     filename.}
 #   \item{comment}{An optional @character string written in ASCII at the
 #     beginning of the file.}
+#   \item{dirs}{A @character @vector constituting the path to the
+#      cache subdirectory to be used. If @NULL, the root path is used.}
 #   \item{...}{Additional argument passed to @see "base::save".}
 # }
 #
 # \value{
-#   Returns nothing.
+#   Returns (invisible) the pathname of the cache file.
 # }
 #
 # \section{Requirements}{
@@ -43,11 +45,11 @@
 # @keyword "programming"
 # @keyword "IO"
 #*/######################################################################### 
-setMethodS3("saveCache", "default", function(object, key=NULL, sources=NULL, suffix=".Rcache", comment=NULL, ...) {
+setMethodS3("saveCache", "default", function(object, key=NULL, sources=NULL, suffix=".Rcache", comment=NULL, dirs=NULL, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Generate cache name from basename and hash object.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  cacheFile <- generateCache(key=key, suffix=suffix);
+  pathname <- generateCache(key=key, suffix=suffix, dirs=dirs);
 
   # Compression is not possible!  See loadCache().
   compress <- FALSE;
@@ -55,7 +57,7 @@ setMethodS3("saveCache", "default", function(object, key=NULL, sources=NULL, suf
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Save to file connection
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  fh <- file(cacheFile, open="wb");
+  fh <- file(pathname, open="wb");
   on.exit(close(fh));
 
   # Save 'identifier' 
@@ -84,10 +86,14 @@ setMethodS3("saveCache", "default", function(object, key=NULL, sources=NULL, suf
   
   # Save 'object'
   base::save(file=fh, object, compress=compress, ...);
+
+  invisible(pathname);
 })
 
 ############################################################################
 # HISTORY:
+# 2007-01-24
+# o Now saveCache() returns the pathname to the cache file.
 # 2006-05-25
 # o BUG FIX: Work around for not saving "promises" (non-evaluated arguments)
 #   in base::save(), which otherwise includes all of the surrounding 

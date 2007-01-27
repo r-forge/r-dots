@@ -16,7 +16,7 @@
  Loads data from file cache, which is unique for an optional key object.
 }
 
-\usage{\method{loadCache}{default}(key=NULL, sources=NULL, suffix=".Rcache", removeOldCache=TRUE, pathname=NULL, ...)}
+\usage{\method{loadCache}{default}(key=NULL, sources=NULL, suffix=".Rcache", removeOldCache=TRUE, pathname=NULL, dirs=NULL, ...)}
 
 \arguments{
   \item{key}{An optional object from which a hexadecimal hash
@@ -33,6 +33,8 @@
     this is only needed in order to read a cache file for which
     the key is unknown, for instance, in order to investigate
     an unknown cache file.}
+  \item{dirs}{A \code{\link[base]{character}} \code{\link[base]{vector}} constituting the path to the
+     cache subdirectory to be used. If \code{\link[base]{NULL}}, the root path is used.}
   \item{...}{Additional argument passed to \code{\link[base]{load}}().}
 }
 
@@ -85,6 +87,7 @@ file.remove(findCache(key=list(2.3,3.5)))
 
 \seealso{
  \code{\link{saveCache}}().
+ The \code{\link[Biobase]{cache}} method in Bioconductor.
 }
 
 

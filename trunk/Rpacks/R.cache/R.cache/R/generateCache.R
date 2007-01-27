@@ -1,3 +1,35 @@
+#########################################################################/**
+# @RdocDefault generateCache
+#
+# @title "Generates a cache pathname from a key list object"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{key}{An object from which a hexadecimal hash code will be 
+#     generated and appended to the filename.}
+#   \item{suffix}{A @character string to be appended to the end of the
+#     filename.}
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns the path as a @character string.
+# }
+#
+# \details{
+# }
+#
+# @author
+#
+# @keyword "programming"
+# @keyword "IO"
+# @keyword "internal"
+#*/######################################################################### 
 setMethodS3("generateCache", "default", function(key=NULL, suffix=".Rcache", ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -20,7 +52,7 @@ setMethodS3("generateCache", "default", function(key=NULL, suffix=".Rcache", ...
   }
 
   # Add cache directory or pathname
-  path <- getCachePath();
+  path <- getCachePath(...);
   cacheName <- file.path(path, cacheName);
 
   # Add suffix
