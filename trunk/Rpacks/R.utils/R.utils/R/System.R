@@ -526,7 +526,7 @@ setMethodS3("findGhostscript", "System", function(static, updateRGSCMD=TRUE, ...
   if (length(pathname) > 0) {
     if (length(pathname) > 1)
       pathname <- pathname[1];
-    Sys.putenv("R_GSCMD"=pathname);
+    Sys.setenv("R_GSCMD"=pathname);
   } else if (updateRGSCMD) {
     if (!is.null(paths0)) {
       warning("Ghostscript not found. Searched directories: ", 
@@ -691,6 +691,8 @@ setMethodS3("findGraphicsDevice", "System", function(static, devices=list(png2, 
 
 ############################################################################
 # HISTORY:
+# 2007-01-22
+# o Replaced Sys.putenv() with new Sys.setenv(). 
 # 2007-01-10
 # o Now findGhostscript() searches all 'Program Files' directories too, if
 #   on Windows.
