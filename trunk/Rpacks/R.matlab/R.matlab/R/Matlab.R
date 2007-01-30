@@ -700,7 +700,7 @@ setMethodS3("startServer", "Matlab", function(this, matlab=getOption("matlab"), 
   # Argument 'port':
   if (!is.null(port)) {
     port <- Arguments$getInteger(port, range=c(1023,65535));
-    Sys.putenv("MATLABSERVER_PORT"=port);
+    Sys.setenv("MATLABSERVER_PORT"=port);
   }
 
   enter(this$.verbose, "Starting the Matlab server");
@@ -1124,6 +1124,8 @@ setMethodS3("setVerbose", "Matlab", function(this, threshold=0, ...) {
 
 ############################################################################
 # HISTORY:
+# 2007-01-22
+# o Replaced Sys.putenv() with new Sys.setenv(). 
 # 2006-12-28
 # o Updated Rdoc for evaluate() to say that it returns NULL (not 0).
 # o Now open() throws an error if connection to Matlab failed.
