@@ -33,8 +33,9 @@
 # @keyword programming
 #*/###########################################################################
 setMethodS3("addFinalizerToLast", "default", function(...) {
-  # Get .Last().
+  # Modify existing .Last() or create a new one?
   if (exists(".Last", mode="function")) {
+    # A) Modify
     .Last <- get(".Last", mode="function");
     if (identical(attr(.Last, "finalizeSession"), TRUE))
       return(invisible(FALSE));
@@ -44,17 +45,29 @@ setMethodS3("addFinalizerToLast", "default", function(...) {
 
     # Define a new .Last() function
     .Last <- function(...) {
-      finalizeSession();
-      if (exists(".LastOriginal", mode="function"))
-        .LastOriginal();
+      tryCatch({
+        if (exists("finalizeSession", mode="function"))
+          finalizeSession();
+        if (exists(".LastOriginal", mode="function"))
+          .LastOriginal();
+      }, error = function(ex) {
+        cat("Ignoring error occured in .Last(): ", as.character(ex));
+      })
     }
   } else {
+    # B) Create a new one
     .Last <- function(...) { 
-      finalizeSession();
+      tryCatch({
+        if (exists("finalizeSession", mode="function"))
+          finalizeSession();
+      }, error = function(ex) {
+        cat("Ignoring error occured in .Last(): ", as.character(ex));
+      })
     }
   }
-
   attr(.Last, "finalizeSession") <- TRUE;
+
+  # Store it.
   assign(".Last", .Last, envir=.GlobalEnv);
 
   invisible(FALSE);
@@ -64,6 +77,11 @@ setMethodS3("addFinalizerToLast", "default", function(...) {
 
 ############################################################################
 # HISTORY:
+# 2007-02-26
+# o Added tryCatch() and explicit check for finalizeSession().  Thanks
+#   Elizabeth Purdum at UC Berkeley for reporting your problems on receiving
+#   'Error in .Last() : could not find function "finalizeSession"' when 
+#   trying to quit R.
 # 2005-06-10
 # o Extra care was need with this function, because otherwise R CMD check
 #   would give an error if called by .First.lib() in R.utils.

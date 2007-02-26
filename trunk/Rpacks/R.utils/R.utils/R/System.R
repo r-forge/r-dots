@@ -505,7 +505,7 @@ setMethodS3("findGhostscript", "System", function(static, updateRGSCMD=TRUE, ...
     paths0 <- file.path(c(systemDrives, pfDirs), "gs");
 
     # Keep only those that are directories
-    paths <- paths0[file.exists(paths)];  # Avoids warnings
+    paths <- paths0[file.exists(paths0)];  # Avoids warnings
     paths <- paths[sapply(paths, FUN=isDirectory)];
 
     # Now search each of them for an ghostscript executable

@@ -3,8 +3,6 @@
 % 
 %  TextStatusBar.R
 % 
-% on Fri Nov 10 16:59:16 2006.
-% 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -56,7 +54,7 @@ extends \link[R.oo]{Object}\cr
 }
 
 
-\bold{Methods inherited from Object}:\cr
+ \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
 

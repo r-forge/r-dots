@@ -116,7 +116,7 @@ setHook("sourceTo/onPreprocess", oldHooks, action="replace")
 
  \seealso{
   \code{\link{sourceDirectory}}().
-  Compare to \code{\link[base]{source}}().
+  \code{\link[base]{sys.source}}() and \code{\link[base]{source}}().
  }
 
 

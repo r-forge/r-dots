@@ -2,7 +2,17 @@
 Package: R.utils
 ================
 
-Version: 0.8.4 [2007-01-10xx]
+Version: 0.8.5 [2007-02-26]
+o Added argument 'depth' to getParent().
+o BUG FIX:  Added tryCatch() and explicit check for finalizeSession().
+  Otherwise if, under special circumstance, one might get the error
+  'Error in .Last() : could not find function "finalizeSession"' when 
+  trying to quit R with quit().  Thanks Elizabeth Purdum at UC Berkeley 
+  for reporting this.
+o When running R v2.5.0, Sys.getenv() is used instead of deprecated
+  Sys.putenv().
+
+Version: 0.8.4 [2007-01-10]
 o Now System$findGhostscript() searches all 'Program Files' directories
   too, if on Windows.
 
