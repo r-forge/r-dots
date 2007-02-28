@@ -37,11 +37,21 @@ setMethodS3("addFinalizerToLast", "default", function(...) {
   if (exists(".Last", mode="function")) {
     # A) Modify
     .Last <- get(".Last", mode="function");
-    if (identical(attr(.Last, "finalizeSession"), TRUE))
-      return(invisible(FALSE));
 
-    # Rename original .Last() function
-    assign(".LastOriginal", .Last, envir=.GlobalEnv);
+    # Already has finalizeSession()?
+    if (identical(attr(.Last, "finalizeSession"), TRUE)) {
+      # And a version from R.utils v0.8.5 or after?
+      ver <- attr(.Last, "finalizeSessionVersion");
+      if (!is.null(ver) && compareVersion(ver, "0.8.5") >= 0) {
+        # ...then everything is fine.
+        return(invisible(FALSE));
+      }
+
+      # Otherwise, overwrite old buggy version.
+    } else {
+      # Rename original .Last() function
+      assign(".LastOriginal", .Last, envir=.GlobalEnv);
+    }
 
     # Define a new .Last() function
     .Last <- function(...) {
@@ -66,6 +76,7 @@ setMethodS3("addFinalizerToLast", "default", function(...) {
     }
   }
   attr(.Last, "finalizeSession") <- TRUE;
+  attr(.Last, "finalizeSessionVersion") <- packageDescription("R.utils")$Version;
 
   # Store it.
   assign(".Last", .Last, envir=.GlobalEnv);
@@ -77,6 +88,9 @@ setMethodS3("addFinalizerToLast", "default", function(...) {
 
 ############################################################################
 # HISTORY:
+# 2007-02-27
+# o Added so that modified .Last() from R.utils v0.8.4 or before are 
+#   replaced with the newer version.
 # 2007-02-26
 # o Added tryCatch() and explicit check for finalizeSession().  Thanks
 #   Elizabeth Purdum at UC Berkeley for reporting your problems on receiving
