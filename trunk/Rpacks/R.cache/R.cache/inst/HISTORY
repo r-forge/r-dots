@@ -2,6 +2,10 @@
 Package: R.cache
 ================
 
+Version: 0.1.4 [2007-03-07]
+o Added getCacheRootPath() and setCacheRootPath() to specify
+  where the root of the file path is located.
+
 Version: 0.1.3 [2007-01-24]
 o Now saveCache() and loadCache() takes optional argument 'dirs' for
   caching data to subdirectories of the root cache directory.

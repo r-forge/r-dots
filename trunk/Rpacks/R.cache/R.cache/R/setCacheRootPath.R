@@ -36,7 +36,7 @@ setMethodS3("setCacheRootPath", "default", function(path=file.path(getwd(), ".Rc
       throw("Could not create cache directory: ", path);
   }
 
-  ovalue <- options("R.cache.rootPath"=path);
+  ovalue <- options("R.cache::rootPath"=path);
 
   invisible(ovalue);
 })
