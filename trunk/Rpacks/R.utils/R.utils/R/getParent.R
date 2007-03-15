@@ -35,6 +35,9 @@ setMethodS3("getParent", "default", function(pathname, depth=1, fsep=.Platform$f
   pathname <- as.character(pathname);
 
   getParentLocal <- function(pathname) {
+    if (length(pathname) == 0)
+      return(NULL);
+
     # Treat C:/, C:\\, ... special, that is, not at all.
     if (regexpr("^[A-Z]:[/\\]$", pathname) != -1)
       return(paste(gsub("[\\/]$", "", pathname), fsep=fsep, sep=""));
@@ -73,8 +76,11 @@ setMethodS3("getParent", "default", function(pathname, depth=1, fsep=.Platform$f
    path <- getParentLocal(lastPath);
    if (is.null(path))
      break;
-   if (identical(path, lastPath))
-     throw("No such parent (depth=", depth, ") available: ", pathname);
+   if (identical(path, lastPath)) {
+     path <- NULL;
+     break;
+#    throw("No such parent (depth=", depth, ") available: ", pathname);
+   }
    lastPath <- path;
    d <- d - 1;
  }
@@ -84,6 +90,9 @@ setMethodS3("getParent", "default", function(pathname, depth=1, fsep=.Platform$f
 
 ###########################################################################
 # HISTORY: 
+# 2007-03-07
+# o Now getParent(...) returns NULL if the parent directory does not
+#   exists, regardless of depth.
 # 2007-02-15
 # o Added argument 'depth' to getParent().
 # 2005-08-01
