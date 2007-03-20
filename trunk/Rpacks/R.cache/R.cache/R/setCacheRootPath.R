@@ -27,7 +27,7 @@
 # @keyword "programming"
 # @keyword "IO"
 #*/######################################################################### 
-setMethodS3("setCacheRootPath", "default", function(path=file.path(getwd(), ".Rcache"), ...) {
+setMethodS3("setCacheRootPath", "default", function(path="~/.Rcache", ...) {
   path <- as.character(path);
 
   if (!isDirectory(path)) {
@@ -44,6 +44,8 @@ setMethodS3("setCacheRootPath", "default", function(path=file.path(getwd(), ".Rc
 
 ############################################################################
 # HISTORY:
+# 2007-03-07
+# o Changed the default root path to ~/.Rcache/
 # 2007-01-24
 # o Renamed from setCachePath().
 # 2005-12-07

@@ -1,6 +1,6 @@
 
 Package: R.cache
-================
+===============
 
 Version: 0.1.4 [2007-03-07]
 o Added getCacheRootPath() and setCacheRootPath() to specify
