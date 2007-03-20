@@ -2,6 +2,10 @@
 Package: R.utils
 ================
 
+Version: 0.8.7 [2007-03-20xxx]
+o The warning message on "cannot refer relative pathname" for
+  getRelativePath() didn't paste the path resulting in a funny
+  looking warning.
 
 Version: 0.8.6 [2007-02-27]
 o An R.utils (v0.8.4) modified .Last() function saved in .RData from
