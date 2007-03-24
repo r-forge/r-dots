@@ -2,7 +2,11 @@
 Package: R.utils
 ================
 
-Version: 0.8.7 [2007-03-20xxx]
+Version: 0.8.7 [2007-03-24]
+o Added moveInSearchPath() to reshuffle the search path. Useful
+  to change the order of packages after they have loaded.
+o Added toCamelCase() to convert strings.
+o Added loadToEnv() for loading saved data to a new environment.
 o The warning message on "cannot refer relative pathname" for
   getRelativePath() didn't paste the path resulting in a funny
   looking warning.
