@@ -44,7 +44,7 @@
 # \keyword{attribute}
 # \keyword{utilities}
 #*/########################################################################### 
-setMethodS3("equals", "ANY", function(object, other, ...) {
+setMethodS3("equals", "default", function(object, other, ...) {
   (is.null(object) && is.null(other)) || identical(object, other);
 })
 

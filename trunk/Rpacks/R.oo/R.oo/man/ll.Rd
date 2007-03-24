@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  ll.R
+%  ll.default.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -45,14 +45,14 @@
  by setting option \code{"R.oo::ll/properties"}, e.g.
  \code{options("R.oo::ll/properties"=c("data.class", "dimension"))}.
  If this option is not set when the package is loaded, it is set to
- \code{c("data.class", "dimension", "object.size")}.
+ \code{c("data.class", "dimension", "objectSize")}.
 }
 
 \examples{
   \dontrun{
    To list all objects in .GlobalEnv:
    > ll()
-   		     member data.class dimension object.size
+   		     member data.class dimension objectSize
    1                *tmp*     Person         1         428
    2  as.character.Person   function      NULL        1208
    3              country  character         1          44

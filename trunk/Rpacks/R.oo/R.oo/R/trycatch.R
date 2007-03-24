@@ -70,6 +70,8 @@
 #*/###########################################################################
 if (R.Version()$major <= 1 && R.Version()$minor < 8.0) {
   trycatch <- function(expr, ..., finally=NULL, envir=parent.frame()) {
+    throw("trycatch() in R.oo is deprecated. Use tryCatch() instead.");
+
     # Note that substitute(finally) must be done here and NOT after the loop.
     # I don't know why, but it just does not work. Maybe it is because other
     # eval()'s are called in the loop?!
@@ -124,6 +126,8 @@ if (R.Version()$major <= 1 && R.Version()$minor < 8.0) {
   } # trycatch()
 } else {
   trycatch <- function(expr, ..., finally=NULL, envir=parent.frame()) {
+    throw("trycatch() in R.oo is deprecated. Use tryCatch() instead.");
+
     # Note that substitute(finally) must be done here and NOT after the loop.
     # I don't know why, but it just does not work. Maybe it is because other
     # eval()'s are called in the loop?!
@@ -200,6 +204,9 @@ if (R.Version()$major <= 1 && R.Version()$minor < 8.0) {
 
 ############################################################################
 # HISTORY:
+# 2007-03-23
+# o Made trycatch() defunct, i.e. it gives an error suggesting to use
+#   tryCatch() instead.
 # 2005-02-20
 # o Updated broken link to tryCatch().
 # 2005-02-10

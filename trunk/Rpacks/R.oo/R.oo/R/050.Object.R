@@ -1112,9 +1112,9 @@ setMethodS3("hasField", "Object", function(this, field, ...) {
 #   \dontrun{
 #   gives:
 #
-#     member class    mode  typeof length  dim bytes
-#   1      x  NULL numeric integer    100 NULL   428
-#   2      y  NULL numeric integer    100 NULL   428
+#     member data.class dimension objectSize
+#   1      x    numeric       100        424
+#   2      y    numeric       100        424
 #   }
 # }
 #
@@ -1755,7 +1755,7 @@ setMethodS3("novirtual", "Object", function(this, ...) {
 
 
 
-setMethodS3("callSuperMethodS3", "ANY", function(this, methodName, ..., nbrOfClassesAbove=1) {
+setMethodS3("callSuperMethodS3", "default", function(this, methodName, ..., nbrOfClassesAbove=1) {
   if (nbrOfClassesAbove < 0)
     throw("Argument 'nbrOfClassesAbove' is negative.");
 

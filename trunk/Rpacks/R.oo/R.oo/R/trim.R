@@ -22,7 +22,7 @@
 #
 # \keyword{character}
 #*/###########################################################################
-setMethodS3("trim", "ANY", function(object, ...) {
+setMethodS3("trim", "default", function(object, ...) {
   s <- sub("^[\t\n\f\r ]*", "", as.character(object));
   s <- sub("[\t\n\f\r ]*$", "", s);
   s;

@@ -34,7 +34,7 @@
 # \keyword{programming}
 # \keyword{methods}
 #*/###########################################################################
-setMethodS3("hashCode", "ANY", function(object, ...) {
+setMethodS3("hashCode", "default", function(object, ...) {
   asInt.Java <- function(x) {
     Integer.MIN.VALUE <- -2147483648;
     Integer.MAX.VALUE <-  2147483647;

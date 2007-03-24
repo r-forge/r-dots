@@ -52,7 +52,7 @@
 #
 # \keyword{error}
 #*/###########################################################################
-setMethodS3("throw", "ANY", function(...) {
+setMethodS3("throw", "default", function(...) {
   throw(Exception(...));
 })
 

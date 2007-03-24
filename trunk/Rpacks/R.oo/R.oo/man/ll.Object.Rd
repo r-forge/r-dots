@@ -38,9 +38,9 @@
   \dontrun{
   gives:
 
-    member class    mode  typeof length  dim bytes
-  1      x  NULL numeric integer    100 NULL   428
-  2      y  NULL numeric integer    100 NULL   428
+    member data.class dimension objectSize
+  1      x    numeric       100        424
+  2      y    numeric       100        424
   }
 }
 

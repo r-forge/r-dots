@@ -23,7 +23,7 @@
 #
 # \keyword{character}
 #*/###########################################################################
-setMethodS3("typeOfClass", "ANY", function(object, ...) {
+setMethodS3("typeOfClass", "default", function(object, ...) {
   if (is.null(object))
     return(NA);
 

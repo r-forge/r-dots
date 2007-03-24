@@ -1,6 +1,13 @@
 Package: R.oo
 =============
 
+Version: 1.2.6 [2007-03-23]
+o Now ll() uses objectSize() instead of object.size().
+o Added a default method for objectSize(), which is just a wrapper
+  for object.size().
+o Made trycatch() defunct, i.e. it gives an error suggesting to use
+  tryCatch() instead.
+
 Version: 1.2.5 [2007-01-05]
 o BUG FIX: getMethods(..., private=FALSE) for class Class would return 
   private methods, and private=TRUE would remove them.  It should be 

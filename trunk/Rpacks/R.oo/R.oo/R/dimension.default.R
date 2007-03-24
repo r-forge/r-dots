@@ -37,7 +37,7 @@
 # \keyword{attribute}
 # \keyword{utilities}
 #*/###########################################################################
-setMethodS3("dimension", "ANY", function(object, ...) {
+setMethodS3("dimension", "default", function(object, ...) {
   if (is.function(object))
     return(NULL);
   size <- dim(object);

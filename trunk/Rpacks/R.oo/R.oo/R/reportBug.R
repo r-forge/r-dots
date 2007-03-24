@@ -31,7 +31,7 @@
 # \keyword{error}
 # \keyword{internal}
 #*/###########################################################################
-setMethodS3("reportBug", "ANY", function(...) {
+setMethodS3("reportBug", "default", function(...) {
   ex <- Exception$getLastException();
   if (!inherits(ex, "InternalErrorException")) {
     warning("Can not report last exception as a bug since it was not an InternalErrorException.");
