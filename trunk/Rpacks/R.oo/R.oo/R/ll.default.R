@@ -175,49 +175,47 @@ setMethodS3("ll", "default", function(pattern=".*", ..., private=FALSE, properti
   # Generate a data frame row by row where each row contains the name of the
   # member and the properties as character strings.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Precreate a function return a row in the resulting data frame
+  # Precreate a function returning a row in the resulting data frame
   expr <- expression();
   for (property in properties) {
     e <- substitute({
       ..exp <- substitute(propertyFcn(object), 
               list=list(propertyFcn=as.name(property), object=..object));
       ..value <- eval(..exp, envir=globalenv());
-  	  if (is.null(..value))
-  	    ..value <- "NULL"
-  	  else if (is.vector(..value) && length(..value) > 1)
-  	    ..value <- sprintf("c(%s)", paste(..value, collapse=","))
-  	  else if (is.list(..value))
+  	  if (is.null(..value)) {
+  	    ..value <- "NULL";
+  	  } else if (is.vector(..value) && length(..value) > 1) {
+  	    ..value <- sprintf("c(%s)", paste(..value, collapse=","));
+  	  } else if (is.list(..value)) {
   	    ..value <- unlist(..value);
-  	  if (length(..value) > 0)
+      }
+  	  if (length(..value) > 0) {
   	    ..value <- ..value[1];
-#  	  ..value <- as.character(..value);
+      }
     }, list=list(property=property));
-    expr <- substitute({expr; e; ..row <- c(..row, ..value);}, 
+    expr <- substitute({expr; e; ..row <- cbind(..row, ..value);}, 
                                              list=list(expr=expr,e=e));
   }
 
   df <- NULL;
   for (member in members) {
     rowExpr <- substitute({
-      ..row <- name; 
+      ..row <- list(name); 
       ..object <- get(name, envir=envir); 
       expr;
     }, list=list(name=member, member=as.name(member), expr=expr));
     dfRow <- eval(rowExpr);
-    df <- rbind(df, dfRow);
+    if (is.null(df)) {
+      df <- dfRow;
+    } else {
+      for (kk in seq_len(length(df))) {
+        df[[kk]] <- c(df[[kk]], dfRow[[kk]]);
+      }
+    }
   }
-  colnames(df) <- c("member", properties);
-  rownames(df) <- seq(length.out=nrow(df));
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Coerce, if possible
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Ad hoc, but it works /HB 2007-03-24
-  con <- textConnection(capture.output(print(df)));
-  df <- read.table(con);
-  close(con);
-  rm(con);
+  attributes(df) <- NULL;
+  names(df) <- c("member", properties);
+  df <- as.data.frame(df);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Sort data frame?
