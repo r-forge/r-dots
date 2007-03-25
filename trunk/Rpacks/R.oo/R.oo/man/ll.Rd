@@ -76,6 +76,9 @@
 
    To list all numeric and character object in the base package:
    ll(mode=c("numeric", "character"), envir="base")
+
+   To list all objects in the base package greater than 40kb:
+   subset(ll(envir="base"), objectSize > 40000)
   }
 }
 

@@ -1,8 +1,11 @@
 Package: R.oo
 =============
 
-Version: 1.2.6 [2007-03-23]
-o Now ll() uses objectSize() instead of object.size().
+Version: 1.2.6 [2007-03-24]
+o Now ll() uses objectSize() instead of object.size().  It also
+  returns the properties in its "minimal" data type, e.g. the
+  'objectSize' column contains integers (not characters as before).
+  This makes it possible to utilize subset() on the ll() output.
 o Added a default method for objectSize(), which is just a wrapper
   for object.size().
 o Made trycatch() defunct, i.e. it gives an error suggesting to use

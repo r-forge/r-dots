@@ -67,6 +67,9 @@
 #
 #    To list all numeric and character object in the base package:
 #    ll(mode=c("numeric", "character"), envir="base")
+#
+#    To list all objects in the base package greater than 40kb:
+#    subset(ll(envir="base"), objectSize > 40000)
 #   }
 # }
 #
@@ -187,7 +190,7 @@ setMethodS3("ll", "default", function(pattern=".*", ..., private=FALSE, properti
   	    ..value <- unlist(..value);
   	  if (length(..value) > 0)
   	    ..value <- ..value[1];
-  	  ..value <- as.character(..value);
+#  	  ..value <- as.character(..value);
     }, list=list(property=property));
     expr <- substitute({expr; e; ..row <- c(..row, ..value);}, 
                                              list=list(expr=expr,e=e));
@@ -206,6 +209,15 @@ setMethodS3("ll", "default", function(pattern=".*", ..., private=FALSE, properti
   colnames(df) <- c("member", properties);
   rownames(df) <- seq(length.out=nrow(df));
 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Coerce, if possible
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Ad hoc, but it works /HB 2007-03-24
+  con <- textConnection(capture.output(print(df)));
+  df <- read.table(con);
+  close(con);
+  rm(con);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Sort data frame?
@@ -239,6 +251,10 @@ setMethodS3("ll", "default", function(pattern=".*", ..., private=FALSE, properti
 
 ############################################################################
 # HISTORY:
+# 2007-03-24
+# o Now ll() returns a data frame with column of the "minimal" data type.
+#   This makes it possible to use subset() on the output as the new example
+#   illustrates.
 # 2007-03-23
 # o Now ll() uses objectSize() instead object.size().
 # 2005-06-12
