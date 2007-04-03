@@ -1,10 +1,11 @@
 Package: R.utils
-Version: 0.8.7
-Date: 2007-03-24
+Version: 0.8.8
+Date: 2007-04-03
 Title: Various programming utilities
 Author: Henrik Bengtsson <henrikb@braju.com>
 Maintainer: Henrik Bengtsson <henrikb@braju.com>
 Depends: R (>= 2.0.0), R.oo
+Suggests: digest
 Description: This package provides utility classes and methods useful when programming in R and developing R packages.
 License: LGPL version 2.1 or newer (the releases)
 URL: http://www.braju.com/R/

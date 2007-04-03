@@ -2,6 +2,21 @@
 Package: R.utils
 ================
 
+Version: 0.8.8 [2007-04-03xx]
+o Added saveObject() and loadObject().
+o Removed the warning in getRelativePath() about "Cannot infer 
+  relative pathname, because the two pathnames are not refering
+  to the same root/device".  The warning was more confusing than
+  helpful.
+o BUG FIX: getAbsolutePath("C:/foo/", expandTilde=TRUE) would return
+  "C://foo" and not "C:/foo".  Now the method also replace all
+  multiple occurances of slashes with a single one.  This bug
+  cause getRelativePath("C:/foo", "C:/") to return the wrong thing.
+o BUG FIX: toCamelCase(toCamelCase(s)) would not be equal to
+  toCamelCase(s), but instead result in all lower case letters.
+o BUG FIX: Default value of argument 'format' of timestamp() 
+  was invalid.
+
 Version: 0.8.7 [2007-03-24]
 o Added moveInSearchPath() to reshuffle the search path. Useful
   to change the order of packages after they have loaded.

@@ -22,6 +22,12 @@
 #  Returns a @character string.
 # }
 #
+# \examples{
+#   s <- "hello world"
+#   print(toCamelCase(s))  # helloWorld
+#   stopifnot(toCamelCase(s) == toCamelCase(toCamelCase(s)))
+# }
+#
 # @author
 #
 # \seealso{
@@ -36,7 +42,11 @@
 setMethodS3("toCamelCase", "default", function(s, capitalize=FALSE, split="[ \t]+", ...) {
   s <- strsplit(s, split=split);
   s <- lapply(s, FUN=function(s) {
-    paste(capitalize(tolower(s)), collapse="")
+    s2 <- tolower(s);
+    isUpperCase <- (!s %in% s2);
+    s2 <- capitalize(s2);
+    s2[isUpperCase] <- s[isUpperCase];
+    paste(s2, collapse="")
   });
   s <- unlist(s);
   if (!capitalize)
@@ -46,6 +56,9 @@ setMethodS3("toCamelCase", "default", function(s, capitalize=FALSE, split="[ \t]
 
 ############################################################################
 # HISTORY:
+# 2007-04-03
+# o BUG FIX: toCamelCase(toCamelCase(s)) would not be equal to
+#   toCamelCase(s), but instead result in all lower case letters.
 # 2007-03-24
 # o Moved to R.utils from aroma.affymetrix.
 # 2007-01-14

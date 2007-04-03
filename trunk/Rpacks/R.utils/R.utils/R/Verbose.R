@@ -1265,7 +1265,7 @@ setMethodS3("header", "Verbose", function(this, ..., char="-", padding=0, prefix
 #
 # @keyword programming
 #*/###########################################################################
-setMethodS3("timestamp", "Verbose", function(this, format=getTimestampFormat(thos), ...) {
+setMethodS3("timestamp", "Verbose", function(this, format=getTimestampFormat(this), ...) {
   if (is.function(format)) {
     stamp <- format();
   } else {
@@ -1519,6 +1519,9 @@ setMethodS3("popState", "Verbose", function(this, ...) {
 
 ############################################################################
 # HISTORY: 
+# 2007-03-28
+# o BUG FIX: Argument 'format' of timestamp() defaulted to 
+#   getTimestampFormat(thos) - 'thos' not 'this'.
 # 2006-09-19
 # o Added Rdoc comments for the less() and the more() methods.
 # 2006-09-14
