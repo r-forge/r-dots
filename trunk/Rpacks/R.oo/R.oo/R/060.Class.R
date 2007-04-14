@@ -76,7 +76,10 @@ setConstructorS3("Class", Class) # Class()
 # @keyword programming
 # @keyword methods
 #*/###########################################################################
-setMethodS3("as.character", "Class", function(this, ...) {
+setMethodS3("as.character", "Class", function(x, ...) {
+  # To please R CMD check
+  this <- x;
+
   if (is.null(getStaticInstance(this)))
     return(as.character.Object(this));
 

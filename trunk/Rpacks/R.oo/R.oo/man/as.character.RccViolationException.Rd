@@ -19,7 +19,7 @@
  Gets a string representing of the RCC violation of format "[{POSIX date string}] {class name}: {msg}, cf. http://www.maths.lth.se/help/R/RCC/".
 }
 
-\usage{\method{as.character}{RccViolationException}(this, ...)}
+\usage{\method{as.character}{RccViolationException}(x, ...)}
 
 \arguments{
   \item{...}{Not used.}

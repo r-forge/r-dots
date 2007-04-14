@@ -91,7 +91,10 @@ setConstructorS3("Package", function(name=NULL) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("as.character", "Package", function(this, ...) {
+setMethodS3("as.character", "Package", function(x, ...) {
+  # To please R CMD check
+  this <- x;
+
   s <- paste(data.class(this), ": ", getName(this), " v", getVersion(this), " (", getDate(this), ")", sep="");
   pos <- getPosition(this);
   if (pos != -1)

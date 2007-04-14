@@ -68,7 +68,10 @@ setConstructorS3("RdocException", function(..., source=NULL) {
 # \keyword{methods}
 # \keyword{error}
 #*/###########################################################################
-setMethodS3("as.character", "RdocException", function(this, ...) {
+setMethodS3("as.character", "RdocException", function(x, ...) {
+  # To please R CMD check
+  this <- x;
+
   paste("[", getWhen(this), "] ", data.class(this), " in ", getSource(this), 
                                           ": ", getMessage(this), sep = "");
 })

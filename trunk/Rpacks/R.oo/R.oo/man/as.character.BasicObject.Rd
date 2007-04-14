@@ -19,7 +19,7 @@
  Gets a character string representing the object.
 }
 
-\usage{\method{as.character}{BasicObject}(this, ...)}
+\usage{\method{as.character}{BasicObject}(x, ...)}
 
 \value{
  Returns a \code{\link[base]{character}} string representation of the object.

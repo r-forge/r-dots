@@ -97,7 +97,10 @@ setMethodS3("isReferable", "BasicObject", function(this, ...) {
 # \keyword{programming}
 # \keyword{methods}
 #*/###########################################################################
-setMethodS3("as.character", "BasicObject", function(this, ...) {
+setMethodS3("as.character", "BasicObject", function(x, ...) {
+  # To please R CMD check
+  this <- x;
+
   paste(data.class(this), ": ", getInstanciationTime(this), sep="");
 }) # as.character()
  

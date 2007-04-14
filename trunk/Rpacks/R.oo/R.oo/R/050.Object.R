@@ -97,7 +97,10 @@ setConstructorS3("Object", Object);
 # \keyword{programming}
 # \keyword{methods}
 #*/###########################################################################
-setMethodS3("as.character", "Object", function(this, ...) {
+setMethodS3("as.character", "Object", function(x, ...) {
+  # To please R CMD check
+  this <- x;
+
   intToHex <- function(x, width=NULL) {
     y <- as.integer(x)
     class(y) <- "hexmode"

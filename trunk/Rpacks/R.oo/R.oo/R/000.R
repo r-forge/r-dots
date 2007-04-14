@@ -3,18 +3,14 @@
 # is named "000.R" (zeros).
 ##############################################################################
 
-if (R.Version()$major < 2) { 
-  require(methods) || stop("Could not load package: methods");
-  options(dontWarnPkgs=unique(c("base", "datasets", "graphics", "grDevices", 
-      "methods", "stats", "utils", "Autoloads", getOption("dontWarnPkgs"))))
-}
-
 if (!exists("baseenv", mode="function")) {
   baseenv <- function() NULL;
 }
 
 ############################################################################
 # HISTORY:
+# 2007-04-07
+# o Removed support for R v2.0.0 and before.
 # 2006-02-09
 # o Added baseenv() for R versions (< v2.2.0) where it does not exist.
 #   This is used in setGenericS3() and setMethodS3() from R v2.3.0.

@@ -59,7 +59,6 @@ extends \link[R.oo]{Exception}\cr
 \tabular{rll}{
  \tab \code{\link[R.oo:getMessage.InternalErrorException]{getMessage}} \tab Gets the message of the exception.\cr
  \tab \code{\link[R.oo:getPackage.InternalErrorException]{getPackage}} \tab Gets the suspicious package likely to contain an error.\cr
- \tab \code{\link[R.oo:reportBug.InternalErrorException]{reportBug}} \tab Send a bug report.\cr
 }
 
 

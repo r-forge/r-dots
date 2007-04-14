@@ -97,7 +97,10 @@ setConstructorS3("Exception", function(..., sep="", collapse=", ") {
 # \keyword{methods}
 # \keyword{error}
 #*/###########################################################################
-setMethodS3("as.character", "Exception", function(this, ...) {
+setMethodS3("as.character", "Exception", function(x, ...) {
+  # To please R CMD check
+  this <- x;
+
   paste("[", getWhen(this), "] ", class(this)[1], ": ", getMessage(this), sep="");
 })
 
