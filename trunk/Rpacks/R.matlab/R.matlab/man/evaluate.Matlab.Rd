@@ -36,8 +36,8 @@
 }
 
 \value{
-  Returns \code{0} if expressions were evaluated successfully. An exception
-  might also be thrown.
+  Returns (invisibly) \code{\link[base]{NULL}} if expressions were evaluated successfully.
+  An exception might also be thrown.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

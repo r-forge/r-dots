@@ -51,15 +51,17 @@ extends \link[R.oo]{Object}\cr
  \tab \code{\link[R.matlab:getVariable.Matlab]{getVariable}} \tab Gets one or several Matlab variables.\cr
  \tab \code{\link[R.matlab:isOpen.Matlab]{isOpen}} \tab Checks if connection to the Matlab server is open.\cr
  \tab \code{\link[R.matlab:open.Matlab]{open}} \tab Tries to open a connection to the Matlab server.\cr
+ \tab \code{\link[R.matlab:readResult.Matlab]{readResult}} \tab Reads results from the Matlab server.\cr
  \tab \code{\link[R.matlab:setFunction.Matlab]{setFunction}} \tab Defines a Matlab function.\cr
  \tab \code{\link[R.matlab:setOption.Matlab]{setOption}} \tab Sets the value of an option.\cr
  \tab \code{\link[R.matlab:setVariable.Matlab]{setVariable}} \tab Sets one or several Matlab variables.\cr
  \tab \code{\link[R.matlab:setVerbose.Matlab]{setVerbose}} \tab Sets the verbose level to get more details about the Matlab access.\cr
  \tab \code{\link[R.matlab:startServer.Matlab]{startServer}} \tab Static method which starts a Matlab server.\cr
+ \tab \code{\link[R.matlab:writeCommand.Matlab]{writeCommand}} \tab Writes (sends) a command to the Matlab server.\cr
 }
 
 
-\bold{Methods inherited from Object}:\cr
+ \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
  }
@@ -230,7 +232,7 @@ if (!open(matlab))
   throw("Matlab server is not running: waited 30 seconds.")
 
 # Run Matlab expressions on the Matlab server
-res <- evaluate(matlab, "A=1+2;", "B=ones(2,20);")
+evaluate(matlab, "A=1+2;", "B=ones(2,20);")
 
 # Get Matlab variables
 data <- getVariable(matlab, c("A", "B"))

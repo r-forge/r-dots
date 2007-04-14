@@ -346,11 +346,9 @@ close(is);
 close(server);
 
 
-
 \%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%
 \% HISTORY:
-\% 2006-12-28
-# o Extended the accepted range of ports from [1023,49151] to [1023,66535].
+\% o Extended the accepted range of ports from [1023,49151] to [1023,66535].
 \% 2006-05-08
 \% o BUG FIX: The error message string for reporting port out of range
 \%   was invalid and gave the error '... Line: 109 Column: 45 ")" expected,
@@ -368,7 +366,7 @@ close(server);
 \%   will simplify life for Matlab v7 users.
 \% 2005-02-22
 \% o Added javaaddpath() to include InputStreamByteWrapper.class.
-\%   Thanks Yichun Wei forfeedback and great suggestions.
+\%   Thanks Yichun Wei for feedback and great suggestions.
 \% 2005-02-11
 \% o If Matlab v7 or higher is detected, all MAT structures are saved with
 \%   option '-V6' so readMat() in R.matlab can read them.

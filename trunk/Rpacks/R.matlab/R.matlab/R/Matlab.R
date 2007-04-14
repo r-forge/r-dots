@@ -205,7 +205,10 @@ setConstructorS3("Matlab", function(host="localhost", port=9999, remote=!(host %
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("as.character", "Matlab", function(this, ...) {
+setMethodS3("as.character", "Matlab", function(x, ...) {
+  # To please R CMD check
+  this <- x;
+
   s <- sprintf("%s: The Matlab host is '%s' and communication goes via port %d.", class(this)[1], this$host, this$port);
   s <- sprintf("%s Objects are passed via the %s (remote=%s).", s,
          (if (this$remote) "socket connection" else "local file system"),

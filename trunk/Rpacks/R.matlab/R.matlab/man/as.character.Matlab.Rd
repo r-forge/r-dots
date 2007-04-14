@@ -19,7 +19,7 @@
   Gets a string describing the current Matlab connection.
 }
 
-\usage{\method{as.character}{Matlab}(this, ...)}
+\usage{\method{as.character}{Matlab}(x, ...)}
 
 \arguments{
  \item{...}{Not used.}
