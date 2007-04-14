@@ -166,7 +166,10 @@ setConstructorS3("Verbose", function(con=stderr(), on=TRUE, threshold=0, asGStri
 #
 # @keyword programming
 #*/###########################################################################
-setMethodS3("as.character", "Verbose", function(this, ...) {
+setMethodS3("as.character", "Verbose", function(x, ...) {
+  # To please R CMD check
+  this <- x;
+
   s <- paste(class(this)[1], ": isOn()=", isOn(this), ", threshold=", this$threshold, sep="");
   s <- paste(s, ", timestamp=", this$.timestamp, sep="");
   s <- paste(s, ", timestampFormat=", this$.timestampFormat, sep="");
