@@ -19,7 +19,7 @@
   Gets a character string representation of the job.
  }
 
- \usage{\method{as.character}{Job}(this, ...)}
+ \usage{\method{as.character}{Job}(x, ...)}
 
  \arguments{
   \item{...}{Not used.}

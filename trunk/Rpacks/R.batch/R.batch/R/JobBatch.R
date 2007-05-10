@@ -118,7 +118,10 @@ setConstructorS3("JobBatch", function(root="jobs", ...) {
 # 
 # @keyword programming
 #**/#######################################################################
-setMethodS3("as.character", "JobBatch", function(this, ...) {
+setMethodS3("as.character", "JobBatch", function(x, ...) {
+  # To please R CMD check
+  this <- x;
+
   s <- paste(class(this)[1], ": ", sep="");
   s <- paste(s, "Root path is '", this$.root, "'.", sep="");
   s;

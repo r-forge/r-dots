@@ -19,7 +19,7 @@
   Gets a character string representation of the job batch.
  }
 
- \usage{\method{as.character}{JobBatch}(this, ...)}
+ \usage{\method{as.character}{JobBatch}(x, ...)}
 
  \arguments{
   \item{...}{Not used.}

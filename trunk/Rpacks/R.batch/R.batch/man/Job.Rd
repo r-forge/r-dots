@@ -92,8 +92,10 @@ extends \link[R.oo]{Object}\cr
  \tab \code{setFigurePath} \tab  -\cr
  \tab \code{\link[R.batch:setLabel.Job]{setLabel}} \tab Sets the label of the job.\cr
  \tab \code{setOutputPath} \tab  -\cr
+ \tab \code{setPath} \tab  -\cr
  \tab \code{\link[R.batch:setStatus.Job]{setStatus}} \tab Sets the status of the job.\cr
  \tab \code{\link[R.batch:setup.Job]{setup}} \tab Initiates the job.\cr
+ \tab \code{\link[R.batch:showWarnings.Job]{showWarnings}} \tab Displays warning generated while running this job.\cr
  \tab \code{\link[R.batch:sink.Job]{sink}} \tab Sinks job output.\cr
  \tab \code{sourceDirectoryWithPreprocessor} \tab  -\cr
  \tab \code{\link[R.batch:sourceHotCode.Job]{sourceHotCode}} \tab Sources and removes code in the hot/ and src/hot/ directories.\cr
@@ -107,7 +109,7 @@ extends \link[R.oo]{Object}\cr
 }
 
 
-\bold{Methods inherited from Object}:\cr
+ \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
 

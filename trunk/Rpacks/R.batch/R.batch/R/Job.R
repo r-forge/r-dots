@@ -707,7 +707,10 @@ setMethodS3("finalize", "Job", function(this, ...) {
 # 
 # @keyword programming
 #**/#######################################################################
-setMethodS3("as.character", "Job", function(this, ...) {
+setMethodS3("as.character", "Job", function(x, ...) {
+  # To please R CMD check
+  this <- x;
+
   s <- paste(class(this)[1], ": ", getLabel(this), ":", sep="");
   s <- paste(s, " Job ", getStatus(this), " and is", sep="");
   if (!isLocked(this))
