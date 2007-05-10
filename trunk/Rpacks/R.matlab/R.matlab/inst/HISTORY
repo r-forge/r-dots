@@ -2,6 +2,12 @@
 Package: R.matlab
 =================
 
+Version: 1.1.4 [2007-04-19]
+o Added a "hint" to error message 'Tag type not supported: 
+  miCOMPRESSED' to clarify that readMat() does not support 
+  compressed MAT files.
+
+
 Version: 1.1.3 [2007-04-07]
 o Update so that package passes R CMD check R v2.5.0.
 o Replaced Sys.putenv() with new Sys.setenv() (to be 
@@ -16,11 +22,13 @@ o Extended the accepted range of ports to [1023,66535].
 o Added more details on available options in setOption() and how
   to avoid time outs.
 
+
 Version: 1.1.2 [2006-05-08]
 o BUG FIX: When the port for the Matlab server (MATLABSERVER_PORT) was
   out of range, a Matlab syntax error occured, i.e "... Line: 109 
   Column: 45 ")" expected, "identifier" found.'.  Thanks Alexander
   Nervedi for reporting this.
+
 
 Version: 1.1.1 [2006-01-21]
 o Added argument 'port' to Matlab$startServer(..., port=NULL) to
@@ -30,6 +38,7 @@ o Added argument 'port' to Matlab$startServer(..., port=NULL) to
   This feature was requested by Wang Yu at Iowa State University.
 o Another version has been added to the list of Matlab versions that
   are confirmed to work with R.matlab. See ?Matlab.
+
 
 Version: 1.1.0 [2005-06-29]
 o BUG FIX: Forgot to "implement" miSINGLE, i.e. to set 'knownTypes' 
@@ -45,6 +54,7 @@ o If using the Matlab class, the package requires the R.utils
   the Options class also in R.utils. Similarily, if verbose != FALSE
   in readMat() or writeMat(), then the R.utils package is required.
 
+
 Version: 1.0.3 [2005-05-26]
 o Added support for used defined options to Matlab objects via
   methods setOption() and getOption(). Current supported options
@@ -54,6 +64,7 @@ o Added support for used defined options to Matlab objects via
 o Added class Options. This will probably move to another package
   whenever it becomes stable and widely used.
 
+
 Version: 1.0.2 [2005-05-03]
 o Now Matlab struct's are read into an R structure.
 o BUG FIX: Reading empty struct:s (and cells) tried to read one 
@@ -61,6 +72,7 @@ o BUG FIX: Reading empty struct:s (and cells) tried to read one
   occurances of this problem.
 o Replaces package directory misc/ with two new directories 
   mat-files/ and externals/.
+
 
 Version: 1.0.1 [2005-04-08]
 o BUG FIX: readMat() failed to read some Matlab struct's because
@@ -75,8 +87,10 @@ o BUG FIX: The MatlabServer script did (indeed) not work with
   the above two problems.
 o Minor additions to help pages.
 
+
 Version: 1.0 [2005-02-25]
 o Moved to CRAN.
+
 
 Version: 0.94 [2005-02-24]
 o Updated the MatlabServer.m script to automatically set the Java
@@ -88,10 +102,12 @@ o Updated the MatlabServer.m script to automatically set the Java
 o Added a Wishlist and an Acknowledgements section to "about".
 o Added more information on how to start the Matlab server.
 
+
 Version: 0.93 [2005-02-20]
 o Added autoload("hasVarArgs") to 000.R.
 o Updated the Matlab example to be more explicit about problems
   with Matlab$startServer() and Matlab v7. 
+
 
 Version: 0.92 [2005-02-17]
 o Package now passes R CMD check on R v2.1.0 devel without warnings.
@@ -102,6 +118,7 @@ o Add argument '...' to all methods to make it even more consistent
   in the R base packages.
 o BUG FIX: readMat() would not read non-signed bytes correctly.
 
+
 Version: 0.91 [2005-02-11]
 o Package passes R CMD check on R v2.1.0 devel too.
 o Moved the Java class from R.io to this package, since it is
@@ -109,6 +126,7 @@ o Moved the Java class from R.io to this package, since it is
   Java bytes, ints and (UTF) strings when communicating with Matlab.
 o Updated description of package. Preparing for moving to CRAN.
 o Added Rdoc comments to internal Verbose classes.
+
 
 Version: 0.8 [2004-02-24]
 o Added a setVerbose() method to the Matlab class, which allows the
@@ -127,10 +145,12 @@ o BUG FIX: The header of MAT v4 files was not parsed correctly,
 o BUG FIX: Used "sparce" instead of "sparse" in MOPT[4] tag (MAT v4),
   which most likely would generate an error for such structure.
 
+
 Version: 0.7 [2003-12-02]
 o BUG FIX: Introduced a bug that made files written with big endian
   not to work. The reason was that "<-" was used instead of "<<-"
   in one new method. I do not like "<<-", but that is how it works.
+
 
 Version: 0.6 [2003-11-25]
 o Created an readMat() that can read both MAT v4 and MAT v5 files.
@@ -143,9 +163,11 @@ o Note that I have now choosen to rename readMAT() and writeMAT()
   the RCC, cf. readHtml() instead of readHTML(). If you really need
   readMAT() and writeMAT() you can easily write your own wrappers.
 
+
 Version: 0.5 [2003-04-04]
 o I forgot to remove some debug code that outputs information about
   the Description comment everytime a MAT file is read. Removed.
+
 
 Version: 0.4 [2003-01-16]
 o Now require(R.io) is loaded with the package and not when the first
@@ -155,14 +177,17 @@ o BUG FIX: The Matlab client/server implementation was broken due to
   bugs introduced in the Java class of the R.io package. Correcting 
   these bugs made the Matlab part work again.
 
+
 Version: 0.3 [2002-11-11]
 o BUG FIX: readMAT() would not work because getBits() previously in
-  package R.oo was removed. getBits() is no added as a local 
+  package R.oo was removed. getBits() is now added as a local 
   function inside readMAT().
 o Made all methods \keyword{internal}.
 
+
 Version: 0.2 [2002-10-23]
 o Upgraded to make use of Rx.oo.
+
 
 Version: 0.1 [2002-09-03]
 o Initial methods are readMAT() and writeMAT() for reading and

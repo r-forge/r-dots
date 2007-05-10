@@ -1004,7 +1004,12 @@ setMethodS3("readMat", "default", function(con, maxLength=NULL, fixNames=TRUE, v
   
         tag <- readTag(this);
         if (tag$type %in% c("miCOMPRESSED", "miUTF8", "miUTF16", "miUTF32")) {
-          throw("Tag type not supported: ", tag$type);
+          if (identical(tag$type, "miCOMPRESSED")) {
+            hint <- " [Make sure to save your data in a non-compressed format. If you are running Matlab v7 or higher, use option '-V6' when calling save().]";
+          } else {
+            hint <- "";
+          }
+          throw("Tag type not supported: ", tag$type, hint);
         }
 
         knownTypes <- c("mxCELL_CLASS"=NA, "mxSTRUCT_CLASS"=NA, "mxOBJECT_CLASS"=NA, "mxCHAR_CLASS"=8, "mxSPARSE_CLASS"=NA, "mxDOUBLE_CLASS"=NA, "mxSINGLE_CLASS"=NA, "mxINT8_CLASS"=8, "mxUINT8_CLASS"=8, "mxINT16_CLASS"=16, "mxUINT16_CLASS"=16, "mxINT32_CLASS"=32, "mxUINT32_CLASS"=32);
@@ -1065,7 +1070,12 @@ setMethodS3("readMat", "default", function(con, maxLength=NULL, fixNames=TRUE, v
         
         tag <- readTag(this);
         if (tag$type %in% c("miCOMPRESSED", "miUTF8", "miUTF16", "miUTF32")) {
-          throw("Tag type not supported: ", tag$type);
+          if (identical(tag$type, "miCOMPRESSED")) {
+            hint <- " [Make sure to save your data in a non-compressed format. If you are running Matlab v7 or higher, use option '-V6' when calling save().]";
+          } else {
+            hint <- "";
+          }
+          throw("Tag type not supported: ", tag$type, hint);
         }
       
         sizeOf <- tag$sizeOf %/% 8;
@@ -1093,7 +1103,12 @@ setMethodS3("readMat", "default", function(con, maxLength=NULL, fixNames=TRUE, v
         
         tag <- readTag(this);
         if (tag$type %in% c("miCOMPRESSED", "miUTF8", "miUTF16", "miUTF32")) {
-          throw("Tag type not supported: ", tag$type);
+          if (identical(tag$type, "miCOMPRESSED")) {
+            hint <- " [Make sure to save your data in a non-compressed format. If you are running Matlab v7 or higher, use option '-V6' when calling save().]";
+          } else {
+            hint <- "";
+          }
+          throw("Tag type not supported: ", tag$type, hint);
         }
       
         sizeOf <- tag$sizeOf %/% 8;
@@ -1120,7 +1135,12 @@ setMethodS3("readMat", "default", function(con, maxLength=NULL, fixNames=TRUE, v
         
         tag <- readTag(this);
         if (tag$type %in% c("miCOMPRESSED", "miUTF8", "miUTF16", "miUTF32")) {
-          throw("Tag type not supported: ", tag$type);
+          if (identical(tag$type, "miCOMPRESSED")) {
+            hint <- " [Make sure to save your data in a non-compressed format. If you are running Matlab v7 or higher, use option '-V6' when calling save().]";
+          } else {
+            hint <- "";
+          }
+          throw("Tag type not supported: ", tag$type, hint);
         }
       
         sizeOf <- tag$sizeOf %/% 8;
@@ -1147,7 +1167,12 @@ setMethodS3("readMat", "default", function(con, maxLength=NULL, fixNames=TRUE, v
         
         tag <- readTag(this);
         if (tag$type %in% c("miCOMPRESSED", "miUTF8", "miUTF16", "miUTF32")) {
-          throw("Tag type not supported: ", tag$type);
+          if (identical(tag$type, "miCOMPRESSED")) {
+            hint <- " [Make sure to save your data in a non-compressed format. If you are running Matlab v7 or higher, use option '-V6' when calling save().]";
+          } else {
+            hint <- "";
+          }
+          throw("Tag type not supported: ", tag$type, hint);
         }
       
         names <- c();
@@ -1208,7 +1233,12 @@ setMethodS3("readMat", "default", function(con, maxLength=NULL, fixNames=TRUE, v
         
         tag <- readTag(this);
         if (tag$type %in% c("miCOMPRESSED", "miUTF8", "miUTF16", "miUTF32")) {
-          throw("Tag type not supported: ", tag$type);
+          if (identical(tag$type, "miCOMPRESSED")) {
+            hint <- " [Make sure to save your data in a non-compressed format. If you are running Matlab v7 or higher, use option '-V6' when calling save().]";
+          } else {
+            hint <- "";
+          }
+          throw("Tag type not supported: ", tag$type, hint);
         }
 
         sizeOf <- tag$sizeOf %/% 8;
@@ -1250,7 +1280,12 @@ setMethodS3("readMat", "default", function(con, maxLength=NULL, fixNames=TRUE, v
           for (kk in seq(length=nbrOfCells)) {
             tag <- readTag(this);
             if (tag$type %in% c("miCOMPRESSED", "miUTF8", "miUTF16", "miUTF32")) {
-              throw("Tag type not supported: ", tag$type);
+              if (identical(tag$type, "miCOMPRESSED")) {
+                hint <- " [Make sure to save your data in a non-compressed format. If you are running Matlab v7 or higher, use option '-V6' when calling save().]";
+              } else {
+                hint <- "";
+              }
+              throw("Tag type not supported: ", tag$type, hint);
             }
             cell <- readMiMATRIX(this);
             matrix <- c(matrix, cell);
@@ -1498,7 +1533,12 @@ setMethodS3("readMat", "default", function(con, maxLength=NULL, fixNames=TRUE, v
         return(NULL);
 
       if (tag$type %in% c("miCOMPRESSED", "miUTF8", "miUTF16", "miUTF32")) {
-        throw("Tag type not supported: ", tag$type);
+        if (identical(tag$type, "miCOMPRESSED")) {
+          hint <- " [Make sure to save your data in a non-compressed format. If you are running Matlab v7 or higher, use option '-V6' when calling save().]";
+        } else {
+          hint <- "";
+        }
+        throw("Tag type not supported: ", tag$type, hint);
       }
     
       if (tag$nbrOfBytes == 0)
@@ -1628,6 +1668,10 @@ setMethodS3("readMat", "default", function(con, maxLength=NULL, fixNames=TRUE, v
 
 ######################################################################
 # HISTORY:
+# 2007-04-19
+# o Added a "hint" to error message 'Tag type not supported: 
+#   miCOMPRESSED' to clarify that readMat() does not support 
+#   compressed MAT files.
 # 2006-09-01
 # o Trying to add support for gzip:ed data sections, but it does not
 #   work out of the box.
