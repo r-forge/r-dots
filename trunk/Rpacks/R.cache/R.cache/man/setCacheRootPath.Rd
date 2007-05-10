@@ -16,7 +16,7 @@
  Sets the root path to the file cache directory.
 }
 
-\usage{\method{setCacheRootPath}{default}(path=file.path(getwd(), ".Rcache"), ...)}
+\usage{\method{setCacheRootPath}{default}(path="~/.Rcache", ...)}
 
 \arguments{
   \item{path}{The path.}
