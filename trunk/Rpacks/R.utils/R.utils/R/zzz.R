@@ -1,6 +1,6 @@
 # Allows conflicts. For more information, see library() and
 # conflicts() in [R] base.
-.conflicts.OK <- TRUE
+.conflicts.OK <- TRUE;
 
 
 .First.lib <- function(libname, pkgname) {
@@ -16,6 +16,11 @@
     env <- as.environment("package:R.utils");
     assign("Sys.setenv", Sys.putenv, envir=env);
   }
+
+  # Patch for default parse() depending on R version
+  env <- as.environment("package:R.utils");
+  setMethodS3("parse", "default", appendVarArgs(base::parse), 
+                                            conflict="quiet", envir=env);
 
   # Make .Last() call finalizeSession() when R finishes.
   tryCatch({
@@ -41,6 +46,10 @@
 
 ############################################################################
 # HISTORY: 
+# 2006-05-09
+# o Added dynamic assignment of patch.default() since the .Internal() call 
+#   in base::parse() use different arguments in R v2.4.1 and R v2.5.0.  
+#   one depending on R version.
 # 2005-06-23
 # o Added default Verbose object 'verbose'.
 ############################################################################
