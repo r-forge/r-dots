@@ -1,0 +1,18 @@
+
+Package: R.native
+=================
+
+Version: 0.1.2 [2006-11-07]
+o Added documentation to all methods and classes.
+o Package now passes R CMD check.
+
+Version: 0.1.1 [2005-12-07]
+o BUG FIX: When calculating the median of a row with an even number 
+  non-NA values, the length of the second sort was one element too
+  short, which made rowMedians to freeze R.
+
+Version: 0.1.0 [2005-11-25]
+o Added rowMedians() and rowQuantiles().
+o Created this package. This package will contain methods calling
+  native code.  The reason for this is performance.  The drawback
+  is that it will not install out of the box on any machine.

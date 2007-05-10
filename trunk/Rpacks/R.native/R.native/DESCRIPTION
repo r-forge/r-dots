@@ -1,0 +1,12 @@
+Package: R.native
+Version: 0.1.2
+Date: 2006-11-07
+Title: Utility methods for compiling and loading native code on the fly
+Author: Henrik Bengtsson <henrikb@braju.com>
+Maintainer: Henrik Bengtsson <henrikb@braju.com>
+Depends: R (>= 2.0.0), R.oo, R.utils
+Description: This packages provides a utility class NativeCode that provides static methods to compile native code into a dynamic library, and methods to load, reload and unload such.
+License: LGPL version 2.1 or newer (the releases)
+URL: http://www.braju.com/R/
+LazyLoad: TRUE
+Packaged: Tue Nov  7 15:23:06 2006; bengtsson
