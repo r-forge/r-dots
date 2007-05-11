@@ -2,6 +2,11 @@
 Package: R.utils
 ================
 
+Version: 0.9.4 [2007-05-10]
+o BUG FIX: readTable() tried to access base::read.table() but that was
+  moved to 'utils' as of R v2.5.0.
+
+
 Version: 0.9.3 [2007-05-09]
 o BUG FIX: Using the R v2.4.x build of R.utils in R v2.5.0 gives
   "Error in parse.default(text = src) : 4 arguments passed to 
