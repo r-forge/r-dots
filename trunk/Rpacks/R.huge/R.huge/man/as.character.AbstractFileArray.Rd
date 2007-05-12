@@ -1,0 +1,43 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not modify this file since it was automatically generated from:
+% 
+%  AbstractFileArray.R
+% 
+% by the Rdoc compiler part of the R.oo package.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\name{as.character.AbstractFileArray}
+\alias{as.character.AbstractFileArray}
+\alias{AbstractFileArray.as.character}
+\alias{as.character.AbstractFileArray}
+\alias{as.character,AbstractFileArray-method}
+
+
+\title{Returns a short string describing the file matrix}
+
+\description{
+ Returns a short string describing the file matrix.
+}
+
+\usage{\method{as.character}{AbstractFileArray}(x, ...)}
+
+\arguments{
+  \item{...}{Not used.}
+}
+
+\value{
+ Returns a \code{\link[base]{character}} string.
+}
+
+\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+
+\seealso{
+  For more information see \code{\link{AbstractFileArray}}.
+}
+
+
+
+\keyword{internal}
+\keyword{methods}
+\keyword{IO}
+\keyword{programming}

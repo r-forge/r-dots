@@ -1,0 +1,27 @@
+Package: R.huge
+===============
+
+Version: 0.1.3 [2006-05-09]
+o Package passed R CMD check on R v2.5.0.
+o Added more Rdoc comments.
+
+
+Version: 0.1.2 [2006-03-14]
+o Added getComments() and setComments() to AbstractFileArray.
+o Added a default buffer of free bytes after the header comments.  
+  This will make it easier to update the comments.  Had to change
+  the file format.
+
+
+Version: 0.1.1 [2006-01-28]
+o Added FileVector and abstract superclass AbstractFileArray.
+  The FileVector class is now used by the APS methods in
+  the affxparser.extras package.
+
+
+Version: 0.1.0 [2006-01-22]
+o Created.  The main purpose is to provide quick and easy access
+  to large number of microarray data sets.  All code is currently
+  written in plain R, but will most likely be re-implemented bit
+  by bit in native code to speed up the access further.  When this
+  will happen I do not know.
