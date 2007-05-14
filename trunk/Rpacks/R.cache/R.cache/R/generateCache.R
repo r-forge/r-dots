@@ -14,7 +14,7 @@
 #     generated and appended to the filename.}
 #   \item{suffix}{A @character string to be appended to the end of the
 #     filename.}
-#   \item{...}{Not used.}
+#   \item{...}{Arguments passed to @see "getCachePath".}
 # }
 #
 # \value{

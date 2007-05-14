@@ -20,20 +20,15 @@
   \emph{Warning}:
   The Application Programming Interface (API) of the classes and methods
   in this package may change.  Classes and methods are considered either
-  to be stable, or to be in beta or alpha (pre-beta) stage. See list
-  below for details.
-
-  The main reason for publishing this package on CRAN although it lacks
-  a stable API is that its methods and classes are used internally by
-  other packages on CRAN that the author has published.
+  to be stable, or to be in beta or alpha (pre-beta) stage.
 
   For package history, see \code{showHistory(R.cache)}.
 }
 
 \section{Requirements}{
   This package requires the \pkg{R.oo} [1] and \pkg{R.utils} packages.
-  For hash code functions, the CRAN package \pkg{digest} is also
-  required.
+  For automatic generation of cache filenames, which is the most common
+  usage of this package, the CRAN package \pkg{digest} is also required.
 }
 
 \section{Installation and updates}{
@@ -42,8 +37,13 @@
 
 \section{To get started}{
   \itemize{
-   \item{\link{loadCache},\link{saveCache}}{[alpha] Methods for loading and
-       saving objects to cache.}
+   \item{\link{loadCache}, \link{saveCache}}{
+     Methods for loading and saving objects from and to the cache.
+   }
+   \item{\link{getCacheRootPath}, \link{setCacheRootPath}}{
+     Methods for getting and setting the directory where cache
+     files are stored.
+   }
   }
 }
 

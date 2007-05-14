@@ -26,7 +26,7 @@
 # @author
 #
 # \seealso{
-#   @see "getCachePath".
+#   @see "setCachePath".
 # }
 #
 # @keyword "programming"

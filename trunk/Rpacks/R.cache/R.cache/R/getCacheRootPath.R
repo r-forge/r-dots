@@ -10,7 +10,8 @@
 # @synopsis
 #
 # \arguments{
-#   \item{defaultPath}{The default path.}
+#   \item{defaultPath}{The default path, if no user-specified directory
+#     has been given.}
 #   \item{...}{Not used.}
 # }
 #
@@ -21,12 +22,12 @@
 # @author
 #
 # \seealso{
-#  @seemethod "setCacheRootPath".
+#  Too set the directory where cache files are stored, 
+#  see @see "setCacheRootPath".
 # }
 #
 # @keyword "programming"
 # @keyword "IO"
-# @keyword "internal"
 #*/######################################################################### 
 setMethodS3("getCacheRootPath", "default", function(defaultPath="~/.Rcache", ...) {
   # Check for option settings

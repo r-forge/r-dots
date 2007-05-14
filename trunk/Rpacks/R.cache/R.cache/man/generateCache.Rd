@@ -23,7 +23,7 @@
     generated and appended to the filename.}
   \item{suffix}{A \code{\link[base]{character}} string to be appended to the end of the
     filename.}
-  \item{...}{Not used.}
+  \item{...}{Arguments passed to \code{\link{getCachePath}}().}
 }
 
 \value{

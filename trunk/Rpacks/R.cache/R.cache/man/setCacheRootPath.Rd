@@ -30,7 +30,7 @@
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
- \code{\link[R.cache:getCacheRootPath.]{*getCacheRootPath}()}.
+ \code{\link{getCacheRootPath}}().
 }
 
 
