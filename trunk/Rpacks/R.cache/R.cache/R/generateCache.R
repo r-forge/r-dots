@@ -47,7 +47,7 @@ setMethodS3("generateCache", "default", function(key=NULL, suffix=".Rcache", ...
   # Generate cache name from hash code of key object
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!is.null(key)) {
-    hashCode <- digest(key);
+    hashCode <- digest::digest(key);
     cacheName <- hashCode;
   }
 
