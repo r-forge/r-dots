@@ -835,6 +835,35 @@ setMethodS3("getCloneNumber", "AbstractFileArray", function(this, ...) {
 
 
 
+###########################################################################/**
+# @RdocMethod getSizeOfComments
+#
+# @title "Gets the number of bytes the comments occupies"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{comments}{The comments to be measured.}
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns an @integer.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#
+# @keyword IO
+# @keyword programming
+#*/###########################################################################
 setMethodS3("getSizeOfComments", "AbstractFileArray", function(this, comments=this$header$comments, ...) {
   count <- 0;
 
@@ -892,7 +921,7 @@ setMethodS3("getComments", "AbstractFileArray", function(this, ...) {
 
 
 ###########################################################################/**
-# @RdocMethod getComments
+# @RdocMethod setComments
 #
 # @title "Sets the comments for this file array"
 #
@@ -1884,6 +1913,39 @@ setMethodS3("readValues", "AbstractFileArray", function(this, indices=NULL, mode
 
 
 
+###########################################################################/**
+# @RdocMethod writeAllValues
+#
+# @title "Writes all values to a file array"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{values}{A @numeric @vector of values to be assigned.}
+#   \item{mode}{The storage mode to be used.}
+#   \item{size}{A @integer specifying the number of bytes per cell.}
+#   \item{offset}{A @integer specifying the file offset of the data section.}
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns nothing.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seemethod "writeValues".
+#   @seeclass
+# }
+#
+# @keyword IO
+# @keyword programming
+#*/###########################################################################
 setMethodS3("writeAllValues", "AbstractFileArray", function(this, values, mode=getStorageMode(this), size=getBytesPerCell(this), offset=getDataOffset(this), ...) {
   con <- this$con;
   # Make sure values are of the correct data type.
@@ -1895,6 +1957,43 @@ setMethodS3("writeAllValues", "AbstractFileArray", function(this, values, mode=g
 }, protected=TRUE)
 
 
+
+###########################################################################/**
+# @RdocMethod writeValues
+#
+# @title "Writes values to a file array"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{indices}{An @integer @vector of indices to be updated. 
+#     If @NULL, all cells are considered.}
+#   \item{values}{A @numeric @vector of values to be assigned.}
+#   \item{mode}{The storage mode to be used.}
+#   \item{size}{A @integer specifying the number of bytes per cell.}
+#   \item{offset}{A @integer specifying the file offset of the data section.}
+#   \item{order}{If @TRUE, the data is reordered before being written.}
+#   \item{...}{Additional arguments passed to @seemethod "writeAllValues".}
+# }
+#
+# \value{
+#   Returns nothing.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seemethod "writeAllValues".
+#   @seeclass
+# }
+#
+# @keyword IO
+# @keyword programming
+#*/###########################################################################
 setMethodS3("writeValues", "AbstractFileArray", function(this, indices=NULL, values, mode=getStorageMode(this), size=getBytesPerCell(this), offset=getDataOffset(this), order=FALSE, ...) {
   # The number of elements to write
   if (is.null(indices)) {
@@ -1939,6 +2038,8 @@ setMethodS3("writeValues", "AbstractFileArray", function(this, indices=NULL, val
 
 ############################################################################
 # HISTORY:
+# 2006-05-21
+# o Added some more Rdoc comments.
 # 2006-05-09
 # o Added some more Rdoc comments.
 # o Made a few methods protected. 

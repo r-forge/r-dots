@@ -67,7 +67,7 @@ extends \link[R.oo]{Object}\cr
  \tab \code{\link[R.huge:getBasename.AbstractFileArray]{getBasename}} \tab Gets the basename (filename) of the data file.\cr
  \tab \code{\link[R.huge:getBytesPerCell.AbstractFileArray]{getBytesPerCell}} \tab Gets the number of bytes per element in a file array.\cr
  \tab \code{\link[R.huge:getCloneNumber.AbstractFileArray]{getCloneNumber}} \tab Gets the clone number of the file array.\cr
- \tab \code{\link[R.huge:getComments.AbstractFileArray]{getComments}} \tab Sets the comments for this file array.\cr
+ \tab \code{\link[R.huge:getComments.AbstractFileArray]{getComments}} \tab Gets the comments for this file array.\cr
  \tab \code{\link[R.huge:getDataOffset.AbstractFileArray]{getDataOffset}} \tab Gets file position of the data section in a file array.\cr
  \tab \code{\link[R.huge:getDimensionOrder.AbstractFileArray]{getDimensionOrder}} \tab Gets the order of dimension.\cr
  \tab \code{\link[R.huge:getExtension.AbstractFileArray]{getExtension}} \tab Gets the filename extension of the file array.\cr
@@ -75,7 +75,7 @@ extends \link[R.oo]{Object}\cr
  \tab \code{\link[R.huge:getName.AbstractFileArray]{getName}} \tab Gets the name of the file array.\cr
  \tab \code{\link[R.huge:getPath.AbstractFileArray]{getPath}} \tab Gets the path (directory) where the data file lives.\cr
  \tab \code{\link[R.huge:getPathname.AbstractFileArray]{getPathname}} \tab Gets the full pathname to the data file.\cr
- \tab \code{getSizeOfComments} \tab  -\cr
+ \tab \code{\link[R.huge:getSizeOfComments.AbstractFileArray]{getSizeOfComments}} \tab Gets the number of bytes the comments occupies.\cr
  \tab \code{\link[R.huge:getSizeOfData.AbstractFileArray]{getSizeOfData}} \tab Gets the size of the data section in bytes.\cr
  \tab \code{\link[R.huge:getStorageMode.AbstractFileArray]{getStorageMode}} \tab Gets the storage mode of the file array.\cr
  \tab \code{\link[R.huge:isOpen.AbstractFileArray]{isOpen}} \tab Checks whether the data file of the file array is open or not.\cr
@@ -85,12 +85,12 @@ extends \link[R.oo]{Object}\cr
  \tab \code{\link[R.huge:readContiguousValues.AbstractFileArray]{readContiguousValues}} \tab Reads sets of contiguous values in the file array.\cr
  \tab \code{\link[R.huge:readHeader.AbstractFileArray]{readHeader}} \tab Read the header of a file array data file.\cr
  \tab \code{\link[R.huge:readValues.AbstractFileArray]{readValues}} \tab Reads individual values in the file array.\cr
- \tab \code{setComments} \tab  -\cr
- \tab \code{writeAllValues} \tab  -\cr
+ \tab \code{\link[R.huge:setComments.AbstractFileArray]{setComments}} \tab Sets the comments for this file array.\cr
+ \tab \code{\link[R.huge:writeAllValues.AbstractFileArray]{writeAllValues}} \tab Writes all values to a file array.\cr
  \tab \code{\link[R.huge:writeEmptyData.AbstractFileArray]{writeEmptyData}} \tab Writes an empty data section to the data file of a file array.\cr
  \tab \code{\link[R.huge:writeHeader.AbstractFileArray]{writeHeader}} \tab Writes the header of a file array to file.\cr
  \tab \code{writeHeaderComments} \tab  -\cr
- \tab \code{writeValues} \tab  -\cr
+ \tab \code{\link[R.huge:writeValues.AbstractFileArray]{writeValues}} \tab Writes values to a file array.\cr
 }
 
 

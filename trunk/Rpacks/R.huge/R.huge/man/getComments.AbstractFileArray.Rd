@@ -13,27 +13,26 @@
 \alias{getComments,AbstractFileArray-method}
 
 
-\title{Sets the comments for this file array}
+\title{Gets the comments for this file array}
 
 \description{
- Sets the comments for this file array.
+ Gets the comments for this file array.
 }
 
 \usage{\method{getComments}{AbstractFileArray}(this, ...)}
 
 \arguments{
-  \item{comments}{A \code{\link[base]{character}} \code{\link[base]{vector}} of new comments.}
   \item{...}{Not used.}
 }
 
 \value{
-  Returns (invisibly) the old comments.
+  Returns a \code{\link[base]{character}} \code{\link[base]{vector}}.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  \code{\link[R.huge:getComments.AbstractFileArray]{*getComments}()}.
+  \code{\link[R.huge:setComments.AbstractFileArray]{*setComments}()}.
   For more information see \code{\link{AbstractFileArray}}.
 }
 

@@ -26,22 +26,18 @@
 \alias{getFileSize}
 \alias{getPathname}
 \alias{getSizeOfComments}
-\alias{getSizeOfComments.AbstractFileArray}
 \alias{getSizeOfData}
 \alias{getStorageMode}
 \alias{isOpen}
 \alias{open}
 \alias{readHeader}
 \alias{setComments}
-\alias{setComments.AbstractFileArray}
 \alias{writeAllValues}
-\alias{writeAllValues.AbstractFileArray}
 \alias{writeEmptyData}
 \alias{writeHeader}
 \alias{writeHeaderComments}
 \alias{writeHeaderComments.AbstractFileArray}
 \alias{writeValues}
-\alias{writeValues.AbstractFileArray}
 
 % FileMatrix
 \alias{as.matrix}
