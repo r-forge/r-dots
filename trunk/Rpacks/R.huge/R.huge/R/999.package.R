@@ -26,7 +26,7 @@
 # } 
 #
 # \section{How to cite this package}{
-#   Currently no information.
+#   Please cite [1] below.
 # }
 #
 # @author
