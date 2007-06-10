@@ -80,6 +80,11 @@
 # @keyword IO
 #*/###########################################################################
 setMethodS3("readMat", "default", function(con, maxLength=NULL, fixNames=TRUE, verbose=FALSE, ...) {
+  # The object 'this' is actually never used, but we might put 'con' or
+  # similar in the structure some day, so we keep it for now. /HB 2007-06-10
+  this <- list();
+
+
   #===========================================================================
   # General functions to read both MAT v4 and MAT v5 files.              BEGIN
   #===========================================================================
@@ -604,7 +609,7 @@ setMethodS3("readMat", "default", function(con, maxLength=NULL, fixNames=TRUE, v
       names(data) <- name;
 
       data;
-    }
+    } # readMat4Data()
   
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # "Main program"
