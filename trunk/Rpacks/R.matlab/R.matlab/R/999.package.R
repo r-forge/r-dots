@@ -142,15 +142,16 @@
 #
 # \section{Acknowledgements}{
 #   Thanks to the following people who contributed with valuable
-#   feedback, suggestions, and code:
+#   feedback, suggestions, code etc.:
 #   \itemize{
 #    \item Patrick Drechsler, Biocenter, University of Wuerzburg. 
 #    \item Andy Jacobson, Atmospheric and Oceanic Sciences Program,
 #          Princeton University. 
 #    \item Chris Sims, Department of Economics, Princeton University.
-#    \item Wang Yu, ECE Department, Iowa State University.
 #    \item Yichun Wei, Department of Biological Sciences, 
 #          University of Southern California.
+#    \item Spencer Graves.
+#    \item Wang Yu, ECE Department, Iowa State University.
 #   }
 # }
 #
