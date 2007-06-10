@@ -1078,6 +1078,7 @@ setMethodS3("capture", "Verbose", function(this, ..., level=this$defaultLevel) {
 
   args <- substitute(list(...))[-1];
 
+  bfr <- NULL;  # To please R CMD check R v2.6.0.
   file <- textConnection("bfr", "w", local=TRUE);
   sink(file);
   on.exit({

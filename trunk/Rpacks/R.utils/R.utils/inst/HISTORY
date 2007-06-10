@@ -2,6 +2,12 @@
 Package: R.utils
 ================
 
+Version: 0.9.5 [2007-06-09]
+o Updated code to pass the more strict R CMD check R v2.6.0.
+o BUG FIX: Used omit.na() instead of na.omit() in static method 
+  parseDebian() of System.
+
+
 Version: 0.9.4 [2007-05-10]
 o BUG FIX: readTable() tried to access base::read.table() but that was
   moved to 'utils' as of R v2.5.0.

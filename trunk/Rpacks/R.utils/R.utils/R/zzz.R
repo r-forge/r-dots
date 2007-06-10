@@ -38,6 +38,7 @@
 
 .Last.lib <- function(libpath) {
   # Revert to original .Last() function
+  .LastOriginal <- NULL; # To please R CMD check R v2.6.0
   if (exists(".LastOriginal", mode="function", envir=.GlobalEnv)) {
     assign(".Last", .LastOriginal, envir=.GlobalEnv);
     rm(".LastOriginal", envir=.GlobalEnv);
@@ -46,6 +47,8 @@
 
 ############################################################################
 # HISTORY: 
+# 2007-06-09
+# o Added "declaration" of '.LastOriginal' in .Last.lib().
 # 2006-05-09
 # o Added dynamic assignment of patch.default() since the .Internal() call 
 #   in base::parse() use different arguments in R v2.4.1 and R v2.5.0.  
