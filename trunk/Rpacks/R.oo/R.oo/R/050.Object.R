@@ -493,6 +493,7 @@ setMethodS3("getInternalAddress", "Object", function(this, ...) {
     as.integer(hexStringToDouble(hex));
   }
 
+  .R.oo.getInternalAddress.pointer <- NULL;  # To please R CMD check R v2.6.0
   con <- textConnection(".R.oo.getInternalAddress.pointer", open="w");
   on.exit({
     close(con);
@@ -851,6 +852,7 @@ setMethodS3("load", "Object", function(static, file, path=NULL, ...) {
   }
  
   # load.default() recognized gzip'ed files too.
+  saveLoadReference <- NULL; # To please R CMD check R v2.6.0
   vars <- load.default(file=file);
 
   if (!"saveLoadReference" %in% vars)
@@ -919,7 +921,7 @@ setMethodS3("objectSize", "Object", function(this, ...) {
   totalSize <- 0;
   for (member in members) {
     size <- eval(substitute(object.size(member), 
-                 list=list(member=as.name(member))), envir=envir);
+                 list(member=as.name(member))), envir=envir);
     totalSize <- totalSize + size;
   }
   totalSize;
@@ -1942,6 +1944,10 @@ setMethodS3("gc", "Object", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2007-06-09
+# o Added "declaration" of '.R.oo.getInternalAddress.pointer'.
+# o Added "declaration" of 'saveLoadReference'.
+# o Removed (incorrect) argument name 'list' from all substitute() calls.
 # 2006-10-03
 # o Updated as.character() to display hexadecimal addresses longer than
 #   2^32 bytes.

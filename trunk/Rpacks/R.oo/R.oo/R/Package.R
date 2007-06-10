@@ -412,10 +412,10 @@ setMethodS3("getDataPath", "Package", function(this, ...) {
 })
 
 
-# Virtual field $data, because a lot of old packages uses it.
-setMethodS3("getData", "Package", function(this, ...) {
-  getDataPath(this);
-}, private=TRUE, deprecated=TRUE)
+## # Virtual field $data, because a lot of old packages uses it.
+## setMethodS3("getData", "Package", function(this, ...) {
+##   getDataPath(this);
+## }, private=TRUE, deprecated=TRUE)
 
 
 
@@ -712,7 +712,7 @@ setMethodS3("isLoaded", "Package", function(this, ...) {
 # }
 #*/#########################################################################
 setMethodS3("load", "Package", function(this, ...) {
-  eval(substitute(library(pkg), list=list(pkg=as.name(getName(this)))));
+  eval(substitute(library(pkg), list(pkg=as.name(getName(this)))));
   isLoaded(this);
 })
 
@@ -1544,7 +1544,6 @@ setMethodS3("update", "Package", function(object, contribUrl=c(getContribUrl(thi
     tmpfile <- tempfile();
     on.exit(unlink(tmpfile), add=TRUE);
     for (url in contribUrl) {
-print(url);
       tryCatch({
         if (force) {
           install.packages(pkgs, contriburl=url);
@@ -1559,9 +1558,9 @@ print(url);
             break;
           }
         } # if (force)
-      }, warning=function(warn) {
-      }, error=function(ex) {
-         print(error);
+      }, warning = function(warn) {
+      }, error = function(ex) {
+        print(ex);
       })
     } # for (url ...)
     
@@ -1577,6 +1576,13 @@ print(url);
 
 ############################################################################
 # HISTORY:
+# 2007-06-09
+# o BUG FIX: Queried non-existing object 'error' instead of 'ex' in
+#   the exception handling of update() of the Package class.
+# o Removed (incorrect) argument name 'list' from all substitute() calls.
+# 2007-06-01
+# o Removed already deprecated getData() because there might be a name 
+#   clash with the 'nlme' package.
 # 2006-07-13
 # o Now update() returns invisibly.
 # o BUG FIX: update(R.oo) would throw an error and package was detached.

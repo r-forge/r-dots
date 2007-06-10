@@ -196,7 +196,7 @@ setMethodS3.default <- function(name, class="default", definition, private=FALSE
       # As above, to avoid "using .GlobalEnv instead of package:<pkg>"
       # warnings, we do the below trick. /HB 2005-02-25
       assign("...R.oo.definition", definition, envir=envir);
-      eval(substitute(fcn <- appendVarArgs(fcn), list=list(fcn=as.name("...R.oo.definition"))), envir=envir);
+      eval(substitute(fcn <- appendVarArgs(fcn), list(fcn=as.name("...R.oo.definition"))), envir=envir);
       definition <- get("...R.oo.definition", envir=envir);
       rm(list="...R.oo.definition", envir=envir);
     }
@@ -259,7 +259,7 @@ setMethodS3.default <- function(name, class="default", definition, private=FALSE
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   if (is.null(fcnDef) || overwrite == TRUE) {
     eval(substitute({fcn <- definition; attr(fcn, "modifiers") <- modifiers},
-  	 list=list(fcn=as.name(methodName), definition=definition,
+  	 list(fcn=as.name(methodName), definition=definition,
   		   modifiers=modifiers)),
   	 envir=envir);
   }
@@ -291,6 +291,8 @@ setGenericS3("setMethodS3");
 
 ############################################################################
 # HISTORY:
+# 2007-06-09
+# o Removed (incorrect) argument name 'list' from all substitute() calls.
 # 2006-02-09
 # o Removed all usage of NULL environments.  get(envir=NULL) is replaced
 #   with get(envir=baseenv()).

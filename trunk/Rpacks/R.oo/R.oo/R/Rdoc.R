@@ -861,7 +861,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       bfr <- getTagValue(bfr);
       method <- attr(bfr, "value");
       objectName <<- paste(method, ".", class, sep="");
-      isDeprecated <<- eval(substitute({"deprecated" %in% attr(object, "modifiers")}, list=list(object=as.name(objectName))));
+      isDeprecated <<- eval(substitute({"deprecated" %in% attr(object, "modifiers")}, list(object=as.name(objectName))));
       name <- createName.Rdoc(NULL, class, method, escape=FALSE);
       alias <- name;
       name <<- name <- escapeName(name);
@@ -893,7 +893,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       bfr <- getTagValue(bfr);
       default <- attr(bfr, "value");
       objectName <<- default;
-      isDeprecated <<- eval(substitute({"deprecated" %in% attr(object, "modifiers")}, list=list(object=as.name(objectName))));
+      isDeprecated <<- eval(substitute({"deprecated" %in% attr(object, "modifiers")}, list(object=as.name(objectName))));
       name <- default;
       name <<- name <- escapeName(name);
       line <- paste("\\name{", name, "}\n", sep="");
@@ -910,7 +910,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       bfr <- getTagValue(bfr);
       generic <- attr(bfr, "value");
       objectName <<- generic;
-      isDeprecated <<- eval(substitute({"deprecated" %in% attr(object, "modifiers")}, list=list(object=as.name(objectName))));
+      isDeprecated <<- eval(substitute({"deprecated" %in% attr(object, "modifiers")}, list(object=as.name(objectName))));
       name <- generic;
       name <<- name <- escapeName(name);
       line <- paste("\\name{", name, "}\n", sep="");
@@ -927,7 +927,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       bfr <- getTagValue(bfr);
       fcn <- attr(bfr, "value");
       objectName <<- fcn;
-      isDeprecated <<- eval(substitute({"deprecated" %in% attr(object, "modifiers")}, list=list(object=as.name(objectName))));
+      isDeprecated <<- eval(substitute({"deprecated" %in% attr(object, "modifiers")}, list(object=as.name(objectName))));
       name <- fcn;
       name <<- name <- escapeName(name);
       line <- paste("\\name{", name, "}\n", sep="");
@@ -943,7 +943,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       bfr <- getTagValue(bfr);
       object <- attr(bfr, "value");
       objectName <<- object;
-      isDeprecated <<- eval(substitute({"deprecated" %in% attr(object, "modifiers")}, list=list(object=as.name(objectName))));
+      isDeprecated <<- eval(substitute({"deprecated" %in% attr(object, "modifiers")}, list(object=as.name(objectName))));
       name <- object;
       name <<- name <- escapeName(name);
       line <- paste("\\name{", name, "}\n", sep="");
@@ -1287,14 +1287,14 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
         pkg <- NULL;
         obj <- pkgObject[1];
         if (exists(obj, mode="function")) {
-          expr <-substitute(inherits(fcn, "Class"), list=list(fcn=as.name(obj)));
+          expr <-substitute(inherits(fcn, "Class"), list(fcn=as.name(obj)));
           if (!eval(expr))
             fcn <- "()";
         }
       } else { 
         pkg <- pkgObject[1];
         obj <- pkgObject[2];
-        if (eval(substitute(require(pkg), list=list(pkg=pkg)))) {
+        if (eval(substitute(require(pkg), list(pkg=pkg)))) {
           pos <- which(paste("package:", "base", sep="") == search());
           if (exists(obj, where=pos, mode="function", inherits=FALSE))
             fcn <- "()";
@@ -1593,7 +1593,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
             # so all variables can be shared between tags.
             # All tag functions must return the resulting buffer!
             eval(substitute(assign("rdoc", tagFunction(rdoc)), 
-               list=list(tagFunction=tagFunction, rdoc=rdoc)));
+               list(tagFunction=tagFunction, rdoc=rdoc)));
           }
         } else {
           pos <- regexpr("[^a-zA-Z0-9]", substring(rdoc, 2));
@@ -1691,7 +1691,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
     # Create a call expression to source(..., local=local)
     expr <- substitute({
       do.call("source", args)
-    }, list=list(args=args));
+    }, list(args=args));
   
     # Call source()
     eval(expr, envir=envir); 
@@ -2412,6 +2412,8 @@ setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) 
 
 #########################################################################
 # HISTORY:
+# 2007-06-09
+# o Removed (incorrect) argument name 'list' from all substitute() calls.
 # 2007-01-06
 # o Now getMethodsInheritedFrom() recognizes visiblity private.
 # 2006-09-12

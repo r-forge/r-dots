@@ -1,6 +1,14 @@
 Package: R.oo
 =============
 
+Version: 1.2.8 [2007-06-09]
+o Removed (incorrect) argument name 'list' from all substitute() calls.
+o Removed already deprecated getData() because there might be a name 
+  clash with the 'nlme' package.
+o BUG FIX: Queried non-existing object 'error' instead of 'ex' in
+  the exception handling of update() of the Package class.
+
+
 Version: 1.2.7 [2007-04-07]
 o Removed support for R v2.0.0 and before.
 o Removed reportBug() since it was never completed.

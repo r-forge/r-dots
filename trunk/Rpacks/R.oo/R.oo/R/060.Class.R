@@ -1161,10 +1161,10 @@ setMethodS3("getDetails", "Class", function(this, private=FALSE, ...) {
       s <- paste(s, indentStr, modifiers[k], " ", fields[k], "\n", sep="");
   }
 
-  formalsToString <- function(methodName, isConstructor=FALSE) {
-    args <- argsToString(Class, method, argOffset);
-    s <- paste(sep="", s, methodName, "(", args, ")\n");
-  } ## formalsToString(...)
+##   formalsToString <- function(methodName, isConstructor=FALSE) {
+##     args <- argsToString(Class, method, argOffset);
+##     s <- paste(sep="", s, methodName, "(", args, ")\n");
+##   } ## formalsToString(...)
 
   methodsPerClass <- getMethods(this, private=private);
   if (length(methodsPerClass) > 0) {
@@ -1435,6 +1435,9 @@ setMethodS3("[[<-", "Class", function(this, name, value) {
 
 ############################################################################
 # HISTORY:
+# 2007-06-09
+# o Removed internal function formalsToString() of getDetails() for class
+#   Class, because it was never used.
 # 2007-01-05
 # o BUG FIX: getMethods(..., private=FALSE) would return private methods,
 #   and private=TRUE would remove them.  It should be the otherway around.

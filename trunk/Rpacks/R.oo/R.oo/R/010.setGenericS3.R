@@ -195,7 +195,7 @@ setGenericS3.default <- function(name, envir=parent.frame(), ellipsesOnly=TRUE, 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     # 4c. "Rename" the function to a default function
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-    assign(nameDefault, substitute(fcn, list=list(fcn=fcnDef)), envir=envir);
+    assign(nameDefault, substitute(fcn, list(fcn=fcnDef)), envir=envir);
     if (!is.element(fcnPkg, dontWarn)) {
       warning(paste("Renamed the preexisting function ", name, " to ", 
         nameDefault, ", which was defined in environment ", fcnPkg, ".", sep=""));
@@ -214,6 +214,8 @@ setGenericS3.default("setGenericS3");  # Creates itself ;)
 
 ############################################################################
 # HISTORY:
+# 2007-06-09
+# o Removed (incorrect) argument name 'list' from all substitute() calls.
 # 2006-02-09
 # o Removed all usage of NULL environments.  get(envir=NULL) is replaced
 #   with get(envir=baseenv()).

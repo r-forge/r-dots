@@ -120,21 +120,21 @@ setMethodS3("ll", "default", function(pattern=".*", ..., private=FALSE, properti
     for (kk in seq(length=length(args))) {
       value <- args[[kk]];
       if (is.null(value)) {
-        e <- substitute(is.null(fcn(..object)), list=list(fcn=as.name(names[kk])));
+        e <- substitute(is.null(fcn(..object)), list(fcn=as.name(names[kk])));
       } else {
         e <- substitute(fcn(..object) %in% value, 
-                        list=list(fcn=as.name(names[kk]), value=value));
+                        list(fcn=as.name(names[kk]), value=value));
       }
       if (is.null(expr)) {
         expr <- e;
       } else {
-        expr <- substitute(expr && e, list=list(expr=expr, e=e));
+        expr <- substitute(expr && e, list(expr=expr, e=e));
       }
     } # for (kk ...)
 
 #    expr <- substitute(filter <- function(name) { 
-#      eval(substitute(expr, list=list(..object=as.name(name))), envir=envir) 
-#    }, list=list(expr=expr, envir=envir));
+#      eval(substitute(expr, list(..object=as.name(name))), envir=envir) 
+#    }, list(expr=expr, envir=envir));
     # Now, create the filter() function
 #    eval(expr);
 
@@ -180,7 +180,7 @@ setMethodS3("ll", "default", function(pattern=".*", ..., private=FALSE, properti
   for (property in properties) {
     e <- substitute({
       ..exp <- substitute(propertyFcn(object), 
-              list=list(propertyFcn=as.name(property), object=..object));
+              list(propertyFcn=as.name(property), object=..object));
       ..value <- eval(..exp, envir=globalenv());
   	  if (is.null(..value)) {
   	    ..value <- "NULL";
@@ -192,9 +192,9 @@ setMethodS3("ll", "default", function(pattern=".*", ..., private=FALSE, properti
   	  if (length(..value) > 0) {
   	    ..value <- ..value[1];
       }
-    }, list=list(property=property));
+    }, list(property=property));
     expr <- substitute({expr; e; ..row <- cbind(..row, ..value);}, 
-                                             list=list(expr=expr,e=e));
+                                             list(expr=expr,e=e));
   }
 
   df <- NULL;
@@ -203,7 +203,7 @@ setMethodS3("ll", "default", function(pattern=".*", ..., private=FALSE, properti
       ..row <- list(name); 
       ..object <- get(name, envir=envir); 
       expr;
-    }, list=list(name=member, member=as.name(member), expr=expr));
+    }, list(name=member, member=as.name(member), expr=expr));
     dfRow <- eval(rowExpr);
     if (is.null(df)) {
       df <- dfRow;
@@ -235,7 +235,7 @@ setMethodS3("ll", "default", function(pattern=".*", ..., private=FALSE, properti
       sortBy <- colnames(df)[pos];
 
       # Figure out the data type of the sort column
-      dummy <- eval(substitute(property(2), list=list(property=as.name(sortBy))));
+      dummy <- eval(substitute(property(2), list(property=as.name(sortBy))));
       mode(by) <- mode(dummy);
     }
 
@@ -249,6 +249,8 @@ setMethodS3("ll", "default", function(pattern=".*", ..., private=FALSE, properti
 
 ############################################################################
 # HISTORY:
+# 2007-06-09
+# o Removed (incorrect) argument name 'list' from all substitute() calls.
 # 2007-03-24
 # o Now ll() returns a data frame with column of the "minimal" data type.
 #   This makes it possible to use subset() on the output as the new example

@@ -56,7 +56,7 @@ setMethodS3("showAndWait", "simpleError", function(this, ...) {
                     whenStr,
   		    "\" -message \"", this$message, 
   		    "\" -type \"ok\" -icon \"error\"", sep="");
-    invisible( as.character(.Tcl(tclCmd)) );
+    invisible( as.character(tcltk::.Tcl(tclCmd)) );
   } else {
     cat(class(this)[1], ":\n", 
         whenStr,
@@ -70,6 +70,8 @@ setMethodS3("showAndWait", "simpleError", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2007-06-09
+# o Replaced '.Tcl()' with 'tcltk::.Tcl()'.
 # 2005-06-08
 # o Added keyword "internal" to all methods, because of change in Rdoc.
 # 2005-02-15

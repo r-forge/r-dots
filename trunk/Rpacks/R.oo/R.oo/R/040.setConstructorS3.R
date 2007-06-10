@@ -121,7 +121,7 @@ setMethodS3("setConstructorS3", "default", function(name, definition,
       attr(fcn, "formals") <- modifiers;   # To be removed.
       attr(fcn, "modifiers") <- modifiers;
     }, 
-    list=list(fcn=as.name(name), name=name, definition=definition, 
+    list(fcn=as.name(name), name=name, definition=definition, 
                                                       modifiers=modifiers)),
     envir=envir
   );
@@ -134,6 +134,8 @@ setMethodS3("setConstructorS3", "default", function(name, definition,
 
 ############################################################################
 # HISTORY:
+# 2007-06-09
+# o Removed (incorrect) argument name 'list' from all substitute() calls.
 # 2006-05-30
 # o Renamed class from "ANY" to "default".
 # 2005-02-15
