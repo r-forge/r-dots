@@ -1,0 +1,13 @@
+###########################################################################
+# IATA airport codes
+# Henrik Bengtsson, 2007-07-05
+# Source: http://en.wikipedia.org/wiki/IATA_airport_code
+###########################################################################
+CPH: Copenhagen, K?penhamn, Copenhagen Kastrup
+FRA: Frankfurt, Frankfurt International Airport
+LHR: London, London Heathrow
+MEL: Melbourne
+MMX: Malmö, Malm?, Malm? Sturup
+OPO: Oporto
+SFO: San Fransisco, San Fransisco International Airport
+SEA: Seattle, Seattle Tacoma

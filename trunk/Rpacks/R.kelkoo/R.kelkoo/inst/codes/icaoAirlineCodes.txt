@@ -1,0 +1,36 @@
+###########################################################################
+# ICAO airline designators
+# Henrik Bengtsson, 2007-07-07
+# Source: http://en.wikipedia.org/wiki/IATA_airline_designator
+###########################################################################
+AAL: American Airlines
+AFR: Air France
+BAW: British Airways
+BER: Air Berlin
+BMR: British Midland, British Midland Regional, British Midland Airways
+ASA: Alaska Airlines
+CPA: Cathay Pacific, Cathay Pacific Airways
+DAT: Brussels Airlines, SN Brussels Airlines
+DLH: Lufthansa
+DAL: Delta, Delta Airlines, Delta Air Lines, Delta Air Lines INC
+IBE: Iberia
+JKK: Spanair
+KLM: KLM, KLM Royal Dutch Airlines, KL
+KLC: KLM Cityhopper
+NWA: Northwest Airlines, NW
+OCA: Aserca, Aserca Airlines
+PVV: Continental, Continental Airlines
+RAE: Régional
+RAM: Royal Air Maroc
+RGL: Regional Airlines, Regional Air Lines
+QAF: Qantas, Qantas Airways
+MAS: Malaysia Airlines
+SAS: SAS, Scandinavian Airlines
+SCH: Swiss, Swiss Airlines, Swiss Int. Air Lines      #not sure???
+SIA: Singapore Airlines
+TAP: Air Portugal TAP, TAP Portugal, Air Portugal
+THY: Turkish Airlines
+UAE: Emirates, Emirates Airlines
+UAL: United Airlines, United, UA
+USA: US Airways
+VIR: Virgin Atlantic, Virgin Atlantic Airways

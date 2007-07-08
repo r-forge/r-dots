@@ -1,0 +1,23 @@
+Package: R.kelkoo
+=================
+
+Version: 0.2.1 [2007-07-07]
+o Package now supports one-way tickets.
+
+
+Version: 0.2.0 [2007-07-05]
+o Total rewrite of package:
+  - Package is now done using the XML package.
+  - New main class KelkooFlightScan for scanning.
+  - New RSP report generator.
+
+
+Version: 0.1.1 [2007-05-11]
+o Made into a package.  
+o The same code as a year ago still works.
+
+
+Version: 0.1.0 [2006-05-16]
+o Used to find cheap flights. Works great!
+o Created.
+
