@@ -1,6 +1,15 @@
 Package: R.kelkoo
 =================
 
+Version: 0.2.2 [2007-07-23xx]
+o Added support for specifying number of adults, children, and babies.
+o Now the heatmaps in the reports are covering values in
+  quantiles [0,0.99].  Higher heatmap values are truncated 
+  to the 99% quantile.  This way the color range will be
+  robust against extreme outliers.
+o BUG FIX: Updated path reports/.rsp/ to <getRootPath()>/.rsp/.
+
+
 Version: 0.2.1 [2007-07-07]
 o Package now supports one-way tickets.
 

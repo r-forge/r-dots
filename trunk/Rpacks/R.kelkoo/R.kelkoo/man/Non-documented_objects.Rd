@@ -108,6 +108,12 @@
 \alias{getKelkooCountry.KelkooScan}
 \alias{setKelkooCountry}
 \alias{setKelkooCountry.KelkooScan}
+\alias{getNbrOfAdults}
+\alias{getNbrOfAdults.KelkooFlightScan}
+\alias{getNbrOfBabies}
+\alias{getNbrOfBabies.KelkooFlightScan}
+\alias{getNbrOfChildren}
+\alias{getNbrOfChildren.KelkooFlightScan}
 
 \description{
   This page contains aliases for all "non-documented" objects that

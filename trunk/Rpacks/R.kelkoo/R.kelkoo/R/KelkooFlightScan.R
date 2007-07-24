@@ -20,6 +20,7 @@
 #   \item{depDates}{A @vector of @see "base::Dates" specifying the departure dates.}
 #   \item{retDates}{A @vector of @see "base::Dates" specifying the return dates.}
 #   \item{nbrOfDays}{A @vector of @integers specifying the length of the trip.  Alternative to argument \code{retDates}.}
+#   \item{nbrOfAdults, nbrOfChildren, nbrOfBabies}{Number of adults, children, and babies travelling.}
 # }
 #
 # \section{Fields and Methods}{
@@ -38,7 +39,7 @@
 #
 # \keyword{methods}
 #*/###########################################################################
-setConstructorS3("KelkooFlightScan", function(..., from=NULL, to=NULL, oneWay=FALSE, depDates=NULL, retDates=NULL, nbrOfDays=NULL) {
+setConstructorS3("KelkooFlightScan", function(..., from=NULL, to=NULL, oneWay=FALSE, depDates=NULL, retDates=NULL, nbrOfDays=NULL, nbrOfAdults=1, nbrOfChildren=0, nbrOfBabies=0) {
   if (!is.null(from))
     from <- Arguments$getCharacters(from);
 
@@ -48,14 +49,18 @@ setConstructorS3("KelkooFlightScan", function(..., from=NULL, to=NULL, oneWay=FA
   if (!is.null(oneWay))
     oneWay <- Arguments$getLogical(oneWay);
 
+
   extend(KelkooScan(...), "KelkooFlightScan",
     .from = from,
     .to = to,
     .isOneWay = oneWay,
     .depDates = depDates,
     .retDates = retDates,
-    .nbrOfDays = nbrOfDays
-  );
+    .nbrOfDays = nbrOfDays,
+    .nbrOfAdults = nbrOfAdults, 
+    .nbrOfChildren = nbrOfChildren,
+    .nbrOfBabies = nbrOfBabies
+  )
 })
 
 
@@ -108,6 +113,18 @@ setMethodS3("getNbrOfDays", "KelkooFlightScan", function(this, nbrOfDays=NULL, .
   if (is.null(nbrOfDays))
     nbrOfDays <- this$.nbrOfDays;
   nbrOfDays;
+})
+
+setMethodS3("getNbrOfAdults", "KelkooFlightScan", function(this, ...) {
+  as.integer(this$.nbrOfAdults);
+})
+
+setMethodS3("getNbrOfChildren", "KelkooFlightScan", function(this, ...) {
+  as.integer(this$.nbrOfChildren);
+})
+
+setMethodS3("getNbrOfBabies", "KelkooFlightScan", function(this, ...) {
+  as.integer(this$.nbrOfBabies);
 })
 
 
@@ -180,7 +197,8 @@ setMethodS3("generateReport", "KelkooFlightScan", function(this, tags=NULL, ...)
 
   rspFilename <- "heatmapKelkoo.rsp";
   defPath <- system.file("rsp", package="R.kelkoo");
-  paths <- c("reports/.rsp/", defPath);
+  usrPath <- filePath(getRootPath(this), ".rsp", expandLinks="any");
+  paths <- c(usrPath, defPath);
   for (path in paths) {
     rspPathname <- filePath(path, rspFilename, expandLinks="any");rspPathname
     if (isFile(rspPathname))
@@ -275,7 +293,7 @@ setMethodS3("translateAirfair", "KelkooFlightScan", function(static, airfair, ve
 
 
 
-setMethodS3("getPostUrl", "KelkooFlightScan", function(this, from, to, depDate, retDate, depTime=NULL, oneWay=FALSE, ..., verbose=FALSE) {
+setMethodS3("getPostUrl", "KelkooFlightScan", function(this, from, to, depDate, retDate, depTime=NULL, oneWay=FALSE, nbrOfAdults=1, nbrOfChildren=0, nbrOfBabies=0, ..., verbose=FALSE) {
   # Argument 'depDate':
   depDate <- as.Date(depDate);
 
@@ -303,6 +321,7 @@ setMethodS3("getPostUrl", "KelkooFlightScan", function(this, from, to, depDate, 
   # The airports
   args[["from"]] <- sprintf("departureSEL=%s&departure=%s&departureTEXT=%s", from, from, from);
   args[["to"]] <- sprintf("arrivalSEL=%s&arrival=%s&arrivalTEXT=%s", to, to, to);
+  args[["toMulti"]] <- "arrivalSelected=0";
 
   # The ticket
   if (is.null(retDate)) {
@@ -313,7 +332,7 @@ setMethodS3("getPostUrl", "KelkooFlightScan", function(this, from, to, depDate, 
   args[["ticket"]] <- "ticketclass=economy&first=no&level=2&country=";
 
   # The passengers
-  args[["passengers"]] <- sprintf("nbadults=%d&nbchilds=%d&nbbabies=%d", 1, 0, 0);
+  args[["passengers"]] <- sprintf("nbadults=%d&nbchilds=%d&nbbabies=%d", as.integer(nbrOfAdults), as.integer(nbrOfChildren), as.integer(nbrOfBabies));
 
   # The outbound date
   args[["departureDate"]] <- format(depDate, "wdday=%a&dday=%d&dmonth=%m&dyear=%Y");
@@ -338,7 +357,7 @@ setMethodS3("getPostUrl", "KelkooFlightScan", function(this, from, to, depDate, 
 })
 
 
-setMethodS3("queryOneDay", "KelkooFlightScan", function(this, from, to, depDate, retDate=NULL, depTime=NULL, ..., sort=TRUE, force=FALSE, verbose=FALSE) {
+setMethodS3("queryOneDay", "KelkooFlightScan", function(this, from, to, depDate, retDate=NULL, depTime=NULL, nbrOfAdults=1, nbrOfChildren=0, nbrOfBabies=0, ..., sort=TRUE, force=FALSE, verbose=FALSE) {
   # Argument 'depDate':
   depDate <- as.Date(depDate);
 
@@ -350,11 +369,10 @@ setMethodS3("queryOneDay", "KelkooFlightScan", function(this, from, to, depDate,
   if (!is.null(depTime))
     depTime <- match.arg(depTime, c("noon"));
 
-
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
-  url <- getPostUrl(this, from=from, to=to, depDate=depDate, depTime=depTime, retDate=retDate);
+  url <- getPostUrl(this, from=from, to=to, depDate=depDate, depTime=depTime, retDate=retDate, nbrOfAdults=nbrOfAdults, nbrOfChildren=nbrOfChildren, nbrOfBabies=nbrOfBabies);
 
   doc <- parseHtmlTree(this, url, force=force, verbose=verbose);
   on.exit(free(doc));
@@ -694,7 +712,7 @@ setMethodS3("queryOneDay", "KelkooFlightScan", function(this, from, to, depDate,
 # @keyword IO
 # @keyword programming
 #*/###########################################################################
-setMethodS3("query", "KelkooFlightScan", function(this, from=getFrom(this), to=getTo(this), oneWay=isOneWay(this), depDates=getDepDates(this), retDates=getRetDates(this), nbrOfDays=getNbrOfDays(this), ..., verbose=getVerbose(this)) {
+setMethodS3("query", "KelkooFlightScan", function(this, from=getFrom(this), to=getTo(this), oneWay=isOneWay(this), depDates=getDepDates(this), retDates=getRetDates(this), nbrOfDays=getNbrOfDays(this), nbrOfAdults=getNbrOfAdults(this), nbrOfChildren=getNbrOfChildren(this), nbrOfBabies=getNbrOfBabies(this), ..., verbose=getVerbose(this)) {
   country <- getKelkooCountry(this);
   if (!country %in% c("se", "dk")) {
     throw("No scan code implemented for Kelkoo server: ", getKelkooDomain(this));
@@ -826,6 +844,10 @@ setMethodS3("query", "KelkooFlightScan", function(this, from=getFrom(this), to=g
 
 #############################################################################
 # HISTORY:
+# 2007-07-23
+# o Added support for arguments 'nbrOfAdults', 'nbrOfChildren', and 
+#   'nbrOfBabies' to query().
+# o Forgot to update path reports/.rsp/ to <getRootPath()>/.rsp/.
 # 2007-07-07
 # o Moved several general methods up to new class KelkooScan.
 # o Now outputting everything to the same directory.

@@ -5,10 +5,12 @@
 ###########################################################################
 AAL: American Airlines
 AFR: Air France
+AUA: Austrian Airlines, Austrian
 BAW: British Airways
-BER: Air Berlin
+BER: Air Berlin, AB
 BMR: British Midland, British Midland Regional, British Midland Airways
 ASA: Alaska Airlines
+CFG: Condor Airlines, Condor
 CPA: Cathay Pacific, Cathay Pacific Airways
 DAT: Brussels Airlines, SN Brussels Airlines
 DLH: Lufthansa
@@ -28,6 +30,7 @@ MAS: Malaysia Airlines
 SAS: SAS, Scandinavian Airlines
 SCH: Swiss, Swiss Airlines, Swiss Int. Air Lines      #not sure???
 SIA: Singapore Airlines
+SNB: Sterling
 TAP: Air Portugal TAP, TAP Portugal, Air Portugal
 THY: Turkish Airlines
 UAE: Emirates, Emirates Airlines

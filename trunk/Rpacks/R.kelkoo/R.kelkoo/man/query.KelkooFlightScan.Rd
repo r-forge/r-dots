@@ -19,7 +19,7 @@
  Method to query Kelkoo for flights.
 }
 
-\usage{\method{query}{KelkooFlightScan}(this, from=getFrom(this), to=getTo(this), oneWay=isOneWay(this), depDates=getDepDates(this), retDates=getRetDates(this), nbrOfDays=getNbrOfDays(this), ..., verbose=getVerbose(this))}
+\usage{\method{query}{KelkooFlightScan}(this, from=getFrom(this), to=getTo(this), oneWay=isOneWay(this), depDates=getDepDates(this), retDates=getRetDates(this), nbrOfDays=getNbrOfDays(this), nbrOfAdults=getNbrOfAdults(this), nbrOfChildren=getNbrOfChildren(this), nbrOfBabies=getNbrOfBabies(this), ..., verbose=getVerbose(this))}
 
 \arguments{
  \item{depDates}{A \code{\link[base]{vector}} of departure dates.}

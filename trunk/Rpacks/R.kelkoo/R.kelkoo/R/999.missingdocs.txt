@@ -31,3 +31,6 @@
   getCurrency getCurrency.KelkooItem getKelkooCountry
   getKelkooCountry.KelkooScan setKelkooCountry
   setKelkooCountry.KelkooScan
+  getNbrOfAdults getNbrOfAdults.KelkooFlightScan getNbrOfBabies
+  getNbrOfBabies.KelkooFlightScan getNbrOfChildren
+  getNbrOfChildren.KelkooFlightScan

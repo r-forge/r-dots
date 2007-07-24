@@ -35,7 +35,7 @@ extends \emph{\link[R.kelkoo]{KelkooScan}}\cr
  \url{http://www.kelkoo.se/}.}
 }
 
-\usage{KelkooFlightScan(..., from=NULL, to=NULL, oneWay=FALSE, depDates=NULL, retDates=NULL, nbrOfDays=NULL)}
+\usage{KelkooFlightScan(..., from=NULL, to=NULL, oneWay=FALSE, depDates=NULL, retDates=NULL, nbrOfDays=NULL, nbrOfAdults=1, nbrOfChildren=0, nbrOfBabies=0)}
 
 \arguments{
   \item{...}{Arguments passed to constructor of \code{\link{KelkooScan}}.}
@@ -45,6 +45,7 @@ extends \emph{\link[R.kelkoo]{KelkooScan}}\cr
   \item{depDates}{A \code{\link[base]{vector}} of \code{\link[base]{Dates}} specifying the departure dates.}
   \item{retDates}{A \code{\link[base]{vector}} of \code{\link[base]{Dates}} specifying the return dates.}
   \item{nbrOfDays}{A \code{\link[base]{vector}} of \code{\link[base]{integer}}s specifying the length of the trip.  Alternative to argument \code{retDates}.}
+  \item{nbrOfAdults, nbrOfChildren, nbrOfBabies}{Number of adults, children, and babies travelling.}
 }
 
 \section{Fields and Methods}{
@@ -56,6 +57,9 @@ extends \emph{\link[R.kelkoo]{KelkooScan}}\cr
  \tab \code{getDepDates} \tab  -\cr
  \tab \code{getFrom} \tab  -\cr
  \tab \code{getFromToTag} \tab  -\cr
+ \tab \code{getNbrOfAdults} \tab  -\cr
+ \tab \code{getNbrOfBabies} \tab  -\cr
+ \tab \code{getNbrOfChildren} \tab  -\cr
  \tab \code{getNbrOfDays} \tab  -\cr
  \tab \code{getPostUrl} \tab  -\cr
  \tab \code{getRetDates} \tab  -\cr
