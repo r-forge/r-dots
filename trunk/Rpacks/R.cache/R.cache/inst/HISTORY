@@ -2,11 +2,10 @@
 Package: R.cache
 ===============
 
-Version: 0.1.6 [2007-07-02xx]
+Version: 0.1.6 [2007-07-02]
 o Now environments, in addition to lists, may be used as keys
   for generating cache names.
 o Package passes R CMD check on R v2.6.0 devel.  Minor mods.
-
 
 
 Version: 0.1.5 [2007-03-11]
