@@ -18,14 +18,12 @@
   Calculates the quantiles for each row in a matrix.
 }
 
-\usage{\method{rowQuantiles}{matrix}(x, which, na.rm=FALSE, ...)}
+\usage{\method{rowQuantiles}{matrix}(x, which, ...)}
 
 \arguments{
  \item{x}{A \code{\link[base]{numeric}} \code{\link[base]{matrix}}.}
  \item{which}{An \code{\link[base]{integer}} \code{\link[base]{vector}} in \code{[1,ncol(x)]} specifying the
    quantiles to be returned.}
- \item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link[base]{NA}}s are excluded before calculating the quantiles,
-   otherwise not.}
  \item{...}{Not use.}
 }
 

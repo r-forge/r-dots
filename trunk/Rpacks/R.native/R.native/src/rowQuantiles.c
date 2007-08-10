@@ -1,15 +1,24 @@
+/***************************************************************************
+ Public methods:
+ SEXP rowQuantiles(SEXP x, SEXP which)
+
+ Private methods:
+ SEXP rowQuantilesReal(SEXP x, int nrow, int ncol, int qq,)
+ SEXP rowQuantilesInteger(SEXP x, int nrow, int ncol, int qq)
+
+ Authors: Adopted from rowQ() by R. Gentleman.
+
+ To do: Add support for missing values.
+
+ Copyright Henrik Bengtsson, 2007
+ **************************************************************************/
 /* Include R packages */
 #include <R.h>
 #include <Rdefines.h>
 #include <Rmath.h>
 
 
-/***************************************************************************
- rowQuantiles(SEXP x, SEXP which)
-
- 
- **************************************************************************/
-SEXP rowQuantilesReal(SEXP x, int nrow, int ncol, int qq, int narm) {
+SEXP rowQuantilesReal(SEXP x, int nrow, int ncol, int qq) {
   SEXP ans;
   int ii, jj;
   int *colOffset;
@@ -48,7 +57,7 @@ SEXP rowQuantilesReal(SEXP x, int nrow, int ncol, int qq, int narm) {
 }
 
 
-SEXP rowQuantilesInteger(SEXP x, int nrow, int ncol, int qq, int narm) {
+SEXP rowQuantilesInteger(SEXP x, int nrow, int ncol, int qq) {
   SEXP ans;
   int ii, jj;
   int *colOffset;
@@ -88,14 +97,10 @@ SEXP rowQuantilesInteger(SEXP x, int nrow, int ncol, int qq, int narm) {
 
 
 
-SEXP rowQuantiles(SEXP x, SEXP which, SEXP naRm) {
+SEXP rowQuantiles(SEXP x, SEXP which) {
   SEXP ans;
   int nrow, ncol, qq;
-  int narm;
 
-  /************************************************************************
-   * Validate arguments
-   ************************************************************************/
   /* Argument 'x': */
   if (!isMatrix(x))
     error("Argument 'x' must be a matrix.");
@@ -107,16 +112,6 @@ SEXP rowQuantiles(SEXP x, SEXP which, SEXP naRm) {
   if (!isNumeric(which))
     error("Argument 'which' must be a numeric number.");
 
-  /* Argument 'naRm': */
-  if (!isLogical(naRm))
-    error("Argument 'naRm' must be a single logical.");
-
-  if (length(naRm) != 1)
-    error("Argument 'naRm' must be a single logical.");
-
-  narm = LOGICAL(naRm)[0];
-  if (narm != TRUE && narm != FALSE)
-    error("Argument 'naRm' must be either TRUE or FALSE.");
 
   /* Get dimensions of 'x'. */
   PROTECT(ans = getAttrib(x, R_DimSymbol));
@@ -130,12 +125,11 @@ SEXP rowQuantiles(SEXP x, SEXP which, SEXP naRm) {
   if (qq < 0 || qq >= ncol)
     error("Argument 'which' is out of range");
 
-	narm=1;
   /* Double matrices are more common to use. */
   if (isReal(x)) {
-    ans = rowQuantilesReal(x, nrow, ncol, qq, narm);
+    ans = rowQuantilesReal(x, nrow, ncol, qq);
   } else if (isInteger(x)) {
-    ans = rowQuantilesInteger(x, nrow, ncol, qq, narm);
+    ans = rowQuantilesInteger(x, nrow, ncol, qq);
   } else {
     ans = NULL;
   }
@@ -151,7 +145,9 @@ SEXP rowQuantiles(SEXP x, SEXP which, SEXP naRm) {
 
 /***************************************************************************
  HISTORY:
- 2005-11-24
+ 2007-08-10 [HB]
+  o Removed arguments for NAs since rowQuantiles() still don't support it.
+ 2005-11-24 [HB]
   o Cool, it works and compiles nicely.
   o Preallocate colOffset to speed up things even more.
   o Added more comments and error checking.

@@ -1,14 +1,21 @@
+/***************************************************************************
+ Public methods:
+ SEXP rowMedians(SEXP x, SEXP naRm)
+
+ Private methods:
+ SEXP rowMediansReal(SEXP x, int nrow, int ncol, int narm)
+ SEXP rowMediansInteger(SEXP x, int nrow, int ncol, int narm)
+
+ Copyright Henrik Bengtsson, 2007
+ **************************************************************************/
+
 /* Include R packages */
 #include <R.h>
 #include <Rdefines.h>
 #include <Rmath.h>
 
 
-/***************************************************************************
- rowMedians(SEXP x, SEXP which)
 
- 
- **************************************************************************/
 SEXP rowMediansReal(SEXP x, int nrow, int ncol, int narm) {
   SEXP ans;
   int isOdd;
@@ -194,9 +201,6 @@ SEXP rowMedians(SEXP x, SEXP naRm) {
   int nrow, ncol;
   int narm;
 
-  /************************************************************************
-   * Validate arguments
-   ************************************************************************/
   /* Argument 'x': */
   if (!isMatrix(x))
     error("Argument 'x' must be a matrix.");
@@ -237,11 +241,11 @@ SEXP rowMedians(SEXP x, SEXP naRm) {
 
 /***************************************************************************
  HISTORY:
- 2005-12-07
+ 2005-12-07 [HB]
  o BUG FIX: When calculating the median of an even number (non-NA) values,
     the length of the second sort was one element too short, which made the
     method to freeze, i.e. rPsort(rowData, qq, qq) is now (...qq+1, qq).
- 2005-11-24
+ 2005-11-24 [HB]
   o By implementing a special version for integers, there is no need to
     coerce to double in R, which would take up twice the amount of memory.
   o rowMedians() now handles NAs too.

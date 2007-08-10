@@ -14,8 +14,6 @@
 #  \item{x}{A @numeric @matrix.}
 #  \item{which}{An @integer @vector in \code{[1,ncol(x)]} specifying the
 #    quantiles to be returned.}
-#  \item{na.rm}{If @TRUE, @NAs are excluded before calculating the quantiles,
-#    otherwise not.}
 #  \item{...}{Not use.}
 # }
 #
@@ -33,15 +31,17 @@
 #
 # @keyword internal
 #*/########################################################################### 
-setMethodS3("rowQuantiles", "matrix", function(x, which, na.rm=FALSE, ...) {
+setMethodS3("rowQuantiles", "matrix", function(x, which, ...) {
   which <- as.integer(which);
-  na.rm <- as.logical(na.rm);
-  .Call("rowQuantiles", x, which, na.rm, PACKAGE="R.native");
+  .Call("rowQuantiles", x, which, PACKAGE="R.native");
 }, protected=TRUE)
 
 
 ############################################################################
 # HISTORY:
+# 2008-08-10
+# o Removed argument 'na.rm' from rowQuantiles() since it still don't
+#   support missing values.
 # 2005-11-25
 # o Created.
 ############################################################################
