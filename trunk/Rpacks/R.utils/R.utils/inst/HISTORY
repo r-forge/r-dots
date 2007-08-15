@@ -2,6 +2,11 @@
 Package: R.utils
 ================
 
+Version: 0.9.6 [2007-08-14x]
+o Added bunzip2(), cf. gunzip().
+o Added argument 'remove' to gunzip().
+
+
 Version: 0.9.5 [2007-06-09]
 o Updated code to pass the more strict R CMD check R v2.6.0.
 o BUG FIX: Used omit.na() instead of na.omit() in static method 
