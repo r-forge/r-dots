@@ -19,6 +19,8 @@
 #  Returns nothing.
 # }
 #
+# @examples "../incl/sourceC.Rex"
+#
 # @author
 #
 # @keyword programming

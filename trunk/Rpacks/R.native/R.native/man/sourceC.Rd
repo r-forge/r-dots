@@ -28,6 +28,21 @@
  Returns nothing.
 }
 
+\examples{
+filename <- "hello.c";
+
+if (!isFile(filename)) {
+  path <- system.file("code", package="R.native");
+  file.copy(file.path(path, filename), filename);
+}
+
+# Compile the source code
+sourceC(filename);
+
+# Call the function
+.C("hello")
+}
+
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 
