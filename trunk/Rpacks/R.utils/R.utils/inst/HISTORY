@@ -2,7 +2,9 @@
 Package: R.utils
 ================
 
-Version: 0.9.6 [2007-08-14x]
+Version: 0.9.6 [2007-08-15x]
+o Added flush() to TextStatusBar.  Added flush() to example(TextStatusBar)
+  so it displays correctly on Rgui on Windows.
 o Added bunzip2(), cf. gunzip().
 o Added argument 'remove' to gunzip().
 
