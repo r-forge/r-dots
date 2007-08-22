@@ -52,6 +52,7 @@ extends \link[R.huge]{AbstractFileArray}\cr
 \tabular{rll}{
  \tab \code{\link[R.huge:000-LB-.FileMatrix]{[}} \tab Gets a subset of elements of a file matrix.\cr
  \tab \code{\link[R.huge:000-LB-LT_-.FileMatrix]{[<-}} \tab Assigns values to a subset of elements of a file matrix.\cr
+ \tab \code{as.character} \tab  -\cr
  \tab \code{\link[R.huge:as.matrix.FileMatrix]{as.matrix}} \tab Returns the elements of a file matrix as an \R matrix.\cr
  \tab \code{\link[R.huge:colnames.FileMatrix]{colnames}} \tab Gets the column names of a file matrix.\cr
  \tab \code{\link[R.huge:getByRow.FileMatrix]{getByRow}} \tab Checks if elements are stored row by row or not.\cr
@@ -122,8 +123,8 @@ if (isFile(pathname)) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 verbose && enter(verbose, "Creating new matrix");
 # The dimensions of the matrix
-nrow <- 15;
-ncol <- 2;
+nrow <- 20;
+ncol <- 5;
 X <- FileByteMatrix(pathname, nrow=nrow, ncol=ncol, byrow=TRUE);
 verbose && exit(verbose);
 
@@ -139,11 +140,17 @@ y <- readValues(X, rows=rows, cols=cols);
 verbose && exit(verbose);
 stopifnot(all.equal(x,y));
 
-verbose && enter(verbose, "Getting and setting data using [i,j]");
+verbose && enter(verbose, "Setting data using [i,j]");
+i <- c(20:18, 13:15); j <- c(3:2, 4:5);
+n <- length(i) * length(j);
+values <- 1:n;
+X[i,j] <- values;
+verbose && enter(verbose, "Validating");
+print(X);
 print(X[])
-i <- 13:15; j <- 1:2;
-X[i,j] <- 99:98;
-print(X[])
+print(X[i,j]);
+stopifnot(all.equal(as.vector(X[i,j]), values))
+verbose && exit(verbose);
 verbose && exit(verbose);
 
 

@@ -13,8 +13,8 @@ if (isFile(pathname)) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 verbose && enter(verbose, "Creating new matrix");
 # The dimensions of the matrix
-nrow <- 15;
-ncol <- 2;
+nrow <- 20;
+ncol <- 5;
 X <- FileByteMatrix(pathname, nrow=nrow, ncol=ncol, byrow=TRUE); 
 verbose && exit(verbose);
 
@@ -30,11 +30,17 @@ y <- readValues(X, rows=rows, cols=cols);
 verbose && exit(verbose);
 stopifnot(all.equal(x,y));
 
-verbose && enter(verbose, "Getting and setting data using [i,j]");
+verbose && enter(verbose, "Setting data using [i,j]");
+i <- c(20:18, 13:15); j <- c(3:2, 4:5);
+n <- length(i) * length(j);
+values <- 1:n;
+X[i,j] <- values;
+verbose && enter(verbose, "Validating");
+print(X);
 print(X[])
-i <- 13:15; j <- 1:2;
-X[i,j] <- 99:98;
-print(X[])
+print(X[i,j]);
+stopifnot(all.equal(as.vector(X[i,j]), values))
+verbose && exit(verbose);
 verbose && exit(verbose);
 
 

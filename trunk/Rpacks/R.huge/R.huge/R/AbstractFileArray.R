@@ -114,6 +114,9 @@ setConstructorS3("AbstractFileArray", function(filename=NULL, path=NULL, storage
   header <- NULL;
   if (!is.null(pathname)) {
     if (!isFile(pathname)) {
+      if (is.null(dimOrder))
+        dimOrder <- seq(along=dim);
+
       # Create header
       header <- list(
         magic = "",
@@ -123,7 +126,7 @@ setConstructorS3("AbstractFileArray", function(filename=NULL, path=NULL, storage
         storageMode = as.character(storageMode),
         bytesPerCell = as.integer(bytesPerCell),
         dim = dim,
-        dimOrder = seq(along=dim),
+        dimOrder = dimOrder,
         dimnames = dimnames,
         comments = as.character(comments),
         nbrOfFreeBytes = as.double(nbrOfFreeBytes)
@@ -152,7 +155,7 @@ setConstructorS3("AbstractFileArray", function(filename=NULL, path=NULL, storage
 ###########################################################################/**
 # @RdocMethod as.character
 #
-# @title "Returns a short string describing the file matrix"
+# @title "Returns a short string describing the file array"
 #
 # \description{
 #  @get "title".
@@ -2038,6 +2041,10 @@ setMethodS3("writeValues", "AbstractFileArray", function(this, indices=NULL, val
 
 ############################################################################
 # HISTORY:
+# 2006-08-21
+# o BUG FIX: Argument 'dimOrder' of the AbstractFileArray constructor was
+#   not recognized causing weird results if it was intended to be in a
+#   non-increasing order, e.g. FileMatrix(..., byrow=TRUE).
 # 2006-05-21
 # o Added some more Rdoc comments.
 # 2006-05-09

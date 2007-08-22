@@ -12,7 +12,7 @@ if (isFile(pathname)) {
 # Create a new file matrix
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 verbose && enter(verbose, "Creating new matrix (>5Gb!)");
-X <- FileDoubleMatrix(pathname, nrow=1000000/4, ncol=2100, byrow=FALSE); 
+X <- FileDoubleMatrix(pathname, nrow=1000000/4, ncol=2100, byrow=TRUE); 
 verbose && exit(verbose);
 
 verbose && enter(verbose, "Filling it with data");
@@ -27,11 +27,16 @@ y <- readValues(X, rows=rows, cols=cols);
 verbose && exit(verbose);
 stopifnot(all.equal(x,y));
 
-verbose && enter(verbose, "Getting and setting data using [i,j]");
-i <- 13:15; j <- 3:2;
-X[i,j] <- 99:98;
-print(X)
-print(X[1:35,1:4])
+verbose && enter(verbose, "Setting data using [i,j]");
+i <- c(20:18, 13:15); j <- c(3:2, 15:98);
+n <- length(i) * length(j);
+values <- 1:n;
+X[i,j] <- values;
+verbose && enter(verbose, "Validating");
+print(X);
+print(X[i,j]);
+stopifnot(all.equal(as.vector(X[i,j]), values))
+verbose && exit(verbose);
 verbose && exit(verbose);
 
 
@@ -43,12 +48,8 @@ Y <- FileByteMatrix(pathname);
 verbose && print(verbose, Y);
 verbose && exit(verbose);
 
-Y[5,1] <- 55;
 print(Y)
-tmp <- Y[1:35,1:4];
-print(tmp)
-stopifnot(all(tmp[1:10,1] == c(1,2,3,4,55,0,5,6,7,8)) && all(tmp[13:15,2:3] == c(98,99,98,99,98,99)));
-rm(tmp);
+stopifnot(all.equal(as.vector(Y[i,j]), values))
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Close all matrices

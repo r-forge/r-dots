@@ -13,10 +13,10 @@
 \alias{as.character,AbstractFileArray-method}
 
 
-\title{Returns a short string describing the file matrix}
+\title{Returns a short string describing the file array}
 
 \description{
- Returns a short string describing the file matrix.
+ Returns a short string describing the file array.
 }
 
 \usage{\method{as.character}{AbstractFileArray}(x, ...)}

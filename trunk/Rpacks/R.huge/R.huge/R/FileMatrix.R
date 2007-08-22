@@ -67,8 +67,48 @@ setConstructorS3("FileMatrix", function(..., nrow=NULL, ncol=NULL, rownames=NULL
   dimOrder <- 1:2;
   if (byrow)
     dimOrder <- 2:1;
-
   extend(AbstractFileArray(..., dim=dim, dimnames=dimnames, dimOrder=dimOrder), "FileMatrix");
+})
+
+
+
+###########################################################################/**
+# @RdocMethod as.character
+#
+# @title "Returns a short string describing the file matrix"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#
+# @keyword IO
+# @keyword programming
+#*/###########################################################################
+setMethodS3("as.character", "FileMatrix", function(x, ...) {
+  # To please R CMD check
+  this <- x;
+
+  s <- NextMethod("as.character", x, ...);
+  s <- c(s, sprintf(" byrow=%s.", getByRow(this)));
+  s <- paste(s, collapse="");
+
+  s;
 })
 
 
@@ -280,6 +320,7 @@ setMethodS3("getOffset", "FileMatrix", function(this, rows, cols, offset=getData
   }
 
   offset <- offset + bytesPerCell*idx;
+
   offset;
 }, protected=TRUE)
 
@@ -466,56 +507,53 @@ setMethodS3("getMatrixIndicies", "FileMatrix", function(this, i, j, ...) {
 # @keyword programming
 #*/###########################################################################
 setMethodS3("[", "FileMatrix", function(this, i, j, drop=FALSE) {
-  con <- this$con;
-  mode <- getStorageMode(this);
-  what <- vector(mode=mode, length=1);
-  size <- getBytesPerCell(this);
-
   # Calculate row and column index offsets
   res <- getMatrixIndicies(this, i, j);
+  i <- res$i;
+  j <- res$j;
   ni <- res$ni;
   nj <- res$nj;
-  iOffsets <- res$iOffsets;
-  jOffsets <- res$jOffsets;
+  ncol <- res$ncol;
+  nrow <- res$nrow;
+  byrow <- res$byrow;
+  size <- res$bytesPerCell;
   rm(res);
 
-  # Allocate array for return value
-  values <- vector(mode=mode, length=ni*nj);
-  dim(values) <- c(ni, nj);
-
-  if (getByRow(this)) {
-    # Read row by row
-    for (rr in seq(length=ni)) {
-      offset <- iOffsets[rr] + jOffsets;
-      seek(con=con, where=offset, rw="read");
-      values[rr,] <- readBin(con=con, what=what, n=nj, size=size);
-    }
+  if (byrow) {
+    i <- (i-as.integer(1))*ncol;
   } else {
-    # Read column by column
-    for (cc in seq(length=nj)) {
-      offset <- jOffsets[cc] + iOffsets;
-      seek(con=con, where=offset, rw="read");
-      values[,cc] <- readBin(con=con, what=what, n=ni, size=size);
-    }
+    j <- (j-as.integer(1))*nrow;
   }
+
+  # Get the location of all cells to be read
+  idxs <- outer(i, j, FUN="+");
+  rm(i, j);
+
+  # Move to the data section
+  con <- this$con;
+  seek(con=con, where=getDataOffset(this), rw="read");
+
+  mode <- getStorageMode(this);
+  res <- readBinFragments(con=con, what=mode, size=size, idxs=idxs);
+  dim(res) <- c(ni, nj);
 
   # Dimension names?
   if (!drop) {
     names <- rownames(this);
     if (length(names) > 0)
-      rownames(values) <- names;
+      rownames(res) <- names;
     names <- colnames(this);
     if (length(names) > 0)
-      colnames(values) <- names;
+      colnames(res) <- names;
   }
 
   # Drop indices?
   if (drop) {
     if (ni <= 1 || nj <= 1)
-      dim(values) <- NULL;
+      dim(res) <- NULL;
   } 
   
-  values;
+  res;
 }) # "["()
 
 
@@ -587,38 +625,44 @@ setMethodS3("as.matrix", "FileMatrix", function(x, ...) {
 # @keyword programming
 #*/###########################################################################
 setMethodS3("[<-", "FileMatrix", function(this, i, j, value) {
-  con <- this$con;
-  mode <- getStorageMode(this);
-  what <- vector(mode=mode, length=1);
-  size <- getBytesPerCell(this);
-
   # Calculate row and column index offsets
   res <- getMatrixIndicies(this, i, j);
-  ni <- res$ni;
-  nj <- res$nj;
-  iOffsets <- res$iOffsets;
-  jOffsets <- res$jOffsets;
+  i <- res$i;
+  j <- res$j;
+  ncol <- res$ncol;
+  nrow <- res$nrow;
+  byrow <- res$byrow;
+  size <- res$bytesPerCell;
   rm(res);
 
-  # Coerce values to correct data type into a matrix
-  storage.mode(value) <- mode;
-  value <- matrix(value, nrow=ni, ncol=nj);
-
-  if (getByRow(this)) {
-    # Write row by row
-    for (rr in seq(length=ni)) {
-      offset <- iOffsets[rr] + jOffsets;
-      seek(con=con, where=offset, rw="write");
-      writeBin(con=con, value[rr,], size=size);
-    }
+  if (byrow) {
+    i <- (i-as.integer(1))*ncol;
   } else {
-    # Write column by column
-    for (cc in seq(length=nj)) {
-      offset <- jOffsets[cc] + iOffsets;
-      seek(con=con, where=offset, rw="write");
-      writeBin(con=con, value[,cc], size=size);
-    }
+    j <- (j-as.integer(1))*nrow;
   }
+
+  # Get the location of all cells to be read
+  idxs <- outer(i, j, FUN="+");
+  idxs <- as.vector(idxs);
+  rm(i, j);
+
+  # Coerce input data
+  storage.mode(value) <- getStorageMode(this);
+
+  # Move to the data section
+  con <- this$con;
+  seek(con=con, where=getDataOffset(this), rw="write");
+
+  # Write the data
+  nValue <- length(value);
+  nIdxs <- length(idxs);
+  if (nValue < nIdxs) {
+    value <- rep(value, length.out=nIdxs);
+  } else if (nValue > nIdxs) {
+    value <- value[seq(length=nIdxs)];
+  }
+
+  writeBinFragments(value, con=con, size=size, idxs=idxs);
 
   this;
 })
@@ -807,6 +851,12 @@ setMethodS3("rowMeans", "FileMatrix", function(x, ..., doCount=FALSE) {
 
 ############################################################################
 # HISTORY:
+# 2007-08-22
+# o Added special as.character() for FileMatrix.
+# o BUG FIX: "["() and "[<-"() were totally broken.  Now they utilize the
+#   new readBinFragments() and writeBinFragments(), respectively.
+#   Eventually this should be implement in AbstractFileArray as a generic
+#   solution.
 # 2006-05-09
 # o Added Rdoc comments.
 # 2006-02-27

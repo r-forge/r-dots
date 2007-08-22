@@ -15,7 +15,7 @@
 
 
 \description{
-  The package currently provides a class representing a matrix where the actuall data is stored in a binary format on the local file system.  This way the size limit of the data is set by the file system and not the memory.
+  The package currently provides a class representing a matrix where the actual data is stored in a binary format on the local file system.  This way the size limit of the data is set by the file system and not the memory.  Please consider this package to in an alpha/early-beta version.
 
   This package should be considered to be in "alpha" version.
 }
@@ -39,7 +39,7 @@
 }
 
 \section{How to cite this package}{
-  Currently no information.
+  Please cite [1] below.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
