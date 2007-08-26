@@ -374,7 +374,10 @@ setMethodS3("popMessage", "TextStatusBar", function(this, ..., collapse="", sep=
 #
 # @keyword programming
 #*/###########################################################################
-setMethodS3("flush", "TextStatusBar", function(this, ...) {
+setMethodS3("flush", "TextStatusBar", function(con, ...) {
+  # To please R CMD check
+  this <- con;
+
   flush.console();
 })
 
