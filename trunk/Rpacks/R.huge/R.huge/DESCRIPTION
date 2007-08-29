@@ -1,6 +1,6 @@
 Package: R.huge
 Version: 0.1.5
-Date: 2006-08-22
+Date: 2006-08-29
 Title: Methods for accessing huge amounts of data
 Author: Henrik Bengtsson <henrikb@braju.com>
 Maintainer: Henrik Bengtsson <henrikb@braju.com>

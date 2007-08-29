@@ -52,7 +52,7 @@ extends \link[R.huge]{AbstractFileArray}\cr
 \tabular{rll}{
  \tab \code{\link[R.huge:000-LB-.FileMatrix]{[}} \tab Gets a subset of elements of a file matrix.\cr
  \tab \code{\link[R.huge:000-LB-LT_-.FileMatrix]{[<-}} \tab Assigns values to a subset of elements of a file matrix.\cr
- \tab \code{as.character} \tab  -\cr
+ \tab \code{\link[R.huge:as.character.FileMatrix]{as.character}} \tab Returns a short string describing the file matrix.\cr
  \tab \code{\link[R.huge:as.matrix.FileMatrix]{as.matrix}} \tab Returns the elements of a file matrix as an \R matrix.\cr
  \tab \code{\link[R.huge:colnames.FileMatrix]{colnames}} \tab Gets the column names of a file matrix.\cr
  \tab \code{\link[R.huge:getByRow.FileMatrix]{getByRow}} \tab Checks if elements are stored row by row or not.\cr
