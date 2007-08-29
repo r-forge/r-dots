@@ -569,8 +569,8 @@ setMethodS3("extend", "BasicObject", function(this, ...className, ...) {
 # }
 #
 # \usage{
-#   "$.BasicObject"(this, name)
-#   "[[.BasicObject"(this, name)
+#   \method{$}{BasicObject}(this, name)
+#   \method{[[}{BasicObject}(this, name)
 # }
 #
 # \arguments{
@@ -656,8 +656,8 @@ setMethodS3("$", "BasicObject", function(this, name) {
 # }
 #
 # \usage{
-#   "$<-.Object"(this, name, value)
-#   "[[<-.Object"(this, name, value)
+#   \method{$}{BasicObject}(this, name) <- value
+#   \method{[[}{BasicObject}(this, name) <- value
 # }
 #
 # \arguments{

@@ -66,9 +66,6 @@ extends simpleError\cr
 }
 
 
- \bold{Methods inherited from simpleError}:\cr
-showAndWait
-
  \bold{Methods inherited from error}:\cr
 as.character, throw
 

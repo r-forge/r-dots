@@ -24,8 +24,8 @@
 }
 
 \usage{
-  "$.BasicObject"(this, name)
-  "[[.BasicObject"(this, name)
+  \method{$}{BasicObject}(this, name)
+  \method{[[}{BasicObject}(this, name)
 }
 
 \arguments{

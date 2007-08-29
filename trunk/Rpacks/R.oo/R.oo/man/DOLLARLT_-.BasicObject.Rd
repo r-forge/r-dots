@@ -24,8 +24,8 @@
 }
 
 \usage{
-  "$<-.Object"(this, name, value)
-  "[[<-.Object"(this, name, value)
+  \method{$}{BasicObject}(this, name) <- value
+  \method{[[}{BasicObject}(this, name) <- value
 }
 
 \arguments{

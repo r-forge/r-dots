@@ -702,7 +702,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Pre-processing
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    require(tools) || throw("Package 'tools' not found");
+    require("tools") || throw("Package 'tools' not found");
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Validate arguments
@@ -2330,7 +2330,7 @@ setMethodS3("getPackageNameOf", "Rdoc", function(static, objectName, mode="any",
 # @keyword documentation
 #*/###########################################################################
 setMethodS3("check", "Rdoc", function(this, manPath=getManPath(this), verbose=FALSE, ...) {
-  require(tools) || throw("Could not load package: tools");
+  require("tools") || throw("Could not load package: tools");
 
   # file paths with trailing '/' are not recognized! /HB 2004-10-13
   manPath <- gsub("/$", "", manPath);

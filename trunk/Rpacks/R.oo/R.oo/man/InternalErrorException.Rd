@@ -65,9 +65,6 @@ extends \link[R.oo]{Exception}\cr
  \bold{Methods inherited from Exception}:\cr
 as.character, getCall, getLastException, getMessage, getStackTrace, getWhen, print, printStackTrace, throw
 
- \bold{Methods inherited from simpleError}:\cr
-showAndWait
-
  \bold{Methods inherited from error}:\cr
 as.character, throw
 

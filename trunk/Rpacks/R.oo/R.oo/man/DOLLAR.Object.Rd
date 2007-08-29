@@ -48,8 +48,8 @@
 }
 
 \usage{
-  "$.Object"(this, name)
-  "[[.Object"(this, name)
+  \method{$}{Object}(this, name)
+  \method{[[}{Object}(this, name)
 }
 
 \arguments{

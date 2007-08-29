@@ -20,8 +20,8 @@
 \title{Makes the fields and methods of an Class assignable via the \$<- and the [[<- operator}
 
 \usage{
-  "$<-.Class"(this, name, value)
-  "[[<-.Class"(this, name, value)
+  \method{$}{Class}(this, name) <- value
+  \method{[[}{Class}(this, name) <- value
 }
 
 \description{

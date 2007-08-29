@@ -383,7 +383,6 @@ setMethodS3("getVersion", "Package", function(this, ...) {
 
 #########################################################################/**
 # @RdocMethod getDataPath
-# @aliasmethod getData
 #
 # @title "Gets the path to the data (data/) directory of this package"
 #
@@ -410,12 +409,6 @@ setMethodS3("getVersion", "Package", function(this, ...) {
 setMethodS3("getDataPath", "Package", function(this, ...) {
   file.path(this$.libPath, getName(this), "data", "");
 })
-
-
-## # Virtual field $data, because a lot of old packages uses it.
-## setMethodS3("getData", "Package", function(this, ...) {
-##   getDataPath(this);
-## }, private=TRUE, deprecated=TRUE)
 
 
 
@@ -1565,7 +1558,7 @@ setMethodS3("update", "Package", function(object, contribUrl=c(getContribUrl(thi
     } # for (url ...)
     
     if (!found) {
-      require(R.oo);  # In case it was unloaded!
+      require("R.oo");  # In case it was unloaded!
       throw(InternalErrorException("Could not update package ", getName(this), " v", getVersion(this), " since none of the URLs available (", paste(contribUrl, collapse=", "), ") seems to contain no R packages or bundles, i.e. no PACKAGE file was found. The URLs were extracted from the DESCRIPTION file of the package.", package=this));
     }
   }

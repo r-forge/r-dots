@@ -1311,7 +1311,38 @@ setMethodS3("extend", "Object", function(this, ...className, ..., ...fields=NULL
   # Note, we have to register the finalizer here and not in Object(), 
   # because here the reference variable 'this' will have the correct
   # class attribute, which it does not in Object().
-  reg.finalizer(attr(this, ".env"), function(env) finalize(this));
+  reg.finalizer(attr(this, ".env"), function(env) {
+    # Note, R.oo might be detached when this is called!  If so, reload
+    # it, this will be our best chance to run the correct finalizer(),
+    # which might be in a subclass of a different package that is still
+    # loaded.
+    isRooLoaded <- any(c("package:R.oo", "dummy:R.oo") %in% search());
+    if (isRooLoaded) {
+      finalize(this);
+    } else {
+      suppressMessages({
+        require("R.oo", quietly=TRUE);
+      })
+
+      finalize(this);
+
+      # NOTE! Before detach R.oo again, we have to make sure the Object:s
+      # allocated by R.oo itself (e.g. an Package object), will not reload
+      # R.oo again when being garbage collected, resulting in an endless
+      # loop.  We do this by creating a dummy finalize() function, detach
+      # R.oo, call garbage collect to clean out all R.oo's objects, and
+      # then remove the dummy finalize() function.
+      # (1) Put a dummy finalize() function on the search path.
+      attach(list(finalize = function(...) { }), name="dummy:R.oo",
+                                                    warn.conflicts=FALSE);
+      # (2) Detach R.oo
+      detach("package:R.oo");
+      # (3) Force all R.oo's Object:s to be finalize():ed.
+      gc();
+      # (4) Remove the dummy finalize():er again.
+      detach("dummy:R.oo");
+    }
+  });
 
 
   # Finally, create the static instance?
@@ -1366,8 +1397,8 @@ setMethodS3("extend", "Object", function(this, ...className, ..., ...fields=NULL
 # }
 #
 # \usage{
-#   "$.Object"(this, name)
-#   "[[.Object"(this, name)
+#   \method{$}{Object}(this, name)
+#   \method{[[}{Object}(this, name)
 # }
 #
 # \arguments{
@@ -1564,8 +1595,8 @@ setMethodS3("$", "Object", function(this, name) {
 # }
 #
 # \usage{
-#   "$<-.Object"(this, name, value)
-#   "[[<-.Object"(this, name, value)
+#   \method{$}{Object}(this, name) <- value
+#   \method{[[}{Object}(this, name) <- value
 # }
 #
 # \arguments{
@@ -1944,6 +1975,13 @@ setMethodS3("gc", "Object", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2007-08-29
+# o BUG FIX: If Object:s are garbage collected after R.oo has been detached,
+#   the error 'Error in function (env) : could not find function "finalize"'
+#   would be thrown, because the registered finalizer hook tries to call
+#   the generic function finalize() in R.oo.  We solve this by trying to
+#   reload R.oo (and the unload it again).  Special care was taken so that
+#   Object:s allocated by R.oo itself won't cause an endless loop.
 # 2007-06-09
 # o Added "declaration" of '.R.oo.getInternalAddress.pointer'.
 # o Added "declaration" of 'saveLoadReference'.

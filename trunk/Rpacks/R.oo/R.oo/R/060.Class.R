@@ -1212,8 +1212,8 @@ setMethodS3("getDetails", "Class", function(this, private=FALSE, ...) {
 # @title "Makes the fields and methods of an Class accessable via the \$ and the [[ operator"
 #
 # \usage{
-#   "$.Class"(this, name)
-#   "[[.Class"(this, name)
+#   \method{$}{Class}(this, name)
+#   \method{[[}{Class}(this, name)
 # }
 #
 # \description{
@@ -1327,8 +1327,8 @@ setMethodS3("$", "Class", function(this, name) {
 # @title "Makes the fields and methods of an Class assignable via the \$<- and the [[<- operator"
 #
 # \usage{
-#   "$<-.Class"(this, name, value)
-#   "[[<-.Class"(this, name, value)
+#   \method{$}{Class}(this, name) <- value
+#   \method{[[}{Class}(this, name) <- value
 # }
 #
 # \description{

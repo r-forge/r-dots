@@ -41,7 +41,6 @@
 \alias{getStackTraceString}
 \alias{getWhen}
 \alias{printStackTrace}
-\alias{showAndWait}
 
 % The Object class
 \alias{attach}

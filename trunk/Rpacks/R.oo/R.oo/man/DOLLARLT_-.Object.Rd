@@ -51,8 +51,8 @@
 }
 
 \usage{
-  "$<-.Object"(this, name, value)
-  "[[<-.Object"(this, name, value)
+  \method{$}{Object}(this, name) <- value
+  \method{[[}{Object}(this, name) <- value
 }
 
 \arguments{

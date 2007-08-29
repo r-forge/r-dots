@@ -20,8 +20,8 @@
 \title{Makes the fields and methods of an Class accessable via the \$ and the [[ operator}
 
 \usage{
-  "$.Class"(this, name)
-  "[[.Class"(this, name)
+  \method{$}{Class}(this, name)
+  \method{[[}{Class}(this, name)
 }
 
 \description{
