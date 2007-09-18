@@ -122,10 +122,6 @@
 # @alias getSource
 #
 # % Utility functions
-# @alias appendVarArgs
-# @alias appendVarArgs.function
-# @alias hasVarArgs
-# @alias hasVarArgs.function
 # @alias environment
 # @alias environment.default
 #

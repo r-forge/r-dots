@@ -57,7 +57,7 @@
 # \examples{\dontrun{For a complete example see help(Object).}}
 #
 # \seealso{
-#   To define a method see @see "setMethodS3".
+#   To define a method see @see "R.methodsS3::setMethodS3".
 #   For information about the R Coding Conventions, see
 #   @see "RccViolationException".
 #   For a thorough example of how to use this method see @see "Object".

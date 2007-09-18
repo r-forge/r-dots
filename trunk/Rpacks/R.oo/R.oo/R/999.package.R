@@ -19,18 +19,16 @@
 # }
 #
 # \section{Dependancies and other requirements}{
-#   This package only requires a standard \R installation.
-#   This is a cross-platform package implemented in pure \R.
+#   This package requires a standard \R installation and
+#   the \pkg{R.methodsS3} package.  
 # }
 #
 # \section{To get started}{
 #   To get started, see:
 #   \enumerate{
-#     \item @see "setMethodS3" - Simple and safe creation of S3 methods
-#         and, whenever needed,  automatic creation of S3 generic function.
 #     \item @see "Object" - Root class providing support for reference
-#         variables. Any class inheriting from this class supports reference
-#         variables.
+#         variables. Any class inheriting from this class supports 
+#         reference variables.
 #   }
 # } 
 #

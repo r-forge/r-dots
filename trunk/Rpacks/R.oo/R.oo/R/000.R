@@ -3,12 +3,12 @@
 # is named "000.R" (zeros).
 ##############################################################################
 
-if (!exists("baseenv", mode="function")) {
-  baseenv <- function() NULL;
-}
 
 ############################################################################
 # HISTORY:
+# 2007-09-17
+# o Removed support for R v2.2.0 and before by removing patch for missing
+#   baseenv().
 # 2007-04-07
 # o Removed support for R v2.0.0 and before.
 # 2006-02-09

@@ -249,6 +249,8 @@ setMethodS3("getMessage", "Exception", function(this, ...) {
 # \seealso{
 #   @seeclass
 #   See also \code{\link[base:conditions]{tryCatch}}().
+#   This method overrides (and is fully backward compatible with) the one
+#   defined in the \pkg{R.methodsS3} package.
 # }
 #
 # \keyword{programming}
@@ -258,14 +260,9 @@ setMethodS3("getMessage", "Exception", function(this, ...) {
 setMethodS3("throw", "Exception", function(this, ...) {
   Exception$.lastException <- this;
   message <- getStackTraceString(this);
-#  message <- as.character(this);
-  if (R.Version()$major <= 1 && R.Version()$minor < 8.0) {
-    .Internal(stop(as.logical(FALSE), message));
-  } else {
-    signalCondition(this);
-    .Internal(.dfltStop(paste("\n", getStackTraceString(this), sep=""), getCall(this)));
-  } # if (R.Version()$major <= 1 && R.Version()$minor < 8.0) 
-})
+  signalCondition(this);
+ .Internal(.dfltStop(paste("\n", getStackTraceString(this), sep=""), getCall(this)));
+}, overwrite=TRUE, conflict="quiet")
 
 
 

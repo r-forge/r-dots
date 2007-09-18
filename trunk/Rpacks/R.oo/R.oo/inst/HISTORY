@@ -1,6 +1,15 @@
 Package: R.oo
 =============
 
+Version: 1.5.0 [2007-09-17]
+o Extracted setMethodS3() and related methods from R.oo and put them
+  in a standalone R.methodsS3 package.  While doing this, the 
+  'enforceRCC' argument used by setMethodS3() was renamed to 'validators'
+  which now takes an optional list of functions.  Any code using
+  argument 'enforceRCC=FALSE' must now use 'validators=NULL'.
+o CLEAN UP: Removed code that patched R v1.8.0 and before.
+
+
 Version: 1.3.0 [2007-08-29]
 o Now the startup message when loading the package is generated with
   packageStartupMessage() so that it can be suppressed.

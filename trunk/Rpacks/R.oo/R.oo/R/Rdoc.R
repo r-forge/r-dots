@@ -159,7 +159,7 @@ setMethodS3("getKeywords", "Rdoc", function(this, fullInfo=FALSE, ...) {
   file <- file.path(rhome, "/doc/KEYWORDS.db");
   if (!file.exists(file))
     throw("The KEYWORDS.db file was not found: ", file);
-  keywords <- readLines(file);
+  keywords <- readLines(file, warn=FALSE);
   keywords <- strsplit(keywords, ":");
   names <- lapply(keywords, FUN=function(x) x[1]);
   names <- unlist(names);
@@ -601,7 +601,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       throw(RdocException("File not found: ", filename));
   
     # Read all lines from the source code file
-    lines <- readLines(filename);
+    lines <- readLines(filename, warn=FALSE);
   
     if (length(lines) == 0)
       return(list());
@@ -1127,7 +1127,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       if (!file.exists(value)) {
         throw(RdocException("File to be included not found: ", value, source=sourcefile));
       } else {
-        include <- readLines(value);
+        include <- readLines(value, warn=FALSE);
         include <- paste(include, collapse="\n");
         include <- gsub("\\%", "\\\\%", include);
         line <- paste(include, "\n", sep="");
@@ -1144,7 +1144,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       if (!file.exists(value)) {
         throw(RdocException("File containing examples to be included not found: ", value, source=sourcefile));
       } else {
-        include <- readLines(value);
+        include <- readLines(value, warn=FALSE);
         include <- paste(include, collapse="\n");
         include <- gsub("\\%", "\\\\%", include);
         line <- paste("\\examples{\n", include, "\n}", sep="");
@@ -2207,7 +2207,7 @@ setMethodS3("getRdTitle", "Rdoc", function(this, class, method, ...) {
   rdFile <- paste(rdName, "Rd", sep=".");
   url <- file.path(getManPath(this), rdFile);
   if (file.exists(url)) {
-    src <- paste(readLines(url), collapse="\n");
+    src <- paste(readLines(url, warn=FALSE), collapse="\n");
   
     # Search for \title{...} in the Rd source
     titlePos <- regexpr("\\title\\{[^\\}]*}", src);
@@ -2412,6 +2412,8 @@ setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) 
 
 #########################################################################
 # HISTORY:
+# 2007-09-17
+# o Added 'warn=FALSE' to all readLines().
 # 2007-06-09
 # o Removed (incorrect) argument name 'list' from all substitute() calls.
 # 2007-01-06
