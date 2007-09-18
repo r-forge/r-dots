@@ -132,12 +132,11 @@
 \alias{getSource}
 
 % Utility functions
-\alias{appendVarArgs}
-\alias{appendVarArgs.function}
-\alias{hasVarArgs}
-\alias{hasVarArgs.function}
 \alias{environment}
 \alias{environment.default}
+\alias{rccValidateFunctionName}
+\alias{rccValidateSetGenericS3}
+\alias{rccValidateSetMethodS3}
 
 % Trial functions
 \alias{gc.default}

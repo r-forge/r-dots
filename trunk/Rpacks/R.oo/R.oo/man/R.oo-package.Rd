@@ -15,7 +15,7 @@
 
 
 \description{
- Methods and classes for object-oriented programming in R with or without references.  Large effort has been made on making definition of methods as simple as possible with a minimum of maintainance for package developers.  For example, generic functions are created automatically, if missing, and name conflict are automatically solved, if possible.  The method setMethodS3() is a good start for those who in the future want to migrate to S4.  The package has been developed since 2001 and is now considered very stable.
+ Methods and classes for object-oriented programming in R with or without references.  Large effort has been made on making definition of methods as simple as possible with a minimum of maintainance for package developers.  The package has been developed since 2001 and is now considered very stable.  This is a cross-platform package implemented in pure R that defines standard S3 classes without any tricks.
 
  Please note that the Rdoc syntax/grammar used to convert Rdoc comments
  in code into Rd files is not strictly defined and is modified by the
@@ -32,18 +32,16 @@
 }
 
 \section{Dependancies and other requirements}{
-  This package only requires a standard \R installation.
-  This is a cross-platform package implemented in pure \R.
+  This package requires a standard \R installation and
+  the \pkg{R.methodsS3} package.
 }
 
 \section{To get started}{
   To get started, see:
   \enumerate{
-    \item \code{\link{setMethodS3}}() - Simple and safe creation of S3 methods
-        and, whenever needed,  automatic creation of S3 generic function.
     \item \code{\link{Object}} - Root class providing support for reference
-        variables. Any class inheriting from this class supports reference
-        variables.
+        variables. Any class inheriting from this class supports
+        reference variables.
   }
 }
 
