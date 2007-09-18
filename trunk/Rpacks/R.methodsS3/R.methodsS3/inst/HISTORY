@@ -1,0 +1,10 @@
+Package: R.methodsS3
+====================
+
+Version: 1.0.0 [2007-09-17]
+o Created by extracting setMethodS3() and related methods from the 
+  R.oo package.  The purpose is to provide setMethodS3() without
+  having to load (the already lightweight) R.oo package.  For 
+  previous history related to the methods in this package, please
+  see the history of the R.oo package.
+
