@@ -8,7 +8,7 @@ o BUG FIX/WORKAROUND: moveInSearchPath() would make the package
   needed by packageDescription().  This would in turn cause 
   sessionInfo() to throw an error.  Now moveInSearchPath() makes sure
   to set all attributes on a moved package environment to what it
-  used to be. This might actually be due to a bug in base::attach().
+  used to be.
 
 
 Version: 0.9.6 [2007-08-29]
