@@ -2,6 +2,9 @@
 Package: R.utils
 ================
 
+o The default filename for eps() had extension *.ps not *.eps.
+
+
 Version: 0.9.8 [2007-11-26]
 o Added copyFile() which safely copies a file by copying to a
   temporary file, which is then renamed.
