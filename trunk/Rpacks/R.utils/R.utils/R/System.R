@@ -172,9 +172,6 @@ setMethodS3("currentTimeMillis", "System", function(this, ...) {
 #   Returns a named @list of parameter values.
 # }
 #
-# \details{
-# }
-#
 # \examples{
 #  file <- file.path(Package("R.utils")$path, "DESCRIPTION")
 #  l <- System$parseDebian(file=file)

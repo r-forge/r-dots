@@ -3,6 +3,7 @@ Package: R.utils
 ================
 
 o The default filename for eps() had extension *.ps not *.eps.
+o Cleaned out empty sections from the Rd help pages.
 
 
 Version: 0.9.8 [2007-11-26]
