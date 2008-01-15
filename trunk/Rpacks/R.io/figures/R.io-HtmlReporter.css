@@ -1,0 +1,673 @@
+/*********************************************************************
+ This HTML style sheet makes your webpage more conforming to
+ Lund University's graphical profile.
+
+
+ H o w   t o   u s e:
+
+ To include this style sheet in our HTML web page add the following
+ line *between* <head> and </head>:
+
+   <link media="screen" type="text/css" rel="StyleSheet" 
+       href="http://www.maths.lth.se/matstat/staff/hb/lu-profile.css">
+
+
+
+ A b o u t   C o l o r s:
+
+ The true RGB colors for the Lund University Graphical Profile are
+
+   LU blue      : #0C 25 77
+   LU lionbrown : #9E 5A 00
+
+ These doesn't look very good in a Sun Solaris Netscape browser, so
+ I have with trial and error found that the following looks great:
+ 
+   LU blue      : #0C 25 77
+   LU lionbrown : #A5 7B 52
+
+ However, these colors are not among the 216 web safe colors:
+
+   http://www.maths.lth.se/matstat/staff/hb/tools/pixelgenerator/websafecolors.html 
+
+ Therefore, if you really want to make sure the colors are not
+ dithered or some other artifact use the following:
+
+   LU blue      : #00 33 99
+   LU lionbrown : #99 66 00
+
+ Background stripes are image of size 1x2:
+   redback:   RGB = [FF 00 00; FF 8C 8C]
+   greenback: RGB = [00 FF 00; 8C FF 8C]
+   blueback:  RGB = [00 00 FF; 8C 8C FF]
+
+ NOTE:
+
+ Netscape 4.75 does *not* support 
+
+   background: transparent; 
+
+ correctly. The background becomes black. Don't use it or specify color.
+ 
+ H o w   t o   g e t:
+
+ URL   : http://www.maths.lth.se/jsp/css/style.css
+ Author: Henrik Bengtsson, hb@maths.lth.se
+*********************************************************************/
+
+
+/* ----------- M a i n - b o d y ----------- */
+
+body {
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+  position:        absolute;
+  top:             0px; 
+  left:            0px;
+  right:           0px;
+  bottom:          0px;
+  /* margin does not actually apply to position=absolute according to
+     the CSS standard, but it seems to be required anyway. */
+  margin:          10px;
+/*
+  margin-top:      10em;
+  margin-bottom:   10em;
+  margin-left:     10em;
+  margin-right:    10em;
+  background:      #00ff00 url(/kovalevsky/images/greenback.gif);
+  background:      #ffff00 url(/kovalevsky/images/yellowback.gif);
+  background:      #ff0000 url(/kovalevsky/images/redback.gif);
+  background:      #0000ff url(/kovalevsky/images/blueback.gif);
+*/
+  background:      #ffffff;
+  color:           #000000;
+}
+
+.BodyFrame {
+  background:      #000000;
+  color:           #ffffff;
+}
+
+.Body {
+  background:      #ffffff;
+  color:           #000000;
+}
+
+center, p, b, i, em, small, big {
+  font-family:     Arial, Verdana, Geneva,sans-serif;
+}
+
+/* ------------- H e a d e r s ------------- */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+}
+
+h1 {
+  background:      transparent;
+  color:           #CCC69B;
+  color:           #0C2577;
+}
+
+h3, h4, h5, h6 {
+  font-style:      italic;
+}
+
+
+/* --------------- L i n k s --------------- */
+
+a {
+  font-family:     Arial, Verdana, Geneva,sans-serif;
+}
+
+a:link { 
+  background:      transparent;
+  color:           #0C2577; 
+}
+a:visited { 
+  background:      transparent;
+  color:           #A57B52; 
+}
+a:active { 
+  background:      transparent;
+  color:           #0C2577; 
+}
+
+
+/* --------------- L i s t s --------------- */
+ol, ul, li {
+ font-family:      Arial, Verdana, Geneva, sans-serif;
+}
+
+
+/* ------------ V e r b a t i m ------------ */
+
+tt,code {
+  font-family:     'Courier New', monospace;
+}
+
+pre {
+  font-family:     'Courier New', monospace;
+  color:           #000099;
+  margin-bottom:   0pt;   /* Fix the problem with extra line at the bottom */
+}
+
+
+
+/* --------------- F o r m s --------------- */
+
+.FormButton {
+  background:      #8C8CFF;
+  background:      #6C6CFF;
+  color:           #ffffff;
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+  font-weight:     bold;
+  font-family:     sans-serif;
+  font-size:       x-small;
+}
+
+
+/* -------------- T a b l e s -------------- */
+
+table, tr, th, td {
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+}
+
+.TableHeader { 
+ background:       #A57B52; 
+ color:            #ffffff;
+ font-weight:      bold;
+}
+
+.Table { 
+ background:       #ffffff;
+ color:            #000000;
+ border-width:     thin;
+ border-color:     #A57B52;
+ border-style:     solid;
+}
+
+/* --------- C o d e - S t y l e s --------- */
+.SourceCode {
+  border:          dashed #000000 2px;
+  color:           #000099;
+  background:      #eeeeee;
+  font-size:       0.75em;
+  margin-bottom:   0pt; 
+  padding:         0.5em; 
+}
+
+.Code, .RCode, .TeXCode, .LaTeXCode, .CCode, .JavaCode, .PerlCode, .HTMLCode, .UnixCode { 
+ background:       transparent;
+ color:            #0C2577;
+ font-family:      'Courier New', monospace;
+}
+
+Prompt, .RPrompt { 
+ background: transparent;
+ color: #A57B52;
+ font-family: 'Courier New', monospace;
+}
+
+
+/* ----------- N e w ----------- */
+
+.New { 
+  background:      transparent;
+  color:           red; 
+  font-weight:     bold;
+}
+
+/* ----------- F o o t n o t e s ----------- */
+
+.Footnote { 
+  font-family:     Arial, Helvetica, sans-serif;
+  font-size:       80%;
+  background:      transparent;
+  color:           gray; 
+}
+
+.FootnoteInverse { 
+  background:      transparent;
+  color:           white; 
+}
+
+.FootnoteTable { 
+  background:      transparent;
+  color:           gray; 
+  font-size:       x-small;
+}
+
+/* --------------- T i t l e s ------------- */
+.Title, .SmallTitle {
+  background:      #a57b52;
+  color:           #ffffff;
+  font-family:     Arial, Helvetica, sans-serif;
+  font-size:       200%;
+  font-weight:     bold;
+  text-align:      right;
+}
+
+.SmallTitle {
+  font-size:       150%;
+  font-style:      italic;
+}
+
+/* ------- T o p   N a v i g a t o r ------- */
+
+.TopNavigator { 
+  background:      #A57B52;
+  color:           white;
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+}
+
+.TopNavigator a {
+  background:      #A57B52;
+  color:           white;
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+}
+
+.TopNavigator a:visited {
+  background:      #A57B52;
+  color:           white;
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+}
+
+.TopNavigator a:link {
+  background:      #A57B52;
+  color:           white;
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+}
+
+.TopNavigator a:active {
+  background:      #A57B52;
+  color:           white;
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+}
+
+/* ------- L e f t   N a v i g a t o r ------- */
+
+.LeftNavigator { 
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+}
+
+.LeftNavigator a {
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+}
+
+.LeftNavigator a:visited {
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+}
+
+.LeftNavigator a:link {
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+}
+
+.LeftNavigator a:active {
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+}
+
+
+/* -------------- F o o t e r -------------- */
+
+.Footer { 
+  color: #666666;
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+  font-size:       x-small;
+/*  margin-top:      2em; */
+}
+
+.Footer tr { 
+  color: #666666;
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+  font-size:       x-small;
+}
+
+.Footer tr td { 
+  color:           #666666;
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+  font-size:       x-small;
+}
+
+.Footer td { 
+  color:           #666666;
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+  font-size:       x-small;
+}
+
+a.Footer { 
+  background:      transparent;
+  color:           #666666;
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+}
+
+.Footer a:link { 
+  background:      transparent;
+  color:           #666666;
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+}
+
+.Footer a:visited { 
+  background:      transparent;
+  color:           #666666;
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+}
+
+.Footer a:active { 
+  background:      transparent;
+  color:           #666666;
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+}
+
+/* ------------ E x c e p t i o n ----------- */
+
+.Exception {
+  background:      red;
+  color:           white;
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+  font-size:       larger;
+  font-weight:     bold;
+  line-height:     200%;
+  letter-spacing:  0.3em;
+}
+
+.UnknownSectionException {
+  font-family:     Arial, Verdana, Geneva, sans-serif;
+  background:      red;
+  color:           white;
+  font-size:       larger;
+  font-weight:     bold;
+  line-height:     200%;
+  letter-spacing:  0.3em;
+}
+
+/* ------- L a T e X ------- */
+
+/* Source: http://www.miktex.org/ */
+
+span.TeX {
+  letter-spacing:  -0.125em;
+}
+
+span.TeX span.e {
+  position:        relative;
+  top:             0.5ex;
+  left:            -0.0417em;
+}
+
+span.LaTeX span.a {
+  position:        relative;
+  top:             -0.5ex;
+  left:            -0.4em;
+  font-size:       85%;
+}
+
+span.LaTeX span.epsilon {
+  position:        relative;
+  top:             0.5ex;
+}
+
+span.LaTeX span.TeX {
+  position:        relative;
+  left:            -0.4em;
+}
+
+
+/* ------- M i s c e l l a n e o u s ------- */
+
+.Small {
+  font-size:       small;
+}
+
+.Dates { 
+  font-size:       x-small; 
+}
+
+.Debug { 
+  background:      transparent;
+  color:           gray; 
+  font-size:       small; 
+}
+
+.Verbatim { 
+  background:      transparent;
+  color:           gray; 
+  font-family:     'New Courier', Courier, monospace; 
+  font-size:       small; 
+}
+
+.Filesize { 
+  background:      transparent;
+  color:           gray; 
+}
+
+.HorizontalBar {
+  background:      #A57B52;
+  color:           #000000;
+}
+
+
+
+.EventFree { 
+  background:      transparent;
+  color:           green;  
+}
+.EventBusy { 
+  background:      transparent;
+  color:           red;    
+}
+.EventTentative { 
+  background:      transparent;
+  color:           #ffff00; 
+}
+.EventOutOfOffice { 
+  background:      transparent;
+  color:           blue;   
+}
+.EventNA { 
+  background:      transparent;
+  color:           white;  
+}
+
+.WebcutsLink {
+  font-size:       x-small;
+  color:           #999999;
+}
+
+
+/* --------------- T i t l e s ------------- */
+.Title, .SmallTitle {
+  background:      #a57b52;
+  color:           #ffffff;
+  font-family:     Arial, Helvetica, sans-serif;
+  font-size:       200%;
+  font-weight:     bold;
+  text-align:      right;
+}
+
+.SmallTitle {
+  font-size:       150%;
+  font-style:      italic;
+}
+
+
+/* ----- U n i f i e d   M o d e l l i n g   L a n g u a g e  ----- */
+.UML {
+}
+
+.UML .PackageName {
+  text-align:     right;
+}
+
+
+.UML .UMLPackage {
+  padding:        0em;
+  background:     #cccccc;
+  border:         1px dashed;
+}
+
+.UML .UMLPackage .PackageName {
+  padding:        1em;
+  background:     #cccccc;
+  text-align:     right;
+}
+
+.UML .UMLClass {
+  border:         0px;
+  padding:        0px;
+  margin:         0px;
+  background:     transparent;
+}
+
+.UML .UMLClass TABLE {
+  border:         1px solid black;
+  margin:         0px solid black;
+  background:     black;
+}
+
+.UML .UMLClass TR {
+  border:         0px solid black;
+}
+
+.UML .UMLClass TD {
+  border:         1px solid black;
+  padding:        0.15em;
+}
+
+
+.UMLClass .classname {
+  background:     #bbccee;
+  font-weight:    bold;
+  text-align:     center;
+}
+
+.UMLClass .classnameA {
+  background:     #eeccbb;
+  font-weight:    bold;
+  text-align:     center;
+}
+
+.UMLClass .classnameB {
+  background:     #cceebb;
+  font-weight:    bold;
+  text-align:     center;
+}
+
+.UMLClass .classnameC {
+  background:     #eeee99;
+  font-weight:    bold;
+  text-align:     center;
+}
+
+.UMLClass .classnameD {
+  background:     #ee99ee;
+  font-weight:    bold;
+  text-align:     center;
+}
+
+.UMLClass .fields {
+  background:     #ffffff;
+  font-size:      0.75em;
+  text-align:     left;
+  font-weight:    bold;
+}
+
+.UMLClass .methods {
+  background:     #ffffff;
+  font-size:      0.75em;
+  text-align:     left;
+  font-weight:    bold;
+}
+
+.extends {
+  font-style:     normal;
+  font-size:      0.75em;
+  font-weight:    normal;
+}
+
+.UMLClass .abstract {
+  font-style:     italic;
+}
+
+.UMLClass .private {
+  color:          #666666;
+}
+
+.UMLClass .protected {
+  background:     #dddddd;
+/*  color:          #6666cc; */
+}
+
+
+/* --------- R e f e r e n c e s  ---------- */
+.References {
+  vertical-align: top;
+}
+
+.BibTeX {
+  background:     transparent;
+  color:          #000000;
+}
+
+/* ---------  R   C o d i n g   C o n v e n t i o n s  ---------- */
+.RccRecommendation {
+  background:     #ccc69b;
+  background:     #A57B52;
+  background:     #0c2577;
+  color:          #ffffff;
+  font-weight:    bold;
+}
+
+.RccPractice {
+  background:     #bbccee;
+  font-weight:    bold;
+}
+
+.RccRationale {
+  font-size:      0.75em;
+}
+
+/* ---------  R   R e p o r t e r   c l a s s e s  ---------- */
+
+.ReporterError {
+  background   : #eeeeee;
+  color        : #000000;
+  border       : medium dashed #ff0000;
+  padding      : 0.5em;
+}
+
+
+.ReporterWarning {
+  background   : #eeeeee;
+  color        : #000000;
+  border       : thin dashed #ffff00;
+  padding      : 0.5em;
+}
+
+
+
+/* HISTORY:
+
+2002-10-21
+o Cleaned up the code and left-aligned all values.
+o Added the UML class, the References class, the SourceCode class and the Rcc* classes.
+2002-08-12
+* Added the WebcutsLink class.
+2002-06-11
+* Added class .Small since Netscape 4.xx can't deal with attribute 'style'.
+2002-04-15
+* Netscape 4.75 does not support background: transparent.
+2001-12-05
+* Fixed the color attribute for all Footer classes. /HB
+2001-11-12
+* Added the class Prompt etc. /HB
+2001-11-06
+* Added the font Geneva as an option. /HB
+* Added margins to TopNavigator and Footer. /HB
+2001-11-03
+* Added the class TopNavigator. /HB
+2001-11-02
+* Added comments about web safe colors. /HB
+2001-10-24
+* Cleaned up the code and added a few comments. /HB
+
+*/

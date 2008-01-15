@@ -1,0 +1,230 @@
+Package: R.io
+=============
+
+Version: 0.36 [2007-05-09]
+o Package now passes R CMD check on R v2.5.0.
+o Replaced all deprecated trycatch() with tryCatch().
+o BUG FIX: The example for HtmlPrintStream did not generate
+  valid HTML colors for the HTML table under R v2.5.0.
+
+
+Version: 0.35 [2005-08-02]
+o The RspEngine and RspException classes are now deprecated. Use the
+  R.rsp package instead.
+
+
+Version: 0.34 [2005-05-31]
+o Package now depends on the new R.utils package. 
+o Several classes and methods has now been deprecated: 
+  - File, FileFilter, RegExprFileFilter, FileException, FileExistsException,
+    FileNotFoundException, and getTargetPathname(). Use file functions
+    R.utils instead.
+  - readJavaXXX() and writeJavaXXX() functions. Use Java in R.utils.
+o Moved readWindowsShortcut() to R.utils.
+o Moved sourceTo() to R.utils and removed the argument 'expandShortcuts'.
+
+Version: 0.33 [2005-05-03]
+o Removed unnecessary dependancy on R.colors from DESCRIPTION.
+
+Version: 0.32 [2005-03-09]
+o Added arguments 'recursive' and 'pattern' to listDir(). 
+o Remove argument 'filter' from listFiles(). This is passed to listDir()
+  by '...' instead. 
+
+Version: 0.31 [2005-02-25]
+o Now isDirectory(File("C:/")) returns TRUE.
+o Removed debug message that occured when loading R.io.
+o Update the File class to recognize C:/ as a directory.
+
+Version: 0.30 [2005-02-20]
+o Minor fixes to work with the new R.oo package.
+
+Version: 0.29 [2005-02-10]
+o Moved the Java class to the R.matlab package since it currently
+  used there.
+
+Version: 0.28 [2005-01-18]
+o Added get- and setOnStart() to LaTeXReporter.
+o Updated getVerbatim() in Reporter to utilize print() instead.
+
+Version: 0.27 [2004-10-21]
+o Updated the Reporter classes; Added begin*(), end*() and 
+  write*() to several "tags". Remove argument 'height' from
+  writeImage() again. Width and height is now handled by 
+  Device$print() as it should. 
+o Added sourceTo() to source() a file to a given environment.
+o Now File accepts any number of pathname components. 
+o Added readWindowsShortcut() to read and parse Microsoft Windows
+  Shortcut files.
+o Added getTargetPathname() to read and parse Microsoft Windows
+  Shortcut files to the target pathname.
+o Added argument 'expandShortcuts' to constructor and method 
+  getAbsolutePath() such that Microsoft Windows Shortcut files are 
+  followed. All related methods recognizes the expansion if a File 
+  object's 'expandShortcuts' field is TRUE. If there exists a "data.lnk"
+  Windows Shortcut file, both File("data.lnk") and File("data") will
+  expand it.
+o BUG FIX: 'Object "s" not found' error in pushTag() of HtmlPrintStream.
+
+Version: 0.26 [2004-07-01]
+o BUG FIX: The sub- and subsubsection counters were not reset 
+  when a new section was created. Updated HtmlReporter and
+  TextReporter.
+o Now the CSS destination directory used by HtmlReporter is
+  created if missing. In previous versions the CSS file would
+  not be copied if the directory was missing when the reporter
+  was opened.
+o BUG FIX: The example of the RspExample used paste() instead of 
+  file.path().
+o Added setIncludePath(), include(), pushRedirect(), popRedirect(), 
+  writeWarning(), writeError(), getExtension(), writeImage(),
+  beginFigure(), endFigure() to the Reporter class(es).
+
+Version: 0.25 [2004-03-02]
+o BUG FIX: Starting with R v1.8.1, strsplit(x) will not anymore 
+  make x <- as.character(x) internally. Thus strsplit(NULL) etc
+  generated errors. Updated HTMLPrintStream$escape() accordingly.
+
+Version: 0.24 [2003-12-31]
+o BUG FIX: File(NULL, child) would give an error. Now it is identical
+  to File(child) as expected.
+
+Version: 0.23 [2003-12-16]
+o Added the IOException, FileException, FileNotFoundException 
+  and FileExistsException classes.
+
+Version: 0.22 [2003-10-19]
+o Added support to extract more than just the last extension 
+  of a filename. See File's getExtension() and argument 'last=1'.
+
+Version: 0.21 [2003-04-21]
+o Replaced all occurances of getClass() with data.class().
+
+Version: 0.20 [2003-01-16]
+o Added static constants to the Java class for minimum and maximum values
+  of some of the Java data types, e.g. LONG.MIN and SHORT.MAX.
+o Added executable example code for the Java class. This was mainly
+  to have some test code that would make sure that bugs are not 
+  introduced with new version.
+o BUG FIX: readShort() of the Java class did not return integers (as it
+  could), i.e. is.integer() would return FALSE. Also, readShort() 
+  returned 32768 when it read -32768. readInt() did inherit an analogue
+  problem for the smallest possible integer.
+o BUG FIX: Java$writeUTF() and Java$readUTF() was broken because I forgot
+  to update the code to call the write/read methods as static methods as
+  introduced 2002-10-23 (see below). Thanks Toby Patterson at CSIRO in
+  Hobart for reporting the problem with the Matlab server/client code, 
+  that lead to this bug fix.
+
+Version: 0.19 [2003-01-07]
+o BUG FIX: listDir() in the class File, which is used by listFiles(), did
+  give an error if the directory was empty and a FileFilter object was to 
+  be applied.
+o BUG FIX: accept() of RegExprFileFilter now returns FALSE if pathname
+  is NULL.
+o writeEquation() of HtmlReporter now tries to convert LaTeX symbols and
+  commands into valid HTML characters. Note that some characters might not
+  be supported by some browser, e.g. greek letters.
+o writeTable() of all Reporter classes will now follow getOption("digits")
+  if nothing else is specified.
+o Added method add() to MultiReporter to make it possible to add Reporter
+  one by one and not only at construction time.
+
+Version: 0.18 [2002-12-19]
+o Added writeEquation() to the Reporter classes and made TextReporter and
+  LateXReporter to generate better tables and lists.
+o Added finalize() to the Reporter class, meaning that if one forget
+  to close an Reporter object, but it eventually will cleanup by the
+  garbage collection any reserved connection will be released.
+o Added writeAndEvaluateCode() and protected getVerbatim() to the Reporter
+  class.
+o Updated the writeVerbatim() methods to make use getVerbatim(), which
+  should guarantee that the output from all writeVerbatim() should be
+  the same.
+o Added trial version of the LaTeXReporter class.
+o Added writeList() to all Reporter classes.
+o printList() of HtmlPrintStream does not print empty item names anymore. 
+o BUG FIX: Internal bugs in writeTable() for HtmlReporter. Should
+  work better now.
+o BUG FIX: toURLEncodedPath() did incorrectly encode "-" as "2%D". This 
+  was due to an incorrect usage of regexpr(). Furthermore, the argument
+  'encodeUrlSyntax=FALSE' was added.
+Version: 0.17 [2002-10-23]
+o Added support for the RSP <%# %> tag for the RSPEngine. This tag
+  is the same as <% %> except that it also outputs the code to the
+  HTML document.
+o Added the Java class, which should contain static methods for all
+  Java related importing and exporting of data types etc.
+  Kept the writeJavaInt() et al for backward compatibility, but the
+  are deprecated and *will* be removed.
+o Renamed the HTML* classes to Html* to comply with the RCC rules.
+o Added the methods show() and chooseFile() to File.
+o Updated the package to comply to the new Object class.
+
+Version: 0.16 [2002-09-03]
+o Added writeJavaByte(), writeJavaShort(), writeJavaInt() and
+  writeJavaUTF() and the corresponding read methods. Currently
+  readJavaUTF() only supports plain ASCII sequences.
+
+Version: 0.15 [2002-07-03]
+o Added .conflict.OK to minimize number of message during loading. 
+
+Version: 0.14 [2002-05-26]
+o Package now passes the R CMD check with 5 warnings.
+o Minimized the number of warnings when loading packages.
+
+Version: 0.13 [2002-05-21]
+o BUG FIX: toURL() in class File returned "file:/" instead of "file://".
+
+Version: 0.12 [2002-05-05]
+o Implemented a working [R] Server Pages (RSP) engine. Wow ;)
+  It also create nice RSPException messages.
+  See class RSPEngine for more information.
+
+Version: 0.11 [2002-04-07]
+o Added hasEndTag() to HTMLPrintStream and made printTag() lookup up
+  if a end tag is need or not if 'endTag=NULL'. This makes life easier
+  and basically one does not have to think about setting endTag or not.
+
+Version: 0.10 [2002-04-03]
+o Argument 'child' in constructor of File can now also be a File object.
+
+Version: 0.9 [2002-04-02]
+o Renamed HTMLImageRotator to HTMLRotatableImage and made some redesign
+  of it so it is not dependent on an HTMLPrintStream.
+o Finally this package also passes Rcmd check.
+o Added isOpen() to ConnectionInputStream and ConnectionOutputStream.
+o BUG FIX: close() in ConnectionInputStream did give an error if called
+  more than once.
+
+Version: 0.8 [2002-03-26]
+o Added trial version of class HTMLImageRotator.
+o Added Rdoc comments and an extensive example for Reporter.
+o Improved the speed and the control of each cell written by
+  writeTable in class HTMLOutputStream.
+
+Version: 0.7 [2002-03-05]
+o Improved the HTMLOutputStream.
+o Added the class BufferedOutputStream.
+o The argument pathname in the accept() method of FileFilter's should
+  now accept any kind of objects. If the class is unknown, 
+  as.character() will be used.
+o Added full support for FileFilter's in listDir() and listFiles().
+o Added help pages for a lot of the classes.
+o Implemented mkdirs() in File and made some minor updates in 
+  the code for other File methods.
+
+Version: 0.6 [2002-01-24]
+o Updated HTMLPrintStream and MultiOutputStream.
+o Added Reporter, HTMLReporter, TextReporter, MultiReporter.
+
+Version: 0.5 [2002-01-21]
+
+Version: 0.4 [2001-08-04]
+
+Version: 0.3 [2001-07-17]
+
+Version: 0.2 [2001-05-06]
+
+Version: 0.1 [2001-04-30]
+o Created!

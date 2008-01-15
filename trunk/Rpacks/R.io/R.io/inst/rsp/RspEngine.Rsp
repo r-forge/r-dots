@@ -1,0 +1,146 @@
+<%-- 
+ This is the RSP file process in the example of RspEngine.
+ If you see this because you ran example(RspEngine) you
+ should see the RSP respond, a HTML document, in a web
+ browser in a few seconds...
+--%>
+
+<html>
+ <head>
+  <title>[R] Server Pages - The very first one!</title>
+  <style>
+    .HTMLCode {
+      background   : #ddddff;
+      color        : #000000;
+      border       : medium solid #00000;
+      padding      : 0.5em;
+    }
+    .RspScriptlet {
+      background   : transparent;
+      color        : #0000ff;
+      margin-bottom: 0px;
+      padding      : 0.5em;
+      border       : thin dashed #000000;
+      font-family  : 'Courier New', monospace;
+    }
+    .RspException {
+      background   : #eeeeee;
+      color        : #000000;
+      border       : medium dashed #ff0000;
+      padding      : 0.5em;
+    }
+    .RspExceptionMessage {
+      background   : #eeeeee;
+      color        : #ff0000;
+    }
+    .RspExceptionCode {
+      background   : #eeeeee;
+      color        : #0000ff;
+      font-family  : 'Courier New', monospace;
+    }
+  </style>
+ </head>
+ <body>
+  <h1>[R] Server Pages - The very first one!</h1>
+
+  Say <%="Hello world!"%> to the very first RSP code ever created. RSP stands for [R] Server Pages.
+
+  <h2>Supported RSP Tags</h2>
+  <%-- Table of supported tags --%>
+  <table border="1">
+   <tr><th>Element</th><th>RSP</th><th>Description</th></tr>
+   <tr valign="top">
+    <td>Comment</td><td>&lt;%-- <em>comment</em> --%&gt;</td>
+    <td>Documents the RSP code, but not part of the response.</td>
+   </tr>
+   <tr valign="top">
+    <td>Expression</td><td>&lt;%= <em>expression</em> %&gt;</td>
+    <td>Contains an [R] expression.</td>
+   </tr>
+   <tr valign="top">
+    <td>Scriptlet</td><td>&lt;% <em>code fragment</em> %&gt;</td>
+    <td>Runs the containing [R] code fragment.</td>
+   </tr>
+   <tr valign="top">
+    <td>Scriptlet</td><td>&lt;%# <em>code fragment</em> %&gt;</td>
+    <td>Same as above but the code fragment is first copied to the output.</td>
+   </tr>
+   <tr valign="top">
+    <td>Include Directive</td><td>&lt;%@include file="<em>URL</em>" %&gt;</td>
+    <td>Includes a URL and parses its RSP contents.</td>
+   </tr>
+  </table>
+
+
+  <h2>Scriptlets</h2>
+  <p>
+  The following code was copies from a
+  &lt;%#&nbsp;<em>code&nbsp;fragment</em>&nbsp;%&gt;
+  scriptlet to this document and then evaluated.
+  </p>
+  <%#
+x <- rnorm(1000)
+mx <- mean(x)
+  %>
+  <p>
+  The above code calculated the mean of the <em>x</em> vector to be <%=mx%>.
+  </p>
+
+
+  <h2>Include Directive</h2>
+  <p>
+   <strong>Usage:</strong> <code>&lt;%@include file="URL"%&gt;</code>
+  </p>
+  <h3>Example</h3>
+  <p>
+   The contents of the frame below was included by:<br>
+   <br>
+   &nbsp;&nbsp;<code>&lt;%@include file="RspEngine.include.rsp"%&gt;</code>
+  </p>
+  <div class="HTMLCode"><%@include file="RspEngine.include.rsp"%></div>
+  <p>
+
+
+  <h2>Special objects and methods available in the RSP context</h2>
+  <table border="1">
+   <tr><th>Object</th><th>Context</th><th>Description</th></tr>
+   <tr valign="top">
+    <td><code>page</code></td><td><em>anywhere</em></td>
+    <td>A reference to the RspEngine processing the current page.</td>
+   </tr>
+   <tr valign="top">
+    <td><code>getCurrentConnection(page)</code></td><td><em>anywhere</em></td>
+    <td>The name of the currently processed file. If files are included, then it is the name of the currently included file.</td>
+   </tr>
+   <tr valign="top">
+    <td><code>getHtmlPrintStream(page)</code></td><td><em>anywhere</em></td>
+    <td>The HtmlPrintStream to which any output can be written.</td>
+   </tr>
+  </table>
+
+  <h3>Example</h3>
+  <p>
+   The current processed connection is '<code><%=getCurrentConnection(page)%></code>'.
+  </p>
+
+  <h2>Exception handling</h2>
+  <p>
+   There is also a build in exception handling that generates informative message of RSP parsing errors or evaluation error of embedded [R] code. For example:
+  </p>
+  <p>
+   <%@include file="RspEngine.include.rsp" alt="rere"%>
+  </p>
+  <p>
+   <%@include file="RspEngine.include.notfound.rsp"%>
+  </p>
+  <p>
+   <%=log("a")%>
+  </p>
+
+  <%--     F o o t e r    --%>
+  <hr>
+  <address>
+   This page was generated on <%=date()%> by the <a href="http://www.braju.com/R/">RspEngine</a>.
+  </address>
+ </body>
+</html>

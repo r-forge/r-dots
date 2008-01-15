@@ -1,0 +1,3 @@
+This section was included from the file '<%=getCurrentConnection(page)%>' which is also containing RSP code. For example, the current time is <%=date()%>. Note that both the name of the RSP file and the timestamp was dynamically created.<br>
+<br>
+Bye ;)
