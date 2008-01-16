@@ -153,6 +153,7 @@ setMethodS3("parseAttributes", "RspEngine", function(this, rspCode, known=mandat
 
 
 setMethodS3("processRspCode", "RspEngine", function(object, rspCode, ...) {
+str(0000000);
   bfr <- rspCode;
   rspCode <- paste("&lt;%", rspCode, "%&gt;", sep="");
   if (regexpr("^=", bfr) != -1) {
@@ -251,7 +252,7 @@ setMethodS3("process", "RspEngine", function(object, con, append=FALSE, ...) {
   ready <- FALSE;
   while (!ready) {
     s <- readChar(con, nchars=nchars);
-    ready <- (nchar(s) == 0);
+    ready <- (length(s) == 0 || nchar(s) == 0);
     if (!ready) {
       bfr <- paste(bfr, s, sep="");
       if (state == HTMLmode) {
@@ -280,7 +281,7 @@ setMethodS3("process", "RspEngine", function(object, con, append=FALSE, ...) {
           }, RspException = function(ex) {
             cat(as.HTML(ex));
           }, error = function(ex) {
-            cat(ex);
+            cat(ex$message);
           })
           state <- HTMLmode;
   			} else {
@@ -300,6 +301,13 @@ setMethodS3("process", "RspEngine", function(object, con, append=FALSE, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2008-01-15
+# BUG FIX: In newer versions of R 'nchar(s)' gives NULL if length(s) == 0.
+# Now we have to test 'ready <- (length(s) == 0 || nchar(s) == 0);'
+# BUG FIX: process() of RspEngine would give "Error in cat(list(...), file, 
+# sep, fill, labels, append) : argument 1 (type 'list') cannot be handled by 
+# 'cat'" in case an error occured. Now the tryCatch() uses cat(ex$message)
+# instead of cat(ex).
 # 2007-05-09
 # o Replaced all deprecated trycatch() with tryCatch().
 # 2005-08-02

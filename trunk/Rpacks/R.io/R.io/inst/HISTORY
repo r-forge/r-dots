@@ -1,6 +1,19 @@
 Package: R.io
 =============
 
+Version: 0.37 [2008-01-15]
+o BUG FIX: printDl() of HtmlPrintStream called onLi() instead
+  of onDd() internally.
+o BUG FIX: printList() of HtmlPrintStream called onLi() with
+  an non-existing argument 'index'. Same for onDd().
+o BUG FIX: writeFigure() of HtmlReporter used a non-existing
+  variable internally.
+o BUG FIX: example(RspEngine) would give an error on recent
+  versions of R.
+o Package passes R CMD check on R v2.6.1.
+  No tests and no promises are done for version before that. 
+
+
 Version: 0.36 [2007-05-09]
 o Package now passes R CMD check on R v2.5.0.
 o Replaced all deprecated trycatch() with tryCatch().

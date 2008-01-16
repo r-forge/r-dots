@@ -281,6 +281,9 @@ setMethodS3("writeImage", "HtmlReporter", function(this, name=NULL, suffix=NULL,
   style <- sprintf("border: none; width: %dpx; height: %dpx;", dim[1], dim[2]);
   printTag(this$out, "img", src=url, alt=name, style=style);
   popTag(this$out); # "a"
+
+  # Return written filenames
+  invisible(filenames);
 })
 
 
@@ -313,7 +316,7 @@ setMethodS3("endFigure", "HtmlReporter", function(this, caption="", ...) {
 setMethodS3("writeFigure", "HtmlReporter", function(this, label=NULL, caption="", ...) {
   label <- beginFigure(this, label=label);
 
-  writeImage(this, name=label, ...);
+  filenames <- writeImage(this, name=label, ...);
   
   if (this$addDownloadLink) {
     printTag(this$out, "br");
@@ -565,6 +568,10 @@ setMethodS3("getExtension", "HtmlReporter", function(this, ...) {
 
 ######################################################################
 # HISTORY:
+# 2008-01-15
+# o BUG FIX: writeFigure() used a non-existing variable, which now
+#   equals what writeImage() returns.
+# o Now writeImage() returns the pathnames to the written files.
 # 2004-07-25
 # o Now endFigure() does not center the caption anymore.
 # 2004-07-13

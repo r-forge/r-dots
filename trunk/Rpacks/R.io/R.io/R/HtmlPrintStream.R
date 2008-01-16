@@ -887,7 +887,7 @@ setMethodS3("printList", "HtmlPrintStream", function(this, type=c("ul", "ol"), x
         }
         popTag(this, indent=FALSE);
       } else {
-        onLi(path, index, this, item);
+        onLi(path, this, item);
       }
     }
   } else {
@@ -1053,7 +1053,7 @@ setMethodS3("printDl", "HtmlPrintStream", function(this, x, ..., onDt=NULL, onDd
         }
         popTag(this, indent=indent.Dd);
       } else {
-        onLi(path, index, this, item);
+        onDd(path, this, item);
       }
     }
   } else {

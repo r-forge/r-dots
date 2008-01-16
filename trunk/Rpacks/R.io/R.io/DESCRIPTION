@@ -1,15 +1,14 @@
 Package: R.io
-Version: 0.36
-Date: 2007-05-09
+Version: 0.37
+Date: 2008-01-15
 Title: [R] Class Library - File, connection and I/O classes
 Author: Henrik Bengtsson <henrikb@braju.com>
 Maintainer: Henrik Bengtsson <henrikb@braju.com>
 Depends: R (>= 2.0.0), R.oo, R.utils
 Suggests: R.basic, R.lang, R.graphics
-Description: Contains File, connection and I/O classes.
-License: LGPL version 2.1 or newer (the releases)
+Description: Contains File, connection and I/O classes. (This package is deprecated but kept available because it is used by other package, e.g. aroma)
+License: LGPL (>= 2.1)
 URL: http://www.braju.com/R/
-ContribURL: http://www.maths.lth.se/help/R/ 
-DevelURL: http://www.maths.lth.se/help/R/
+ContribURL: http://www.braju.com/R/
+DevelURL: http://www.braju.com/R/
 LazyLoad: TRUE
-Packaged: Mon Apr  3 17:54:59 2006; hb
