@@ -36,6 +36,8 @@
 \seealso{
   For more information see \code{\link{Exception}}.
   See also \code{\link[base:conditions]{tryCatch}}().
+  This method overrides (and is fully backward compatible with) the one
+  defined in the \pkg{R.methodsS3} package.
 }
 
 \keyword{programming}

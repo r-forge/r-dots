@@ -30,9 +30,6 @@
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
-\seealso{
-}
-
 
 \keyword{methods}
 \keyword{internal}

@@ -25,10 +25,15 @@ attach(list(
         finalize(this);
       } else {
         suppressMessages({
-          require("R.oo", quietly=TRUE);
+          isRooLoaded <- require("R.oo", quietly=TRUE);
         })
 
-        finalize(this);
+        # For unknown reasons R.oo might not have been loaded.
+        if (isRooLoaded) {
+          finalize(this);
+        } else {
+          warning("Failed to temporarily reload 'R.oo' and finalize().");
+        }
 
         # NOTE! Before detach R.oo again, we have to make sure the Object:s
         # allocated by R.oo itself (e.g. an Package object), will not reload
@@ -81,6 +86,8 @@ attach(list(
 
 ############################################################################
 # HISTORY:
+# 2008-01-10
+# o Made the registered finalizer calling finalize() more error prone.
 # 2007-08-29
 # o BUG FIX: If Object:s are garbage collected after R.oo has been detached,
 #   the error 'Error in function (env) : could not find function "finalize"'

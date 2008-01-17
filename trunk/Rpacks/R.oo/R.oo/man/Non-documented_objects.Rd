@@ -134,9 +134,6 @@
 % Utility functions
 \alias{environment}
 \alias{environment.default}
-\alias{rccValidateFunctionName}
-\alias{rccValidateSetGenericS3}
-\alias{rccValidateSetMethodS3}
 
 % Trial functions
 \alias{gc.default}

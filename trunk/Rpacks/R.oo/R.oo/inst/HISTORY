@@ -1,6 +1,10 @@
 Package: R.oo
 =============
 
+Version: 1.4.1 [2008-01-10]
+o Made the registered finalizer calling finalize() more error prone.
+
+
 Version: 1.4.0 [2007-09-17]
 o Extracted setMethodS3() and related methods from R.oo and put them
   in a standalone R.methodsS3 package.  While doing this, the 

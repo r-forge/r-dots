@@ -93,9 +93,6 @@ setMethodS3("getSuperclasses", "classRepresentation", function(this, ...) {
 #
 # @author
 #
-# \seealso{
-# }
-#
 # @keyword documentation
 #*/###########################################################################
 setMethodS3("getRdHierarchy", "classRepresentation", function(this, ...) {
@@ -156,9 +153,6 @@ setMethodS3("getRdHierarchy", "classRepresentation", function(this, ...) {
 #
 # @author
 #
-# \seealso{
-# }
-#
 # @keyword documentation
 #*/###########################################################################
 setMethodS3("getRdDeclaration", "classRepresentation", function(this, ...) {
@@ -218,9 +212,6 @@ setMethodS3("getRdDeclaration", "classRepresentation", function(this, ...) {
 # }
 #
 # @author
-#
-# \seealso{
-# }
 #
 # @keyword documentation
 #*/###########################################################################
