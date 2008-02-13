@@ -2,6 +2,20 @@
 Package: R.matlab
 =================
 
+Version: 1.2.0 [2008-02-12]
+o Added support for reading compressed MAT files.  It requires
+  that the 'Rcompression' package (Omegahat.org) is available.
+o Added support for also returning sparse matrices according to
+  the representations given by either the 'Matrix' or the
+  'SparseM' package.
+o Added simple UTF-* string support.  Conversion should be 
+  accurate when the R installation supports iconv.
+o Added mat-files/StructWithSparseMatrix-v4.mat from JR.
+o Credits for all of the above new feature goes to Jason Riedy
+  at the Computer Science Dept, UC Berkeley.  Thanks also to 
+  Duncan Temple-Lang at UC Davis for the Rcompression package.
+
+
 Version: 1.1.4 [2007-04-19]
 o Added a "hint" to error message 'Tag type not supported: 
   miCOMPRESSED' to clarify that readMat() does not support 

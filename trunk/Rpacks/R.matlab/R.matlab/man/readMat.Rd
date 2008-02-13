@@ -23,15 +23,26 @@
  Both the MAT version 4 and MAT version 5 file formats are
  supported. The implementation is based on [1].
 
- From Matlab v7, \emph{compressed} MAT version 5 files are used
- by default [3]. These are not supported.
- Use \code{save -V6} in Matlab to write a MAT file compatible with
- Matlab v6, that is, to write a non-compressed MAT version 5 file.
+ From Matlab v7, \emph{compressed} MAT version 5 files are used by
+ default [3], which can be read (not written) if the \pkg{Rcompression}
+ package is installed.  See \code{\link{R.matlab}} for more details on that
+ package.
+
+ If \pkg{Rcompression} is not available, use \code{save -V6} in Matlab
+ to write a MAT file compatible with Matlab v6, that is, to write a
+ non-compressed MAT version 5 file.
+
  Note: Do not mix up version numbers for the Matlab software and
  the Matlab file formats.
+
+ Recent versions of Matlab store some strings using Unicode
+ encodings.  If the R installation supports \code{\link{iconv}},
+ these strings will be read correctly.  Otherwise non-ASCII codes
+ are converted to NA.  Saving to an earlier file format version
+ may avoid this problem as well.
 }
 
-\usage{\method{readMat}{default}(con, maxLength=NULL, fixNames=TRUE, verbose=FALSE, ...)}
+\usage{\method{readMat}{default}(con, maxLength=NULL, fixNames=TRUE, verbose=FALSE, sparseMatrixClass=c("Matrix", "SparseM", "matrix"), ...)}
 
 \arguments{
   \item{con}{Binary \code{\link[base:connections]{connection}} to which the MAT file structure should be
@@ -50,6 +61,10 @@
     the threshold is set to -1 (minimal). If \code{\link[base:logical]{FALSE}}, no output is written
     (and neither is the \link[R.utils:R.utils-package]{R.utils} package required).
   }
+  \item{sparseMatrixClass}{If \code{"matrix"}, a sparse matrix is expanded to
+    a regular \code{\link[base]{matrix}}.  If either \code{"Matrix"} (default) or \code{"SparseM"},
+    the sparse matrix representation by the package of the same name will be used.
+    These packages are only loaded if the a sparse matrix is read.}
   \item{...}{Not used.}
 }
 
@@ -61,9 +76,6 @@
 \details{
   For the MAT v5 format, \emph{cell} structures are read into
   \R as a \code{\link[base]{list}} structure.
-
-  Sparse matrices are converted into plain matrices, which means that
-  some matrices will be too large to be allocated.
 }
 
 \examples{
@@ -98,6 +110,28 @@ mat5 <- readMat(file.path(path, "SparseMatrix3-v5.mat"))
 diff <- sum(abs(mat4$sparseM - mat5$sparseM))
 if (diff > .Machine$double.eps)
   stop("Failed to read identical MAT v4 and MAT v5 sparse matrices.")
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Assert that sparse matrices can be read as 'Matrix' and 'SparseM'
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+pathname <- file.path(path, "SparseMatrix3-v4.mat")
+mat4a <- readMat(pathname, sparseMatrixClass="matrix")
+
+if (require("Matrix")) {
+  mat4b <- readMat(pathname, sparseMatrixClass="Matrix")
+  diff <- sum(abs(as.matrix(mat4b$sparseM) - mat4a$sparseM))
+  if (diff > .Machine$double.eps)
+    stop("Failed to read MAT v4 sparse matrix by class 'Matrix'.")
+}
+
+if (require("SparseM")) {
+  mat4c <- readMat(pathname, sparseMatrixClass="SparseM");
+  diff <- sum(abs(as.matrix(mat4c$sparseM) - mat4a$sparseM))
+  if (diff > .Machine$double.eps)
+    stop("Failed to read MAT v4 sparse matrix by class 'SparseM'.")
+}
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Assert that signed and unsigned integers are read correctly
@@ -143,6 +177,8 @@ print(s[,,2])
   The internal MAT v4 reader was written by
   Andy Jacobson at Program in Atmospheric and Oceanic Sciences,
   Princeton University.
+  Support for read compressed files, sparse matrices and UTF-encoded
+  strings was added by Jason Riedy, UC Berkeley.
 }
 
 \seealso{

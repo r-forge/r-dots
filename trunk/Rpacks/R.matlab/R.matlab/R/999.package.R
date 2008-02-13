@@ -21,12 +21,17 @@
 #   This is a cross-platform package implemented in plain \R.
 #   This package depends on the \pkg{R.oo} package [1].
 #
+#   In order to read compressed MAT files, the \pkg{Rcompression} 
+#   package is required.  To install that package, please see 
+#   instructions \url{http://www.omegahat.org/cranRepository.html}.
+#
 #   To use the Matlab class or requesting verbose output messages, the 
 #   \link[R.utils:R.utils-package]{R.utils} package is loaded 
 #   when needed (and therefore required at in those cases).
 #
-#   The \code{readMat()} and \code{writeMat()} methods do \eqn{not} require a 
-#   Matlab installation neither do they depend on the Matlab class.
+#   The \code{readMat()} and \code{writeMat()} methods do \eqn{not} 
+#   require a Matlab installation neither do they depend on the 
+#   @see "Matlab" class.
 #
 #   To connect to Matlab, Matlab v6 or higher is required.
 #   It does \emph{not} work with Matlab v5 or before (because there those 

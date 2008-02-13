@@ -563,12 +563,12 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
     # Argument 'verbose':
     if (inherits(verbose, "Verbose")) {
     } else if (is.numeric(verbose)) {
-      require(R.utils) || throw("Package not available: R.utils");
+      require("R.utils") || throw("Package not available: R.utils");
       verbose <- Verbose(threshold=verbose);
     } else {
       verbose <- as.logical(verbose);
       if (verbose) {
-        require(R.utils) || throw("Package not available: R.utils");
+        require("R.utils") || throw("Package not available: R.utils");
         verbose <- Verbose(threshold=-1);
       }
     }

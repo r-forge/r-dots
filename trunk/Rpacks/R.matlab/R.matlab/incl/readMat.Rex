@@ -30,6 +30,28 @@ diff <- sum(abs(mat4$sparseM - mat5$sparseM))
 if (diff > .Machine$double.eps)
   stop("Failed to read identical MAT v4 and MAT v5 sparse matrices.")
 
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# Assert that sparse matrices can be read as 'Matrix' and 'SparseM'
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+pathname <- file.path(path, "SparseMatrix3-v4.mat")
+mat4a <- readMat(pathname, sparseMatrixClass="matrix")
+
+if (require("Matrix")) {
+  mat4b <- readMat(pathname, sparseMatrixClass="Matrix")
+  diff <- sum(abs(as.matrix(mat4b$sparseM) - mat4a$sparseM))
+  if (diff > .Machine$double.eps)
+    stop("Failed to read MAT v4 sparse matrix by class 'Matrix'.")
+}
+
+if (require("SparseM")) {
+  mat4c <- readMat(pathname, sparseMatrixClass="SparseM");
+  diff <- sum(abs(as.matrix(mat4c$sparseM) - mat4a$sparseM))
+  if (diff > .Machine$double.eps)
+    stop("Failed to read MAT v4 sparse matrix by class 'SparseM'.")
+}
+
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Assert that signed and unsigned integers are read correctly
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
