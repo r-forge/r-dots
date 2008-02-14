@@ -2,6 +2,12 @@
 Package: R.cache
 ===============
 
+Version: 0.1.7 [2008-02-14]
+o BUG FIX: The throw() for invalid identifiers was trying to put 
+  the connection object is the out and not the identifier.
+o Now error messages specifies the pathname, if available.
+
+
 Version: 0.1.6 [2007-07-02]
 o Now environments, in addition to lists, may be used as keys
   for generating cache names.

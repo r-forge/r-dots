@@ -131,8 +131,8 @@ setMethodS3("loadCache", "default", function(key=NULL, sources=NULL, suffix=".Rc
     object <- NULL;  # To please 'codetools' in R v2.6.0
     vars <- baseLoad(con=fh, ...);  # 'vars' holds names of loaded objects
     if (!identical(vars, "object")) {
-      throw("Rcache file format error. Expected 'object' object: ", 
-                                                paste(vars, collapse=", "));
+      throw("Rcache file format error ('", pathname, 
+            "'). Expected 'object' object: ", paste(vars, collapse=", "));
     }
 
     # 5. Return cached object
@@ -147,6 +147,8 @@ setMethodS3("loadCache", "default", function(key=NULL, sources=NULL, suffix=".Rc
 
 ############################################################################
 # HISTORY:
+# 2008-02-14
+# o Now errors reports the pathname, if available.
 # 2006-08-09
 # o Added link to cache() in Biobase.
 # 2006-05-25
