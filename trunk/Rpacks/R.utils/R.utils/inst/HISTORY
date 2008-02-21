@@ -3,7 +3,8 @@ Package: R.utils
 ================
 
 Version: 1.0.0 [2008-02-21]
-o Added method colClasses() for creating "colClasses" vectors.
+o Added colClasses() for creating "colClasses" vectors.
+o Addeed isPackageLoaded(). 
 o The default filename for eps() had extension *.ps not *.eps.
 o Cleaned out empty sections from the Rd help pages.
 o BUG FIX: When 'values' was a non-list its values were placed 
