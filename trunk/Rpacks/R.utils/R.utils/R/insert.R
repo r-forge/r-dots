@@ -52,7 +52,7 @@ setMethodS3("insert", "default", function(x, ats, values=NA, ...) {
     throw("Argument 'values' is not a vector: ", class(values));
 
   if (!is.list(values))
-    values <- list(values);
+    values <- as.list(values);
 
   if (length(ats) != length(values)) 
     throw("Argument 'ats' and argument 'values' has different lengths: ", 
@@ -122,6 +122,9 @@ setMethodS3("insert", "default", function(x, ats, values=NA, ...) {
 
 ############################################################################
 # HISTORY:
+# 2008-02-21
+# o BUG FIX: When 'values' was a non-list its values were placed in a 
+#   single-element list.  Should have been as.list().
 # 2005-06-12
 # o Updated a lot! Wrote a rather large example.
 # 2005-02-20
