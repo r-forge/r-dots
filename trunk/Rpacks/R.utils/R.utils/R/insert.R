@@ -51,8 +51,13 @@ setMethodS3("insert", "default", function(x, ats, values=NA, ...) {
   if (!is.vector(values))
     throw("Argument 'values' is not a vector: ", class(values));
 
-  if (!is.list(values))
-    values <- as.list(values);
+  if (!is.list(values)) {
+    if (length(ats) == 1) {
+      values <- list(values);
+    } else {
+      values <- as.list(values);
+    }
+  }
 
   if (length(ats) != length(values)) 
     throw("Argument 'ats' and argument 'values' has different lengths: ", 
