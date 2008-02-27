@@ -27,6 +27,9 @@
 # \seealso{
 #   @see "base::require".
 # }
+#
+# @keyword utilities
+# @keyword package
 #*/########################################################################### 
 setMethodS3("isPackageLoaded", "default", function(package, version=NULL, ...) {
   s <- search();

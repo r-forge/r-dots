@@ -19,3 +19,14 @@ print(c1)
 # Passing repeats and class names using sprintf() syntax
 c2 <- colClasses("%dc{%s}%d{foo}", 3, "MyClass", 3)
 stopifnot(identical(c1, c2))
+
+# Repeats of a vector of column classes
+c3 <- colClasses("3{MyClass,c}")
+print(c3)
+## [1] "MyClass"   "character" "MyClass"   "character"
+## [4] "MyClass"   "character"
+
+# Large number repeats
+c4 <- colClasses("321{MyClass,c,i,d}")
+c5 <- rep(c("MyClass", "character", "integer", "double"), times=321)
+stopifnot(identical(c4, c5))
