@@ -1,6 +1,10 @@
 Package: R.methodsS3
 ====================
 
+Version: 1.0.1 [2008-02-12]
+o Added paper to citation("R.methodsS3").
+
+
 Version: 1.0.0 [2007-09-17]
 o Created by extracting setMethodS3() and related methods from the 
   R.oo package.  The purpose is to provide setMethodS3() without
