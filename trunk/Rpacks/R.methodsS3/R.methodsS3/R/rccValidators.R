@@ -8,7 +8,7 @@ rccValidateFunctionName <- function(name, ...) {
   allowedFirst <- c("?", "$", "$<-", "[", "[<-", "[[", "[[<-");
   if (!is.element(firstLetter, allowedFirst)) {
     if (!is.element(tolower(firstLetter), letters))
-      throw("Method names must begin with a lower case letter (a-z): ", name);
+      throw("Method names must begin with a letter: ", name);
 
     # Check first letter  
     if (firstLetter == toupper(firstLetter))
