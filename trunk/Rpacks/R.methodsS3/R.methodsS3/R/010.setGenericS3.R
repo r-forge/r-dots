@@ -68,7 +68,7 @@ setGenericS3.default <- function(name, envir=parent.frame(), ellipsesOnly=TRUE, 
   # Backward compatibility tests
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   args <- list(...);
-  if ("enforceRCC" %in% names(args)) {
+  if (is.element("enforceRCC", names(args))) {
     warning("Argument 'enforceRCC' of setGenericS3() has been replaced by argument 'validators'.");
     # Turn off validators?
     if (args$enforceRCC == FALSE) {

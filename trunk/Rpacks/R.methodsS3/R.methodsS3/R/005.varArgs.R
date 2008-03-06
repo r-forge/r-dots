@@ -5,7 +5,7 @@ hasVarArgs.function <- function(fcn, ...) {
   # Get the current formals
   args <- formals(fcn);
 
-  ("..." %in% names(args));
+  is.element("...", names(args));
 } # hasVarArgs()
 
 hasVarArgs <- function(...) UseMethod("hasVarArgs");

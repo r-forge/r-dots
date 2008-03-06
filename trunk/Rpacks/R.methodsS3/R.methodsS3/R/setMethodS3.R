@@ -72,7 +72,7 @@ setMethodS3.default <- function(name, class="default", definition, private=FALSE
   # Backward compatibility tests
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   args <- list(...);
-  if ("enforceRCC" %in% names(args)) {
+  if (is.element("enforceRCC", names(args))) {
     warning("Argument 'enforceRCC' of setGenericS3() has been replaced by argument 'validators'.");
     # Turn off validators?
     if (args$enforceRCC == FALSE) {
@@ -93,7 +93,7 @@ setMethodS3.default <- function(name, class="default", definition, private=FALSE
   # Ignore argument 'appendVarArgs' if a "special" method 
   # or a replacement method.
   if (appendVarArgs) {
-    appendVarArgs <- !(name %in% c("$", "$<-", "[[", "[[<-", "[", "[<-"));
+    appendVarArgs <- !is.element(name, c("$", "$<-", "[[", "[[<-", "[", "[<-"));
     appendVarArgs <- appendVarArgs && !(regexpr("<-", name) != -1);
   }
 
@@ -222,7 +222,7 @@ setMethodS3.default <- function(name, class="default", definition, private=FALSE
     "$<-"  = c(NA, "name", "value")
   )
 
-  if (name %in% names(pickyMethods)) {
+  if (is.element(name, names(pickyMethods))) {
     f <- formals(definition);
 
     fStr <- capture.output(args(definition))[[1]];
