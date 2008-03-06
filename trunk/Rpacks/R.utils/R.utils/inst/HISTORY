@@ -2,6 +2,14 @@
 Package: R.utils
 ================
 
+Version: 1.0.1 [2008-03-06]
+o BUG FIX: Regular expression pattern 'a-Z' is illegal on (at least) 
+  some locale, e.g. 'C' (where 'A-z' works). The only way to specify 
+  the ASCII alphabet is to list all characters explicitly, which we now
+  do in all methods of the package.  See the r-devel thread 
+  "invalid regular expression '[a-Z]'" on 2008-03-05 for details.
+
+
 Version: 1.0.0 [2008-02-26]
 o Added touchFile() for updating the timestamp of a file.
 o Added colClasses() for creating "colClasses" vectors.

@@ -347,7 +347,7 @@ setMethodS3("openBrowser", "System", function(this, query, ...) {
   }
 
   url <- as.character(query);
-  if (regexpr("^[a-z][a-z]*:", url) == -1) {
+  if (regexpr("^[abcdefghijklmnopqrstuvwxyz]+:", url) == -1) {
     # Assume we are dealing with a file
     file <- filePath(url);
     if (!file.exists(file))

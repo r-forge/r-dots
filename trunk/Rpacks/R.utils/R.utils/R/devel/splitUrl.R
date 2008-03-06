@@ -33,7 +33,7 @@ setMethodS3("splitUrl", "default", function(pathname, ...) {
     throw("Can not split URL. Not a valid URL: ", pathname);
 
   # Get the protocol
-  pattern <- "^([a-z][a-z]*)(://)(.*)";
+  pattern <- "^([abcdefghijklmnopqrstuvwxyz]+)(://)(.*)";
   protocol <- gsub(pattern, "\\1", pathname);
   tail <- gsub(pattern, "\\3", pathname);
 

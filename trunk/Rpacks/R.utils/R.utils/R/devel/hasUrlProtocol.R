@@ -4,7 +4,7 @@
 # @title "Checks if one or several pathnames has a URL protocol"
 #
 # \description{
-#  @get "title", i.e. if they contain the pattern "^[a-z][a-z]*://" or not.
+#  @get "title", i.e. if they contain the pattern "^[abc...z]+://" or not.
 # }
 #
 # @synopsis
@@ -24,7 +24,7 @@
 # @keyword programming
 #*/###########################################################################
 setMethodS3("hasUrlProtocol", "default", function(pathname, ...) {
-  pattern <- "^([a-z][a-z]*)(://.*)";
+  pattern <- "^([abcdefghijklmnopqrstuvwxyz]+)(://.*)";
   (regexpr(pattern, pathname) != -1);
 })
 
