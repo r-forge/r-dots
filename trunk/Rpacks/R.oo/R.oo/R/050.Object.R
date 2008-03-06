@@ -1256,7 +1256,7 @@ setMethodS3("extend", "Object", function(this, ...className, ..., ...fields=NULL
   parseModifiers <- function(args, ...) {
     names <- names(args);
   
-    pattern <- "([a-z ]*):(.*)$";
+    pattern <- "([abcdefghijklmnopqrstuvwxyz ]*):(.*)$";
     modifiers <- rep("", length(names));
     idx <- grep(pattern, names);
     modifiers[idx] <- gsub(pattern, "\\1", names[idx]);
@@ -1264,7 +1264,7 @@ setMethodS3("extend", "Object", function(this, ...className, ..., ...fields=NULL
     modifiers <- lapply(modifiers, gsub, pattern=" *", replacement="");
   
     # Get the real names
-    names[idx] <- gsub("[a-z ]*:", "", names[idx]);
+    names[idx] <- gsub("[abcdefghijklmnopqrstuvwxyz ]*:", "", names[idx]);
     names(args) <- names;
   
     # Set modifier attributes

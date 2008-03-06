@@ -439,7 +439,7 @@ setMethodS3("escapeRdFilename", "Rdoc", function(static, filename, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # A filename must start with a letter or a digit
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  startOk <- (regexpr("^[a-zA-Z0-9]", filename) != -1);
+  startOk <- (regexpr("^[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]", filename) != -1);
   if (!startOk) {
     # Fix Rd filename (not really important actually).
     filename <- paste("000", filename, sep="");
@@ -766,7 +766,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
     names <- names(shorttags);
     match <- gsub("\\.", "\\\\.", names);
     attr(shorttags, "beginsWith") <- paste("^@", match, sep="");
-    attr(shorttags, "contains") <- paste("[^a-zA-Z0-9.]@", match, sep="");
+    attr(shorttags, "contains") <- paste("[^abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9.]@", match, sep="");
     replace <- paste("\\link[", unlist(shorttags), "]{", names, "}", sep="");
     replace[is.na(shorttags)] <- names[is.na(shorttags)];
     replace <- paste("\\code{", replace, "}", sep="");
@@ -1556,7 +1556,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
   
         # (ii) ...otherwise...
         if (pos == -1) {
-          pos <- regexpr("[^a-zA-Z0-9.]@", rdoc);
+          pos <- regexpr("[^abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9.]@", rdoc);
           if (pos == -1)
             break;  # No more tags. Done!
           # Save everything before the tag...
@@ -1596,7 +1596,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
                list(tagFunction=tagFunction, rdoc=rdoc)));
           }
         } else {
-          pos <- regexpr("[^a-zA-Z0-9]", substring(rdoc, 2));
+          pos <- regexpr("[^abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]", substring(rdoc, 2));
           tagName <- substring(rdoc, 1, pos);
           msg <- paste("Unknown tag not processed in ", sourcefile, ": ", tagName, "\n", sep="");
           warning(msg);

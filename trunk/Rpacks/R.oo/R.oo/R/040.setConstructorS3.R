@@ -5,7 +5,7 @@
 #
 # \description{
 #  Defines a class in R.oo/S3 style.
-#  The class name is validated so it starts with a letter (A-Z) and it
+#  The class name is validated so it starts with a letter and it
 #  also gives a @warning if its first letter is \emph{not} captial. The
 #  reason for this is to enforce a naming convention that names classes
 #  with upper-case initial letters and methods with lower-case initial
@@ -78,7 +78,7 @@ setMethodS3("setConstructorS3", "default", function(name, definition,
     # Assert that the class name is a valid class name.
     firstLetter <- substring(name, 1,1);
     if (!is.element(tolower(firstLetter), letters))
-      throw(RccViolationException("Class names must begin with a letter (A-Z): ", name));
+      throw(RccViolationException("Class names must begin with a letter: ", name));
   
     # Check first letter
     if (firstLetter == tolower(firstLetter))
