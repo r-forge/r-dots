@@ -638,7 +638,7 @@ setMethodS3("queryOneDay", "KelkooFlightScan", function(this, from, to, depDate,
           ticket[["price"]] <- as.numeric(price[1]);
 
           # Extract currency
-          currency <- gsub("[^a-zA-Z]", "", values);
+          currency <- gsub("[^abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]", "", values);
           currency <- charToRaw(currency);
           currency <- currency[currency >= 32 & currency <= 127];
           currency <- rawToChar(currency);

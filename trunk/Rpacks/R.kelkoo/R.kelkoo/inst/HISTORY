@@ -1,7 +1,15 @@
 Package: R.kelkoo
 =================
 
-Version: 0.2.2 [2007-07-23xx]
+Version: 0.2.3 [2008-03-06]
+o BUG FIX: Regular expression pattern 'a-Z' is illegal on (at least) 
+  some locale, e.g. 'C' (where 'A-z' works). The only way to specify 
+  the ASCII alphabet is to list all characters explicitly, which we now
+  do in all methods of the package.  See the r-devel thread 
+  "invalid regular expression '[a-Z]'" on 2008-03-05 for details.
+
+
+Version: 0.2.2 [2007-07-23]
 o Added support for specifying number of adults, children, and babies.
 o Now the heatmaps in the reports are covering values in
   quantiles [0,0.99].  Higher heatmap values are truncated 

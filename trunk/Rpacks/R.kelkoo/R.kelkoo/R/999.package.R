@@ -21,15 +21,9 @@
 #   }
 # }
 #
-# \section{How to cite this package}{
-# }
-#
 # \section{License}{
 #   The releases of this package is licensed under 
 #   LGPL version 2.1 or newer.
-# }
-# 
-# \references{
 # }
 #*/#########################################################################
 

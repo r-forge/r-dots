@@ -220,7 +220,7 @@ setMethodS3("parseHtmlTree", "KelkooScan", function(this, url, verbose=FALSE, ch
 
   # Load results for local cache?
   key <- list(url=url);
-  rawURL <<- url;
+  ## rawURL <<- url;  # For debugging only
   dirs <- c("R.kelkoo", "downloads", getToday(this));
   bfr <- loadCache(key=key, dirs=dirs);
   if (is.null(bfr) || force) {
