@@ -1,6 +1,6 @@
 Package: R.io
-Version: 0.37
-Date: 2008-01-15
+Version: 0.38
+Date: 2008-03-06
 Title: [R] Class Library - File, connection and I/O classes
 Author: Henrik Bengtsson <henrikb@braju.com>
 Maintainer: Henrik Bengtsson <henrikb@braju.com>

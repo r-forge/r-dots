@@ -104,7 +104,7 @@ setMethodS3("parseAttributes", "RspEngine", function(this, rspCode, known=mandat
       bfr <- substring(bfr, len+1);
   
       # Read the attribute name
-      pos <- regexpr("^[a-zA-Z][a-zA-Z]*", bfr);
+      pos <- regexpr("^[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]+", bfr);
       if (pos == -1)
         throw(RspException("Error when parsing attributes. Expected an attribute name.", rspCode));
       len <- attr(pos, "match.length");

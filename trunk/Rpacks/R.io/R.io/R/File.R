@@ -867,7 +867,7 @@ setMethodS3("split", "File", function(x, f, ...) {
 
 setMethodS3("removeUps", "File", function(static, pathname, verbose=FALSE, ...) {
   # Treat C:/, C:\\, ... special
-  if (regexpr("^[A-Z]:[/\\]$", pathname) != -1)
+  if (regexpr("^[ABCDEFGHIJKLMNOPQRSTUVWXYZ]:[/\\]$", pathname) != -1)
     return(gsub("\\\\", "/", pathname));
 
   components <- File$split(pathname);
@@ -1007,7 +1007,7 @@ setMethodS3("getAbsolutePath", "File", function(this, expandShortcuts=this$expan
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   followShortcuts <- function(pathname, mustExist=FALSE, verbose=FALSE) {
     # Treat C:/, C:\\, ... special
-    if (regexpr("^[A-Z]:[/\\]$", pathname) != -1)
+    if (regexpr("^[ABCDEFGHIJKLMNOPQRSTUVWXYZ]:[/\\]$", pathname) != -1)
       return(gsub("\\\\", "/", pathname));
 
     # Requires that the 'pathname' is a absolute pathname.
@@ -1290,7 +1290,7 @@ setMethodS3("getParent", "File", function(this, ...) {
   pathname <- getAbsolutePath(this);
 
   # Treat C:/, C:\\, ... special, that is, not at all.
-  if (regexpr("^[A-Z]:[/\\]$", pathname) != -1)
+  if (regexpr("^[ABCDEFGHIJKLMNOPQRSTUVWXYZ]:[/\\]$", pathname) != -1)
     return(paste(gsub("[\\/]$", "", pathname), this$separator, sep=""));
 
   # Split by '/' or '\\'
@@ -1300,12 +1300,12 @@ setMethodS3("getParent", "File", function(this, ...) {
 
   if (len == 2) {
     # Treat C:/, C:\\, ... special, that is, not at all.
-    if (regexpr("^[A-Z]:$", pathname[1]) != -1)
+    if (regexpr("^[ABCDEFGHIJKLMNOPQRSTUVWXYZ]:$", pathname[1]) != -1)
       return(paste(pathname[1], this$separator, sep=""));
   }
 
   name <- pathname[len];
-  reg <- regexpr("^[A-Z]:", name);
+  reg <- regexpr("^[ABCDEFGHIJKLMNOPQRSTUVWXYZ]:", name);
   if (reg != -1) {
     pathname[len] <- substring(name, first=1, last=attr(reg, "match.length"));
     if (len == 1)
@@ -1385,7 +1385,7 @@ setMethodS3("getPath", "File", function(this, removeSuffix=FALSE, ...) {
     pathname <- gsub("/", "\\\\", pathname);
 
   # Treat C:/, C:\\, ... special, that is, not at all.
-  if (regexpr("^[A-Z]:[/\\]$", pathname) == -1)
+  if (regexpr("^[ABCDEFGHIJKLMNOPQRSTUVWXYZ]:[/\\]$", pathname) == -1)
     pathname <- gsub("[\\/]$", "", pathname);
 
   if (removeSuffix)
@@ -1432,7 +1432,7 @@ setMethodS3("toURL", "File", function(this, safe=TRUE, ...) {
 
 setMethodS3("toURLEncodedPath", "File", function(this, pathname, encodeUrlSyntax=FALSE, ...) {
   hexDigits <- c("0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F");
-  # "...Only alphanumerics [0-9a-zA-Z], the special characters
+  # "...Only alphanumerics [0-9a...zA...Z], the special characters
   # "$-_.+!*'()," [not including the quotes - ed], and reserved
   # characters used for their reserved purposes may be used unencoded
   # within a URL." [1]
@@ -1444,9 +1444,9 @@ setMethodS3("toURLEncodedPath", "File", function(this, pathname, encodeUrlSyntax
   
   # Note '-' must be last!!!
   if (encodeUrlSyntax == TRUE) {
-    keepSet <- "[0-9a-zA-Z$_.+!*'(),-]";
+    keepSet <- "[0-9abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_.+!*'(),-]";
   } else {
-    keepSet <- "[0-9a-zA-Z$_.+!*'(),;/?:@=#&-]";
+    keepSet <- "[0-9abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_.+!*'(),;/?:@=#&-]";
   }
   res <- NULL;
   pathname <- as.character(pathname);
