@@ -14,7 +14,7 @@
 
 \description{
  Defines a class in R.oo/S3 style.
- The class name is validated so it starts with a letter (A-Z) and it
+ The class name is validated so it starts with a letter and it
  also gives a \code{\link[base]{warning}} if its first letter is \emph{not} captial. The
  reason for this is to enforce a naming convention that names classes
  with upper-case initial letters and methods with lower-case initial

@@ -26,8 +26,8 @@
 }
 
 \value{
-  Returns a \code{\link[base]{double}} (\eqn{2^64} bytes, cf an \code{\link[base]{integer}}
-  addresses \eqn{2^32} bytes).
+  Returns a \code{\link[base]{double}} (can hold 64-bit addresses, whereas an \code{\link[base]{integer}} can
+  only hold 32-bit addresses).
 }
 
 \examples{
@@ -38,6 +38,7 @@
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
+  \code{\link[getName.environment]{getName()}}.
   For more information see \code{\link{Object}}.
 }
 

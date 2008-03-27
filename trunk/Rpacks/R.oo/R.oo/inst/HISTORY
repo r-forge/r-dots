@@ -1,6 +1,10 @@
 Package: R.oo
 =============
 
+Version: 1.4.3 [2008-03-25]
+o BUG FIX: getInternalAddress() would return NA.
+o Added getName() for environment:s.
+
 Version: 1.4.2 [2008-03-06]
 o Added paper to citation("R.oo").
 o BUG FIX: Regular expression pattern 'a-Z' is illegal on (at least) 
