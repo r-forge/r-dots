@@ -35,7 +35,7 @@
 # @keyword internal
 #*/#########################################################################
 ASCII <- c(
-  "\000","\001","\002","\003","\004","\005","\006","\007", # 000-007
+  "","\001","\002","\003","\004","\005","\006","\007", # 000-007
   "\010","\011","\012","\013","\014","\015","\016","\017", # 010-017
   "\020","\021","\022","\023","\024","\025","\026","\027", # 020-027
   "\030","\031","\032","\033","\034","\035","\036","\037", # 030-037
@@ -68,6 +68,15 @@ ASCII <- c(
   "\360","\361","\362","\363","\364","\365","\366","\367", # 360-367
   "\370","\371","\372","\373","\374","\375","\376","\377"  # 370-377
 );
+
+# We removed ASCII 0x00, because it represents an empty string in 
+# R v2.7.0 (and maybe some earlier version) and in R v2.8.0 we will get 
+# a warning.  However, for backward compatibility we will still use it
+# for version prior to R v2.7.0.  See also email from Brian Ripley
+# on 2008-04-23 on this problem.
+if (compareVersion(as.character(getRversion()), "2.7.0") < 0) {
+  ASCII[1] <- eval(parse(text="\"\\000\""));
+}
 
 # Alternatively one can do like this. Idea by Peter Dalgaard,
 # Dept. of Biostatistics, University of Copenhagen, Denmark.
@@ -119,6 +128,7 @@ ASCII.ESC <- "\033";
 # }
 #
 # \seealso{
+#   @see "base::utf8Conversion".
 #   @see intToChar
 # }
 #
@@ -164,6 +174,7 @@ setMethodS3("charToInt", "default", function(ch, ...) {
 # }
 #
 # \seealso{
+#   @see "base::utf8Conversion".
 #   @see charToInt
 # }
 #
@@ -178,6 +189,8 @@ setMethodS3("intToChar", "default", function(i, ...) {
 
 ############################################################################
 # HISTORY:
+# 2008-05-08
+# o Updated the ASCII vector to deal with updates of '\000'.
 # 2005-02-15
 # o Added arguments '...' in order to match any generic functions.
 # 2002-10-20

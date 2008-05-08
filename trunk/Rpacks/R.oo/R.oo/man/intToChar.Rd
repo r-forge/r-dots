@@ -39,6 +39,7 @@
 }
 
 \seealso{
+  \code{\link[base]{utf8Conversion}}.
   \code{\link{charToInt}}()
 }
 

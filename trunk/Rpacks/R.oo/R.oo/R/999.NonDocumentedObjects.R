@@ -78,6 +78,7 @@
 # @alias getLicense
 # @alias getMaintainer
 # @alias getManPath
+# @alias getNews
 # @alias getPath
 # @alias getPosition
 # @alias getTitle
@@ -89,6 +90,7 @@
 # @alias showDescriptionFile
 # @alias showHistory
 # @alias showHowToCite
+# @alias showNews
 # @alias unload
 #
 # % The RccViolationException class

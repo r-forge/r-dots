@@ -124,7 +124,7 @@ setMethodS3("as.character", "Package", function(x, ...) {
 
   s <- paste(s, "  Description: ", getDescription(this), sep="");
 
-  s <- paste(s, "  Type showChangeLog(", getName(this), 
+  s <- paste(s, "  Type showNews(", getName(this), 
        ") for package history, and ?", getName(this), " for help.", sep="");
 
   s;
@@ -1235,14 +1235,16 @@ setMethodS3("getBundlePackages", "Package", function(this, ...) {
 
 #########################################################################/**
 # @RdocMethod getChangeLog
+# @aliasmethod getNews
 # @aliasmethod getHistory
 #
 # @title "Gets the change log of this package"
 #
 # \description{
-#   @get "title", that is, (by default) the \code{ChangeLog} (or the
-#   \code{HISTORY}) file, which should is expected to be located in the 
-#   root directory of the package, i.e. @seemethod "getPath".
+#   @get "title", that is, (by default) the \code{NEWS} (then the
+#   \code{HISTORY} and \code{ChangeLog}) file, which should is expected to
+#   be located in the root directory of the package, 
+#   i.e. @seemethod "getPath".
 # }
 #
 # @synopsis
@@ -1265,7 +1267,7 @@ setMethodS3("getBundlePackages", "Package", function(this, ...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("getChangeLog", "Package", function(this, filenames=c("ChangeLog", "HISTORY"), newline="\n", ...) {
+setMethodS3("getChangeLog", "Package", function(this, filenames=c("NEWS", "HISTORY", "ChangeLog"), newline="\n", ...) {
   # Argument 'filenames':
   filenames <- as.character(filenames);
   filenames <- tolower(filenames);
@@ -1296,11 +1298,16 @@ setMethodS3("getHistory", "Package", function(this, ...) {
   getChangeLog(this, ...);
 })
 
+setMethodS3("getNews", "Package", function(this, ...) {
+  getChangeLog(this, ...);
+})
+
 
 
 #########################################################################/**
 # @RdocMethod showChangeLog
 # @aliasmethod showHistory
+# @aliasmethod showNews
 #
 # @title "Show the change log of this package"
 #
@@ -1328,7 +1335,7 @@ setMethodS3("getHistory", "Package", function(this, ...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("showChangeLog", "Package", function(this, filenames=c("ChangeLog", "HISTORY"), ...) {
+setMethodS3("showChangeLog", "Package", function(this, filenames=c("NEWS", "HISTORY", "ChangeLog"), ...) {
   # Argument 'filenames':
   filenames <- as.character(filenames);
   filenames <- tolower(filenames);
@@ -1348,7 +1355,7 @@ setMethodS3("showChangeLog", "Package", function(this, filenames=c("ChangeLog", 
   file <- files[1];
 
   if (length(file) == 0)
-    throw("ChangeLog file for package ", getName(this), " does not exist.");
+    throw("NEWS/HISTORY/ChangeLog file for package ", getName(this), " does not exist.");
 
   pathname <- file.path(path, file);
   file.show(pathname);
@@ -1359,7 +1366,9 @@ setMethodS3("showHistory", "Package", function(this, ...) {
   showChangeLog(this, ...);
 })
 
-
+setMethodS3("showNews", "Package", function(this, ...) {
+  showChangeLog(this, ...);
+})
 
 
 
@@ -1569,6 +1578,8 @@ setMethodS3("update", "Package", function(object, contribUrl=c(getContribUrl(thi
 
 ############################################################################
 # HISTORY:
+# 2008-05-08
+# o Added getNews() and showNews(). NEWS files are now detected (first).
 # 2007-06-09
 # o BUG FIX: Queried non-existing object 'error' instead of 'ex' in
 #   the exception handling of update() of the Package class.

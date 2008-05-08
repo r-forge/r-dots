@@ -16,6 +16,10 @@
 \alias{showHistory.Package}
 \alias{showHistory,Package-method}
 
+\alias{Package.showNews}
+\alias{showNews.Package}
+\alias{showNews,Package-method}
+
 
 \title{Show the change log of this package}
 
@@ -24,7 +28,7 @@
   If the change log file does not exist, an exception is thrown.
 }
 
-\usage{\method{showChangeLog}{Package}(this, filenames=c("ChangeLog", "HISTORY"), ...)}
+\usage{\method{showChangeLog}{Package}(this, filenames=c("NEWS", "HISTORY", "ChangeLog"), ...)}
 
 \arguments{
   \item{filenames}{A \code{\link[base]{character}} \code{\link[base]{vector}} of (non-case sensitive) filenames
