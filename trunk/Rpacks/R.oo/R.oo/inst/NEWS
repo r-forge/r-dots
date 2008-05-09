@@ -1,9 +1,21 @@
 Package: R.oo
 =============
 
+Version: 1.4.4 [2008-05-08]
+o Added getNews() and showNews() to the Package class. NEWS files 
+  are now detected (first).
+o Added getConstructorS3().
+o The NEWS file does now replace the former HISTORY file of R.oo.
+o If running R v2.7.0 or new, the first element of vector 'ASCII'
+  is an empty string.  This is because ASCII 0x00 cannot be represented
+  as an R string and in R v2.8.0 it will give a warning.  Note though
+  that regardless of this, charToInt(intToChar(0)) == 0 is still TRUE.
+
+
 Version: 1.4.3 [2008-03-25]
 o BUG FIX: getInternalAddress() would return NA.
 o Added getName() for environment:s.
+
 
 Version: 1.4.2 [2008-03-06]
 o Added paper to citation("R.oo").
