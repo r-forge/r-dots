@@ -2,6 +2,18 @@
 Package: R.matlab
 =================
 
+Version: 1.2.1 [2008-05-08]
+o In readMat()/writeMat() we use an internal character vector
+  to represent the 8-bit ASCII character set.  However, in R
+  one cannot represent ASCII 0x00 - it resolves to an empty
+  string, and from R v2.8.0 we will get a warning if we try.
+  For now, we have replaced the ASCII for 0x00 with the empty
+  string (unless before R v2.6.0).  We might want to move 
+  away from using this ASCII vector for intToChar()/charToInt() 
+  and instead make use of intToUtf8()/utf8ToInt() or 
+  alternatively just rawToChar()/charToRaw().
+
+
 Version: 1.2.0 [2008-02-12]
 o Added support for reading compressed MAT files.  It requires
   that the 'Rcompression' package (Omegahat.org) is available.
