@@ -1,6 +1,12 @@
 Package: R.methodsS3
 ====================
 
+Version: 1.0.2 [2008-05-08]
+o Added getMethodS3() and getGenericS3().
+o BUG FIX: isGenericS3() and isGenericS4() gave an error if 
+  a function was passed.
+
+
 Version: 1.0.1 [2008-03-06]
 o Added paper to citation("R.methodsS3").
 o BUG FIX: Regular expression pattern 'a-Z' is illegal on (at least) 

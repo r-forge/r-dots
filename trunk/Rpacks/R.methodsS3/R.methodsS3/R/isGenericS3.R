@@ -10,7 +10,7 @@
 # @synopsis
 #
 # \arguments{
-#   \item{fcn}{A @function.}
+#   \item{fcn}{A @function or a @character string.}
 #   \item{...}{Not used.}
 # }
 #
@@ -31,7 +31,10 @@
 # @keyword "internal"
 #*/###########################################################################
 isGenericS3.default <- function(fcn, ...) {
-  body <- as.character(body(fcn));
+  body <- body(fcn);
+  if (is.call(body))
+    body <- deparse(body);
+  body <- as.character(body);
   return(length(grep("UseMethod[(]", body)) > 0)
 }
 
@@ -51,7 +54,7 @@ setGenericS3("isGenericS3");
 # @synopsis
 #
 # \arguments{
-#   \item{fcn}{A @function.}
+#   \item{fcn}{A @function or a @character string.}
 #   \item{...}{Not used.}
 # }
 #
@@ -72,7 +75,10 @@ setGenericS3("isGenericS3");
 # @keyword "internal"
 #*/###########################################################################
 isGenericS4.default <- function(fcn, ...) {
-  body <- as.character(body(fcn));
+  body <- body(fcn);
+  if (is.call(body))
+    body <- deparse(body);
+  body <- as.character(body);
   return(length(grep("standardGeneric", body)) > 0)
 }
 

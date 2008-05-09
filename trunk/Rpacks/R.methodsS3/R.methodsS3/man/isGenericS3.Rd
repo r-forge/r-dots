@@ -19,7 +19,7 @@
 \usage{\method{isGenericS3}{default}(fcn, ...)}
 
 \arguments{
-  \item{fcn}{A \code{\link[base]{function}}.}
+  \item{fcn}{A \code{\link[base]{function}} or a \code{\link[base]{character}} string.}
   \item{...}{Not used.}
 }
 
