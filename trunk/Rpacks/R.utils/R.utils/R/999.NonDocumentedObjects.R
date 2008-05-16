@@ -156,6 +156,7 @@
 #
 # % Misc.
 # @alias extract
+# @alias gunzip.default
 # @alias isOpen
 # @alias isOpen.default
 # @alias remove.default

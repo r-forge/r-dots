@@ -3,6 +3,8 @@
 % 
 %  999.NonDocumentedObjects.R
 % 
+% on Fri May 16 00:07:37 2008.
+% 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -166,6 +168,7 @@
 
  % Misc.
  \alias{extract}
+ \alias{gunzip.default}
  \alias{isOpen}
  \alias{isOpen.default}
  \alias{remove.default}
