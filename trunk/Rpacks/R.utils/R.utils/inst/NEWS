@@ -7,6 +7,7 @@ o Added readBinFragments() and writeBinFragments() to read and write
   binary data scattered across a connection or a file.  These methods
   moved from the R.huge package.
 o Added gzip().
+o Added toAsciiRegExprPattern().
 o Renamed inst/HISTORY to inst/NEWS according to new R standards.
 
 
