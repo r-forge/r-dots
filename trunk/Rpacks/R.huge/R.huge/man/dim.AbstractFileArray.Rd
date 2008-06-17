@@ -21,9 +21,6 @@
 
 \usage{\method{dim}{AbstractFileArray}(x)}
 
-\arguments{
-}
-
 \value{
  Returns a \code{\link[base]{double}} \code{\link[base]{vector}} of length two.
 }

@@ -1531,9 +1531,6 @@ setMethodS3("getDimensionOrder", "AbstractFileArray", function(this, ...) {
 #
 # @synopsis
 #
-# \arguments{
-# }
-#
 # \value{
 #  Returns a @double @vector of length two.
 # }

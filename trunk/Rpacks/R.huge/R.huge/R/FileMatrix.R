@@ -527,6 +527,7 @@ setMethodS3("[", "FileMatrix", function(this, i, j, drop=FALSE) {
 
   # Get the location of all cells to be read
   idxs <- outer(i, j, FUN="+");
+  idxs <- as.vector(idxs);
   rm(i, j);
 
   # Move to the data section
@@ -662,7 +663,7 @@ setMethodS3("[<-", "FileMatrix", function(this, i, j, value) {
     value <- value[seq(length=nIdxs)];
   }
 
-  writeBinFragments(value, con=con, size=size, idxs=idxs);
+  writeBinFragments(con=con, value, size=size, idxs=idxs);
 
   this;
 })
