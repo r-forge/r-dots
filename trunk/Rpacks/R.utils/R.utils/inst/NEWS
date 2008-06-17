@@ -2,8 +2,12 @@
 Package: R.utils
 ================
 
-Version: 1.0.3 [2008-05-15]
+Version: 1.0.3 [2008-06-16]
+o Added readBinFragments() and writeBinFragments() to read and write
+  binary data scattered across a connection or a file.  These methods
+  moved from the R.huge package.
 o Added gzip().
+o Renamed inst/HISTORY to inst/NEWS according to new R standards.
 
 
 Version: 1.0.2 [2008-03-31]

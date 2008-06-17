@@ -3,8 +3,6 @@
 % 
 %  gzip.R
 % 
-% on Thu May 15 23:48:07 2008.
-% 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
