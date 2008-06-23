@@ -1,6 +1,13 @@
 Package: R.oo
 =============
 
+Version: 1.4.5 [2008-05-28]
+o SPELL CORRECTION: Added getInstantiationTime(), but keeping
+  misspelled (and now deprecated) getInstanciationTime() for backward
+  compatibility.  The internal attribute was also renamed, but the
+  above method look for both in case saved objects are loaded.
+
+
 Version: 1.4.4 [2008-05-08]
 o Added getNews() and showNews() to the Package class. NEWS files 
   are now detected (first).

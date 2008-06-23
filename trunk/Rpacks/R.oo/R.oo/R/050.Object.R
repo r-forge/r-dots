@@ -147,9 +147,10 @@ setMethodS3("as.character", "Object", function(x, ...) {
 
 
 ###########################################################################/**
-# @RdocMethod getInstanciationTime
+# @RdocMethod getInstantiationTime
+# @aliasmethod getInstanciationTime
 #
-# @title "Gets the time when the object was instanciated"
+# @title "Gets the time when the object was instantiated"
 #
 # \description{
 #  @get "title" (created) as a POSIXt object.
@@ -167,7 +168,7 @@ setMethodS3("as.character", "Object", function(x, ...) {
 #
 # \examples{
 #   obj <- Object()
-#   print(getInstanciationTime(obj))
+#   print(getInstantiationTime(obj))
 # }
 #
 # \seealso{
@@ -180,10 +181,16 @@ setMethodS3("as.character", "Object", function(x, ...) {
 # \keyword{programming}
 # \keyword{methods}
 #*/###########################################################################
-setMethodS3("getInstanciationTime", "Object", function(this, ...) {
-  attr(this, "...instanciationTime");
-}) # getInstanciationTime()
+setMethodS3("getInstantiationTime", "Object", function(this, ...) {
+  time <- attr(this, "...instantiationTime");
+  if (is.null(time))
+    time <- attr(this, "...instanciationTime");
+  time;
+})
 
+setMethodS3("getInstanciationTime", "default", function(...) {
+  getInstantiationTime(...);  
+}, private=TRUE, deprecated=TRUE)
 
 
 
@@ -1970,6 +1977,8 @@ setMethodS3("gc", "Object", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2008-05-28
+# o SPELL CORRECTION: Used '...instanciation' instead of 'instantiation'.
 # 2008-03-25
 # o BUG FIX: getInternalAddress() would return NA.  Now it uses the new
 #   getName() for environments.

@@ -32,7 +32,7 @@ setConstructorS3("BasicObject", function(core=NULL) {
     core <- NA;
   this <- core;
   class(this) <- c("BasicObject", class(this));
-  attr(this, "...instanciationTime") <- Sys.time();
+  attr(this, "...instantiationTime") <- Sys.time();
   this; 
 })
 
@@ -101,7 +101,7 @@ setMethodS3("as.character", "BasicObject", function(x, ...) {
   # To please R CMD check
   this <- x;
 
-  paste(data.class(this), ": ", getInstanciationTime(this), sep="");
+  paste(data.class(this), ": ", getInstantiationTime(this), sep="");
 }) # as.character()
  
 
@@ -109,9 +109,10 @@ setMethodS3("as.character", "BasicObject", function(x, ...) {
 
 
 ###########################################################################/**
-# @RdocMethod getInstanciationTime
+# @RdocMethod getInstantiationTime
+# @aliasmethod getInstanciationTime 
 #
-# @title "Gets the time when the object was instanciated"
+# @title "Gets the time when the object was instantiated"
 #
 # \description{
 #  @get "title" (created) as a POSIXt object.
@@ -137,8 +138,11 @@ setMethodS3("as.character", "BasicObject", function(x, ...) {
 # \keyword{programming}
 # \keyword{methods}
 #*/########################################################################### 
-setMethodS3("getInstanciationTime", "BasicObject", function(this, ...) {
-  attr(this, "...instanciationTime");
+setMethodS3("getInstantiationTime", "BasicObject", function(this, ...) {
+  time <- attr(this, "...instantiationTime");
+  if (is.null(time))
+    time <- attr(this, "...instanciationTime");
+  time;
 })
 
 
@@ -174,7 +178,7 @@ setMethodS3("getInstanciationTime", "BasicObject", function(this, ...) {
 # \keyword{methods}
 #*/########################################################################### 
 setMethodS3("hashCode", "BasicObject", function(this, ...) {
-  as.integer(getInstanciationTime(this));
+  as.integer(getInstantiationTime(this));
 })
 
 
@@ -786,6 +790,8 @@ setMethodS3("[[<-", "BasicObject", function(this, name, value) {
 
 ############################################################################
 # HISTORY:
+# 2008-05-28
+# o SPELL CORRECTION: Used '...instanciation' instead of 'instantiation'.
 # 2005-02-15
 # o Added arguments '...' in order to match any generic functions.
 # 2004-10-17

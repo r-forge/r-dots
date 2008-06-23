@@ -47,6 +47,7 @@
 # @alias getClass.default
 # @alias getFields
 # @alias getInstanciationTime
+# @alias getInstantiationTime
 # @alias getInternalAddress
 # @alias hasField
 # @alias load

@@ -8,7 +8,8 @@ attach(list(
     this <- core;
     attr(this, ".env") <- new.env();
     class(this) <- "Object";
-    attr(this, "...instanciationTime") <- Sys.time();
+    ## attr(this, "...instanciationTime") <- Sys.time(); # SPELLING ERROR
+    attr(this, "...instantiationTime") <- Sys.time();
 
     # Note, we cannot register the finalizer here, because then
     # the reference variable 'this' will be of the wrong class,
@@ -86,6 +87,8 @@ attach(list(
 
 ############################################################################
 # HISTORY:
+# 2008-05-28
+# o SPELL CORRECTION: Used '...instanciation' instead of 'instantiation'.
 # 2008-01-10
 # o Made the registered finalizer calling finalize() more error prone.
 # 2007-08-29
