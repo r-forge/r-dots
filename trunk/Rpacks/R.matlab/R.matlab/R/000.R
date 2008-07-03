@@ -7,8 +7,8 @@
 # should not use require().
 # require("R.oo")    || stop("Could not load package: R.oo");
 # require("R.utils") || stop("Could not load package: R.utils");
-autoload("appendVarArgs", package="R.oo")
-autoload("hasVarArgs", package="R.oo")
-autoload("setMethodS3", package="R.oo")
+autoload("appendVarArgs", package="R.methodsS3")
+autoload("hasVarArgs", package="R.methodsS3")
+autoload("setMethodS3", package="R.methodsS3")
 autoload("setConstructorS3", package="R.oo")
 
