@@ -167,6 +167,7 @@
  % Misc.
  \alias{extract}
  \alias{gunzip.default}
+ \alias{intervalsToSeq}
  \alias{isOpen}
  \alias{isOpen.default}
  \alias{remove.default}
@@ -182,6 +183,8 @@
  \alias{pasteTree}
  \alias{pasteTree.FileListTree}
  \alias{cat.FileListTree}
+ \alias{toAsciiRegExprPattern}
+ \alias{toAsciiRegExprPattern.character}
 
 
  \description{

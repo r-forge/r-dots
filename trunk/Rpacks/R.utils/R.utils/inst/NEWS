@@ -2,14 +2,15 @@
 Package: R.utils
 ================
 
-Version: 1.0.3 [2008-06-21]
+Version: 1.0.3 [2008-07-03]
 o Added readBinFragments() and writeBinFragments() to read and write
   binary data scattered across a connection or a file.  These methods
   moved from the R.huge package.
+o Added intervalsToSeq(), which is bijective to seqToIntervals().
+o IMPROVEMENT: Major speed up of seqToIntervals().  
 o Added gzip().
-o Added toAsciiRegExprPattern().
-o SPEED: Major speed up of seqToIntervals().  
 o Renamed inst/HISTORY to inst/NEWS according to new R standards.
+o BETA: Added (for now internal) toAsciiRegExprPattern().
 
 
 Version: 1.0.2 [2008-03-31]

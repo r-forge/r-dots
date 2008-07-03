@@ -16,9 +16,11 @@
 #
 # @author
 #
-# \examples{
-#   print(seqToIntervals(1:10))  # [1 10]
-#   print(seqToIntervals(c(1:10, 15:18, 20)))  # [1 10; 15 18; 20 20]
+# @examples "../incl/seqToIntervals.Rex"
+#
+# \seealso{
+#   @set "class=matrix"
+#   @seemethod "intervalsToSeq".
 # }
 #
 # @keyword "attribute"

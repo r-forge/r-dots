@@ -18,6 +18,7 @@
 #   \item{size}{The size of the data type to be read. If @NA, the natural
 #    size of the data type is used.}
 #   \item{...}{Additional arguments passed to @see "base::readBin".}
+#   \item{verbose}{A @logical or a @see "Verbose" object.}
 # }
 #
 # \value{
@@ -34,7 +35,7 @@
 #
 # @keyword IO
 #*/#########################################################################   
-setMethodS3("readBinFragments", "default", function(con, what, idxs=1, size=NA, ...) {
+setMethodS3("readBinFragments", "default", function(con, what, idxs=1, size=NA, ..., verbose=FALSE) {
   # Argument 'con':
   if (is.character(con)) {
     pathname <- con;
@@ -79,63 +80,73 @@ setMethodS3("readBinFragments", "default", function(con, what, idxs=1, size=NA, 
     stop("Argument 'size' must be numeric or NA: ", class(size)[1]);
   }
 
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Identify index intervals
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (is.matrix(idxs)) {
-    oSeqs <- idxs;
-
-    # Sanity checks
-    ## For now, we assume that non-overlapping intervals. /HB 2008-06-16
-
-    # Calculate lengths of intervals
-    ns <- oSeqs[,2] - oSeqs[,1] + as.integer(1);
-
-    nAll <- sum(ns);
-
-    o <- NULL;
-  } else {
-    # Allocate return vector
-    nAll <- length(idxs);
-
-    # Order the indices
-    o <- order(idxs);
-    oIdxs <- as.integer(idxs)[o];
-
-    # Identify contiguous fragments
-    oSeqs <- seqToIntervals(oIdxs);
-
-    # Calculate lengths of intervals
-    ns <- oSeqs[,2] - oSeqs[,1] + as.integer(1);
-
-    # Sanity check
-    if (nAll != sum(ns)) {
-      stop("Argument 'idxs' does most likely contain replicated indices, which is currently not supported.");
-    }
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose), add=TRUE);
   }
 
-  # Starting positions (double in order to address larger vectors!)
-  offset <- seek(con=con, rw="read"); # Current file offset
-  froms <- as.double(oSeqs[,1])*size + (offset - size);
 
-  rm(oSeqs); # Not needed anymore
+  # Intervals to index sequence?
+  if (is.matrix(idxs)) {
+    idxs <- intervalsToSeq(idxs);
+  }
+
+  # Allocate return vector
+  nAll <- length(idxs);
+
+  # Order the indices
+  o <- order(idxs);
+  idxs <- as.integer(idxs)[o];
 
   # Allocate return vector
   res <- vector(mode=what, length=nAll);
 
-  resOffset <- 0;
-  for (kk in seq(length=length(froms))) {
-    n <- ns[kk];
-    seek(con=con, where=froms[kk], rw="read");
-    bfr <- readBin(con=con, what=what, n=n, size=size, ...);
+  CHUNK.SIZE <- floor(1024e3/size);
+  destOffset <- srcOffset <- as.integer(0);
+  while(length(idxs) > 0) {
+    # Skip to first element to be read
+    if (idxs[1] > 1) {
+      skip <- idxs[1]-as.integer(1);
+      verbose && cat(verbose, "Number of elements skipped: ", skip);
+      seek(con=con, where=skip*size, origin="current", rw="read");
+      idxs <- idxs - skip;
+    }
+
+    verbose && cat(verbose, "Remaining indices (relative to current position):");
+    verbose && str(verbose, idxs);
+
+    # Read data
+    bfr <- readBin(con=con, what=what, n=CHUNK.SIZE, size=size, ...);
     n <- length(bfr);
     if (n == 0)
       break;
-    idx <- resOffset + 1:n;
-    res[idx] <- bfr;
-    resOffset <- resOffset + n;
-  } # for (rr ...)
+
+    # The file offset of the next element to be read
+    srcOffset <- n;
+
+    verbose && cat(verbose, "Data read:");
+    verbose && str(verbose, bfr);
+
+    # Keep only the indices requested
+    keep <- match(idxs, 1:n);
+    keep <- keep[is.finite(keep)];
+    bfr <- bfr[keep];
+    rm(keep);
+
+    # Store the results
+    n <- length(bfr);
+    idx <- 1:n;
+    res[destOffset+idx] <- bfr;
+    destOffset <- destOffset + n;
+    rm(bfr);
+
+    # Next chunk of elements
+    idxs <- idxs[-idx];
+    idxs <- idxs - srcOffset;
+    rm(idx);
+  }
 
   if (!is.null(o)) {
     # order(o) can be optimized, cf. affxparser::invertMap(). /HB 2007-08-22
@@ -148,6 +159,9 @@ setMethodS3("readBinFragments", "default", function(con, what, idxs=1, size=NA, 
 
 ############################################################################
 # HISTORY:
+# 2008-07-01
+# o SPEED UP: Made readBinFragments() by having it read data in chunks and
+#   ignoring non-requested elements.
 # 2008-06-16
 # o Now argument 'idxs' can also be an matrix of index intervals.
 # o Added Rdoc comments.
