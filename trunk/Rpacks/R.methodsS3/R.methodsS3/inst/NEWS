@@ -1,6 +1,10 @@
 Package: R.methodsS3
 ====================
 
+Version: 1.0.3 [2008-07-02]
+o Renamed DESCRIPTION file to NEWS.
+
+
 Version: 1.0.2 [2008-05-08]
 o Added getMethodS3() and getGenericS3().
 o BUG FIX: isGenericS3() and isGenericS4() gave an error if 
