@@ -12,6 +12,7 @@
 
 
 % The BasicObject class
+\alias{getInstanciationTime.default}
 \alias{isReferable}
 
 % The Class class
@@ -57,6 +58,8 @@
 \alias{getClass.default}
 \alias{getFields}
 \alias{getInstanciationTime}
+\alias{getInstanciationTime.default}
+\alias{getInstantiationTime}
 \alias{getInternalAddress}
 \alias{hasField}
 \alias{load}
