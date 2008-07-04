@@ -1,10 +1,10 @@
 Package: R.huge
 ===============
 
-Version: 0.1.6 [2008-06-16]
+Version: 0.1.6 [2008-07-03]
 o Moved internal readBinFragments() and writeBinFragments() to R.utils.
 o No bug fixes was made in this version.
-o Package passed R CMD check on R v2.7.0.
+o Renamed the HISTORY file to NEWS.
 
 
 Version: 0.1.5 [2006-08-29]
