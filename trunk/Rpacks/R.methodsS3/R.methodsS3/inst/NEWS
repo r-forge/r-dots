@@ -2,7 +2,7 @@ Package: R.methodsS3
 ====================
 
 Version: 1.0.3 [2008-07-02]
-o Renamed DESCRIPTION file to NEWS.
+o Renamed HISTORY file to NEWS.
 
 
 Version: 1.0.2 [2008-05-08]
