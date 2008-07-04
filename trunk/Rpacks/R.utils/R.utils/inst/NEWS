@@ -10,6 +10,7 @@ o Added intervalsToSeq(), which is bijective to seqToIntervals().
 o IMPROVEMENT: Major speed up of seqToIntervals().  
 o Added gzip().
 o Renamed inst/HISTORY to inst/NEWS according to new R standards.
+o CLEAN UP: as.character() for 'hexmode' is only added if missing.
 o BETA: Added (for now internal) toAsciiRegExprPattern().
 
 
