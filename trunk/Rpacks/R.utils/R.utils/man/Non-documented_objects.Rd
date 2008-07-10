@@ -170,12 +170,13 @@
  \alias{intervalsToSeq}
  \alias{isOpen}
  \alias{isOpen.default}
- \alias{remove.default}
- \alias{verbose}
- \alias{unwrap}
- \alias{wrap}
  \alias{lapply}
  \alias{lapply.default}
+ \alias{remove.default}
+ \alias{unwrap}
+ \alias{verbose}
+ \alias{wrap}
+ \alias{whichVector}
 
  % Private
  \alias{toFileListTree}
