@@ -92,7 +92,7 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # 'nbrOfBytesList'
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  nbrOfBytesList <- c();
+#  nbrOfBytesList <- c();
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -219,10 +219,10 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
       verbose && cat(verbose, "writeDataElement()");
     
       writeTag <- function(dataType, nbrOfBytes, compressed=FALSE) {
-        if (!countOnly) {
-          nbrOfBytes <- nbrOfBytesList[1];
-          nbrOfBytesList <<- nbrOfBytesList[-1];
-        }
+###        if (!countOnly) {
+###          nbrOfBytes <- nbrOfBytesList[1];
+###          nbrOfBytesList <<- nbrOfBytesList[-1];
+###        }
         verbose && cat(verbose, "dataType=", dataType, ", nbrOfBytes=", nbrOfBytes);
         knownTypes <- c("miINT8"=8, "miUINT8"=8, "miINT16"=16, "miUINT16"=16, "miINT32"=32, "miUINT32"=32, "miSINGLE"=NA, NA, "miDOUBLE"=64, NA, NA, "miINT64"=64, "miUINT64"=64, "miMATRIX"=NA);
         type <- which(names(knownTypes) == dataType);
@@ -237,16 +237,17 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
         }
       } # writeTag()
       
-      beginTag <- function() {
-        if (countOnly)
-          nbrOfBytesList <<- c(nbrOfBytesList, nbrOfBytesWritten);
-        length(nbrOfBytesList);
-      }
-      
-      endTag <- function(k) {
-        if (countOnly)
-          nbrOfBytesList[k] <<- nbrOfBytesWritten - nbrOfBytesList[k];
-      }
+###      beginTag <- function() {
+###        if (countOnly)
+###          nbrOfBytesList <<- c(nbrOfBytesList, nbrOfBytesWritten);
+###        length(nbrOfBytesList);
+###        0;
+###      }
+###      
+###      endTag <- function(k) {
+###        if (countOnly)
+###          nbrOfBytesList[k] <<- nbrOfBytesWritten - nbrOfBytesList[k];
+###      }
     
       writeArrayFlags <- function(class, complex=FALSE, global=FALSE, logical=FALSE) {
         verbose && cat(verbose, "writeArrayFlags(): ", class);
@@ -260,7 +261,7 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
     
         # Array Flags [miUINT32]
         writeTag(dataType="miUINT32", nbrOfBytes=8);
-        tagPos <- beginTag();
+###        tagPos <- beginTag();
     
         bfr <- flags*256 + classID;
         writeBinMat(as.integer(bfr), size=4, endian="little");
@@ -268,7 +269,7 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
         # Undefined
         writeBinMat(as.integer(rep(0,4)), size=1);
     
-        endTag(tagPos);
+###        endTag(tagPos);
       }
     
       
@@ -281,12 +282,12 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
         
         # Dimensions Array [miINT32]
         writeTag(dataType="miINT32", nbrOfBytes=nbrOfBytes);
-        tagPos <- beginTag();
+###        tagPos <- beginTag();
       
         # Write the dimensions
         writeBinMat(as.integer(dim), size=4, signed=TRUE, endian="little");
         
-        endTag(tagPos);
+###        endTag(tagPos);
         
         # Write padded bytes
         if (padding > 0) {
@@ -305,13 +306,13 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
         compressed <- (nbrOfBytes > 0 && nbrOfBytes <= 4);
         # Dimensions Array [miINT8]
         writeTag(dataType="miINT8", nbrOfBytes=nbrOfBytes, compressed=compressed);
-        tagPos <- beginTag();
+###        tagPos <- beginTag();
       
         # Write characters
         if (nbrOfBytes > 0)
           writeBinMat(as.integer(name), size=1, endian="little");
       
-        endTag(tagPos);
+###        endTag(tagPos);
       
         # Write padded bytes
         if (compressed)
@@ -344,12 +345,12 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
         
         # Numeric Part [Any of the numeric data types]
         writeTag(dataType=dataType, nbrOfBytes=nbrOfBytes);
-        tagPos <- beginTag();
+###        tagPos <- beginTag();
       
         # Write numeric values
         writeBinMat(values, size=sizeOf, endian="little");
       
-        endTag(tagPos);
+###        endTag(tagPos);
         
         # Write padded bytes
         padding <- 8 - ((nbrOfBytes-1) %% 8 + 1);
@@ -405,12 +406,12 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
         #       will assume miUINT16 anyway. /HB 020828
         # Character Part [miUINT16]
         writeTag(dataType="miUINT16", nbrOfBytes=nbrOfBytes);
-        tagPos <- beginTag();
+###        tagPos <- beginTag();
       
         # Write characters
         writeBinMat(as.integer(values), size=sizeOf);
       
-        endTag(tagPos);
+###        endTag(tagPos);
         
         # Write padded bytes
         padding <- 8 - ((nbrOfBytes-1) %% 8 + 1);
@@ -438,13 +439,13 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
         
         # Field Name Length [miINT32]
         writeTag(dataType="miINT32", nbrOfBytes=4, compressed=TRUE);
-        tagPos <- beginTag();
+###        tagPos <- beginTag();
         
         # Write maxLength
         writeBinMat(as.integer(maxLength), size=4, endian="little");
         nbrOfBytes <- 4;
       
-        endTag(tagPos);
+###        endTag(tagPos);
         
         # Write padded bytes
         padding <- 4 - ((nbrOfBytes-1) %% 4 + 1);
@@ -461,7 +462,7 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
         # Field Names [miINT8]
         nbrOfBytes <- length(fieldNames)*maxLength;
         writeTag(dataType="miINT8", nbrOfBytes=nbrOfBytes);
-        tagPos <- beginTag();
+###        tagPos <- beginTag();
         
         for (k in seq(along=fieldNames)) {
           name <- fieldNames[k];
@@ -473,7 +474,7 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
           writeBinMat(as.integer(bfr), size=1);
         }
       
-        endTag(tagPos);
+###        endTag(tagPos);
       } # writeFieldNames()
       
         
@@ -561,7 +562,7 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
     
       # Write the Data Element Tag
       writeTag(dataType=dataType, nbrOfBytes=nbrOfBytes);
-      tagPos <- beginTag();
+###      tagPos <- beginTag();
     
       if (is.numeric(value) || is.complex(value)) {
         if (is.null(dim(value)))
@@ -578,7 +579,7 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
         writeStructure(name=name, structure=value);
       }
     
-      endTag(tagPos);
+###      endTag(tagPos);
     } # writeDataElement()
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -635,14 +636,13 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
 
     # Record the original state of 'verbose'
     verboseOrg <- verbose;
-  
+
     # Two-pass procedure
     for (pass in c("count", "write")) {
       if (pass == "count") {
         # Skip first pass?
         if (!doCount)
           next;
-
         countOnly <<- TRUE;
         # Turn off verbose for the "count" session and reactivate 
         # when bytes are really written to the connection.
@@ -667,7 +667,7 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
         object <- objects[kk];   # NOT [[kk]], has to be a list!
         writeDataElement(object);
       }
-    }
+    } # for (pass ...)
 
     invisible(nbrOfBytesWritten);
   } # writeMat5()
@@ -713,6 +713,8 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
 ######################################################################
 # HISTORY:
 # 2008-07-12
+# o CLEAN UP: Removed debugging/asserting code based on the stack
+#   'nbrOfBytesList', and beginTag() and endTag().
 # o Now the first pass counting the number of bytes to be written is
 #   skipped if argument 'onWrite' is not given.  Thank to 
 #   Adam Grossman at Stanford University for providing code this.

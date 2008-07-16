@@ -6,6 +6,7 @@ Version: 1.2.2 [2008-07-12]
 o Now the first pass counting the number of bytes to be written is
   skipped if argument 'onWrite' is not given.  Thank to 
   Adam Grossman at Stanford University for providing code this.
+o CLEAN UP: Removed internal debugging/asserting code.
 o Renamed the HISTORY file to NEWS.
 
 
