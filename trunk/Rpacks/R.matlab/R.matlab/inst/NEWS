@@ -3,9 +3,13 @@ Package: R.matlab
 =================
 
 Version: 1.2.2 [2008-07-12]
-o Now the first pass counting the number of bytes to be written is
-  skipped if argument 'onWrite' is not given.  Thank to 
-  Adam Grossman at Stanford University for providing code this.
+o Now the first pass in writeMat() that counts the number of 
+  bytes to be written is skipped if argument 'onWrite' is 
+  not given.  This means that writing to file, which is the
+  most common use case, will no longer involve the counting.
+  Thank to Adam Grossman at Stanford University for suggesting
+  the modification and providing initial code.  He reports
+  a substantial speed up in writing large files (38MB file).
 o CLEAN UP: Removed internal debugging/asserting code.
 o Renamed the HISTORY file to NEWS.
 
