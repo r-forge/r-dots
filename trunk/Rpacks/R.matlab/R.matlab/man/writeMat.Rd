@@ -52,6 +52,21 @@
   any onWrite function are \emph{not} included in this count.
 }
 
+\section{Details on onWrite()}{
+  If specified, the \code{onWrite()} function is called before the
+  data is written to the connection.  This function must take a \code{\link[base]{list}}
+  argument as the first argument.  This will hold the element \code{con}
+  which is the opened \code{\link[base:connections]{connection}} to be written to.
+  It will also hold the element \code{length}, which specified the
+  number of bytes to be written.  See example for an illustration.
+
+  \emph{Note}, in order to provide the number of bytes before actually
+  writing the data, a two-pass procedure has to be taken, where the
+  first pass is immitating a complete writing without writing anything
+  to the connection but only counting the total number of bytes. Then
+  in the second pass, after calling \code{onWrite()}, the data is written.
+}
+
 \examples{A <- matrix(1:27, ncol=3)
 B <- as.matrix(1:10)
 
@@ -64,7 +79,7 @@ print(data)
 unlink(filename)
 
 \dontrun{
-# When writing to a stream connection the receiver needs to know in
+# When writing to a stream connection the receiver needs to know on
 # beforehand how many bytes are available. This can be done by using
 # the 'onWrite' argument.
 onWrite <- function(x)

@@ -7,7 +7,7 @@ for (version in 4:5) {
   cat("Loading all MAT v", version, " example files in ", 
                                                 path, "...\n", sep="")
 
-  pattern <- sprintf("-v%d.mat$", version)
+  pattern <- sprintf("-v%d[.]mat$", version)
   filenames <- list.files(pattern=pattern, path=path, full.names=TRUE)
 
   for (filename in filenames) {
@@ -20,6 +20,18 @@ for (version in 4:5) {
     print(mat)
   }
 }
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# Assert that signed and unsigned integers are read correctly
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+bs <- readMat(file.path(path, "unsignedByte.mat"))
+if (!identical(as.vector(bs$A), as.double(126:255)))
+  stop("Error reading unsigned bytes saved by Matlab.")
+
+is <- readMat(file.path(path, "unsignedInt.mat"))
+if (!identical(as.vector(is$B), as.double(127:256)))
+  stop("Error reading unsigned ints saved by Matlab.")
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Assert that sparse matrices are read identically in MAT v4 and v5
@@ -53,15 +65,13 @@ if (require("SparseM")) {
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-# Assert that signed and unsigned integers are read correctly
+# Assert that compressed files can be read
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-bs <- readMat(file.path(path, "unsignedByte.mat"))
-if (!identical(as.vector(bs$A), as.double(126:255)))
-  stop("Error reading unsigned bytes saved by Matlab.")
+if (require("Rcompression")) {
+  pathname <- file.path(path, "StructWithSparseMatrix-v4,compressed.mat")
+  mat4 <- readMat(pathname, sparseMatrixClass="matrix")
+}
 
-is <- readMat(file.path(path, "unsignedInt.mat"))
-if (!identical(as.vector(is$B), as.double(127:256)))
-  stop("Error reading unsigned ints saved by Matlab.")
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Example of a Matlab struct

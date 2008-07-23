@@ -1092,7 +1092,7 @@ setMethodS3("readMat", "default", function(con, maxLength=NULL, fixNames=TRUE, v
 
         if (identical(tag$type, "miCOMPRESSED")) {
           if (!require("Rcompression", quietly=TRUE)) {
-            throw("No support for compressed data.  Save your data in a non-compressed format by specifying -V6 when calling save() in Matlab or Octave.");
+            throw("Cannot read compressed data.  Omegahat package 'Rcompression' could not be loaded.  Alternatively, save your data in a non-compressed format by specifying -V6 when calling save() in Matlab or Octave.");
           }
           n <- tag$nbrOfBytes;
           zraw <- readBinMat(con=con, what=raw(), n=n);

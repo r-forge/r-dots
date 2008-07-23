@@ -2,6 +2,11 @@
 Package: R.matlab
 =================
 
+Version: 1.2.3 [2008-07-20]
+o Updated example(readMat) so that it gives no error if
+  the optional 'Rcompression' package is not installed.
+
+
 Version: 1.2.2 [2008-07-12]
 o Now the first pass in writeMat() that counts the number of 
   bytes to be written is skipped if argument 'onWrite' is 
