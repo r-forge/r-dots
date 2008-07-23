@@ -60,7 +60,7 @@ devSetName <- function(which=dev.cur(), name) {
 devSet <- function(which=dev.next()) {
   # Argument 'which':
   if (is.character(which)) {
-    which <- devGetById(which);
+    which <- .devIndexOf(which);
   }
   dev.set(which);
 } # devSet()

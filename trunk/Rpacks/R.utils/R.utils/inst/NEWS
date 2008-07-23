@@ -2,7 +2,8 @@
 Package: R.utils
 ================
 
-Version: 1.0.4 [2008-07-18]
+Version: 1.0.4 [2008-07-23]
+o Added countLines() for counting number of lines in a text file.
 o Added several functions for extending the current functions dealing
   with devices.  All added functions can address a device by a name
   in addition to the standard device index.  The devGetName() and

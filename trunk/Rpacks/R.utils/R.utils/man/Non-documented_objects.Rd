@@ -164,6 +164,16 @@
  % The VComments class
  % <none>
 
+ % Device utilities
+ \alias{devDone}
+ \alias{devGetName}
+ \alias{devIsOpen}
+ \alias{devNames}
+ \alias{devOff}
+ \alias{devOpen}
+ \alias{devSet}
+ \alias{devSetName}
+
  % Misc.
  \alias{extract}
  \alias{gunzip.default}
