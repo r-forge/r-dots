@@ -2,7 +2,9 @@
 Package: R.utils
 ================
 
-Version: 1.0.4 [2008-07-23]
+Version: 1.0.4 [2008-07-24]
+o Now sourceDirectory() is guaranteed to source directories and files 
+  in lexicographic order.
 o Added countLines() for counting number of lines in a text file.
 o Added several functions for extending the current functions dealing
   with devices.  All added functions can address a device by a name
