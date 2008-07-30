@@ -754,6 +754,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       "numeric"     = "base",
       "table"       = "base",
       "TRUE"        = "base:logical",
+      "raw"         = "base",
       "ts"          = "base",
       "vector"      = "base",
       "warning"     = "base",
@@ -2412,6 +2413,8 @@ setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) 
 
 #########################################################################
 # HISTORY:
+# 2008-07-30
+# o Added shorttags: 'raw'.
 # 2007-09-17
 # o Added 'warn=FALSE' to all readLines().
 # 2007-06-09

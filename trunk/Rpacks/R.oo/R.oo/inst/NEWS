@@ -1,6 +1,10 @@
 Package: R.oo
 =============
 
+Version: 1.4.6 [2008-07-30]
+o Added support for more "short tags" in the Rdoc compiler.
+
+
 Version: 1.4.5 [2008-05-28]
 o SPELL CORRECTION: Added getInstantiationTime(), but keeping
   misspelled (and now deprecated) getInstanciationTime() for backward
