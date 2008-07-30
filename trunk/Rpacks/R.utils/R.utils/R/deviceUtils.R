@@ -18,6 +18,8 @@
 #   Returns @TRUE if the device is open, otherwise @FALSE.
 # }
 #
+# @examples "../incl/deviceUtils.Rex"
+#
 # @author
 #
 # @keyword device
@@ -145,7 +147,12 @@ devSetLabel <- function(which=dev.cur(), label, ...) {
   devList <- .devList();
   if (devList[[which]] == "")
     stop("No such device: ", which);
+
+  # Update the label
+  if (is.null(label))
+    label <- "";
   names(devList)[which] <- label;
+
   assign(".Devices", devList, envir=baseenv());
 }
 
@@ -225,7 +232,13 @@ devSet <- function(which=dev.next(), ...) {
 # @keyword utilities
 #*/########################################################################### 
 devOff <- function(which=dev.cur(), ...) {
+  # Identify device
   which <- devSet(which);
+
+  # Reset the label
+  devSetLabel(which, label=NULL);
+
+  # Close device
   dev.off(which);
 } # devOff()
 
@@ -270,7 +283,7 @@ devDone <- function(which=dev.cur(), ...) {
     
     isOnScreen <- (type %in% deviceIsInteractive());
     if (!isOnScreen)
-      dev.off(which);
+      devOff(which);
   }
 } # devDone()
 
