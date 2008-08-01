@@ -2,18 +2,21 @@
 Package: R.utils
 ================
 
-Version: 1.0.4 [2008-07-29]
+Version: 1.0.4 [2008-08-01]
 o Now sourceDirectory() is guaranteed to source directories and files 
   in lexicographic order.
 o Added countLines() for counting number of lines in a text file.
 o Added several functions for extending the current functions dealing
   with devices.  All added functions can address a device by a label
   in addition to the standard device index.  The devGetLabel() and
-  devSetLabel() gets and sets the label of a give device.  To list
-  existing device labels there is devLabels().  The functions devSet()
-  and devOff() work like dev.set() and dev.off() but accept labels 
-  as well.  The devIsOpen() checks if a device is open or not. 
-  The devDone() function calls devOff() except for screen devices.
+  devSetLabel() gets and sets the label of a give device.  devList()
+  lists the indices of existing device named by their labels, cf.
+  dev.list().  The functions devSet() and devOff() work like 
+  dev.set() and dev.off() but accept labels as well.  Furthermore, 
+  devSet(idx) will open a device with index 'idx' if it does not 
+  exists, and devSet(label) a device with that label if not already
+  opened.  The devIsOpen() checks if a device is open or not. The 
+  devDone() function calls devOff() except for screen devices.
 
 
 Version: 1.0.3 [2008-07-10]

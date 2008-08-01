@@ -34,10 +34,12 @@ devIsOpen <- function(which=dev.cur(), ...) {
 
 
 
+
+
 ###########################################################################/**
-# @RdocFunction devLabels
+# @RdocFunction devList
 #
-# @title "Lists the labels of all open devices"
+# @title "Lists the indices of the open devices named by their labels"
 #
 # \description{
 #  @get "title".
@@ -50,23 +52,33 @@ devIsOpen <- function(which=dev.cur(), ...) {
 # }
 #
 # \value{
-#   Returns a @character @vector.
+#   Returns a named @integer @vector.
 # }
 #
 # @author
 #
 # \seealso{
-#   @see "devGetLabel" and @see "devSetLabel".
+#   @see "grDevices::dev.list".
 # }
 #
 # @keyword device
 # @keyword utilities
 #*/########################################################################### 
-devLabels <- function(...) {
+devList <- function(...) {
   devList <- .devList();
-  keep <- sapply(devList, FUN=function(dev) (dev != ""));
-  devList <- devList[keep];
-  names(devList);
+
+  # Return only opened devices
+  isOpen <- sapply(devList, FUN=function(dev) (dev != ""));
+  names(isOpen) <- names(devList);
+  idxs <- which(isOpen);
+
+  # Exclude the "null" device
+  idxs <- idxs[-1];
+
+  if (length(idxs) == 0)
+    idxs <- NULL;
+
+  idxs;
 }
 
 
@@ -94,7 +106,7 @@ devLabels <- function(...) {
 # @author
 #
 # \seealso{
-#   @see "devSetLabel" and @see "devLabels".
+#   @see "devSetLabel" and @see "devList".
 # }
 #
 # @keyword device
@@ -135,7 +147,7 @@ devGetLabel <- function(which=dev.cur(), ...) {
 # @author
 #
 # \seealso{
-#   @see "devGetLabel" and @see "devLabels".
+#   @see "devGetLabel" and @see "devList".
 # }
 #
 # @keyword device
@@ -191,11 +203,60 @@ devSetLabel <- function(which=dev.cur(), label, ...) {
 # @keyword utilities
 #*/########################################################################### 
 devSet <- function(which=dev.next(), ...) {
+  args <- list(...);
+
   # Argument 'which':
   if (is.character(which)) {
-    which <- .devIndexOf(which);
+    args$label <- which;
+    which <- .devIndexOf(which, error=FALSE);
+    # If not existing, open the next available one
+    if (is.na(which))
+      which <- .devNextAvailable();
   }
-  dev.set(which);
+
+  if (which < 2) {
+    stop("Cannot set device: ", which);
+  }
+
+
+  if (devIsOpen(which)) {
+    # Active already existing device
+    return(dev.set(which));
+  }
+
+  # Identify set devices that needs to be opened inorder for
+  # the next device to get the requested index
+  if (which == 2) {
+    toBeOpened <- c();
+  } else {
+    toBeOpened <- setdiff(2:(which-1), dev.list());
+  }
+
+  toBeClosed <- list();
+  len <- length(toBeOpened);
+  if (len > 0) {
+    for (idx in toBeOpened) {
+      # Create a dummy postscript device (which is non-visible)
+      pathname <- tempfile();
+      toBeClosed[[idx]] <- pathname;
+      postscript(file=pathname);
+    }
+  }
+
+  # Open the device
+  res <- do.call("devNew", args=args);
+
+  # Close temporarily opened devices
+  for (kk in seq(along=toBeClosed)) {
+    pathname <- toBeClosed[[kk]];
+    if (!is.null(pathname)) {
+      dev.set(kk);
+      dev.off();
+      file.remove(pathname);
+    }
+  }
+
+  invisible(res);
 } # devSet()
 
 
@@ -326,7 +387,7 @@ devDone <- function(which=dev.cur(), ...) {
 devNew <- function(type=getOption("device"), ..., label=NULL) {
   # Argument 'label':
   if (!is.null(label)) {
-    if (any(label == devLabels()))
+    if (any(label == names(devList())))
       stop("Cannot open device. Label is already used: ", label);
   }
 
@@ -351,21 +412,45 @@ devNew <- function(type=getOption("device"), ..., label=NULL) {
 
   labels <- names(devList);
   if (is.null(labels)) {
-    labels <- paste("Device", seq(along=devList));
+    labels <- paste("Device", seq(along=devList), sep=" ");
     names(devList) <- labels;
     assign(".Devices", devList, envir=baseenv());
+  } else {
+    # Update the names
+    labels <- names(devList);
+    idxs <- which(nchar(labels) == 0);
+    if (length(idxs) > 0) {
+      labels[idxs] <- paste("Device", idxs, sep=" ");
+    }
+    names(devList) <- labels;
   }
 
   devList;
 } # .devList()
 
-.devIndexOf <- function(label) {
+.devIndexOf <- function(label, error=TRUE) {
   devList <- .devList();
   idx <- match(label, names(devList));
-  if (is.na(idx) || devList[[idx]] == "")
-    stop("No such device: ", label);
+  if (is.na(idx) || devList[[idx]] == "") {
+    if (error)
+      stop("No such device: ", label);
+  }
   idx;
 } # .devIndexOf()
+
+
+.devNextAvailable <- function() {
+  # All open devices
+  devList <- dev.list();
+
+  if (length(devList) == 0)
+    return(as.integer(2));
+
+  devPossible <- seq(from=2, to=max(devList)+1);
+  devFree <- setdiff(devPossible, devList);
+
+  devFree[1];
+} # .devNextAvailable()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # END: Local functions
@@ -373,6 +458,13 @@ devNew <- function(type=getOption("device"), ..., label=NULL) {
 
 ############################################################################
 # HISTORY: 
+# 2008-08-01
+# o Added devList() and removed devLabels().
+# o Added internal .devNextAvailable().
+# o Added argument 'error=TRUE' to internal .devIndexOf().
+# 2008-07-31
+# o Now devSet(idx) opens a new device with index 'idx' if not already
+#   opened.
 # 2008-07-29
 # o Using term 'label' instead of 'name' everywhere, e.g. devLabels().
 #   This was changed because the help pages on 'dev.list' etc. already
