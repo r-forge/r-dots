@@ -2,6 +2,12 @@
 Package: R.utils
 ================
 
+Version: 1.0.5 [2008-08-04]
+o Now commandArgs(...) pass '...' to base::commandArgs() making it
+  fully backward compatible.  It is also updated to recognize all
+  R command line options as of R v2.7.1 and R v2.8.0 devel.
+
+
 Version: 1.0.4 [2008-08-01]
 o Now sourceDirectory() is guaranteed to source directories and files 
   in lexicographic order.
