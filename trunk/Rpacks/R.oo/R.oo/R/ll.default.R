@@ -122,7 +122,7 @@ setMethodS3("ll", "default", function(pattern=".*", ..., private=FALSE, properti
       if (is.null(value)) {
         e <- substitute(is.null(fcn(..object)), list(fcn=as.name(names[kk])));
       } else {
-        e <- substitute(fcn(..object) %in% value, 
+        e <- substitute(is.element(fcn(..object), value), 
                         list(fcn=as.name(names[kk]), value=value));
       }
       if (is.null(expr)) {
@@ -164,7 +164,7 @@ setMethodS3("ll", "default", function(pattern=".*", ..., private=FALSE, properti
   if (length(properties) == 0) {
     # Set default 'properties' argument for ll(), if missing
     key <- "R.oo::ll/properties";
-    if (!key %in% names(options())) {
+    if (!is.element(key, names(options()))) {
       properties <- c("data.class", "dimension", "objectSize");
       options(key=properties);
     }
@@ -249,6 +249,10 @@ setMethodS3("ll", "default", function(pattern=".*", ..., private=FALSE, properti
 
 ############################################################################
 # HISTORY:
+# 2008-08-11
+# o Replace all 'a %in% b' with is.element(a,b) due to weird bug, cf.
+#   my R-devel post 'Argument "nomatch" matched by multiple actual 
+#   arguments ... %in% -> match?!?' on March 6, 2008. 
 # 2007-06-09
 # o Removed (incorrect) argument name 'list' from all substitute() calls.
 # 2007-03-24

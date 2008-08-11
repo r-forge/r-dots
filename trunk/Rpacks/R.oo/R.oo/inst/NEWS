@@ -1,7 +1,12 @@
 Package: R.oo
 =============
 
-Version: 1.4.6 [2008-07-30]
+Version: 1.4.6 [2008-08-11]
+o Replaced all 'a %in% b' with is.element(a,b) due to an old and
+  weird bug that I cannot reproduce, cf. my R-devel post in thread
+  'Argument "nomatch" matched by multiple actual arguments ... 
+  %in% -> match?!?' on March 6, 2008.  Thanks Ran Pang for 
+  reminding me and for additional troubleshooting.
 o Added support for more "short tags" in the Rdoc compiler.
 
 

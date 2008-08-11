@@ -852,7 +852,7 @@ setMethodS3("load", "Object", function(static, file, path=NULL, ...) {
   saveLoadReference <- NULL; # To please R CMD check R v2.6.0
   vars <- load.default(file=file);
 
-  if (!"saveLoadReference" %in% vars)
+  if (!is.element("saveLoadReference", vars))
     throw("The file does not contain an R.oo Object: ", file);
 
   object <- saveLoadReference;
@@ -1313,7 +1313,7 @@ setMethodS3("extend", "Object", function(this, ...className, ..., ...fields=NULL
     # it, this will be our best chance to run the correct finalizer(),
     # which might be in a subclass of a different package that is still
     # loaded.
-    isRooLoaded <- any(c("package:R.oo", "dummy:R.oo") %in% search());
+    isRooLoaded <- any(is.element(c("package:R.oo", "dummy:R.oo"), search()));
     if (isRooLoaded) {
       finalize(this);
     } else {

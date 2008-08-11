@@ -206,7 +206,7 @@ setMethodS3("getKeywords", "Rdoc", function(this, fullInfo=FALSE, ...) {
 # @keyword documentation
 #*/###########################################################################
 setMethodS3("isKeyword", "Rdoc", function(this, word, ...) {
-  (word %in% Rdoc$getKeywords())
+  is.element(word, Rdoc$getKeywords());
 }, static=TRUE)
 
 
@@ -505,7 +505,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   validateKeyword <- function(keyword) {
     knownKeywords <- Rdoc$getKeywords();
-    if (!(keyword %in% knownKeywords)) {
+    if (!is.element(keyword, knownKeywords)) {
       alts <- agrep(keyword, knownKeywords);
       alts <- paste("'", knownKeywords[alts], "'", collapse=", ", sep="");
       if (nchar(alts) > 0)
@@ -862,7 +862,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       bfr <- getTagValue(bfr);
       method <- attr(bfr, "value");
       objectName <<- paste(method, ".", class, sep="");
-      isDeprecated <<- eval(substitute({"deprecated" %in% attr(object, "modifiers")}, list(object=as.name(objectName))));
+      isDeprecated <<- eval(substitute(is.element("deprecated", attr(object, "modifiers")), list(object=as.name(objectName))));
       name <- createName.Rdoc(NULL, class, method, escape=FALSE);
       alias <- name;
       name <<- name <- escapeName(name);
@@ -894,7 +894,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       bfr <- getTagValue(bfr);
       default <- attr(bfr, "value");
       objectName <<- default;
-      isDeprecated <<- eval(substitute({"deprecated" %in% attr(object, "modifiers")}, list(object=as.name(objectName))));
+      isDeprecated <<- eval(substitute(is.element("deprecated", attr(object, "modifiers")), list(object=as.name(objectName))));
       name <- default;
       name <<- name <- escapeName(name);
       line <- paste("\\name{", name, "}\n", sep="");
@@ -911,7 +911,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       bfr <- getTagValue(bfr);
       generic <- attr(bfr, "value");
       objectName <<- generic;
-      isDeprecated <<- eval(substitute({"deprecated" %in% attr(object, "modifiers")}, list(object=as.name(objectName))));
+      isDeprecated <<- eval(substitute(is.element("deprecated", attr(object, "modifiers")), list(object=as.name(objectName))));
       name <- generic;
       name <<- name <- escapeName(name);
       line <- paste("\\name{", name, "}\n", sep="");
@@ -928,7 +928,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       bfr <- getTagValue(bfr);
       fcn <- attr(bfr, "value");
       objectName <<- fcn;
-      isDeprecated <<- eval(substitute({"deprecated" %in% attr(object, "modifiers")}, list(object=as.name(objectName))));
+      isDeprecated <<- eval(substitute(is.element("deprecated", attr(object, "modifiers")), list(object=as.name(objectName))));
       name <- fcn;
       name <<- name <- escapeName(name);
       line <- paste("\\name{", name, "}\n", sep="");
@@ -944,7 +944,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       bfr <- getTagValue(bfr);
       object <- attr(bfr, "value");
       objectName <<- object;
-      isDeprecated <<- eval(substitute({"deprecated" %in% attr(object, "modifiers")}, list(object=as.name(objectName))));
+      isDeprecated <<- eval(substitute(is.element("deprecated", attr(object, "modifiers")), list(object=as.name(objectName))));
       name <- object;
       name <<- name <- escapeName(name);
       line <- paste("\\name{", name, "}\n", sep="");
@@ -1094,7 +1094,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagSynopsis <- function(bfr) {
-      if ("synopsis" %in% names(attributes(usage))) {
+      if (is.element("synopsis", names(attributes(usage)))) {
         synopsis <- attr(usage, "synopsis");
         line <- paste("\\synopsis{", synopsis, "}\n", sep="");
       } else {
@@ -1255,8 +1255,8 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
         for (l in seq(along=methods)) {
           fcn <- get(methods[l], mode="function");
           modifiers <- attr(fcn, "modifiers");
-          isPrivate <- "private" %in% modifiers;
-          isDeprecated <- "deprecated" %in% modifiers;
+          isPrivate <- is.element("private", modifiers);
+          isDeprecated <- is.element("deprecated", modifiers);
           if (isPrivate || isDeprecated)
             methods[l] <- NA;
         }
@@ -1641,9 +1641,9 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
           } else {
             object <- get(objectName);
             modifiers <- attr(object, "modifiers");
-            if ("private" %in% modifiers) {
+            if (is.element("private", modifiers)) {
               visibility <- "private";
-            } else if ("protected" %in% modifiers) {
+            } else if (is.element("protected", modifiers)) {
               visibility <- "protected";
             }
           }
@@ -1683,7 +1683,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
     # Wrap up the arguments to source 
     args <- list(...);
   
-    if (!"file" %in% names(args))
+    if (!is.element("file", names(args)))
       names(args)[1] <- "file";
 
     # Override any 'local' argument
@@ -1910,7 +1910,7 @@ setMethodS3("declaration", "Rdoc", function(this, class, ...) {
 setMethodS3("methodsInheritedFrom", "Rdoc", function(this, class, visibility=c("public", "protected", "private"), showDeprecated=FALSE, inheritedFrom=NULL, sort=TRUE, trial=FALSE, ...) {
   s <- "";
 
-  private <- ("private" %in% visibility);
+  private <- is.element("private", visibility);
 
   # Classes
   for (extend in getSuperclasses(class)) {
@@ -1983,7 +1983,7 @@ setMethodS3("getUsage", "Rdoc", function(static, method, class=NULL, ...) {
     throw(RdocException("Could not get usage. Function was not found: ", fcnName, "()", source=Rdoc$source));
   }
   fcn <- get(fcnName, mode="function");
-  isStatic <- ("static" %in% attr(fcn, "modifiers"));
+  isStatic <- is.element("static", attr(fcn, "modifiers"));
   isConstructor <- inherits(fcn, "Class");
   args <- Rdoc$argsToString(fcn);
   # '%' is a comment in Rd format.
@@ -2388,10 +2388,10 @@ setMethodS3("check", "Rdoc", function(this, manPath=getManPath(this), verbose=FA
 # @keyword documentation
 #*/###########################################################################
 setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) {
-  if (("deprecated" %in% modifiers) && (!"deprecated" %in% visibilities))
+  if (is.element("deprecated", modifiers) && !is.element("deprecated", visibilities))
     return(FALSE);
 
-  if (("trial" %in% modifiers) && (!"trial" %in% visibilities))
+  if (is.element("trial", modifiers) && !is.element("trial", visibilities))
     return(FALSE);
 
   levels <- c("private", "protected", "public");
@@ -2413,6 +2413,10 @@ setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) 
 
 #########################################################################
 # HISTORY:
+# 2008-08-11
+# o Replace all 'a %in% b' with is.element(a,b) due to weird bug, cf.
+#   my R-devel post 'Argument "nomatch" matched by multiple actual 
+#   arguments ... %in% -> match?!?' on March 6, 2008.
 # 2008-07-30
 # o Added shorttags: 'raw'.
 # 2007-09-17

@@ -21,7 +21,7 @@ attach(list(
       # it, this will be our best chance to run the correct finalizer(),
       # which might be in a subclass of a different package that is still
       # loaded.
-      isRooLoaded <- any(c("package:R.oo", "dummy:R.oo") %in% search());
+      isRooLoaded <- any(is.element(c("package:R.oo", "dummy:R.oo"), search()));
       if (isRooLoaded) {
         finalize(this);
       } else {

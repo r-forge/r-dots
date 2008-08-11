@@ -15,7 +15,7 @@ detach("R.oo")
 
   # Set default 'properties' argument for ll(), if missing
   key <- paste(pkgname, "::ll/properties", sep="");
-  if (!key %in% names(options())) {
+  if (!is.element(key, names(options()))) {
     args <- list(c("data.class", "dimension", "objectSize"));
     names(args) <- key;
     do.call(options, args=args);

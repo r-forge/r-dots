@@ -1531,7 +1531,7 @@ setMethodS3("update", "Package", function(object, contribUrl=c(getContribUrl(thi
       } else {
   	old <- old.packages();
   	found <- TRUE;
-  	if (pkgs %in% old) {
+  	if (is.element(pkgs, old)) {
   	  update.packages();
   	  updated <- TRUE;
   	}
@@ -1554,7 +1554,7 @@ setMethodS3("update", "Package", function(object, contribUrl=c(getContribUrl(thi
         } else {
           old <- old.packages(contriburl=url);
           found <- TRUE;
-          if (pkgs %in% old) {
+          if (is.element(pkgs, old)) {
             update.packages(contriburl=url);
             updated <- TRUE;
             break;
@@ -1578,6 +1578,10 @@ setMethodS3("update", "Package", function(object, contribUrl=c(getContribUrl(thi
 
 ############################################################################
 # HISTORY:
+# 2008-08-11
+# o Replace all 'a %in% b' with is.element(a,b) due to weird bug, cf.
+#   my R-devel post 'Argument "nomatch" matched by multiple actual 
+#   arguments ... %in% -> match?!?' on March 6, 2008.
 # 2008-05-08
 # o Added getNews() and showNews(). NEWS files are now detected (first).
 # 2007-06-09
