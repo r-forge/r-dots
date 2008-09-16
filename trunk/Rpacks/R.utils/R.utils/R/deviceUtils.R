@@ -391,7 +391,17 @@ devNew <- function(type=getOption("device"), ..., label=NULL) {
       stop("Cannot open device. Label is already used: ", label);
   }
 
-  res <- do.call(type, args=list(...));
+  args <- list(...);
+  
+  # Exclude 'file' and 'filename' arguments?
+  knownInteractive <- grDevices:::.known_interactive.devices;
+  if (is.element(tolower(type), tolower(knownInteractive))) {
+    keep <- !is.element(names(args), c("file", "filename"));
+    args <- args[keep];
+  }
+
+  res <- do.call(type, args=args);
+#  res <- doCall(type, args=args);
 
   devSetLabel(label=label);
 
@@ -458,6 +468,9 @@ devNew <- function(type=getOption("device"), ..., label=NULL) {
 
 ############################################################################
 # HISTORY: 
+# 2008-09-08
+# o Now devNew() filters out arguments 'file' and 'filename' if the device
+#   is interactive.
 # 2008-08-01
 # o Added devList() and removed devLabels().
 # o Added internal .devNextAvailable().
