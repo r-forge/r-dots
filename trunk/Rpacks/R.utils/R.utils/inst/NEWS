@@ -2,6 +2,10 @@
 Package: R.utils
 ================
 
+Version: 1.0.7 [2008-09-20]
+o Added mapToIntervals(), inAnyInterval(), and mergeIntervals().
+
+
 Version: 1.0.6 [2008-09-08]
 o Now devNew() filters out arguments 'file' and 'filename' if the
   device is interactive.

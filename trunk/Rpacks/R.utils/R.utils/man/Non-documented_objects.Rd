@@ -164,10 +164,15 @@
  % The VComments class
  % <none>
 
+ % Intervals
+ \alias{inAnyInterval}
+ \alias{mapToIntervals}
+ \alias{mergeIntervals}
+ \alias{intervalsToSeq}
+
  % Misc.
  \alias{extract}
  \alias{gunzip.default}
- \alias{intervalsToSeq}
  \alias{isOpen}
  \alias{isOpen.default}
  \alias{lapply}
