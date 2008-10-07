@@ -34,6 +34,8 @@
 # \seealso{
 #  @see "inAnyInterval".
 #  @see "base::match".
+#  @see "base::findInterval".
+#  @see "base::cut".
 # }
 #
 # @keyword "utilities" 
