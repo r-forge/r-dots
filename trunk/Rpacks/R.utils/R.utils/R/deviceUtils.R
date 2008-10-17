@@ -385,23 +385,34 @@ devDone <- function(which=dev.cur(), ...) {
 # @keyword utilities
 #*/########################################################################### 
 devNew <- function(type=getOption("device"), ..., label=NULL) {
+  # Argument 'type':
+  if (is.function(type)) {
+  } else {
+    type <- as.character(type);
+  }
+
   # Argument 'label':
   if (!is.null(label)) {
     if (any(label == names(devList())))
       stop("Cannot open device. Label is already used: ", label);
   }
 
-  args <- list(...);
   
-  # Exclude 'file' and 'filename' arguments?
-  knownInteractive <- grDevices:::.known_interactive.devices;
-  if (is.element(tolower(type), tolower(knownInteractive))) {
-    keep <- !is.element(names(args), c("file", "filename"));
-    args <- args[keep];
+  if (is.character(type)) {
+    args <- list(...);
+
+    # Exclude 'file' and 'filename' arguments?
+    knownInteractive <- grDevices:::.known_interactive.devices;
+    if (is.element(tolower(type), tolower(knownInteractive))) {
+      keep <- !is.element(names(args), c("file", "filename"));
+      args <- args[keep];
+    }
+    res <- do.call(type, args=args);
+  #  res <- doCall(type, args=args);
+  } else if (is.function(type)) {
+    res <- type(...);
   }
 
-  res <- do.call(type, args=args);
-#  res <- doCall(type, args=args);
 
   devSetLabel(label=label);
 
@@ -468,6 +479,8 @@ devNew <- function(type=getOption("device"), ..., label=NULL) {
 
 ############################################################################
 # HISTORY: 
+# 2008-10-16
+# o BUG FIX: Argument 'type' of devNew() did not take function:s.
 # 2008-09-08
 # o Now devNew() filters out arguments 'file' and 'filename' if the device
 #   is interactive.
