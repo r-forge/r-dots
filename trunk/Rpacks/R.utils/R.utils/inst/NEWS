@@ -3,6 +3,7 @@ Package: R.utils
 ================
 
 Version: 1.0.8 [2008-10-16]
+o Now devDone(which=1) does nothing.  Before it gave an error.
 o BUG FIX: Argument 'type' of devNew() did not take function:s.
 
 

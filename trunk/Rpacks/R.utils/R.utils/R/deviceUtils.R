@@ -337,6 +337,10 @@ devOff <- function(which=dev.cur(), ...) {
 # @keyword utilities
 #*/########################################################################### 
 devDone <- function(which=dev.cur(), ...) {
+  # Do nothing?
+  if (which <= 1)
+    return(invisible());
+
   which <- devSet(which);
   if (which != 1) {
     type <- tolower(names(which));
@@ -480,6 +484,7 @@ devNew <- function(type=getOption("device"), ..., label=NULL) {
 ############################################################################
 # HISTORY: 
 # 2008-10-16
+# o Now devDone(which=1) does nothing.  Before it gave an error.
 # o BUG FIX: Argument 'type' of devNew() did not take function:s.
 # 2008-09-08
 # o Now devNew() filters out arguments 'file' and 'filename' if the device
