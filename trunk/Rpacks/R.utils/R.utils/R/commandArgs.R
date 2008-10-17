@@ -124,21 +124,26 @@ commandArgs <- function(asValues=FALSE, excludeReserved=FALSE, excludeEnvVars=FA
   
   # Flag reserved arguments
   args <- base::commandArgs(...);
+
   isReserved <- logical(length(args));
   for (rarg in reservedArgs)
     isReserved <- isReserved | (regexpr(rarg, args) != -1);
-  attr(args, "isReserved") <- isReserved;
 
   # Flag environment variable arguments
   pattern <- "^([^=-]*)(=)(.*)$";
   isEnvVars <- (regexpr(pattern, args) != -1);
-  attr(args, "isEnvVars") <- isEnvVars;
-  
-  if (excludeReserved)
-    args <- args[!attr(args, "isReserved")];
 
+  # Exclude non wanted elements
+  keep <- rep(TRUE, length(args));
+  if (excludeReserved)
+    keep <- keep & !isReserved;
   if (excludeEnvVars)
-    args <- args[!attr(args, "isEnvVars")];
+    keep <- keep & !isEnvVars;
+
+  attrs <- list(isReserved=isReserved, isEnvVars=isEnvVars);
+  attrs <- c(attributes(args), attrs);
+  args <- args[keep];
+  attributes(args) <- attrs;
 
   if (asValues) {
     keys <- args[1];
@@ -197,6 +202,10 @@ commandArgs <- function(asValues=FALSE, excludeReserved=FALSE, excludeEnvVars=FA
 
 ############################################################################
 # HISTORY:
+# 2008-10-17
+# o BUG FIX: commandArgs() would 'Error in !attr(args, "isEnvVars") : 
+#   invalid argument type' if both arguments excludeReserved=TRUE and
+#   excludeEnvVars=TRUE were used.
 # 2008-08-04
 # o Now commandArgs(...) pass '...' to base::commandArgs() making it
 #   fully backward compatible.
