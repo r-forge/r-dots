@@ -2,6 +2,11 @@
 Package: R.utils
 ================
 
+Version: 1.1.0 [2008-10-24]
+o Now sourceDirectory() also searches for source files with extensions
+  *.r, *.q, *.s, and *.S, cf. R manual 'Writing R Extensions'.
+
+
 Version: 1.0.9 [2008-10-17]
 o BUG FIX: commandArgs() would 'Error in !attr(args, "isEnvVars") : 
   invalid argument type' if both arguments excludeReserved=TRUE and

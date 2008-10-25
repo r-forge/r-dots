@@ -47,7 +47,7 @@
 #**/#######################################################################
 # Create a filename pattern for R files and Windows shortcuts too such.
 # sourceTo() will automatically recognize those too.
-setMethodS3("sourceDirectory", "default", function(path, pattern=".*[.]R([.](lnk|LNK))*$", recursive=TRUE, envir=parent.frame(), onError=c("error", "warning", "skip"), verbose=FALSE, ...) {
+setMethodS3("sourceDirectory", "default", function(path, pattern=".*[.](r|R|s|S|q)([.](lnk|LNK))*$", recursive=TRUE, envir=parent.frame(), onError=c("error", "warning", "skip"), verbose=FALSE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -174,6 +174,9 @@ setMethodS3("sourceDirectory", "default", function(path, pattern=".*[.]R([.](lnk
 
 ###########################################################################
 # HISTORY:
+# 2008-10-24
+# o Now sourceDirectory() also searches for source files with extensions
+#   *.r, *.q, *.s, and *.S, cf. R manual 'Writing R Extensions'.
 # 2008-07-24
 # o Now sourceDirectory() is guaranteed to source directories and files 
 #   in lexicographic order.
