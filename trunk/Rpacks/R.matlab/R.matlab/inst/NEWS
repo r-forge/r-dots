@@ -2,6 +2,17 @@
 Package: R.matlab
 =================
 
+Version: 1.2.4 [2008-10-29]
+o If onWrite == NULL, then there is no longer an outer two-pass scan
+  for figuring out the size of MAT structure.  However, instead
+  each readDataElement() has to do a two-pass scan in order to 
+  figure out the number of bytes before writing each element.
+o BUG FIX: Arrays with more than two dimension would be written
+  as vectors.  Thanks Minho Chae for reporting this.
+o BUG FIX: From v1.2.2, writeMat() would generate corrupt MAT files.
+  Reverted writeMat() back to v1.2.1 and updated as above.
+
+
 Version: 1.2.3 [2008-07-20]
 o Updated example(readMat) so that it gives no error if
   the optional 'Rcompression' package is not installed.

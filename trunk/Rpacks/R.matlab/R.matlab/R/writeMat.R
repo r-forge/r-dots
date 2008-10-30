@@ -59,13 +59,14 @@
 # }
 #
 # \examples{@include "../incl/writeMat.Rex"
+#
 # \dontrun{
 # # When writing to a stream connection the receiver needs to know on
 # # beforehand how many bytes are available. This can be done by using
 # # the 'onWrite' argument.
 # onWrite <- function(x)
 #   writeBin(x$length, con=x$con, size=4, endian="little");
-# writeMat(con, A=A, B=B, onWrite=onWrite)
+#   writeMat(con, A=A, B=B, onWrite=onWrite)
 # }
 # }
 #
@@ -83,27 +84,18 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
   # General functions to write MAT v5 files (and later MAT v4 files).    BEGIN
   #===========================================================================
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  # writeBinMat() and writeCharMat() keep count of the number of bytes 
-  # written. If 'countOnly' is TRUE, no bytes are written, but just counted.
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  nbrOfBytesWritten <- 0;
-  countOnly <- FALSE;
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  # 'nbrOfBytesList'
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-#  nbrOfBytesList <- c();
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Function to write (or just count) an object to a connection.
   #
   # This function will also keep track of the actual number of bytes written.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  writeBinMat <- function(object, size, signed=TRUE, endian="little") {
-    if (!countOnly)
+  writeBinMat <- function(con, object, size, signed=TRUE, endian="little") {
+    if (!is.null(con)) {
       writeBin(object, con=con, size=size, endian=endian);
-    nbrOfBytesWritten <<- nbrOfBytesWritten + size*length(object);
+###      verbose && printf(verbose, "writeBinMat([%s]<length=%d>, size=%d)\n", paste(object, collapse=","), length(object), size);
+    }
+    nbrOfBytes <- as.integer(size)*length(object);
+
+    nbrOfBytes;
   } # writeBinMat()
   
   
@@ -112,10 +104,12 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
   #
   # This function will also keep track of the actual number of bytes written.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  writeCharMat <- function(object, nchars=nchar(object)) {
-    if (!countOnly)
+  writeCharMat <- function(con, object, nchars=nchar(object)) {
+    if (!is.null(con)) {
       writeChar(object, con=con, nchars=nchars, eos=NULL);
-    nbrOfBytesWritten <<- nbrOfBytesWritten + nchars;
+###      verbose && printf(verbose, "writeCharMat(<length=%d>, nchars=%d)\n", length(object), nchars);
+    }
+    nchars;
   } # writeCharMat()
 
 
@@ -188,25 +182,32 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
   # MAT v5 specific                                                      BEGIN
   #===========================================================================
   writeMat5 <- function(con, objects, onWrite=onWrite, format="matlab") {
-    writeHeader <- function() {
+    writeHeader <- function(con) {
+      verbose && enter(verbose, "writeHeader()");
+
       # Write 124 bytes header description
       rVersion <- paste(c(R.Version()$major, R.Version()$minor), collapse=".");
       description <- paste("MATLAB 5.0 MAT-file, Platform: ", .Platform$OS.type, ", Software: R v", rVersion, ", Created on: ", date(), sep="");
       bfr <- charToInt(unlist(strsplit(description, "")));
       bfr <- c(bfr, rep(32, max(124-length(bfr),0)));
       if (length(bfr) > 124) bfr <- bfr[1:124];
-      writeBinMat(as.integer(bfr), size=1);
+      nbrOfBytes <- writeBinMat(con, as.integer(bfr), size=1);
     
       # Write version
       version <- as.integer(256);
-      version <- writeBinMat(version, size=2, endian="little");
+      nbrOfBytes <- nbrOfBytes + writeBinMat(con, version, size=2, endian="little");
     
       # Write endian information           
-      writeCharMat("IM");
+      nbrOfBytes <- nbrOfBytes + writeCharMat(con, "IM");
+
+      verbose && exit(verbose);
+
+      # Return number of bytes written
+      nbrOfBytes;
     } # writeHeader()
   
   
-    writeDataElement <- function(object) {
+    writeDataElement <- function(con, object, nbrOfBytes=NA) {
       #      1    2    3    4    5    6    7    8
       #   +----+----+----+----+----+----+----+----+
       #   |    Data type      |  Number of Bytes  |  Tag
@@ -216,371 +217,469 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
       #   |                                       |
       #   +---------------------------------------+
     
-      verbose && cat(verbose, "writeDataElement()");
+      verbose && enter(verbose, "writeDataElement()");
     
       writeTag <- function(dataType, nbrOfBytes, compressed=FALSE) {
-###        if (!countOnly) {
-###          nbrOfBytes <- nbrOfBytesList[1];
-###          nbrOfBytesList <<- nbrOfBytesList[-1];
-###        }
-        verbose && cat(verbose, "dataType=", dataType, ", nbrOfBytes=", nbrOfBytes);
-        knownTypes <- c("miINT8"=8, "miUINT8"=8, "miINT16"=16, "miUINT16"=16, "miINT32"=32, "miUINT32"=32, "miSINGLE"=NA, NA, "miDOUBLE"=64, NA, NA, "miINT64"=64, "miUINT64"=64, "miMATRIX"=NA);
-        type <- which(names(knownTypes) == dataType);
-        if (length(type) == 0)
-          stop(paste("Unknown Data Element Tag type: ", dataType, sep=""));
-        if (compressed) {
-          bfr <- nbrOfBytes * 256^2 + type;
-          writeBinMat(as.integer(bfr), size=4, endian="little");
-        } else {
-          writeBinMat(as.integer(type), size=4, endian="little");
-          writeBinMat(as.integer(nbrOfBytes), size=4, endian="little");
+##        verbose && enter(verbose, sprintf("writeTag(%s, nbrOfBytes=%d, compressed=%s)", dataType, nbrOfBytes, compressed));
+  	knownTypes <- c("miINT8"=8, "miUINT8"=8, "miINT16"=16, "miUINT16"=16, "miINT32"=32, "miUINT32"=32, "miSINGLE"=NA, NA, "miDOUBLE"=64, NA, NA, "miINT64"=64, "miUINT64"=64, "miMATRIX"=NA);
+  	type <- which(names(knownTypes) == dataType);
+  	if (length(type) == 0)
+  	  stop(paste("Unknown Data Element Tag type: ", dataType, sep=""));
+        
+        nbrOfBytesTag <- nbrOfBytes;
+
+        nbrOfBytes <- as.integer(0);
+  	if (compressed) {
+  	  bfr <- nbrOfBytesTag * 256^2 + type;
+  	  nbrOfBytes <- nbrOfBytes + writeBinMat(con, as.integer(bfr), size=4, endian="little");
+  	} else {
+  	  nbrOfBytes <- nbrOfBytes + writeBinMat(con, as.integer(type), size=4, endian="little");
+  	  nbrOfBytes <- nbrOfBytes + writeBinMat(con, as.integer(nbrOfBytesTag), size=4, endian="little");
+  	}
+
+        # Sanity check
+        if(nbrOfBytes != 4 && nbrOfBytes != 8) {
+          stop("Internal error: Number of bytes written by writeTag() is not 4 or 8: ", nbrOfBytes);
         }
+
+###        verbose && exit(verbose);
+
+        # Return number of bytes written
+        nbrOfBytes;
       } # writeTag()
       
-###      beginTag <- function() {
-###        if (countOnly)
-###          nbrOfBytesList <<- c(nbrOfBytesList, nbrOfBytesWritten);
-###        length(nbrOfBytesList);
-###        0;
-###      }
-###      
-###      endTag <- function(k) {
-###        if (countOnly)
-###          nbrOfBytesList[k] <<- nbrOfBytesWritten - nbrOfBytesList[k];
-###      }
-    
+      writePadding <- function(padding, ...) {
+        if (padding > 0) {
+###          verbose && enter(verbose, "Padding with ", padding, " zeros");
+          writeBinMat(con, as.integer(rep(0,padding)), size=1);
+###          verbose && exit(verbose);
+        }
+        padding;
+      } # writePadding()
+
+      
       writeArrayFlags <- function(class, complex=FALSE, global=FALSE, logical=FALSE) {
-        verbose && cat(verbose, "writeArrayFlags(): ", class);
-        knownClasses <- c("mxCELL_CLASS"=NA, "mxSTRUCT_CLASS"=NA, "mxOBJECT_CLASS"=NA, "mxCHAR_CLASS"=8, "mxSPARSE_CLASS"=NA, "mxDOUBLE_CLASS"=NA, "mxSINGLE_CLASS"=NA, "mxINT8_CLASS"=8, "mxUINT8_CLASS"=8, "mxINT16_CLASS"=16, "mxUINT16_CLASS"=16, "mxINT32_CLASS"=32, "mxUINT32_CLASS"=32);
-        classID <- which(names(knownClasses) == class);
-        if (length(classID) == 0)
-          stop(paste("Unknown tag type: ", class, sep=""));
+  	verbose && enter(verbose, "writeArrayFlags(): ", class);
+
+  	knownClasses <- c("mxCELL_CLASS"=NA, "mxSTRUCT_CLASS"=NA, "mxOBJECT_CLASS"=NA, "mxCHAR_CLASS"=8, "mxSPARSE_CLASS"=NA, "mxDOUBLE_CLASS"=NA, "mxSINGLE_CLASS"=NA, "mxINT8_CLASS"=8, "mxUINT8_CLASS"=8, "mxINT16_CLASS"=16, "mxUINT16_CLASS"=16, "mxINT32_CLASS"=32, "mxUINT32_CLASS"=32);
+  	classID <- which(names(knownClasses) == class);
+  	if (length(classID) == 0)
+  	  stop(paste("Unknown tag type: ", class, sep=""));
     
-        flags <- c(2^3*complex, 2^2*global, 2^1*logical, 0);
-        flags <- sum(flags);
+  	flags <- c(2^3*complex, 2^2*global, 2^1*logical, 0);
+  	flags <- sum(flags);
     
-        # Array Flags [miUINT32]
-        writeTag(dataType="miUINT32", nbrOfBytes=8);
-###        tagPos <- beginTag();
+  	# Array Flags [miUINT32]
+  	tagSize <- writeTag(dataType="miUINT32", nbrOfBytes=8);
+        nbrOfBytes <- tagSize;
+        
+  	bfr <- flags*256 + classID;
+  	nbrOfBytes <- nbrOfBytes + writeBinMat(con, as.integer(bfr), size=4, endian="little");
+        
+  	# Undefined
+  	nbrOfBytes <- nbrOfBytes + writeBinMat(con, as.integer(0), size=4);
     
-        bfr <- flags*256 + classID;
-        writeBinMat(as.integer(bfr), size=4, endian="little");
-    
-        # Undefined
-        writeBinMat(as.integer(rep(0,4)), size=1);
-    
-###        endTag(tagPos);
-      }
+  	verbose && exit(verbose);
+
+        # Return number of written bytes
+        nbrOfBytes;
+      } # writeArrayFlags()
     
       
       writeDimensionsArray <- function(dim=c(1,1)) {
-        nbrOfDimensions <- length(dim);
-        nbrOfBytes <- nbrOfDimensions*4;
-        padding <- 8 - ((nbrOfBytes-1) %% 8 + 1);
-        
-        verbose && cat(verbose, "writeDimensionsArray(): dim=c(", paste(dim, collapse=","), ")");
-        
-        # Dimensions Array [miINT32]
-        writeTag(dataType="miINT32", nbrOfBytes=nbrOfBytes);
-###        tagPos <- beginTag();
-      
-        # Write the dimensions
-        writeBinMat(as.integer(dim), size=4, signed=TRUE, endian="little");
-        
-###        endTag(tagPos);
-        
-        # Write padded bytes
-        if (padding > 0) {
-          writeBinMat(as.integer(rep(0,padding)), size=1);
-          nbrOfBytes <- nbrOfBytes + padding;
+  	nbrOfDimensions <- length(dim);
+  	nbrOfBytes <- nbrOfDimensions*4;
+  	
+  	verbose && enter(verbose, "writeDimensionsArray(): dim=c(", paste(dim, collapse=","), ")");
+
+  	# Pad bytes?
+  	padding <- 8 - ((nbrOfBytes-1) %% 8 + 1);
+  	if (padding < 0) {
+          stop("Internal error: Negative padding: ", padding);
         }
-      } # writeDimensionArray()
-      
         
+  	# Dimensions Array [miINT32]
+  	tagSize <- writeTag(dataType="miINT32", nbrOfBytes=nbrOfBytes);
+        nbrOfBytes <- tagSize;
+
+  	# Write the dimensions
+  	nbrOfBytes <- nbrOfBytes + writeBinMat(con, as.integer(dim), size=4, signed=TRUE, endian="little");
+      
+  	# Write padded bytes
+        nbrOfBytes <- nbrOfBytes + writePadding(padding);
+
+  	verbose && exit(verbose);
+
+        # Return number of bytes written
+        nbrOfBytes;
+      } # writeDimensionsArray()
+    
+      
       writeArrayName <- function(name) {
-        verbose && cat(verbose, "writeArrayName(): '", name, "'");
-        name <- charToInt(unlist(strsplit(name,"")));
-        nbrOfBytes <- length(name);
-      
-        # NOTE: Compression is not optional (as stated in [1]). /HB 020828
-        compressed <- (nbrOfBytes > 0 && nbrOfBytes <= 4);
-        # Dimensions Array [miINT8]
-        writeTag(dataType="miINT8", nbrOfBytes=nbrOfBytes, compressed=compressed);
-###        tagPos <- beginTag();
-      
-        # Write characters
-        if (nbrOfBytes > 0)
-          writeBinMat(as.integer(name), size=1, endian="little");
-      
-###        endTag(tagPos);
-      
-        # Write padded bytes
-        if (compressed)
-          padding <- 4 - ((nbrOfBytes-1) %% 4 + 1)
-        else
-          padding <- 8 - ((nbrOfBytes-1) %% 8 + 1);
-        if (padding > 0) {
-          writeBinMat(as.integer(rep(0,padding)), size=1);
-          nbrOfBytes <- nbrOfBytes + padding;
+ 	verbose && enter(verbose, "writeArrayName(): '", name, "'");
+  	name <- charToInt(unlist(strsplit(name,"")));
+  	nbrOfBytes <- length(name);
+        
+  	# NOTE: Compression is not optional (as stated in [1]). /HB 020828
+  	compressed <- (nbrOfBytes > 0 && nbrOfBytes <= 4);
+
+        # Pad bytes? 
+      	if (compressed) {
+  	  padding <- 4 - ((nbrOfBytes-1) %% 4 + 1);
+  	} else {
+  	  padding <- 8 - ((nbrOfBytes-1) %% 8 + 1);
         }
+  	if (padding < 0) {
+          stop("Internal error: Negative padding: ", padding);
+        }
+        
+  	# Dimensions Array [miINT8]
+  	tagSize <- writeTag(dataType="miINT8", nbrOfBytes=nbrOfBytes, compressed=compressed);
+        nbrOfBytes <- tagSize;
+
+  	# Write characters
+  	if (length(name) > 0) {
+  	  nbrOfBytes <- nbrOfBytes + writeBinMat(con, as.integer(name), size=1, endian="little");
+        }
+    
+  	# Write padded bytes
+        nbrOfBytes <- nbrOfBytes + writePadding(padding);
+        
+  	verbose && exit(verbose);
+
+        # Return number of bytes written
+        nbrOfBytes;
       } # writeArrayName()
+    
       
-        
       writeNumericPart <- function(values) {
-        verbose && cat(verbose, "writeNumericPart(): ", length(values), " value(s).");
-          
-        if (is.integer(values)) {
-          dataType <- "miINT32"
-          sizeOf <- 4;
-        } else if (is.double(values)) {
-          dataType <- "miDOUBLE"
-          sizeOf <- 8;
-        } else {
-          dataType <- "miDOUBLE";
-          sizeOf <- 8;
+  	verbose && enter(verbose, "writeNumericPart(): ", length(values), " value(s).");
+  	
+  	if (is.integer(values)) {
+  	  dataType <- "miINT32"
+  	  sizeOf <- 4;
+  	} else if (is.double(values)) {
+  	  dataType <- "miDOUBLE"
+  	  sizeOf <- 8;
+  	} else {
+  	  dataType <- "miDOUBLE";
+  	  sizeOf <- 8;
         }
-      
-        values <- as.vector(values);
-        nbrOfBytes <- length(values) * sizeOf;
-        
-        # Numeric Part [Any of the numeric data types]
-        writeTag(dataType=dataType, nbrOfBytes=nbrOfBytes);
-###        tagPos <- beginTag();
-      
-        # Write numeric values
-        writeBinMat(values, size=sizeOf, endian="little");
-      
-###        endTag(tagPos);
-        
-        # Write padded bytes
-        padding <- 8 - ((nbrOfBytes-1) %% 8 + 1);
-        if (padding > 0) {
-          writeBinMat(as.integer(rep(0,padding)), size=1);
-          nbrOfBytes <- nbrOfBytes + padding;
+    
+  	values <- as.vector(values);
+  	nbrOfBytes <- length(values) * sizeOf;
+
+        # Pad bytes? 
+  	padding <- 8 - ((nbrOfBytes-1) %% 8 + 1);
+  	if (padding < 0) {
+          stop("Internal error: Negative padding: ", padding);
         }
+
+  	# Numeric Part [Any of the numeric data types]
+  	tagSize <- writeTag(dataType=dataType, nbrOfBytes=nbrOfBytes);
+        nbrOfBytes <- tagSize;
+
+  	# Write numeric values
+  	nbrOfBytes <- nbrOfBytes + writeBinMat(con, values, size=sizeOf, endian="little");
+    
+  	# Write padded bytes
+        nbrOfBytes <- nbrOfBytes + writePadding(padding);
+        
+  	verbose && exit(verbose);
+
+        # Return number of bytes written
+        nbrOfBytes;
       } # writeNumericPart()
+    
       
-        
-      writeNumericArray <- function(name, data) {
-        verbose && cat(verbose, "writeNumericArray(): ", name);
-        
-        if (is.integer(data)) {
-          class <- "mxINT32_CLASS"
-          sizeOf <- 4;
-        } else if (is.double(data)) {
-          class <- "mxDOUBLE_CLASS"
-          sizeOf <- 8;
-        } else if (is.complex(data)) {
-          class <- "mxDOUBLE_CLASS"
-          sizeOf <- 8;
-        } else {
-          class <- "mxDOUBLE_CLASS";
-          sizeOf <- 8;
-        }
-        complex <- is.complex(data);
-        global  <- FALSE;
-        logical <- is.logical(data);
-        writeArrayFlags(class=class, complex=complex, global=global, logical=logical);
-        writeDimensionsArray(dim=dim(data));
-        writeArrayName(name=name);
-        if (is.complex(data)) {
-          writeNumericPart(Re(data));
-          writeNumericPart(Im(data));
-        } else {
-          writeNumericPart(data);
-        }
-      } # writeNumericArray()
       
-        
       writeCharPart <- function(values) {
-        verbose && cat(verbose, "writeCharPart(): '", values, "'");
-        
-        values <- charToInt(unlist(strsplit(values, "")));
-        values <- as.vector(values);
-      
-        sizeOf <- 2;
-        nbrOfBytes <- length(values) * sizeOf;
-      
-        # NOTE: Matlab is not following the tags fully! Characters
-        #       can *not* be written as miINT8 here, since Matlab
-        #       will assume miUINT16 anyway. /HB 020828
-        # Character Part [miUINT16]
-        writeTag(dataType="miUINT16", nbrOfBytes=nbrOfBytes);
-###        tagPos <- beginTag();
-      
-        # Write characters
-        writeBinMat(as.integer(values), size=sizeOf);
-      
-###        endTag(tagPos);
-        
-        # Write padded bytes
-        padding <- 8 - ((nbrOfBytes-1) %% 8 + 1);
-        if (padding > 0) {
-          writeBinMat(as.integer(rep(0,padding)), size=1);
-          nbrOfBytes <- nbrOfBytes + padding;
+  	verbose && enter(verbose, "writeCharPart(): '", values, "'");
+  	
+  	values <- charToInt(unlist(strsplit(values, "")));
+  	values <- as.vector(values);
+    
+  	sizeOf <- 2;
+  	nbrOfBytes <- length(values) * sizeOf;
+
+        # Pad bytes? 
+  	padding <- 8 - ((nbrOfBytes-1) %% 8 + 1);
+  	if (padding < 0) {
+          stop("Internal error: Negative padding: ", padding);
         }
+        
+  	# NOTE: Matlab is not following the tags fully! Characters
+  	#       can *not* be written as miINT8 here, since Matlab
+  	#       will assume miUINT16 anyway. /HB 020828
+  	# Character Part [miUINT16]
+  	tagSize <- writeTag(dataType="miUINT16", nbrOfBytes=nbrOfBytes);
+        nbrOfBytes <- tagSize;
+
+  	# Write characters
+  	nbrOfBytes <- nbrOfBytes + writeBinMat(con, as.integer(values), size=sizeOf);
+    
+  	# Write padded bytes
+        nbrOfBytes <- nbrOfBytes + writePadding(padding);
+        
+  	verbose && exit(verbose);
+
+        # Return number of bytes written
+        nbrOfBytes;
       } # writeCharPart()
-      
-        
-      writeCharArray <- function(name, data) {
-        verbose && cat(verbose, "writeCharArray(): '", data, "'");
-        
-        if (length(data) > 1)
-          stop("writeCharArray() only supports one string at the time.");
-        writeArrayFlags(class="mxCHAR_CLASS", complex=FALSE, global=FALSE, logical=FALSE);
-        writeDimensionsArray(dim=c(1,nchar(data)));
-        writeArrayName(name=name);
-        writeCharPart(data);
+    
+
+      writeFieldNameLength <- function(maxLength=32) {
+  	verbose && enter(verbose, "writeFieldNameLength(): ", maxLength);
+  	
+ 	nbrOfBytes <- 4;
+
+        # Pad bytes? 
+  	padding <- 4 - ((nbrOfBytes-1) %% 4 + 1);
+  	if (padding < 0) {
+          stop("Internal error: Negative padding: ", padding);
         }
+        
+  	# Field Name Length [miINT32]
+  	tagSize <- writeTag(dataType="miINT32", nbrOfBytes=4, compressed=TRUE);
+        nbrOfBytes <- tagSize;
+
+  	# Write maxLength
+  	nbrOfBytes <- nbrOfBytes + writeBinMat(con, as.integer(maxLength), size=4, endian="little");
+
+  	# Write padded bytes
+        nbrOfBytes <- nbrOfBytes + writePadding(padding);
+
+  	verbose && exit(verbose);
+        
+        # Return number of bytes written
+        nbrOfBytes;
+      } # writeFieldNameLength()
+    
       
-        
-        writeFieldNameLength <- function(maxLength=32) {
-        verbose && cat(verbose, "writeFieldNameLength(): ", maxLength);
-        
-        # Field Name Length [miINT32]
-        writeTag(dataType="miINT32", nbrOfBytes=4, compressed=TRUE);
-###        tagPos <- beginTag();
-        
-        # Write maxLength
-        writeBinMat(as.integer(maxLength), size=4, endian="little");
-        nbrOfBytes <- 4;
-      
-###        endTag(tagPos);
-        
-        # Write padded bytes
-        padding <- 4 - ((nbrOfBytes-1) %% 4 + 1);
-        if (padding > 0) {
-          writeBinMat(as.integer(rep(0,padding)), size=1);
-          nbrOfBytes <- nbrOfBytes + padding;
-        }
-      } # writeCharArray()
-      
-        
       writeFieldNames <- function(fieldNames, maxLength=32) {
-        verbose && cat(verbose, "writeFieldNames(): ", length(fieldNames), " names(s)");
-        
-        # Field Names [miINT8]
-        nbrOfBytes <- length(fieldNames)*maxLength;
-        writeTag(dataType="miINT8", nbrOfBytes=nbrOfBytes);
-###        tagPos <- beginTag();
-        
-        for (k in seq(along=fieldNames)) {
-          name <- fieldNames[k];
-          if (nchar(name) > maxLength-1)
-            stop(paste("Too long field name: ", name, sep=""));
-          bfr <- charToInt(unlist(strsplit(name, "")));
-          bfr <- c(bfr, 0);
-          bfr <- c(bfr, rep(0, max(0, maxLength-length(bfr))));
-          writeBinMat(as.integer(bfr), size=1);
-        }
-      
-###        endTag(tagPos);
+  	verbose && enter(verbose, "writeFieldNames(): ", length(fieldNames), " names(s)");
+  	
+  	# Field Names [miINT8]
+  	nbrOfBytes <- length(fieldNames)*maxLength;
+
+  	tagSize <- writeTag(dataType="miINT8", nbrOfBytes=nbrOfBytes);
+        nbrOfBytes <- tagSize;
+
+  	for (kk in seq(along=fieldNames)) {
+  	  name <- fieldNames[kk];
+  	  if (nchar(name) > maxLength-1)
+  	    stop(paste("Too long field name: ", name, sep=""));
+  	  bfr <- charToInt(unlist(strsplit(name, "")));
+          # Append trailing '\0'
+  	  bfr <- c(bfr, 0);
+          # Pad with '\0':s
+  	  bfr <- c(bfr, rep(0, max(0, maxLength-length(bfr))));
+  	  nbrOfBytes <- nbrOfBytes + writeBinMat(con, as.integer(bfr), size=1);
+  	}
+    
+  	verbose && exit(verbose);
+
+        # Return number of bytes written
+        nbrOfBytes;
       } # writeFieldNames()
+
       
+      
+      writeNumericArray <- function(name, data) {
+  	verbose && enter(verbose, "writeNumericArray(): ", name);
+  	
+  	if (is.integer(data)) {
+  	  class <- "mxINT32_CLASS"
+  	  sizeOf <- 4;
+  	} else if (is.double(data)) {
+  	  class <- "mxDOUBLE_CLASS"
+  	  sizeOf <- 8;
+  	} else if (is.complex(data)) {
+  	  class <- "mxDOUBLE_CLASS"
+  	  sizeOf <- 8;
+  	} else {
+  	  class <- "mxDOUBLE_CLASS";
+  	  sizeOf <- 8;
+  	}
+  	complex <- is.complex(data);
+  	global  <- FALSE;
+  	logical <- is.logical(data);
+#        str(list(name, class, complex, global, logical, data));
+
+  	nbrOfBytes <- writeArrayFlags(class=class, complex=complex, global=global, logical=logical);
+  	nbrOfBytes <- nbrOfBytes + writeDimensionsArray(dim=dim(data));
+  	nbrOfBytes <- nbrOfBytes + writeArrayName(name=name);
+  	if (is.complex(data)) {
+  	  nbrOfBytes <- nbrOfBytes + writeNumericPart(Re(data));
+  	  nbrOfBytes <- nbrOfBytes + writeNumericPart(Im(data));
+  	} else {
+  	  nbrOfBytes <- nbrOfBytes + writeNumericPart(data);
+  	}
+
+  	verbose && exit(verbose);
+
+        # Return number of bytes written
+        nbrOfBytes;
+      } # writeNumericArray()
+    
+      
+      writeCharArray <- function(name, data) {
+  	verbose && enter(verbose, "writeCharArray(): '", data, "'");
+  	
+  	if (length(data) > 1)
+  	  stop("writeCharArray() only supports one string at the time.");
         
+  	nbrOfBytes <- writeArrayFlags(class="mxCHAR_CLASS", complex=FALSE, global=FALSE, logical=FALSE);
+  	nbrOfBytes <- nbrOfBytes + writeDimensionsArray(dim=c(1,nchar(data)));
+  	nbrOfBytes <- nbrOfBytes + writeArrayName(name=name);
+ 	nbrOfBytes <- nbrOfBytes + writeCharPart(data);
+        
+  	verbose && exit(verbose);
+
+        # Return number of bytes written
+        nbrOfBytes;
+      } # writeCharArray()
+    
+      
       writeStructure <- function(name, structure) {
-        verbose && cat(verbose, "writeStructure()");
+  	verbose && enter(verbose, "writeStructure()");
+  	
+  	nbrOfBytes <- writeArrayFlags(class="mxSTRUCT_CLASS", complex=FALSE, global=FALSE, logical=FALSE);
+  	nbrOfBytes <- nbrOfBytes + writeDimensionsArray(dim=c(1,1));
+  	nbrOfBytes <- nbrOfBytes + writeArrayName(name=name);
+  	nbrOfBytes <- nbrOfBytes + writeFieldNameLength(maxLength=32);
+  	nbrOfBytes <- nbrOfBytes + writeFieldNames(names(structure), maxLength=32);
+  	for (kk in seq(along=structure)) {
+  	  field <- structure[[kk]];
+  	  field <- as.matrix(field);
+  	  field <- list(field);
+  	  nbrOfBytes <- nbrOfBytes + writeDataElement(con, field);
+  	}
         
-        writeArrayFlags(class="mxSTRUCT_CLASS", complex=FALSE, global=FALSE, logical=FALSE);
-        writeDimensionsArray(dim=c(1,1));
-        writeArrayName(name=name);
-        writeFieldNameLength(maxLength=32);
-        writeFieldNames(names(structure), maxLength=32);
-        for (k in seq(along=structure)) {
-          field <- structure[[k]];
-          field <- as.matrix(field);
-          field <- list(field);
-          writeDataElement(field);
-        }
+  	verbose && exit(verbose);
+
+        # Return number of bytes written
+        nbrOfBytes;
       } # writeStructure()
+    
       
-        
       writeCellArrayDataElement <- function(name, cells) {
-        complex <- is.complex(cells);
-        global  <- FALSE;
-        logical <- is.logical(cells);
-        writeArrayFlags(class="mxCELL_CLASS", complex=complex, global=global, logical=logical);
-        writeDimensionsArray(dim=dim(cells));
-        writeArrayName(name=name);
-        for (k in seq(along=cells)) {
-          cell <- cells[k];
-          writeDataElement(cell);
-        }
+  	complex <- is.complex(cells);
+  	global  <- FALSE;
+  	logical <- is.logical(cells);
+        
+  	nbrOfBytes <- writeArrayFlags(class="mxCELL_CLASS", complex=complex, global=global, logical=logical);
+  	nbrOfBytes <- nbrOfBytes + writeDimensionsArray(dim=dim(cells));
+  	nbrOfBytes <- nbrOfBytes + writeArrayName(name=name);
+  	for (kk in seq(along=cells)) {
+  	  cell <- cells[kk];
+  	  nbrOfBytes <- nbrOfBytes + writeDataElement(con, cell);
+  	}
+        
+        # Return number of bytes written
+        nbrOfBytes;
       } # writeCellArrayDataElement()
-
-
       
+
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      # writeDataElement() main code
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      # Count only?
+      if (is.na(nbrOfBytes)) {
+        verbose && enter(verbose, "Counting only");
+        nbrOfBytes <- writeDataElement(con=NULL, object=object, nbrOfBytes=0);
+        tagSize <- attr(nbrOfBytes, "tagSize");
+        nbrOfBytes <- nbrOfBytes - tagSize;
+        verbose && cat(verbose, "nbrOfBytes=", nbrOfBytes);
+        verbose && exit(verbose);
+      }
+
       # Get the data element (and its name)
       name <- names(object);
       if (is.null(name))
-        name = "";
+  	name = "";
     #    stop("Name of object is missing.");
       value <- object[[1]];
-      
+
+      if (is.null(value)) {
+        value <- as.array(integer(0));
+      }
+
       # Get the data type
       dataType <- "miMATRIX";
-        
+      
       if (is.integer(value)) {
-        dataType <- "miINT32";
-        sizeOf <- 4;
+  	dataType <- "miINT32";
+  	sizeOf <- 4;
       }
       
       if (is.double(value)) {
-        dataType <- "miDOUBLE";
-        sizeOf <- 8;
+  	dataType <- "miDOUBLE";
+  	sizeOf <- 8;
       }
       
       if (is.complex(value)) {
-        sizeOf <- 2*8;
+  	sizeOf <- 2*8;
       }
       
       if (is.character(value)) {
-        dataType <- "miMATRIX";
-        sizeOf <- 1;
+  	dataType <- "miMATRIX";
+  	sizeOf <- 1;
       }
       
       if (is.list(value)) {
-        dataType <- "miMATRIX";
-        sizeOf <- 1;
+  	dataType <- "miMATRIX";
+  	sizeOf <- 1;
       }
       
       if (!is.null(dim(value))) {
-        dataType <- "miMATRIX";
+  	dataType <- "miMATRIX";
       }
-               
-      # Get the number of bytes
-      nbrOfBytes <- length(value) * sizeOf;
+
+#      # Get the number of bytes
+#      nbrOfBytes <- length(value) * sizeOf;
     
       # "For data elements representing "MATLAB arrays", (type miMATRIX),
       # the value of the Number Of Bytes field includes padding bytes in
       # the total. For all other MAT-file data types, the value of the
       # Number of Bytes field does *not* include padding bytes."
-      if (is.matrix(value)) {
-        padding <- 8 - ((nbrOfBytes-1) %% 8 + 1);
-        nbrOfBytes <- nbrOfBytes + padding;
+      if (dataType == "miMATRIX") {
+  	padding <- 8 - ((nbrOfBytes-1) %% 8 + 1);
+  	if (padding < 0) {
+          stop("Internal error: Negative padding: ", padding);
+        }
+        if (padding > 0) {
+    	  nbrOfBytes <- nbrOfBytes + padding;
+        }
       }
-    
+
       # Write the Data Element Tag
-      writeTag(dataType=dataType, nbrOfBytes=nbrOfBytes);
-###      tagPos <- beginTag();
-    
+      tagSize <- writeTag(dataType=dataType, nbrOfBytes=nbrOfBytes);
+      nbrOfBytes <- tagSize;
+
       if (is.numeric(value) || is.complex(value)) {
         if (is.null(dim(value)))
           value <- as.matrix(value);
-          writeNumericArray(name=name, data=value);
-        } else if (is.character(value)) {
-        if (length(value) == 1) {
-          writeCharArray(name=name, data=value);
-        } else {
-          value <- as.matrix(value);
-          writeCellArrayDataElement(name=name, cells=value);
-        }
+    	nbrOfBytes <- nbrOfBytes + writeNumericArray(name=name, data=value);
+      } else if (is.character(value)) {
+    	if (length(value) == 1) {
+    	  nbrOfBytes <- nbrOfBytes + writeCharArray(name=name, data=value);
+    	} else {
+    	  value <- as.matrix(value);
+    	  nbrOfBytes <- nbrOfBytes + writeCellArrayDataElement(name=name, cells=value);
+    	}
       } else if (is.list(value)) {
-        writeStructure(name=name, structure=value);
+    	nbrOfBytes <- nbrOfBytes + writeStructure(name=name, structure=value);
       }
-    
-###      endTag(tagPos);
+
+      verbose && exit(verbose);
+
+      attr(nbrOfBytes, "tagSize") <- tagSize;
+
+      # Return number of bytes written
+      nbrOfBytes;
     } # writeDataElement()
+
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # "Main program"
@@ -592,12 +691,12 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
     if (inherits(verbose, "Verbose")) {
     } else if (is.numeric(verbose)) {
       require("R.utils") || throw("Package not available: R.utils");
-      verbose <- Verbose(threshold=verbose);
+      verbose <<- Verbose(threshold=verbose);
     } else {
       verbose <- as.logical(verbose);
       if (verbose) {
         require("R.utils") || throw("Package not available: R.utils");
-        verbose <- Verbose(threshold=-1);
+        verbose <<- Verbose(threshold=-1);
       }
     }
 
@@ -606,17 +705,38 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
     # list.
 
     # If format == "matlab" (default), all scalars and vectors are 
-    # written as matrices, which is the only format Matlab reads. 
+    # written as arrays, which is the only format Matlab reads. 
     # Otherwise, they are written as is, which the MAT v5 format indeed
     # supports. However, since this is probably not going to be needed 
     # by anyone, we have decided to not put the 'format' argument in the 
     # main function readMat(), but if ever need, just add it there too.
     if (!is.null(format) && format == "matlab") {
-      for (k in seq(along=objects)) {
-      if (!is.matrix(objects[[k]]) && !is.list(objects[[k]]))
-        objects[[k]] <- as.matrix(objects[[k]]);
+      for (kk in seq(along=objects)) {
+        object <- objects[[kk]];
+  	if (!is.null(object)) {
+          if (!is.array(object) && !is.list(object)) {
+            object <- as.array(object);
+          }
+          objects[[kk]] <- object;
+        }
       }
     }
+
+
+    writeAll <- function(con, objects) {
+      nbrOfBytes <- writeHeader(con);
+
+      for (kk in seq(along=objects)) {
+  	object <- objects[kk];   # NOT [[kk]], has to be a list!
+  	nbrOfBytes <- nbrOfBytes + writeDataElement(con, object);
+      }
+
+      nbrOfBytes <- as.integer(nbrOfBytes);
+
+      # Return bytes written
+      nbrOfBytes;
+    } # writeAll()
+
 
     # When writing to streams, that is, to other connections than files,
     # we have to "send over" the number of bytes first to inform the
@@ -625,51 +745,17 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
     # bytes needed and then we send the stream.  Here we do this by
     # a two-pass procedure: 1) count Number of Bytes of written while
     # writing to "void", and 2) redo the same with real writing.
-    #
-    # However, we note that when writing to file, we do not have to
-    # "send over" the number or bytes before starting to write.  Thus,
-    # in this case we can skip that step.
 
-    # The first pass will only be done if argument 'onWrite' is give.
-    # Later, we might make this an argument.
-    doCount <- (!is.null(onWrite));
+    # Count size of MAT structure in bytes and pass to onWrite()?
+    if (!is.null(onWrite)) {
+      nbrOfBytes <- writeAll(con=NULL, objects);
+      onWrite(list(con=con, length=nbrOfBytes));
+    }
 
-    # Record the original state of 'verbose'
-    verboseOrg <- verbose;
+    # Write MAT structure to connection
+    nbrOfBytes <- writeAll(con, objects);
 
-    # Two-pass procedure
-    for (pass in c("count", "write")) {
-      if (pass == "count") {
-        # Skip first pass?
-        if (!doCount)
-          next;
-        countOnly <<- TRUE;
-        # Turn off verbose for the "count" session and reactivate 
-        # when bytes are really written to the connection.
-        verbose <- FALSE;
-      } else {
-        countOnly <<- FALSE;
-        verbose <- verboseOrg;
-
-        # Call onWrite() before writing?
-        if (!is.null(onWrite)) {
-          args <- list(con=con);
-          if (doCount)
-            args$length <- as.integer(nbrOfBytesWritten);
-          onWrite(args);
-        }
-      }
-
-      # Count/write all objects
-      nbrOfBytesWritten <<- 0;
-      writeHeader();
-      for (kk in seq(along=objects)) {
-        object <- objects[kk];   # NOT [[kk]], has to be a list!
-        writeDataElement(object);
-      }
-    } # for (pass ...)
-
-    invisible(nbrOfBytesWritten);
+    invisible(nbrOfBytes);
   } # writeMat5()
   #===========================================================================
   # MAT v5 specific                                                        END
@@ -712,6 +798,15 @@ setMethodS3("writeMat", "default", function(con, ..., matVersion="5", onWrite=NU
 
 ######################################################################
 # HISTORY:
+# 2008-10-29
+# o If onWrite == NULL, then there is no longer an outer two-pass scan
+#   for figuring out the size of MAT structure.  However, instead
+#   each readDataElement() has to do a two-pass scan in order to 
+#   figure out the number of bytes before writing each element.
+# o BUG FIX: Arrays with more than two dimension would be written
+#   as vectors.  Thanks Minho Chae for reporting this.
+# o BUG FIX: From v1.2.2, writeMat() would generate corrupt MAT files.
+#   Reverted writeMat() back to v1.2.1 and updated as above.
 # 2008-07-12
 # o CLEAN UP: Removed debugging/asserting code based on the stack
 #   'nbrOfBytesList', and beginTag() and endTag().

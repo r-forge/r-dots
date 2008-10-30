@@ -69,14 +69,19 @@
 
 \examples{A <- matrix(1:27, ncol=3)
 B <- as.matrix(1:10)
+C <- array(1:18, dim=c(2,3,3))
 
 filename <- paste(tempfile(), ".mat", sep="")
 
-writeMat(filename, A=A, B=B)
+writeMat(filename, A=A, B=B, C=C)
 data <- readMat(filename)
-print(data)
+str(data)
+
+X <- list(A=A, B=B, C=C)
+stopifnot(all.equal(X, data[names(X)]))
 
 unlink(filename)
+
 
 \dontrun{
 # When writing to a stream connection the receiver needs to know on
@@ -84,7 +89,7 @@ unlink(filename)
 # the 'onWrite' argument.
 onWrite <- function(x)
   writeBin(x$length, con=x$con, size=4, endian="little");
-writeMat(con, A=A, B=B, onWrite=onWrite)
+  writeMat(con, A=A, B=B, onWrite=onWrite)
 }
 }
 
