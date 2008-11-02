@@ -4,8 +4,8 @@ Package: R.matlab
 
 Version: 1.2.4 [2008-10-29]
 o If onWrite == NULL, then there is no longer an outer two-pass scan
-  for figuring out the size of MAT structure.  However, instead
-  each readDataElement() has to do a two-pass scan in order to 
+  for figuring out the size of MAT structure.  However, instead each
+  internal writeDataElement() has to do a two-pass scan in order to 
   figure out the number of bytes before writing each element.
 o BUG FIX: Arrays with more than two dimension would be written
   as vectors.  Thanks Minho Chae for reporting this.
