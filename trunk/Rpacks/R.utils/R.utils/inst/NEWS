@@ -2,6 +2,11 @@
 Package: R.utils
 ================
 
+Version: 1.1.1 [2008-11-03x]
+o Now gzip() and gunzip() removes the partially written output file if
+  the process is interrupted.
+
+
 Version: 1.1.0 [2008-10-24]
 o Now sourceDirectory() also searches for source files with extensions
   *.r, *.q, *.s, and *.S, cf. R manual 'Writing R Extensions'.
