@@ -2,7 +2,8 @@
 Package: R.utils
 ================
 
-Version: 1.1.1 [2008-11-03x]
+Version: 1.1.1 [2008-11-22x]
+o STABILITY: Added balance and sanity checks for exit() of Verbose.
 o Now gzip() and gunzip() removes the partially written output file if
   the process is interrupted.
 
