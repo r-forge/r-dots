@@ -2,7 +2,15 @@
 Package: R.utils
 ================
 
-Version: 1.1.1 [2008-11-22x]
+Version: 1.1.1 [2008-12-01x]
+o Now getReadablePathname() and getWritablePathname() of Arguments, 
+  and sourceTo() use the more trusted fileAccess() instead of 
+  file.access() of 'base'.  This will hopefully solve some problems
+  where these methods incorrectly gives an error reporting lack of 
+  file permissions; this could happen when some OSs mounted to other
+  external file systems.
+o Added fileAccess() which is intended to give tries harder than
+  file.access() to infer file permissions.
 o STABILITY: Added balance and sanity checks for exit() of Verbose.
 o Now gzip() and gunzip() removes the partially written output file if
   the process is interrupted.
