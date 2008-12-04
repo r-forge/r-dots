@@ -83,8 +83,11 @@ setMethodS3("fileAccess", "default", function(pathname, mode=0, safe=TRUE, ...) 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (mode == 1) {
     fi <- file.info(pathname);
-    faSafe <- fi$exe;
-    faSafe <- -as.integer(!fi$exe);
+    isExecutable <- (fi$exe != "no");
+    faSafe <- -as.integer(!isExecutable);
+    if (fa != faSafe) {
+      warning("file.access() and file.info() gives different results for mode=1 (", fa, " != ", faSafe, "). Will use the file.info() results.");
+    }
     return(faSafe);
   }
 
@@ -109,6 +112,11 @@ setMethodS3("fileAccess", "default", function(pathname, mode=0, safe=TRUE, ...) 
     }, error = function(ex) {
       # If we end up here, we do not have permissions
     })
+
+    if (fa != faSafe) {
+      warning("file.access() and file() gives different results for mode=2 (", fa, " != ", faSafe, "). Will use the file() results.");
+    }
+
     return(faSafe);
   }
 
@@ -135,6 +143,11 @@ setMethodS3("fileAccess", "default", function(pathname, mode=0, safe=TRUE, ...) 
     }, error = function(ex) {
       # If we end up here, we do not have permissions
     })
+
+    if (fa != faSafe) {
+      warning("file.access() and file()+readBin() gives different results for mode=4 (", fa, " != ", faSafe, "). Will use the file()+readBin() results.");
+    }
+
     return(faSafe);
   }
 
@@ -143,6 +156,9 @@ setMethodS3("fileAccess", "default", function(pathname, mode=0, safe=TRUE, ...) 
 
 ###########################################################################
 # HISTORY: 
+# 2008-12-03
+# o Updated with more warnings().
+# o BUG FIX: mode=4 did not work.
 # 2008-12-01
 # o Created.
 ###########################################################################
