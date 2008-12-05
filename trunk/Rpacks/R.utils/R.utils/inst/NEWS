@@ -2,6 +2,13 @@
 Package: R.utils
 ================
 
+Version: 1.1.2 [2008-12-04]
+o WORKAROUND: Now filePath("\\\\shared/foo") will translate backslashes
+  to forward slashed, i.e. "//shared/foo".  This will workaround the
+  problem that readCdfHeader() of affxparser/Fusion SDK does not handle
+  backslashes correctly; wrong chip type is reported.
+
+
 Version: 1.1.1 [2008-12-03]
 o Now getReadablePathname() and getWritablePathname() of Arguments, 
   and sourceTo() use the more trusted fileAccess() instead of 

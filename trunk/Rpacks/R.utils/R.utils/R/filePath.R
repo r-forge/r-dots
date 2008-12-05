@@ -87,7 +87,8 @@ setMethodS3("filePath", "default", function(..., fsep=.Platform$file.sep, remove
     # If on a network, add the path back again.
     if (isOnNetworkBwd) {
       pathname <- paste("\\\\", pathname, sep="");
-      pathname <- gsub("^\\\\\\\\\\\\*", "\\\\\\\\", pathname);
+##      pathname <- gsub("^\\\\\\\\\\\\*", "\\\\\\\\", pathname);
+      pathname <- gsub("^\\\\\\\\\\\\*", "//", pathname);
     }
     if (isOnNetworkFwd) {
       pathname <- paste("//", pathname, sep="");
@@ -307,7 +308,12 @@ setMethodS3("filePath", "default", function(..., fsep=.Platform$file.sep, remove
 
 #############################################################################
 # HISTORY: 
-# 2008-12-03
+# 2008-12-04
+# o WORKAROUND: Now filePath("\\\\shared/foo") will translate backslashes
+#   to forward slashed, i.e. "//shared/foo".  This will workaround the
+#   problem that readCdfHeader() of affxparser/Fusion SDK does not handle
+#   backslashes correctly; wrong chip type is reported.
+ 2008-12-03
 # o BUG FIX: filePath("\\\\shared/foo") would return "\\shared/foo".
 # 2005-11-21
 # o BUG FIX: expandLinks="any" would return the relative link instead of

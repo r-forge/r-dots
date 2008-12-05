@@ -66,6 +66,15 @@ setMethodS3("fileAccess", "default", function(pathname, mode=0, safe=TRUE, ...) 
     return(as.integer(-1));
 
 
+  # This is a workaround to make sure any connection opened inside a
+  # tryCatch() statement is closed again.
+  con <- NULL;
+  on.exit({
+    if (!is.null(con))
+      close(con);
+  });
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # mode = 0: Test for existence of file
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -105,7 +114,6 @@ setMethodS3("fileAccess", "default", function(pathname, mode=0, safe=TRUE, ...) 
     tryCatch({
       # (a) Try to open the file for writing
       con <- file(pathname, open="ab");
-      on.exit(close(con));
 
       # If we get here, we have permission
       faSafe <- as.integer(0);
@@ -129,7 +137,6 @@ setMethodS3("fileAccess", "default", function(pathname, mode=0, safe=TRUE, ...) 
       if (isFile(pathname)) {
         # (a) Try to open the file for reading
         con <- file(pathname, open="rb");
-        on.exit(close(con));
 
         # (b) Try even to read one byte
         bfr <- readBin(con, what="raw", n=1);
