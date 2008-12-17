@@ -2,6 +2,10 @@
 Package: R.utils
 ================
 
+Version: 1.1.2 [2008-12-17]
+o Added subplots() originating from (obsolete) R.graphics.
+
+
 Version: 1.1.1 [2008-12-03]
 o Now getReadablePathname() and getWritablePathname() of Arguments, 
   and sourceTo() use the more trusted fileAccess() instead of 
