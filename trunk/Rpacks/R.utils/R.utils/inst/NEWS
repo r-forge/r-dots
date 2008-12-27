@@ -2,7 +2,15 @@
 Package: R.utils
 ================
 
-Version: 1.1.2 [2008-12-17]
+Version: 1.1.2 [2008-12-27]
+o Now getReadablePathname(..., mustExist=TRUE) and 
+  getWritablePathname(..., mkdirs=FALSE) of Arguments report which
+  of the parent directories exists when the requested pathname is not 
+  found.  This will help troubleshooting missing pathnames.
+o Added removeDirectory() for a convenient and safe way to remove
+  directories.
+o Added argument 'useNames' to insert(), which is now aware of names
+  of the input object.
 o Added subplots() originating from (obsolete) R.graphics.
 
 

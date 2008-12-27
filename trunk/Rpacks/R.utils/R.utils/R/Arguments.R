@@ -89,12 +89,39 @@ setMethodS3("getReadablePathname", "Arguments", function(static, file=NULL, path
 
   if (mustExist) {
     # Check if file exists
-    if (!file.exists(pathname))
-      throw("Pathname not found: ", pathname);
+    if (!file.exists(pathname)) {
+      # Locate the first parent directory that does not exist
+      knownPath <- NA;
+      depth <- 1;
+      while(TRUE) {
+        parent <- getParent(pathname, depth=depth);
+        if (is.null(parent))
+          break;
+        if (isDirectory(parent))
+          knownPath <- parent;
+        depth <- depth + 1;
+      } # while()
+
+      reason <- NULL;
+      if (is.na(knownPath)) {
+        if (depth > 1)
+          reason <- sprintf("none of the parent directories [%s/] exist", getParent(pathname));
+      } else {
+        if (depth == 2) {
+          reason <- sprintf("%s/ exists", knownPath);
+        } else {
+          reason <- sprintf("%s/ exist, but %s/ does not", knownPath, getParent(pathname, depth=depth-2));
+        }
+      }
+      if (!is.null(reason))
+        reason <- sprintf(" (%s)", reason);
+      throw("Pathname not found: ", pathname, reason);
+    }
 
     # Check if file permissions allow reading
-    if (fileAccess(pathname, mode=4) == -1)
-      throw("No permission to read file: ", pathname);
+    if (fileAccess(pathname, mode=4) == -1) {
+      throw("Pathname exists, but there is no permission to read file: ", pathname);
+    }
   }
     
   pathname;
@@ -209,7 +236,6 @@ setMethodS3("getWritablePathname", "Arguments", function(static, ..., mustExist=
 
   # Create pathname
   pathname <- getReadablePathname(static, ..., mustExist=mustExist);
-
   if (isFile(pathname)) {
     # Check if it is ok that the file already exists
     if (mustNotExist) {
@@ -224,8 +250,9 @@ setMethodS3("getWritablePathname", "Arguments", function(static, ..., mustExist=
     parent <- getParent(pathname);
     if (!isDirectory(parent)) {
       # Check if parent directory should be created
-      if (!mkdirs)
-        throw("Filepath does not exist: ", parent);
+      if (!mkdirs) {
+        parent <- Arguments$getReadablePath(parent, mustExist=TRUE);
+      }
 
       if (!mkdirs(parent))
   	throw("Could not create file path: ", parent);
@@ -879,6 +906,11 @@ setMethodS3("getReadablePath", "Arguments", function(static, path=NULL, ...) {
 
 ############################################################################
 # HISTORY:
+# 2008-12-27
+# o Now getReadablePathname(..., mustExist=TRUE) and 
+#   getWritablePathname(..., mkdirs=FALSE) of Arguments report which
+#   of the parent directories exists when the requested pathname is not 
+#   found.  This will help troubleshooting missing pathnames.
 # 2008-12-01
 # o Now getReadablePathname() and getWritablePathname() use the more
 #   trusted fileAccess() of R.utils.
