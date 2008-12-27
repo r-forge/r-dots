@@ -91,27 +91,19 @@ setMethodS3("getReadablePathname", "Arguments", function(static, file=NULL, path
     # Check if file exists
     if (!file.exists(pathname)) {
       # Locate the first parent directory that does not exist
-      knownPath <- NA;
       depth <- 1;
       while(TRUE) {
         parent <- getParent(pathname, depth=depth);
-        if (is.null(parent))
+        if (is.null(parent) || isDirectory(parent))
           break;
-        if (isDirectory(parent))
-          knownPath <- parent;
         depth <- depth + 1;
       } # while()
 
       reason <- NULL;
-      if (is.na(knownPath)) {
-        if (depth > 1)
-          reason <- sprintf("none of the parent directories [%s/] exist", getParent(pathname));
+      if (is.null(parent)) {
+        reason <- sprintf("none of the parent directories [%s/] exist", getParent(pathname));
       } else {
-        if (depth == 2) {
-          reason <- sprintf("%s/ exists", knownPath);
-        } else {
-          reason <- sprintf("%s/ exist, but %s/ does not", knownPath, getParent(pathname, depth=depth-2));
-        }
+        reason <- sprintf("%s/ exists, but nothing beyond", parent);
       }
       if (!is.null(reason))
         reason <- sprintf(" (%s)", reason);
