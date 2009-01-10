@@ -72,7 +72,7 @@ setConstructorS3("Exception", function(..., sep="", collapse=", ") {
 #
 # \description{
 #  @get "title". 
-#  By default the format is: "[{POSIX date string}] {class name}: {msg}".
+#  By default the format is: "[\{POSIX date string\}] \{class name\}: \{msg\}".
 # }
 #
 # @synopsis

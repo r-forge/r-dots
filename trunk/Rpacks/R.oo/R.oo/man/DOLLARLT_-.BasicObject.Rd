@@ -29,8 +29,8 @@
 }
 
 \arguments{
-  \item{name}{The name of the code{set<Name>()} method or the name of
-    the field to be assigned the new value.}
+  \item{name}{The name of the \preformatted{set<Name>()} method or the
+    name of the field to be assigned the new value.}
   \item{value}{The value to be assigned.}
 }
 

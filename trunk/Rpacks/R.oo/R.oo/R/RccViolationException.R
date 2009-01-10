@@ -66,7 +66,7 @@ setConstructorS3("RccViolationException", function(...) {
 # @title "Gets a string representing of the RCC violation"
 #
 # \description{
-#  @get "title" of format "[{POSIX date string}] {class name}: {msg}, cf. @eval "RccViolationException$getRccUrl()"".
+#  @get "title" of format "[\{POSIX date string\}] \{class name\}: \{msg\}, cf. @eval "RccViolationException$getRccUrl()"".
 # }
 #
 # @synopsis

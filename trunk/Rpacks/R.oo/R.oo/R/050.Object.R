@@ -80,7 +80,7 @@ setConstructorS3("Object", Object);
 #
 # \value{
 #  Returns a @character string representation of the Object. By default it
-#  is "{class name}: {hash code}".
+#  is "\{class name\}: \{hash code\}".
 # }
 #
 # \examples{
@@ -725,7 +725,7 @@ setMethodS3("detach", "Object", function(this, ...) {
 # \arguments{
 #  \item{file}{Filename or @connection to which the Object should be saved.
 #    If @NULL, the Object will be save to a file named 
-#    "{class name}.{memory location}.RData", e.g. "Object.26979608.RData".}
+#    "\{class name\}.\{memory location\}.RData", e.g. "Object.26979608.RData".}
 #  \item{path}{The path where the file should be saved.}
 #  \item{compress}{If @TRUE, the file is compressed to, otherwise not.}
 #  \item{...}{Other arguments accepted by \code{save()} in the base package.}

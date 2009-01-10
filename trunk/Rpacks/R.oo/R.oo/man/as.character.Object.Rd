@@ -29,7 +29,7 @@
 
 \value{
  Returns a \code{\link[base]{character}} string representation of the Object. By default it
- is "{class name}: {hash code}".
+ is "\{class name\}: \{hash code\}".
 }
 
 \examples{

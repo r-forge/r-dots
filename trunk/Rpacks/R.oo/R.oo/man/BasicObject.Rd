@@ -39,7 +39,7 @@
  \tab \code{\link[R.oo:equals.BasicObject]{equals}} \tab Compares an object with another.\cr
  \tab \code{\link[R.oo:extend.BasicObject]{extend}} \tab Extends another class.\cr
  \tab \code{\link[R.oo:getFields.BasicObject]{getFields}} \tab Returns the field names of an BasicObject.\cr
- \tab \code{getInstantiationTime} \tab  -\cr
+ \tab \code{\link[R.oo:getInstantiationTime.BasicObject]{getInstantiationTime}} \tab Gets the time when the object was instantiated.\cr
  \tab \code{\link[R.oo:hasField.BasicObject]{hasField}} \tab Checks if a field exists or not.\cr
  \tab \code{\link[R.oo:hashCode.BasicObject]{hashCode}} \tab Gets a hash code for the object.\cr
  \tab \code{\link[R.oo:isReferable.BasicObject]{isReferable}} \tab Checks if the object is referable or not.\cr

@@ -24,7 +24,7 @@
 \arguments{
  \item{file}{Filename or \code{\link[base:connections]{connection}} to which the Object should be saved.
    If \code{\link[base]{NULL}}, the Object will be save to a file named
-   "{class name}.{memory location}.RData", e.g. "Object.26979608.RData".}
+   "\{class name\}.\{memory location\}.RData", e.g. "Object.26979608.RData".}
  \item{path}{The path where the file should be saved.}
  \item{compress}{If \code{\link[base:logical]{TRUE}}, the file is compressed to, otherwise not.}
  \item{...}{Other arguments accepted by \code{save()} in the base package.}

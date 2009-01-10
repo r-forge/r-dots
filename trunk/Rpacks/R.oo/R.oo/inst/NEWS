@@ -1,6 +1,10 @@
 Package: R.oo
 =============
 
+Version: 1.4.7 [2009-01-10]
+o FIXUP: There were some Rd warnings with the new R v2.9.0.
+
+
 Version: 1.4.6 [2008-08-11]
 o Replaced all 'a %in% b' with is.element(a,b) due to an old and
   weird bug that I cannot reproduce, cf. my R-devel post in thread

@@ -17,7 +17,7 @@
 
 \description{
  .
- By default the format is: "[{POSIX date string}] {class name}: {msg}".
+ By default the format is: "[\{POSIX date string\}] \{class name\}: \{msg\}".
 }
 
 \usage{\method{as.character}{Exception}(x, ...)}

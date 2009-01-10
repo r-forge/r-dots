@@ -54,7 +54,7 @@
  \tab \code{\link[R.oo:gc.Object]{gc}} \tab Clear cached fields and calls the garbage collector.\cr
  \tab \code{\link[R.oo:getEnvironment.Object]{getEnvironment}} \tab Gets the environment of this object.\cr
  \tab \code{\link[R.oo:getFields.Object]{getFields}} \tab Returns the field names of an Object.\cr
- \tab \code{getInstantiationTime} \tab  -\cr
+ \tab \code{\link[R.oo:getInstantiationTime.Object]{getInstantiationTime}} \tab Gets the time when the object was instantiated.\cr
  \tab \code{\link[R.oo:getInternalAddress.Object]{getInternalAddress}} \tab Gets the memory location where the Object resides.\cr
  \tab \code{\link[R.oo:getStaticInstance.Object]{getStaticInstance}} \tab Gets the static instance of this objects class.\cr
  \tab \code{\link[R.oo:hasField.Object]{hasField}} \tab Checks if a field exists or not.\cr
