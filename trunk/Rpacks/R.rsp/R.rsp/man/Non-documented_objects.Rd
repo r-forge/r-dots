@@ -92,6 +92,8 @@
 \alias{stop.default}
 \alias{write.default}
 \alias{urlDecode}
+\alias{compileRsp}
+\alias{compileRsp.default}
 
 \description{
 This page contains aliases for all "non-documented" objects that
