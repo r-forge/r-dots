@@ -94,6 +94,10 @@
 \alias{urlDecode}
 \alias{compileRsp}
 \alias{compileRsp.default}
+\alias{epsDev}
+\alias{dvips}
+\alias{ps2pdf}
+\alias{rspCapture}
 
 \description{
 This page contains aliases for all "non-documented" objects that
