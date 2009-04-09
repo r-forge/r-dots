@@ -84,8 +84,9 @@ setMethodS3("getReadablePathname", "Arguments", function(static, file=NULL, path
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   pathname <- filePath(path, file, expandLinks="any");
 
-  if (absolutePath)
+  if (absolutePath) {
     pathname <- getAbsolutePath(pathname);
+  }
 
   if (mustExist) {
     # Check if file exists
@@ -101,11 +102,19 @@ setMethodS3("getReadablePathname", "Arguments", function(static, file=NULL, path
 
       reason <- NULL;
       if (is.null(parent)) {
-        reason <- sprintf("none of the parent directories [%s/] exist", getParent(pathname));
+        parent <- getParent(pathname);
+        if (is.null(parent)) {
+          reason <- "no such file in the current working directory";
+        } else {
+          reason <- sprintf("none of the parent directories [%s/] exist", parent);
+        }
       } else {
         reason <- sprintf("%s/ exists, but nothing beyond", parent);
       }
       if (!is.null(reason))
+        if (!isAbsolutePath(pathname)) {
+          reason <- sprintf("%s; current directory is '%s'", reason, getwd());
+        }
         reason <- sprintf(" (%s)", reason);
       throw("Pathname not found: ", pathname, reason);
     }
@@ -898,6 +907,12 @@ setMethodS3("getReadablePath", "Arguments", function(static, path=NULL, ...) {
 
 ############################################################################
 # HISTORY:
+# 2009-04-04
+# o Now getReadablePathname(..., mustExist=TRUE) of Arguments reports also
+#   the working directory if the a relative pathname is missing.
+# o BUG FIX: getReadablePathname(..., mustExist=TRUE) of Arguments gave an
+#   internal error if the pathname was in the current directory and did 
+#   not exist.
 # 2008-12-27
 # o Now getReadablePathname(..., mustExist=TRUE) and 
 #   getWritablePathname(..., mkdirs=FALSE) of Arguments report which
