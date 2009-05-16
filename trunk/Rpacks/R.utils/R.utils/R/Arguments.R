@@ -338,7 +338,7 @@ setMethodS3("getVector", "Arguments", function(static, x, length=NULL, .name=NUL
     .name <- as.character(deparse(substitute(ss)));
 
   if (length[1] > 0 && !is.vector(x))
-    throw(sprintf("Argument '%s' is not a vector: %s", .name, mode(x)));
+    throw(sprintf("Argument '%s' is not a vector: %s", .name, storage.mode(x)));
 
   xlen <- length(x);
 
@@ -487,14 +487,25 @@ setMethodS3("getCharacter", "Arguments", function(static, ..., length=c(0,1)) {
 #
 # @keyword IO
 #*/#########################################################################
-setMethodS3("getNumerics", "Arguments", function(static, x, range=NULL, asMode="numeric", disallow=NULL, ..., .name=NULL) {
+setMethodS3("getNumerics", "Arguments", function(static, x, range=NULL, asMode=NULL, disallow=NULL, ..., .name=NULL) {
   if (is.null(.name))
     .name <- as.character(deparse(substitute(x)));
   x <- getVector(static, x, ..., .name=.name);
+  xMode <- storage.mode(x);
 
   # Coerce the mode of 'x'
-  if (!is.null(asMode))
-    mode(x) <- asMode;
+  if (is.null(asMode)) {
+    if (is.element(xMode, c("integer", "double"))) {
+      asMode <- xMode;
+    } else {
+      asMode <- "double";
+    }
+  }
+
+  # Update/coerce mode?
+  if (xMode != asMode) {
+    storage.mode(x) <- asMode;
+  }
 
   # Nothing to do?
   if (length(x) == 0)
@@ -907,6 +918,14 @@ setMethodS3("getReadablePath", "Arguments", function(static, path=NULL, ...) {
 
 ############################################################################
 # HISTORY:
+# 2009-05-15
+# o Changed argument 'asMode' for Arguments$getNumerics() to default to
+#   NULL instead of "numeric".  This will case the method to return integer
+#   if the input is integer, and double if the input is double.  The
+#   previous default was alway returning doubles, cf. notes on common 
+#   misconception of how as.numeric() works.  In the case when the input
+#   is neither integer or double, the default is to coerce to doubles.
+#   Also, the method is now using storage.mode() instead of mode().
 # 2009-04-04
 # o Now getReadablePathname(..., mustExist=TRUE) of Arguments reports also
 #   the working directory if the a relative pathname is missing.

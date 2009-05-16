@@ -2,7 +2,16 @@
 Package: R.utils
 ================
 
-Version: 1.1.4x [2009-04-04]
+Version: 1.1.5 [2009-05-16]
+o Changed argument 'asMode' for Arguments$getNumerics() to default to
+  NULL instead of "numeric".  This will case the method to return integer
+  if the input is integer, and double if the input is double.  The
+  previous default was alway returning doubles, cf. notes on common 
+  misconception of how as.numeric() works.  In the case when the input
+  is neither integer or double, the default is to coerce to doubles.
+
+
+Version: 1.1.4 [2009-04-04]
 o Now getReadablePathname(..., mustExist=TRUE) of Arguments reports also
   the working directory if the a relative pathname is missing.
 o BUG FIX: getReadablePathname(..., mustExist=TRUE) of Arguments gave an
