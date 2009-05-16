@@ -1763,11 +1763,13 @@ setMethodS3("readContiguousValues", "AbstractFileArray", function(this, indices,
 
   if (.checkArgs) {
     # Argument 'indices':
+    # (Allow double indices as well in case the 32-bit integer are to short)
     indices <- Arguments$getNumerics(indices, range=c(1,n));
     nbrOfIndices <- length(indices);
   
     # Argument 'lengths':
     n <- length(this);
+    # (Allow double length as well in case the 32-bit integer are to short)
     lengths <- Arguments$getNumerics(lengths, range=c(1,n));
     nbrOfLengths <- length(lengths);
     if (nbrOfLengths < nbrOfIndices) {
