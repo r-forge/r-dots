@@ -62,12 +62,17 @@ setMethodS3("getReadablePathname", "Arguments", function(static, file=NULL, path
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'file':
-  if (inherits(file, "connection"))
-    throw("In this context, argument 'file' cannot be a connection.");
-  file <- getCharacter(static, file);
+  if (!is.null(file)) {
+    if (inherits(file, "connection")) {
+      throw("In this context, argument 'file' cannot be a connection.");
+    }
+    file <- getCharacter(static, file, length=c(1,1));
+  }
 
   # Argument 'path':
-  path <- getCharacter(static, path);
+  if (!is.null(path)) {
+    path <- getCharacter(static, path, length=c(1,1));
+  }
 
   if (is.null(file) && is.null(path))
     throw("Both argument 'file' and 'path' are NULL.");
@@ -237,15 +242,17 @@ setMethodS3("getWritablePathname", "Arguments", function(static, ..., mustExist=
 
   # Create pathname
   pathname <- getReadablePathname(static, ..., mustExist=mustExist);
+
   if (isFile(pathname)) {
     # Check if it is ok that the file already exists
     if (mustNotExist) {
       throw("File already exists: ", pathname);
     }
 
-    # Check if file permissions allow writing
-    if (fileAccess(pathname, mode=2) == -1)
-      throw("No permission to (over-)write file: ", pathname);
+    # Check if file permissions allow to modify existing
+    if (fileAccess(pathname, mode=2) == -1) {
+      throw("No permission to modify existing file: ", pathname);
+    }
   } else {
     # Check if parent directory exists
     parent <- getParent(pathname);
@@ -255,8 +262,9 @@ setMethodS3("getWritablePathname", "Arguments", function(static, ..., mustExist=
         parent <- Arguments$getReadablePath(parent, mustExist=TRUE);
       }
 
-      if (!mkdirs(parent))
-  	throw("Could not create file path: ", parent);
+      if (!mkdirs(parent)) {
+  	throw("Failed not create file path: ", parent);
+      }
     }
   }
 
@@ -337,8 +345,13 @@ setMethodS3("getVector", "Arguments", function(static, x, length=NULL, .name=NUL
   if (is.null(.name))
     .name <- as.character(deparse(substitute(ss)));
 
-  if (length[1] > 0 && !is.vector(x))
+  # See ?is.vector for how it is defined. /HB 2009-05-19
+  attrs <- attributes(x);
+  attributes(x) <- attrs[intersect(names(attrs), c("names", "dim"))];
+
+  if (length[1] > 0 && !is.vector(x)) {
     throw(sprintf("Argument '%s' is not a vector: %s", .name, storage.mode(x)));
+  }
 
   xlen <- length(x);
 
@@ -356,11 +369,13 @@ setMethodS3("getVector", "Arguments", function(static, x, length=NULL, .name=NUL
       }
     }
   } else {
-    if (!xlen %in% length) {
+    if (!is.element(xlen, length)) {
       throw(sprintf("Number of elements in argument '%s' is not in {%s}: %d", 
                                  .name, seqToHumanReadable(length), xlen, ));
     }
   }
+
+  attributes(x) <- attrs;
 
   x;
 }, static=TRUE, private=TRUE)
@@ -512,18 +527,18 @@ setMethodS3("getNumerics", "Arguments", function(static, x, range=NULL, asMode=N
     return(x);
 
   if (!is.null(disallow)) {
-    if ("NaN" %in% disallow && any(is.nan(x))) {
+    if (is.element("NaN", disallow) && any(is.nan(x))) {
       throw(sprintf("Argument '%s' contains %d NaN value(s).", 
                                                    .name, sum(is.nan(x))));
     }
 
-    if ("NA" %in% disallow && any(is.na(x) & !is.nan(x))) {
+    if (is.element("NA", disallow) && any(is.na(x) & !is.nan(x))) {
       throw(sprintf("Argument '%s' contains %d NA value(s).", 
                                                     .name, sum(is.na(x))));
     }
 
     # For conveniency, disallow 'Inf' here too; other range takes care of it.
-    if ("Inf" %in% disallow && any(is.infinite(x))) {
+    if (is.element("Inf", disallow) && any(is.infinite(x))) {
       throw(sprintf("Argument '%s' contains %d NA value(s).", 
                                              .name, sum(is.infinite(x))));
     }
@@ -714,7 +729,7 @@ setMethodS3("getLogicals", "Arguments", function(static, x, ..., disallow=c("NA"
     x <- as.logical(x);
 
   if (!is.null(disallow)) {
-    if ("NA" %in% disallow && any(is.na(x))) {
+    if (is.element("NA", disallow) && any(is.na(x))) {
       throw(sprintf("Argument '%s' contains %d NA value(s).", 
                                                     .name, sum(is.na(x))));
     }
@@ -833,7 +848,7 @@ setMethodS3("getRegularExpression", "Arguments", function(static, pattern=NULL, 
                                                                    .name));
   }
 
-  pattern <- getCharacter(static, pattern, .name=.name);
+  pattern <- getCharacter(static, pattern, .name=.name, length=c(1,1));
 
   # Validate it
   tryCatch({
@@ -886,7 +901,7 @@ setMethodS3("getEnvironment", "Arguments", function(static, envir=NULL, .name=NU
   }
 
   if (is.character(envir)) {
-    name <- Arguments$getCharacter(envir);
+    name <- getCharacter(static, envir, length=c(1,1));
     envirs <- gsub("^package:", "", search());
     pos <- which(name == envirs);
     if (length(pos) == 0)
@@ -918,6 +933,12 @@ setMethodS3("getReadablePath", "Arguments", function(static, path=NULL, ...) {
 
 ############################################################################
 # HISTORY:
+# 2009-05-18
+# o UPDATE: Now getWritablePathname() gives a more precise error message
+#   if the file exists but the rights to modifies it does not.
+# o UPDATE: Now getEnvironment(), getRegularExpression(), and 
+#   getReadablePathname() give clearer error messages if more the input
+#   contains more than one element.
 # 2009-05-15
 # o Changed argument 'asMode' for Arguments$getNumerics() to default to
 #   NULL instead of "numeric".  This will case the method to return integer
