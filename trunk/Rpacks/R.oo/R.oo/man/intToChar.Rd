@@ -10,7 +10,7 @@
 \alias{intToChar.default}
 \alias{intToChar}
 
-\title{Converts a vector of ASCII characters into a vector of integers}
+\title{Converts a vector of integers into a vector of ASCII characters}
 
 \description{
   Converts a vector of ASCII integers to a equal length vector of ASCII

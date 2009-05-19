@@ -10,7 +10,7 @@
 \alias{charToInt.default}
 \alias{charToInt}
 
-\title{Converts a vector of integers into a vector of ASCII characters}
+\title{Converts a vector of ASCII characters into a vector of integers}
 
 \description{
   Converts a \code{\link[base]{vector}} of ASCII \code{\link[base]{character}}s to a equal length vector of ASCII

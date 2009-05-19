@@ -1,6 +1,11 @@
 Package: R.oo
 =============
 
+Version: 1.4.8x [2009-05-18]
+o DOC FIX: The titles for intToChar() and charToInt() where mixed up.
+  Thanks to Jens Philip Hoehmann for reporting this.
+
+
 Version: 1.4.7 [2009-01-10]
 o FIXUP: There were some Rd warnings with the new R v2.9.0.
 

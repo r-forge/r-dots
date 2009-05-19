@@ -100,7 +100,7 @@ ASCII.ESC <- "\033";
 #########################################################################/**
 # @RdocDefault charToInt
 #
-# @title "Converts a vector of integers into a vector of ASCII characters"
+# @title "Converts a vector of ASCII characters into a vector of integers"
 #
 # \description{
 #   Converts a @vector of ASCII @characters to a equal length vector of ASCII
@@ -145,7 +145,7 @@ setMethodS3("charToInt", "default", function(ch, ...) {
 #########################################################################/**
 # @RdocDefault intToChar
 #
-# @title "Converts a vector of ASCII characters into a vector of integers"
+# @title "Converts a vector of integers into a vector of ASCII characters"
 #
 # \description{
 #   Converts a vector of ASCII integers to a equal length vector of ASCII
@@ -189,6 +189,9 @@ setMethodS3("intToChar", "default", function(i, ...) {
 
 ############################################################################
 # HISTORY:
+# 2009-05-18
+# o DOC FIX: The titles for intToChar() and charToInt() where mixed up.
+#   Thanks to Jens Philip Hoehmann for reporting this.
 # 2008-05-08
 # o Updated the ASCII vector to deal with updates of '\000'.
 # 2005-02-15
