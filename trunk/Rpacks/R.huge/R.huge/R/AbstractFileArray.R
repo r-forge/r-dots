@@ -292,13 +292,30 @@ setMethodS3("open", "AbstractFileArray", function(con, ...) {
   pathname <- getPathname(this);
   fileExists <- isFile(pathname);
   if (fileExists) {
-    # Open existing file: read header.
-    # Note, if open="w+b", the file is trucated to size zero.
-    this$con <- file(pathname, open="r+b");
+    con <- NULL;
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Try 1: Open the file for read and updating
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    tryCatch({
+      pathname <- Arguments$getWritablePathname(pathname);
+      # Open existing file: read header.
+      # Note, if open="w+b", the file is trucated to size zero.
+      con <- file(pathname, open="r+b");
+    }, error = function(ex) {});
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Try 2: Open the file for reading only ("better than nothing")
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    if (is.null(con)) {
+      pathname <- Arguments$getReadablePathname(pathname);
+      con <- file(pathname, open="rb");
+    }
+    this$con <- con;
     if (is.null(this$header)) {
       this$header <- readHeader(this);
     }
   } else {
+    pathname <- Arguments$getWritablePathname(pathname);
     # Create a new file: open conection, create header and data section.
     this$con <- file(pathname, open="w+b");
     this <- writeHeader(this);
@@ -441,7 +458,9 @@ setMethodS3("delete", "AbstractFileArray", function(this, ...) {
     return(invisible(TRUE));
 
   # Delete the actual file
-  invisible(file.remove(getPathname(this)));
+  pathname <- getPathname(this);
+  pathname <- Arguments$getWritablePathname(pathname);
+  invisible(file.remove(pathname));
 })
 
 
@@ -541,6 +560,7 @@ setMethodS3("clone", "AbstractFileArray", function(con, copyData=TRUE, ...) {
     if (!isFile(pathname)) {
       # Copy file?
       if (copyData) {
+        pathname <- Arguments$getWritablePathname(pathname);
         if (file.copy(getPathname(this), pathname))
           ready <- TRUE;
       } else {
@@ -2040,6 +2060,14 @@ setMethodS3("writeValues", "AbstractFileArray", function(this, indices=NULL, val
 
 ############################################################################
 # HISTORY:
+# 2009-05-19
+# o ROBUSTNESS: Now open() of AbstractFileArray first tries to open the
+#   file for reading and updating (as before).  If that fails, then it
+#   tries to open the file for reading only.  It might be that the file
+#   is only used for reading, so if the permission allows for that but
+#   not updating, then open it.
+# o EXCEPTION HANDLING: Methods that creates/modifies files will give
+#   a clear error message if the file permissions does not allow it. 
 # 2006-08-21
 # o BUG FIX: Argument 'dimOrder' of the AbstractFileArray constructor was
 #   not recognized causing weird results if it was intended to be in a
