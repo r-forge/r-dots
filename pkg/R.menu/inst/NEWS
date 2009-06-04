@@ -1,0 +1,19 @@
+
+Package: R.menu
+================
+
+Version: 0.0.4 [2009-02-21]
+o Added textChooseDir() for choosing directories.
+o Renamed textSelectFile() to textChooseFile().
+o BUG FIX: Forgot to reorder paths when reordering the options
+  in textSelectFile().
+
+Version: 0.0.3 [2009-02-13]
+o Now textSelectFile() lists directories first (with trailing slash),
+  then the files.  Both sets are sorted in lexicographic order.
+
+Version: 0.0.2 [2009-02-12]
+
+Version: 0.0.1 [2009-02-12]
+o Created by putting a lot of old scripts into a package.
+

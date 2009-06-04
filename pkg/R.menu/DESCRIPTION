@@ -1,0 +1,11 @@
+Package: R.menu
+Version: 0.0.4
+Date: 2009-02-21
+Title: A text based menu system
+Author: Henrik Bengtsson <henrikb@braju.com>
+Maintainer: Henrik Bengtsson <henrikb@braju.com>
+Depends: R (>= 2.6.0), R.utils (>= 1.1.1)
+Description: A text based menu system
+License: LGPL (>= 2.1)
+URL: http://www.braju.com/R/
+LazyLoad: TRUE
