@@ -121,12 +121,14 @@ textChooseFile <- function(path=".", pattern="[^~]$", ..., history=TRUE, verbose
 } # textChooseFile()
 
 
-testSelectFile <- function(...) {
-  testChooseFile(...);
+textSelectFile <- function(...) {
+  textChooseFile(...);
 }
 
 ############################################################################
 # HISTORY: 
+# 2009-06-05
+# o BUG FIX: Method called testChooseFile() not textChooseFile().
 # 2009-02-21
 # o Renamed to testChooseFile() from testSelectFile().
 # 2009-02-20

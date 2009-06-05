@@ -17,6 +17,8 @@
 \alias{textMenu}
 \alias{textSelectFile}
 \alias{launchMenu}
+\alias{textChooseDir}
+\alias{textChooseFile}
 
 \description{
   This page contains aliases for all "non-documented" objects that
