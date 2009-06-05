@@ -1,0 +1,15 @@
+  as.character.NullFileLock getConnection
+  getConnection.default getConnection.FileLock getPathname
+  getPathname.FileLock isLocked isLocked.FileLock lock.FileLock
+  NullFileLock release release.FileLock tryLock.FileLock
+  as.character.FileLock
+  finalize.FileLock
+  lock tryLock
+  acquire.AbstractMutex finalize.AbstractMutex
+ finalize.SocketMutex getHost getHost.SocketMutex getPort
+ getPort.SocketMutex getPort.SocketMutexServer isAcquired.AbstractMutex
+ isAcquired.NullMutex
+ isAcquired.SocketMutex release.AbstractMutex release.NullMutex
+ release.SocketMutex run.SocketMutexServer SocketMutexServer
+ tryAcquire.AbstractMutex tryAcquire.NullMutex tryAcquire.SocketMutex
+acquire isAcquired run tryAcquire

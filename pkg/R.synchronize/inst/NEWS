@@ -1,0 +1,14 @@
+Package: R.synchronize
+======================
+
+Version: 0.0.2 [2009-05-30]
+o Added SocketMutex and SocketMutexServer.
+o KNOWN ISSUES: The FileLock class is known only to work
+  on Windows file systems, if at all. Don't use.
+
+
+Version: 0.0.1 [2009-05-26]
+o Added FileLock with static methods tryLock() and lock()
+  to retrieve a file lock for a particular pathname.  To
+  release a file lock there is release().
+o Created package.
