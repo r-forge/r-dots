@@ -15,9 +15,10 @@
 
 
 \description{
-  The package currently provides a class representing a matrix where the actual data is stored in a binary format on the local file system.  This way the size limit of the data is set by the file system and not the memory.  Please consider this package to in an alpha/early-beta version.
+  \emph{This package has been deprecated. Do not start building new
+  projects based on it.}
 
-  This package should be considered to be in "alpha" version.
+  THIS PACKAGE HAS BEEN DEPRECATED. Do not start building new projects based on it. The main usage of it was inside the aroma.affymetrix package. (The package currently provides a class representing a matrix where the actual data is stored in a binary format on the local file system.  This way the size limit of the data is set by the file system and not the memory.)
 }
 
 \section{Requirements}{

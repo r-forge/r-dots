@@ -2,9 +2,10 @@
 # @RdocPackage R.huge
 #
 # \description{
-#   @eval "getDescription(R.huge)"
+#   \emph{This package has been deprecated. Do not start building new
+#   projects based on it.}
 #
-#   This package should be considered to be in "alpha" version.
+#   @eval "getDescription(R.huge)"
 # }
 #
 # \section{Requirements}{

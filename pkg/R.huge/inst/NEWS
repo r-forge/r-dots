@@ -1,6 +1,11 @@
 Package: R.huge
 ===============
 
+Version: 0.1.8 [2009-06-11]
+o Made it explicit in the title and the description that this
+  package should now be considered deprecated.
+
+
 Version: 0.1.7 [2009-05-20]
 o ROBUSTNESS: Now open() of AbstractFileArray first tries to open the
   file for reading and updating (as before).  If that fails, then it
