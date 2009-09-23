@@ -32,7 +32,6 @@
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  \code{\link[R.huge:dim.FileMatrix]{*dim}()}.
   For more information see \code{\link{FileMatrix}}.
 }
 

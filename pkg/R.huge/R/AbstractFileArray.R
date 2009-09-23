@@ -1711,7 +1711,7 @@ setMethodS3("as.vector", "AbstractFileArray", function(x, ...) {
 # @author
 #
 # \seealso{
-#   @seemethod "readSeqsOfValues" and @see "readValues".
+#   @see "readValues".
 #   @seeclass
 # }
 #
@@ -2017,6 +2017,24 @@ setMethodS3("writeAllValues", "AbstractFileArray", function(this, values, mode=g
 # @keyword programming
 #*/###########################################################################
 setMethodS3("writeValues", "AbstractFileArray", function(this, indices=NULL, values, mode=getStorageMode(this), size=getBytesPerCell(this), offset=getDataOffset(this), order=FALSE, ...) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Local functions
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Call internal writeBin() to avoid overhead.
+  # In R v2.10.0, argument 'useBytes' was added
+  if (is.element("useBytes", names(formals(base::writeBin)))) {
+    # From R v2.10.0
+    writeBinX <- function(object, con, size, ...) {
+      .Internal(writeBin(values[kk], con, size, FALSE, FALSE));
+    }
+  } else {
+    # Before R v2.10.0
+    writeBinX <- function(object, con, size, ...) {
+      .Internal(writeBin(values[kk], con, size, FALSE));
+    }
+  }
+
+
   # The number of elements to write
   if (is.null(indices)) {
     return(writeAllValues(this, values=values, mode=mode, size=size, offset=offset, ...));
@@ -2052,7 +2070,7 @@ setMethodS3("writeValues", "AbstractFileArray", function(this, indices=NULL, val
   for (kk in seq(length=ni)) {
     # seek(con=con, where=fileOffsets[kk], rw="write");
     .Internal(seek(con, fileOffsets[kk], origin, rw));
-    .Internal(writeBin(values[kk], con, size, FALSE));
+    writeBinX(values[kk], con=con, size=size);
   }
 }, protected=TRUE)
 
@@ -2060,6 +2078,10 @@ setMethodS3("writeValues", "AbstractFileArray", function(this, indices=NULL, val
 
 ############################################################################
 # HISTORY:
+# 2009-09-22
+# o BUG FIX: From R v2.10.0, writeValues() of AbstractFileArray would give
+#   "Error: 4 arguments passed to .Internal(writeBin) which requires 5".
+#   Updated so it works with all versions of R.
 # 2009-05-19
 # o ROBUSTNESS: Now open() of AbstractFileArray first tries to open the
 #   file for reading and updating (as before).  If that fails, then it

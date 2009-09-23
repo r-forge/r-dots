@@ -36,7 +36,7 @@
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  \code{\link[R.huge:readSeqsOfValues.AbstractFileArray]{*readSeqsOfValues}()} and \code{\link{readValues}}().
+  \code{\link{readValues}}().
   For more information see \code{\link{AbstractFileArray}}.
 }
 

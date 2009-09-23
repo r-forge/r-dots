@@ -168,7 +168,6 @@ setMethodS3("getByRow", "FileMatrix", function(this, ...) {
 # @author
 #
 # \seealso{
-#   @seemethod "dim".
 #   @seeclass
 # }
 #
@@ -203,7 +202,6 @@ setMethodS3("nrow", "FileMatrix", function(this, ...) {
 # @author
 #
 # \seealso{
-#   @seemethod "dim".
 #   @seeclass
 # }
 #
@@ -237,7 +235,6 @@ setMethodS3("ncol", "FileMatrix", function(this, ...) {
 # @author
 #
 # \seealso{
-#   @seemethod "dimnames".
 #   @seemethod "colnames".
 #   @seeclass
 # }
@@ -272,7 +269,6 @@ setMethodS3("rownames", "FileMatrix", function(this, ...) {
 # @author
 #
 # \seealso{
-#   @seemethod "dimnames".
 #   @seemethod "rownames".
 #   @seeclass
 # }

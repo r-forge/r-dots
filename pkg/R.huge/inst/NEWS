@@ -1,6 +1,13 @@
 Package: R.huge
 ===============
 
+Version: 0.1.9 [2009-09-22]
+o DOCUMENTATION: Now the package description lists alternative packages.
+o BUG FIX: From R v2.10.0, writeValues() of AbstractFileArray would give
+  "Error: 4 arguments passed to .Internal(writeBin) which requires 5".
+  Updated so it works with all versions of R.
+
+
 Version: 0.1.8 [2009-06-11]
 o Made it explicit in the title and the description that this
   package should now be considered deprecated.
