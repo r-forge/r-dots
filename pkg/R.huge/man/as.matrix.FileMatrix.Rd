@@ -13,10 +13,10 @@
 \alias{as.matrix,FileMatrix-method}
 
 
-\title{Returns the elements of a file matrix as an \R matrix}
+\title{Returns the elements of a file matrix as an R matrix}
 
 \description{
- Returns the elements of a file matrix as an \R matrix, that is, imported into memory (if possible).
+ Returns the elements of a file matrix as an R matrix, that is, imported into memory (if possible).
 }
 
 \usage{\method{as.matrix}{FileMatrix}(x, ...)}

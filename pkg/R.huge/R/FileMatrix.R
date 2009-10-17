@@ -557,7 +557,7 @@ setMethodS3("[", "FileMatrix", function(this, i, j, drop=FALSE) {
 ###########################################################################/**
 # @RdocMethod as.matrix
 #
-# @title "Returns the elements of a file matrix as an \R matrix"
+# @title "Returns the elements of a file matrix as an R matrix"
 #
 # \description{
 #  @get "title", that is, imported into memory (if possible).

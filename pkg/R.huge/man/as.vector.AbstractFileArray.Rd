@@ -13,10 +13,10 @@
 \alias{as.vector,AbstractFileArray-method}
 
 
-\title{Returns the elements of a file array as an \R vector}
+\title{Returns the elements of a file array as an R vector}
 
 \description{
- Returns the elements of a file array as an \R vector, that is, imported into memory (if possible).
+ Returns the elements of a file array as an R vector, that is, imported into memory (if possible).
 }
 
 \usage{\method{as.vector}{AbstractFileArray}(x, ...)}

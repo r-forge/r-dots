@@ -1649,7 +1649,7 @@ setMethodS3("dimnames", "AbstractFileArray", function(x) {
 ###########################################################################/**
 # @RdocMethod as.vector
 #
-# @title "Returns the elements of a file array as an \R vector"
+# @title "Returns the elements of a file array as an R vector"
 #
 # \description{
 #  @get "title", that is, imported into memory (if possible).

@@ -1,6 +1,10 @@
 Package: R.huge
 ===============
 
+Version: 0.2.0 [2009-10-16]
+o Some cleanup of Rd files to meet the stricter requirements. 
+
+
 Version: 0.1.9 [2009-09-22]
 o DOCUMENTATION: Now the package description lists alternative packages.
 o BUG FIX: From R v2.10.0, writeValues() of AbstractFileArray would give
