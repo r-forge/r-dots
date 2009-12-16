@@ -1,4 +1,4 @@
-selectMenu <- function(choices, selected=NULL, title="Select/unselect items", options=c("a!"="Select all", "n!"="Unselect all", "t!"="Toggle all", "q!"="Done"), header="%s (0 when done)", ...) {
+selectMenu <- function(choices, selected=NULL, title="Select/unselect items", options=c("a!"="Select all", "n!"="Unselect all", "t!"="Toggle all", "q!"="Done"), header="%s (q! when done)", ...) {
   if (is.null(selected)) {
     selected <- rep(FALSE, length=length(choices));
   } else if (is.logical(selected)) {

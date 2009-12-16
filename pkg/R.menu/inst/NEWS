@@ -2,6 +2,12 @@
 Package: R.menu
 ================
 
+Version: 0.0.6 [2009-12-16]
+o TYPO FIX: selectMenu() said "Select/unselect items (0 when done)",
+  but one actually need to press 'q!' when done.  Thanks Pierre
+  Neuvial for this report.
+
+
 Version: 0.0.5 [2009-06-05]
 o BUG FIX: One method called testChooseFile() not textChooseFile().
 

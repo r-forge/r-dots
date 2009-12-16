@@ -1,6 +1,6 @@
 Package: R.menu
-Version: 0.0.5
-Date: 2009-06-05
+Version: 0.0.6
+Date: 2009-12-16
 Title: A text based menu system
 Author: Henrik Bengtsson <henrikb@braju.com>
 Maintainer: Henrik Bengtsson <henrikb@braju.com>
