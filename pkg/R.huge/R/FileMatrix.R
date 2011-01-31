@@ -531,7 +531,8 @@ setMethodS3("[", "FileMatrix", function(this, i, j, drop=FALSE) {
   seek(con=con, where=getDataOffset(this), rw="read");
 
   mode <- getStorageMode(this);
-  res <- readBinFragments(con=con, what=mode, size=size, idxs=idxs);
+  res <- readBinFragments(con=con, what=mode, size=size, 
+                          idxs=idxs, origin="current");
   dim(res) <- c(ni, nj);
 
   # Dimension names?
@@ -848,6 +849,9 @@ setMethodS3("rowMeans", "FileMatrix", function(x, ..., doCount=FALSE) {
 
 ############################################################################
 # HISTORY:
+# 2010-11-08
+# o Now "["() for FileMatrix explicitly specifies origin="current" in the
+#   call to readBinFragment(), which is an argument added in R.utils 1.5.7.
 # 2007-08-22
 # o Added special as.character() for FileMatrix.
 # o BUG FIX: "["() and "[<-"() were totally broken.  Now they utilize the

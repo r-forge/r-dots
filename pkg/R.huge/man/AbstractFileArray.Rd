@@ -56,7 +56,7 @@ extends \link[R.oo]{Object}\cr
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.huge:as.character.AbstractFileArray]{as.character}} \tab Returns a short string describing the file array.\cr
- \tab \code{\link[R.huge:as.vector.AbstractFileArray]{as.vector}} \tab Returns the elements of a file array as an \R vector.\cr
+ \tab \code{\link[R.huge:as.vector.AbstractFileArray]{as.vector}} \tab Returns the elements of a file array as an R vector.\cr
  \tab \code{\link[R.huge:clone.AbstractFileArray]{clone}} \tab Clones a file array.\cr
  \tab \code{\link[R.huge:close.AbstractFileArray]{close}} \tab Closes a connection to the data file of the file array.\cr
  \tab \code{\link[R.huge:delete.AbstractFileArray]{delete}} \tab Deletes the file array from the file system.\cr

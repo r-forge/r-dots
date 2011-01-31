@@ -1,6 +1,12 @@
 Package: R.huge
 ===============
 
+Version: 0.2.1 [2010-11-08]
+o Now "["() for FileMatrix explicitly specifies origin="current" in the
+  call to readBinFragment(), which is an argument added in R.utils 1.5.7.
+o CLEANUP: Removed some defunct Rd aliases.
+
+
 Version: 0.2.0 [2009-10-16]
 o Some cleanup of Rd files to meet the stricter requirements. 
 

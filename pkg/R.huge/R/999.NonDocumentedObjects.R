@@ -60,12 +60,6 @@
 # @alias rowSums.default
 # @alias writeValues.FileMatrix
 #
-# % Misc.
-# @alias readBinFragments 
-# @alias readBinFragments.default
-# @alias writeBinFragments
-# @alias writeBinFragments.default
-#
 #
 # \description{
 #   This page contains aliases for all "non-documented" objects that 

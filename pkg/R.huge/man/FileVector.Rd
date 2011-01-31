@@ -48,8 +48,8 @@ extends \link[R.huge]{AbstractFileArray}\cr
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.huge:000-LB-.FileVector]{[}} \tab Gets a subset of elements of a file vector.\cr
- \tab \code{\link[R.huge:000-LB-LT_-.FileVector]{[<-}} \tab Assigns values to a subset of elements of a file vector.\cr
+ \tab \code{[} \tab  -\cr
+ \tab \code{[<-} \tab  -\cr
  \tab \code{\link[R.huge:names.FileVector]{names}} \tab Gets the element names of a file vector.\cr
 }
 
