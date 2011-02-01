@@ -19,6 +19,12 @@
 \alias{launchMenu}
 \alias{textChooseDir}
 \alias{textChooseFile}
+\alias{getLaunchPath}
+\alias{getLaunchPath.Package}
+\alias{launchMenu.default}
+\alias{launchMenu.Package}
+\alias{setLaunchPath}
+\alias{setLaunchPath.Package}
 
 \description{
   This page contains aliases for all "non-documented" objects that

@@ -1,3 +1,5 @@
 selectMenu selectOrder textMenu textSelectFile
 launchMenu
 textChooseDir textChooseFile
+getLaunchPath getLaunchPath.Package launchMenu.default
+launchMenu.Package setLaunchPath setLaunchPath.Package
