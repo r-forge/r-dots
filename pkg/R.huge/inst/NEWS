@@ -1,6 +1,11 @@
 Package: R.huge
 ===============
 
+Version: 0.2.2 [2011-02-01]
+o ROBUSTNESS: Now using argument 'nchars' (not 'nchar') when calling
+  readChar().
+
+
 Version: 0.2.1 [2010-11-08]
 o Now "["() for FileMatrix explicitly specifies origin="current" in the
   call to readBinFragment(), which is an argument added in R.utils 1.5.7.

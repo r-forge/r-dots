@@ -1215,7 +1215,7 @@ setMethodS3("readHeader", "AbstractFileArray", function(this, ...) {
     count <- 4;
     
     if (len > 0) {
-      str <- readChar(con=con, nchar=len);
+      str <- readChar(con=con, nchars=len);
       count <- count + len + 1;
     }
 
@@ -1230,14 +1230,14 @@ setMethodS3("readHeader", "AbstractFileArray", function(this, ...) {
 
   # MAGIC
   seek(con, where=offset, rw="read");
-  value <- readChar(con=con, nchar=64);
+  value <- readChar(con=con, nchars=64);
   value <- substring(value, 1);
   header$magic <- value;
   offset <- offset + 64;
 
   # File format version string
   seek(con, where=offset, rw="read");
-  value <- readChar(con=con, nchar=16);
+  value <- readChar(con=con, nchars=16);
   value <- substring(value, 1);
   header$version <- value;
   offset <- offset + 16;
@@ -2078,6 +2078,9 @@ setMethodS3("writeValues", "AbstractFileArray", function(this, indices=NULL, val
 
 ############################################################################
 # HISTORY:
+# 2011-02-01
+# o ROBUSTNESS: Now using argument 'nchars' (not 'nchar') when calling
+#   readChar().
 # 2009-09-22
 # o BUG FIX: From R v2.10.0, writeValues() of AbstractFileArray would give
 #   "Error: 4 arguments passed to .Internal(writeBin) which requires 5".
