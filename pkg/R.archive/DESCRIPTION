@@ -1,0 +1,12 @@
+Package: R.archive
+Version: 0.1.1
+Date: 2011-03-10
+Title: Automatic copying of objects and files to a file-based archive
+Author: Henrik Bengtsson <henrikb@braju.com>
+Maintainer: Henrik Bengtsson <henrikb@braju.com>
+Depends: R (>= 2.5.0), R.oo (>= 1.7.5), R.utils (>= 1.7.0)
+Suggests: 
+Description: Methods for creating archived copies of objects and files, e.g. all image files created.  TAGS: Reproducible research.
+License: LGPL (>= 2.1)
+URL: http://www.braju.com/R/
+LazyLoad: TRUE

@@ -1,0 +1,14 @@
+
+Package: R.archive
+==================
+
+Version: 0.1.1 [2011-03-10]
+o Added get- and setArchiveOption().
+o Added get- and setArchiveRootPath().
+
+
+Version: 0.1.0 [2011-03-09]
+o Added archiveFile() for adding a file to the archive directory.
+  It makes use of internal utility function getArchivePath(), 
+  getArchiveFilename(), and getArchivePathname().
+o Created.
