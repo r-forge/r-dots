@@ -2,6 +2,11 @@
 Package: R.archive
 ==================
 
+Version: 0.1.2 [2011-03-18]
+o In order to make it more unique, the timestamp added to files now
+  includes milliseconds as well, e.g. 041359.032.
+
+
 Version: 0.1.1 [2011-03-10]
 o Added get- and setArchiveOption().
 o Added get- and setArchiveRootPath().

@@ -83,10 +83,10 @@ setMethodS3("getArchiveFilename", "default", function(filename, ...) {
 
   # Generate identifiers
   tz <- getArchiveOption("tz", "");
-  # Example: 04:13:59.03
-  # timestamp <- format(Sys.time(), "%H%M%OS0", tz=tz);
-  # Example: 04:13:59
-  timestamp <- format(Sys.time(), "%H%M%S", tz=tz);
+  # Example: 041359.032
+  timestamp <- format(Sys.time(), "%H%M%OS3", tz=tz);
+  # Example: 041359
+  ## timestamp <- format(Sys.time(), "%H%M%S", tz=tz);
   timestamp <- sprintf("%s%s", timestamp, tz);
 
   tags <- c(timestamp);
@@ -100,6 +100,9 @@ setMethodS3("getArchiveFilename", "default", function(filename, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-03-18
+# o In order to make it more unique, the timestamp added to files now
+#   includes milliseconds as well, e.g. 041359.032.
 # 2011-03-09
 # o Added getArchiveFilename() and getArchivePathname().
 # o Created.
