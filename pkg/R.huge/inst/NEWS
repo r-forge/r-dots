@@ -1,6 +1,14 @@
 Package: R.huge
 ===============
 
+Version: 0.3.0 [2011-07-23]
+o Added a namespace to the package, which will be more or less
+  a requirement in the next major release of R.
+o BUG FIX: Recently R devel automatically adds a namespace to
+  a package, if missing.  This caused some of the PSCBS examples
+  to throw an exception related to incorrect dispatching of cat().
+
+
 Version: 0.2.2 [2011-02-01]
 o ROBUSTNESS: Now using argument 'nchars' (not 'nchar') when calling
   readChar().
