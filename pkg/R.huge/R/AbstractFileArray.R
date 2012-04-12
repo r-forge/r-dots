@@ -1720,16 +1720,13 @@ setMethodS3("as.vector", "AbstractFileArray", function(x, mode="any") {
 setMethodS3("readAllValues", "AbstractFileArray", function(this, mode=getStorageMode(this), size=getBytesPerCell(this), offset=getDataOffset(this), ..., .checkArgs=FALSE) {
   con <- this$con;
 
-  # Call internal functions directly; less overhead (almost twice as fast)
-  # seek(con=con, where=offset, rw="read");
-  origin <- pmatch("start", c("start", "current", "end"));
-  rw <- pmatch("read", c("read", "write"), 0);
-  .Internal(seek(con, offset, origin, rw));
+  .seekCon(con=con, where=offset, rw="read");
 
-  # readBin(con=con, what=what, n=n, size=size);
   what <- mode;
   n <- prod(this$header$dim);
-  .Internal(readBin(con, what, n, size, TRUE, FALSE));
+## .Internal() calls are no longer allowed. /HB 2012-04-15
+##  .Internal(readBin(con, what, n, size, TRUE, FALSE));
+  readBin(con=con, what=what, n=n, size=size, signed=TRUE);
 })
 
 
@@ -1817,12 +1814,13 @@ setMethodS3("readContiguousValues", "AbstractFileArray", function(this, indices,
 
   # Call internal functions directly; less overhead (almost twice as fast)
   what <- mode;
-  origin <- pmatch("start", c("start", "current", "end"));
-  rw <- pmatch("read", c("read", "write"), 0);
+  ## origin <- pmatch("start", c("start", "current", "end"));
+  ## rw <- pmatch("read", c("read", "write"), 0);
   for (kk in seq(length=nbrOfIndices)) {
     # Move to start position
     # seek(con=con, where=fileOffsets[kk], rw="read");
-    .Internal(seek(con, fileOffsets[kk], origin, rw));
+    ## .Internal(seek(con, fileOffsets[kk], origin, rw));
+    .seekCon(con=con, where=fileOffsets[kk], rw="read");
 
     # The number of values to read at this position
     n <- lengths[kk];
@@ -1831,7 +1829,7 @@ setMethodS3("readContiguousValues", "AbstractFileArray", function(this, indices,
     idx <- pos + 1:n;
 
     # Read the sequence of values at this position
-    values[idx] <- .Internal(readBin(con, what, n, size, TRUE, FALSE));
+    values[idx] <- readBin(con=con, what=what, n=n, size=size, signed=TRUE);
  
     # Next position
     pos <- pos + n;
@@ -1877,6 +1875,9 @@ setMethodS3("readContiguousValues", "AbstractFileArray", function(this, indices,
 # @keyword programming
 #*/###########################################################################
 setMethodS3("readValues", "AbstractFileArray", function(this, indices=NULL, mode=getStorageMode(this), size=getBytesPerCell(this), offset=getDataOffset(this), order=FALSE, ..., .checkArgs=TRUE) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (.checkArgs) {
     # Argument 'size':
     size <- Arguments$getInteger(size, range=c(1,8));
@@ -1905,24 +1906,14 @@ setMethodS3("readValues", "AbstractFileArray", function(this, indices=NULL, mode
   fileOffsets <- as.double(offset + (indices-1)*size);
   rm(indices);
 
-#  origin <- "current";
-#  if (origin == "current") {
-#    # This is about the same speed as reading from "start"
-#    fileOffsets <- c(0, fileOffsets);
-#    fileOffsets <- diff(fileOffsets) - size;
-#    fileOffsets[1] <- fileOffsets[1] + size;
-#    origin <- pmatch("current", c("start", "current", "end"));
-#    seek(con=con, where=0, rw="read");
-#  } else {
-    origin <- pmatch("start", c("start", "current", "end"));
-#  }
-
   # Call internal functions directly; less overhead (almost twice as fast)
-  rw <- pmatch("read", c("read", "write"), 0);
+  ## origin <- pmatch("start", c("start", "current", "end"));
+  ## rw <- pmatch("read", c("read", "write"), 0);
   for (kk in seq(length=ni)) {
     # seek(con=con, where=fileOffsets[kk], rw="read");
-    .Internal(seek(con, fileOffsets[kk], origin, rw));
-    values[kk] <- .Internal(readBin(con, what, 1, size, TRUE, FALSE));
+    ## .Internal(seek(con, fileOffsets[kk], origin, rw));
+    .seekCon(con=con, where=fileOffsets[kk], rw="read");
+    values[kk] <- readBin(con=con, what=what, n=1L, size=size, signed=TRUE);
   }
   rm(fileOffsets);
 
@@ -2019,20 +2010,11 @@ setMethodS3("writeValues", "AbstractFileArray", function(this, indices=NULL, val
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Call internal writeBin() to avoid overhead.
-  # In R v2.10.0, argument 'useBytes' was added
-  if (is.element("useBytes", names(formals(base::writeBin)))) {
-    # From R v2.10.0
-    writeBinX <- function(object, con, size, ...) {
-      .Internal(writeBin(values[kk], con, size, FALSE, FALSE));
-    }
-  } else {
-    # Before R v2.10.0
-    writeBinX <- function(object, con, size, ...) {
-      .Internal(writeBin(values[kk], con, size, FALSE));
-    }
-  }
-
+##   # Call internal writeBin() to avoid overhead.
+##   # From R v2.10.0
+##   writeBinX <- function(object, con, size, ...) {
+##     .Internal(writeBin(values[kk], con, size, FALSE, FALSE));
+##   }
 
   # The number of elements to write
   if (is.null(indices)) {
@@ -2064,12 +2046,14 @@ setMethodS3("writeValues", "AbstractFileArray", function(this, indices=NULL, val
   fileOffsets <- as.double(offset + (indices-1)*size);
 
   # Call internal functions directly; less overhead
-  origin <- pmatch("start", c("start", "current", "end"));
-  rw <- pmatch("write", c("read", "write"), 0);
+  ## origin <- pmatch("start", c("start", "current", "end"));
+  ## rw <- pmatch("write", c("read", "write"), 0);
   for (kk in seq(length=ni)) {
     # seek(con=con, where=fileOffsets[kk], rw="write");
-    .Internal(seek(con, fileOffsets[kk], origin, rw));
-    writeBinX(values[kk], con=con, size=size);
+    ## .Internal(seek(con, fileOffsets[kk], origin, rw));
+    .seekCon(con=con, where=fileOffsets[kk], rw="write");
+    ## writeBinX(values[kk], con=con, size=size);
+    writeBin(values[kk], con=con, size=size, useBytes=FALSE);
   }
 }, protected=TRUE)
 
@@ -2078,6 +2062,10 @@ setMethodS3("writeValues", "AbstractFileArray", function(this, indices=NULL, val
 ############################################################################
 # HISTORY:
 # 2012-04-15
+# o Now no longer calling .Internal() readBin() and writeBin().
+# o Now utilizing new .seekCon() instead of .Internal(seek(...)).
+# o CLEANUP: readAllValues() for AbstractFileArray no longer uses
+#   .Internal(seek(...)).
 # o CLEANUP: Now as.vector() for AbstractFileArray uses the exact same
 #   arguments as the base::as.vector() generic function.  This avoids
 #   having to create a new one in R.huge, which R CMD check complaints

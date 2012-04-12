@@ -8,9 +8,19 @@ isOpen <- appendVarArgs(isOpen)
 nrow <- appendVarArgs(nrow)
 ncol <- appendVarArgs(ncol)
 open <- appendVarArgs(open)
-rowMeans <- appendVarArgs(rowMeans)
 rownames <- appendVarArgs(rownames)
-rowSums <- appendVarArgs(rowSums)
+
+# USED TO DO: rowSums <- appendVarArgs(rowSums)
+rowSums <- function(...) UseMethod("rowSums");
+setMethodS3("rowSums", "default", function(...) {
+  base::rowSums(...);
+}) 
+
+# USED TO DO: rowMeans <- appendVarArgs(rowMeans)
+rowMeans <- function(...) UseMethod("rowMeans");
+setMethodS3("rowMeans", "default", function(...) {
+  base::rowMeans(...);
+}) 
 
 ############################################################################
 # HISTORY:
