@@ -1,8 +1,6 @@
 # Adds '...' to some base functions. These will later be
 # turned into default functions by setMethodS3().
 
-as.matrix <- appendVarArgs(as.matrix)
-as.vector <- appendVarArgs(as.vector)
 close <- appendVarArgs(close)
 colnames <- appendVarArgs(colnames)
 flush <- appendVarArgs(flush)

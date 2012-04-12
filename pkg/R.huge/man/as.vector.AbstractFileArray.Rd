@@ -19,10 +19,10 @@
  Returns the elements of a file array as an R vector, that is, imported into memory (if possible).
 }
 
-\usage{\method{as.vector}{AbstractFileArray}(x, ...)}
+\usage{\method{as.vector}{AbstractFileArray}(x, mode="any")}
 
 \arguments{
-  \item{...}{Not used.}
+  \item{mode}{Not used.}
 }
 
 \value{
@@ -32,7 +32,6 @@
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  \code{\link[R.huge:as.vector.AbstractFileArray]{*as.vector}()}.
   For more information see \code{\link{AbstractFileArray}}.
 }
 

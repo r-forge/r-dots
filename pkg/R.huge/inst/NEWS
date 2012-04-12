@@ -1,6 +1,12 @@
 Package: R.huge
 ===============
 
+Version: 0.3.1 [2012-04-12]
+o Updated package requirements.
+o CLEANUP: Package no longer creates new generic functions for
+  as.vector() and as.matrix() such that R CMD check no longer complaints.
+
+
 Version: 0.3.0 [2011-07-23]
 o Added a namespace to the package, which will be more or less
   a requirement in the next major release of R.

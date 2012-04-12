@@ -1658,7 +1658,7 @@ setMethodS3("dimnames", "AbstractFileArray", function(x) {
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Not used.}
+#   \item{mode}{Not used.}
 # }
 #
 # \value{
@@ -1668,19 +1668,18 @@ setMethodS3("dimnames", "AbstractFileArray", function(x) {
 # @author
 #
 # \seealso{
-#   @seemethod "as.vector".
 #   @seeclass
 # }
 #
 # @keyword IO
 # @keyword programming
 #*/###########################################################################
-setMethodS3("as.vector", "AbstractFileArray", function(x, ...) {
+setMethodS3("as.vector", "AbstractFileArray", function(x, mode="any") {
   # To please R CMD check
   this <- x;
 
   readAllValues(this);
-})
+}, appendVarArgs=FALSE)
 
 
 
@@ -2078,6 +2077,11 @@ setMethodS3("writeValues", "AbstractFileArray", function(this, indices=NULL, val
 
 ############################################################################
 # HISTORY:
+# 2012-04-15
+# o CLEANUP: Now as.vector() for AbstractFileArray uses the exact same
+#   arguments as the base::as.vector() generic function.  This avoids
+#   having to create a new one in R.huge, which R CMD check complaints
+#   about.
 # 2011-02-01
 # o ROBUSTNESS: Now using argument 'nchars' (not 'nchar') when calling
 #   readChar().

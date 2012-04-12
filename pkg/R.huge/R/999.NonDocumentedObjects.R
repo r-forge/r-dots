@@ -2,7 +2,6 @@
 # @RdocDocumentation "Non-documented objects"
 #
 # % AbstractFileArray
-# @alias as.vector
 # @alias close
 # @alias delete
 # @alias flush
@@ -30,7 +29,6 @@
 # @alias writeValues
 #
 # % FileMatrix
-# @alias as.matrix
 # @alias colnames
 # @alias colnames.default
 # @alias getByRow
