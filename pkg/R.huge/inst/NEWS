@@ -4,7 +4,7 @@ Package: R.huge
 Version: 0.4.0 [2012-04-12]
 o Updated package requirements.
 o CLEANUP: Package no longer call .Internal() functions.  This will
-  cause a slowdown, because now have to deal with overhead in 
+  cause a slowdown, because we now have to deal with overhead in 
   functions such as seek(), readBin() and writeBin().
 o CLEANUP: Package no longer creates new generic functions for
   as.vector() and as.matrix() such that R CMD check no longer complaints.
