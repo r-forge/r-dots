@@ -1,6 +1,10 @@
 Package: R.huge
 ===============
 
+Version: 0.4.1 [2012-06-29]
+o Updated package requirements.
+
+
 Version: 0.4.0 [2012-04-12]
 o Updated package requirements.
 o CLEANUP: Package no longer call .Internal() functions.  This will
