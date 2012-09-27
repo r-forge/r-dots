@@ -2,6 +2,12 @@
 Package: R.menu
 ================
 
+Version: 0.2.1 [2012-09-27]
+o Now launchMenu() defaults to launching only R scripts.
+o Now argument 'pattern' for textChooseFile() filters only files and
+  not directories, e.g. textChooseFile("R.menu/R", pattern="[.]R$").
+
+
 Version: 0.2.0 [2011-07-24]
 o Added a namespace to the package, which will be more or less
   a requirement in the next major release of R.

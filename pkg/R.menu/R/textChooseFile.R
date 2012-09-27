@@ -63,7 +63,7 @@ textChooseFile <- function(path=".", pattern="[^~]$", ..., history=TRUE, verbose
     }
     path <- Arguments$getReadablePath(path);
 
-    paths <- list.files(pattern=pattern, path=path, full.names=TRUE);
+    paths <- list.files(path=path, full.names=TRUE);
     if (length(paths) > 0) {
       # Identify which are directories (or linking to directories)
       paths2 <- sapply(paths, FUN=function(path) {
@@ -79,8 +79,18 @@ textChooseFile <- function(path=".", pattern="[^~]$", ..., history=TRUE, verbose
       # Append slash to directories
       options[isDir] <- paste(options[isDir], "/", sep="");
 
+      # Filter files by pattern
+      if (!is.null(pattern)) {
+        files <- options[!isDir];
+        keep <- (regexpr(pattern, files) != -1);
+        files[!keep] <- NA;
+        options[!isDir] <- files;
+        rm(files, keep);
+      }
+
       # Display directories first - order lexicographically
       options2 <- c(sort(options[isDir]), sort(options[!isDir]));
+
       o <- match(options2, options);
       paths <- paths[o];
       options <- options2;
@@ -127,6 +137,9 @@ textSelectFile <- function(...) {
 
 ############################################################################
 # HISTORY: 
+# 2012-09-27
+# o Now argument 'pattern' for textChooseFile() filters only files and
+#   not directories, e.g. textChooseFile("R.menu/R", pattern="[.]R$").
 # 2009-06-05
 # o BUG FIX: Method called testChooseFile() not textChooseFile().
 # 2009-02-21

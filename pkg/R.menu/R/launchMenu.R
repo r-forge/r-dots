@@ -1,7 +1,7 @@
-setMethodS3("launchMenu", "default", function(path=".", history=TRUE, echo=TRUE, max.deparse.length=Inf, ...) {
-  pathname <- textChooseFile(path, history=history, ...);
-print(pathname);
+setMethodS3("launchMenu", "default", function(path=".", history=TRUE, echo=TRUE, max.deparse.length=Inf, pattern="[.](r|R)$", ...) {
+  pathname <- textChooseFile(path, history=history, pattern=pattern, ...);
   if (!is.null(pathname)) {
+    print(pathname);
     source(pathname, echo=echo, max.deparse.length=max.deparse.length);
   }
 })
@@ -43,6 +43,8 @@ setMethodS3("launchMenu", "Package", function(this, subpath=NULL, ..., path=getL
 
 ############################################################################
 # HISTORY: 
+# 2012-09-27
+# o Now launchMenu() defaults to launching only R scripts.
 # 2010-01-04
 # o Added launchMenu() for Package.
 # o Added (get|set)LaunchPath() for Package.
