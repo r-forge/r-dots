@@ -104,7 +104,7 @@ setMethodS3("as.character", "FileMatrix", function(x, ...) {
   # To please R CMD check
   this <- x;
 
-  s <- NextMethod("as.character", x, ...);
+  s <- NextMethod("as.character");
   s <- c(s, sprintf(" byrow=%s.", getByRow(this)));
   s <- paste(s, collapse="");
 
