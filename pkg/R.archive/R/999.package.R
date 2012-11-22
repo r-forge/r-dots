@@ -18,8 +18,13 @@
 #
 # \section{To get started}{
 #   \itemize{
-#    \item To add a copy of an existing file to the archive, 
-#          use \code{\link{archiveFile}()}.
+#    \item To \emph{manually} archive an existing file by adding a timestamped
+#      copy of it to the archive directory, see \code{\link{archiveFile}()}.
+#    \item To \emph{automatically} archive all of your image files,
+#       (i) load this package,
+#       (ii), create them using the methods in \pkg{R.devices}, and
+#       (iii) enable archiving by \code{setArchiveOption("devEval", TRUE)}.
+#      For more details, see @see "setArchiveOption".
 #   }
 # }
 #

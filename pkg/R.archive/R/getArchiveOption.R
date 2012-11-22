@@ -27,11 +27,13 @@
 #
 # \section{Archiving options}{
 #   \describe{
-#    \item{tz}{A @character string specifying the timezone to be added
+#    \item{\code{devEval}}{If @TRUE, the @see "R.devices::devEval" function
+#       (and functions using it internally such as @see "R.devices::toPNG",
+#        and @see "R.devices::toPDF") will add a copy of each image file
+#        created to the archive.}
+#    \item{\code{tz}}{A @character string specifying the timezone to be added
 #       to each date or timestamp generated as part of archive 
 #       pathnames, e.g. \code{"GMT"}.}
-#    \item{devEval}{If @TRUE, the @see "R.devices::devEval" function
-#       will add a copy of each image file created to the archive.}
 #   }
 # }
 #

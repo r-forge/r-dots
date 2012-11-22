@@ -36,11 +36,13 @@
 
 \section{Archiving options}{
   \describe{
-   \item{tz}{A \code{\link[base]{character}} string specifying the timezone to be added
+   \item{\code{devEval}}{If \code{\link[base:logical]{TRUE}}, the \code{\link[R.devices]{devEval}} function
+      (and functions using it internally such as \code{\link[R.devices]{toPNG}},
+       and \code{\link[R.devices]{toPDF}}) will add a copy of each image file
+       created to the archive.}
+   \item{\code{tz}}{A \code{\link[base]{character}} string specifying the timezone to be added
       to each date or timestamp generated as part of archive
       pathnames, e.g. \code{"GMT"}.}
-   \item{devEval}{If \code{\link[base:logical]{TRUE}}, the \code{\link[R.devices]{devEval}} function
-      will add a copy of each image file created to the archive.}
   }
 }
 
