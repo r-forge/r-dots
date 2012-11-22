@@ -22,7 +22,7 @@
 \arguments{
   \item{filename, path}{\code{\link[base]{character}} strings specifying the filename
      and path of an existing file to be archived.}
-  \item{...}{Additional arguments passed to \code{\link{getArchivePathname}}().}
+  \item{...}{Additional arguments passed to \code{\link{getArchivePathname}}.}
   \item{onError}{A \code{\link[base]{character}} string specifying what to do if there
      is an error while archiving. Default is to give a warning.}
 }

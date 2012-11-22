@@ -20,16 +20,17 @@ importFrom("R.utils", "mkdirs")
 importFrom("R.utils", "isDirectory")
 importFrom("R.utils", "setOption")
 
-# Object that must exported explicitly
-export(.conflicts.OK) 
-
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # EXPORTS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Export all public methods, that is, those without a preceeding dot
-# in their names.
-exportPattern("^[^\\.]")
+export("archiveFile")
+export("getArchiveOption")
+export("setArchiveOption")
+export("getArchiveRootPath")
+export("setArchiveRootPath")
+export("getArchivePath")
+export("getArchivePathname")
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
