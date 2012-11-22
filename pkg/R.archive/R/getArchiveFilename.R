@@ -1,10 +1,10 @@
 #########################################################################/**
-# @RdocDefault getArchivePathname
+# @RdocDefault getArchiveFilename
 #
-# @title "Generates the pathname in the archive for a file"
+# @title "Generates a filename in the archive for a file"
 #
 # \description{
-#  @get "title" based on its filename.
+#  @get "title" based on an existing filename.
 # }
 #
 # @synopsis
@@ -13,35 +13,41 @@
 #   \item{filename}{A @character string specifying the filename/pathname
 #      of the file to be archived, and on which the archived filename
 #      will be based on.}
-#   \item{...}{Additional arguments passed to @see "getArchivePath"
-#      and @see "getArchiveFilename".}
-#   \item{mustNotExist}{If @TRUE and there already exists a file with
-#      the same archive pathname, then an exception is thrown.}
+#   \item{...}{Not used.}
 # }
 #
 # \value{
-#   Returns the archive pathname as a @character string.
+#   Returns the archive filename as a @character string.
 # }
 #
 # @author
 #
 # \seealso{
-#  @see "archiveFile".
+#   @see "getArchiveOption".
 # }
 #
 # @keyword "programming"
 # @keyword "IO"
 # @keyword "internal"
 #*/#########################################################################  
-setMethodS3("getArchivePathname", "default", function(filename, ..., mustNotExist=TRUE) {
-  pathA <- getArchivePath(...);
+setMethodS3("getArchiveFilename", "default", function(filename, ...) {
+  # Argument 'filename':
+  filename <- basename(filename);  # In case a pathname was given
 
-  filenameA <- getArchiveFilename(filename, ...);
+  # Generate identifiers
+  tz <- getArchiveOption("tz", "");
+  # Example: 041359.032
+  timestamp <- format(Sys.time(), "%H%M%OS3", tz=tz);
+  # Example: 041359
+  ## timestamp <- format(Sys.time(), "%H%M%S", tz=tz);
+  timestamp <- sprintf("%s%s", timestamp, tz);
 
-  pathnameA <- Arguments$getWritablePathname(filenameA, path=pathA, mustNotExist=mustNotExist);
+  tags <- c(timestamp);
+  filenameA <- paste(c(tags, filename), collapse="_");
 
-  pathnameA;
-}) # getArchivePathname()
+  filenameA;
+}) # getArchiveFilename()
+
 
 
 

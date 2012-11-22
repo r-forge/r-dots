@@ -22,6 +22,14 @@
 #   Returns the archive pathname as a @character string.
 # }
 #
+# \section{Where are my archived files located?}{
+#   The archived files are stored in the directory specified by
+#   \code{\link{getArchivePath}(...)}, which in turn is given
+#   by @see "getArchiveRootPath" and today's date, e.g.
+#   \code{getArchivePath(dirs="path/to")} outputs
+#   \code{"~/.Rarchive/path/to/2012-11-22"}.
+# }
+#
 # @author
 #
 # @keyword "programming"

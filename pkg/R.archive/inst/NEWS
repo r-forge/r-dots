@@ -2,6 +2,12 @@
 Package: R.archive
 ==================
 
+Version: 0.2.0 [2012-11-22]
+o CLEANUP: Now only importing needed methods from R.methodsS3 
+  and R.oo.  R.utils still needs to be loaded.
+o DOCUMENTATION: Minor clarifications and fixed a broken cross link.
+
+
 Version: 0.1.2 [2011-03-18]
 o In order to make it more unique, the timestamp added to files now
   includes milliseconds as well, e.g. 041359.032.

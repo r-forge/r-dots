@@ -18,7 +18,8 @@
 #
 # \section{To get started}{
 #   \itemize{
-#    \item{\link{archiveFile}}{To copy an existing file to the archive.}
+#    \item To add a copy of an existing file to the archive, 
+#          use \code{\link{archiveFile}()}.
 #   }
 # }
 #

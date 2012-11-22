@@ -39,7 +39,7 @@
    \item{tz}{A \code{\link[base]{character}} string specifying the timezone to be added
       to each date or timestamp generated as part of archive
       pathnames, e.g. \code{"GMT"}.}
-   \item{devEval}{If \code{\link[base:logical]{TRUE}}, the \code{\link[R.utils]{devEval}} function
+   \item{devEval}{If \code{\link[base:logical]{TRUE}}, the \code{\link[R.devices]{devEval}} function
       will add a copy of each image file created to the archive.}
   }
 }

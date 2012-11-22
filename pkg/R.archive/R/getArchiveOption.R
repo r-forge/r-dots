@@ -30,7 +30,7 @@
 #    \item{tz}{A @character string specifying the timezone to be added
 #       to each date or timestamp generated as part of archive 
 #       pathnames, e.g. \code{"GMT"}.}
-#    \item{devEval}{If @TRUE, the @see "R.utils::devEval" function
+#    \item{devEval}{If @TRUE, the @see "R.devices::devEval" function
 #       will add a copy of each image file created to the archive.}
 #   }
 # }
