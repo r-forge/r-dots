@@ -3,9 +3,10 @@ Package: R.archive
 ==================
 
 Version: 0.2.0 [2012-11-22]
+o DOCUMENTATION: Minor clarifications and fixed a broken cross link.
+o ROBUSTNESS: Explicitly declaring S3 methods.
 o CLEANUP: Now only importing needed methods from R.methodsS3 
   and R.oo.  R.utils still needs to be loaded.
-o DOCUMENTATION: Minor clarifications and fixed a broken cross link.
 
 
 Version: 0.1.2 [2011-03-18]
