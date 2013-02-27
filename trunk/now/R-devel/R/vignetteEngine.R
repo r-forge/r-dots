@@ -19,12 +19,17 @@ vignetteEngine <- local({
         if (missing(name)) {
             result <- as.list(registry)
             if (length(result) > 0L && !is.null(package)) {
-               keep <- sapply(result, FUN=function(engine)
-                   is.element(engine$package, package))
+               package <- unique(package)
+               pkgs <- sapply(result, FUN=function(engine) engine$package)
+               keep <- is.element(pkgs, package)
                if (!any(keep)) {
                    stop("None of packages ", paste(sQuote(package), collapse=", "), " have registered vignette engines")
                }
                result <- result[keep]
+               pkgs <- pkgs[keep]
+               if (length(package) > 1L) {
+                 result <- result[order(match(pkgs, package))]
+               }
             }
         } else if (is.element(name, c("Sweave", "utils::Sweave"))) {
             result <- list(name = "Sweave", package = "utils", pattern = NULL, 

@@ -39,9 +39,21 @@ stopifnot(is.list(engines))
 engines <- vignetteEngine(package="knitr")
 stopifnot(is.list(engines))
 
-# Get all registered engines for knitr and R.rsp
+# Get all registered engines for knitr and R.rsp (in that order)
 engines <- vignetteEngine(package=c("knitr", "R.rsp"))
 stopifnot(is.list(engines))
+pkgs <- unique(sapply(engines, FUN=function(engine) engine$package))
+stopifnot(all.equal(pkgs, c("knitr", "R.rsp")))
+
+# Get all registered engines for R.rsp and knitr (in that order)
+engines <- vignetteEngine(package=c("R.rsp", "knitr"))
+pkgs <- unique(sapply(engines, FUN=function(engine) engine$package))
+stopifnot(all.equal(pkgs, c("R.rsp", "knitr")))
+
+# Get all registered engines for R.rsp, knitr and foo (in that order)
+engines <- vignetteEngine(package=c("R.rsp", "knitr", "foo"))
+pkgs <- unique(sapply(engines, FUN=function(engine) engine$package))
+stopifnot(all.equal(pkgs, c("R.rsp", "knitr")))
 
 # Should give an error
 engines <- try(vignetteEngine(package=c("NonEnginePackage")), silent=TRUE)
