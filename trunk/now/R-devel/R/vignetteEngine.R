@@ -1,13 +1,3 @@
-output_file_default <- function(file) {
-    patterns <- c(".tex"="[.][rRsS](nw|tex)$", ".html"="[.]Rmd$")
-    for (ext in names(patterns)) {
-        if (regexpr(patterns[ext], file) != -1L)
-             return(gsub(patterns[ext], ext, file))
-    }
-    stop("Filename ", sQuote(file), " has an unknown extension")
-}
-
-
 vignetteEngine <- local({
     registry <- new.env(parent = emptyenv())
 
@@ -100,16 +90,3 @@ vignetteEngine <- local({
         }
     }
 })
-
-loadVignetteBuilder <-
-function(pkgdir)
-{
-    pkgs <- .get_package_metadata(pkgdir)["VignetteBuilder"]
-    if (!is.na(pkgs)) {
-        pkgs <- unlist(strsplit(pkgs, ","))
-        pkgs <- gsub('[[:space:]]', '', pkgs)
-        for (pkg in pkgs)
-            loadNamespace(pkg)
-    }
-    pkgs
-}
