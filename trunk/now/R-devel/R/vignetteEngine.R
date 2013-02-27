@@ -18,7 +18,7 @@ vignetteEngine <- local({
     getEngine <- function(name, package) {
         if (missing(name)) {
             result <- as.list(registry)
-            if (length(result) > 0L && !missing(package)) {
+            if (length(result) > 0L && !is.null(package)) {
                keep <- sapply(result, FUN=function(engine)
                    is.element(engine$package, package))
                if (!any(keep)) {
@@ -39,7 +39,7 @@ vignetteEngine <- local({
             )
         } else {
             result <- NULL
-            if (missing(package)) {
+            if (is.null(package)) {
                 key <- engineKey(name)
                 name <- paste(key, collapse="::")
                 result <- registry[[name]]
@@ -57,7 +57,7 @@ vignetteEngine <- local({
                     stop("Vignette engine ", sQuote(name), " is not registered by any of the packages ", paste(sQuote(package), collapse=", "))
             }
    
-            if (!missing(package) && !is.element(result$package, package))
+            if (!is.null(package) && !is.element(result$package, package))
                 stop("Vignette engine ", sQuote(name), " is not registered by any of the packages ", paste(sQuote(package), collapse=", "))
         }
         result
@@ -69,7 +69,7 @@ vignetteEngine <- local({
         }
 
         key <- engineKey(name, package)
-        if (!missing(package) && key[1L] != package)
+        if (!is.null(package) && key[1L] != package)
             stop("Engine name ", sQuote(name), " and package ", sQuote(package), " do not match")
 
 
@@ -91,7 +91,7 @@ vignetteEngine <- local({
         result
     }
 
-    function(name, weave, tangle, pattern=NULL, package) {
+    function(name, weave, tangle, pattern=NULL, package=utils::packageName(parent.frame())) {
         if (missing(weave)) { # we're getting the engine
             getEngine(name, package)
         } else { # we're setting a new engine

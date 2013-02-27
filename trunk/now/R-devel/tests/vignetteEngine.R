@@ -7,6 +7,13 @@ vignetteEngine("rsp", weave=NULL, package="R.rsp")
 # Register again
 vignetteEngine("R.rsp::rsp", weave=Sweave, tangle=Stangle)
 
+# Automagically look up default value for 'package'
+local({
+  .packageName <- "knitr"
+  vignetteEngine("knitr", weave=NULL)
+  vignetteEngine("knitr", weave=Sweave, tangle=Stangle)
+})
+
 # Should give errors
 engine <- try(vignetteEngine("Sweave", weave=NULL), silent=TRUE)
 stopifnot(inherits(engine, "try-error"))
@@ -16,6 +23,11 @@ engine <- try(vignetteEngine("Sweave", weave=Sweave, tangle=Stangle), silent=TRU
 stopifnot(inherits(engine, "try-error"))
 engine <- try(vignetteEngine("utils::Sweave", weave=Sweave, tangle=Stangle), silent=TRUE)
 stopifnot(inherits(engine, "try-error"))
+local({
+  .packageName <- "knitr"
+  engine <- try(vignetteEngine("R.rsp::knitr", weave=Sweave, tangle=Stangle), silent=TRUE)
+  stopifnot(inherits(engine, "try-error"))
+})
 
 
 
@@ -38,8 +50,9 @@ stopifnot(inherits(engine, "try-error"))
 
 # Get set of reference engines
 names <- c("utils::Sweave", "R.rsp::rsp", "knitr::rsp", "knitr::knitr")
-engines <- lapply(names, FUN=vignetteEngine)
-names(engines) <- names
+engines <- list()
+for (name in names)
+  engines[[name]] <- vignetteEngine(name)
 
 
 
