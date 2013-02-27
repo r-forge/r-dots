@@ -1,17 +1,23 @@
+# Reuse Sweave's weave() and tangle() wrappers below
+engine <- vignetteEngine("Sweave")
+weave <- engine$weave
+tangle <- engine$tangle
+
+
 # Register vignettes
-vignetteEngine("knitr", weave=Sweave, tangle=Stangle, package="knitr")
-vignetteEngine("rsp", weave=Sweave, tangle=Stangle, package="knitr")
-vignetteEngine("R.rsp::rsp", weave=Sweave, tangle=Stangle)
+vignetteEngine("knitr", weave=weave, tangle=tangle, package="knitr")
+vignetteEngine("rsp", weave=weave, tangle=tangle, package="knitr")
+vignetteEngine("R.rsp::rsp", weave=weave, tangle=tangle)
 # Clear
 vignetteEngine("rsp", weave=NULL, package="R.rsp")
 # Register again
-vignetteEngine("R.rsp::rsp", weave=Sweave, tangle=Stangle)
+vignetteEngine("R.rsp::rsp", weave=weave, tangle=tangle)
 
 # Automagically look up default value for 'package'
 local({
   .packageName <- "knitr"
   vignetteEngine("knitr", weave=NULL)
-  vignetteEngine("knitr", weave=Sweave, tangle=Stangle)
+  vignetteEngine("knitr", weave=weave, tangle=Stangle)
 })
 
 # Should give errors
@@ -19,13 +25,13 @@ engine <- try(vignetteEngine("Sweave", weave=NULL), silent=TRUE)
 stopifnot(inherits(engine, "try-error"))
 engine <- try(vignetteEngine("utils::Sweave", weave=NULL), silent=TRUE)
 stopifnot(inherits(engine, "try-error"))
-engine <- try(vignetteEngine("Sweave", weave=Sweave, tangle=Stangle), silent=TRUE)
+engine <- try(vignetteEngine("Sweave", weave=weave, tangle=tangle), silent=TRUE)
 stopifnot(inherits(engine, "try-error"))
-engine <- try(vignetteEngine("utils::Sweave", weave=Sweave, tangle=Stangle), silent=TRUE)
+engine <- try(vignetteEngine("utils::Sweave", weave=weave, tangle=tangle), silent=TRUE)
 stopifnot(inherits(engine, "try-error"))
 local({
   .packageName <- "knitr"
-  engine <- try(vignetteEngine("R.rsp::knitr", weave=Sweave, tangle=Stangle), silent=TRUE)
+  engine <- try(vignetteEngine("R.rsp::knitr", weave=weave, tangle=tangle), silent=TRUE)
   stopifnot(inherits(engine, "try-error"))
 })
 
