@@ -11,3 +11,7 @@ stopifnot(output == "foo.html")
 # Assert vectorization
 outputs <- output_file_default(files)
 stopifnot(all(outputs == "foo.tex"))
+
+# Should give errors
+output <- try(output_file_default("foo.rsp"), silent=TRUE)
+stopifnot(inherits(output, "try-error"))
