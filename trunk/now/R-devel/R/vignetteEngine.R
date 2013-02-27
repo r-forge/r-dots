@@ -16,7 +16,17 @@ vignetteEngine <- local({
     }
 
     getEngine <- function(name, package) {
-        if (is.element(name, c("Sweave", "utils::Sweave"))) {
+        if (missing(name)) {
+            result <- as.list(registry)
+            if (length(result) > 0L && !missing(package)) {
+               keep <- sapply(result, FUN=function(engine)
+                   is.element(engine$package, package))
+               if (!any(keep)) {
+                   stop("None of packages ", paste(sQuote(package), collapse=", "), " have registered vignette engines")
+               }
+               result <- result[keep]
+            }
+        } else if (is.element(name, c("Sweave", "utils::Sweave"))) {
             result <- list(name = "Sweave", package = "utils", pattern = NULL, 
                 weave = function(file, ...) {
                   utils::Sweave(file, ...)
@@ -34,7 +44,7 @@ vignetteEngine <- local({
                 name <- paste(key, collapse="::")
                 result <- registry[[name]]
                 if (is.null(result))
-                    stop("vignette engine ", sQuote(name), " is not registered")
+                    stop("Vignette engine ", sQuote(name), " is not registered")
             } else {
                 for (pkg in package) { 
                     key <- engineKey(name, pkg)
@@ -44,18 +54,18 @@ vignetteEngine <- local({
                         break
                 }
                 if (is.null(result))
-                    stop("vignette engine ", sQuote(name), " is not registered by any of the packages ", paste(sQuote(package), collapse=", "))
+                    stop("Vignette engine ", sQuote(name), " is not registered by any of the packages ", paste(sQuote(package), collapse=", "))
             }
    
             if (!missing(package) && !is.element(result$package, package))
-                stop("vignette engine ", sQuote(name), " is not registered by any of the packages ", paste(sQuote(package), collapse=", "))
+                stop("Vignette engine ", sQuote(name), " is not registered by any of the packages ", paste(sQuote(package), collapse=", "))
         }
         result
     }
 
     setEngine <- function(name, package, pattern, weave, tangle) {
         if (is.element(name, c("Sweave", "utils::Sweave"))) {
-            stop("cannot change the ", sQuote("Sweave"), " engine or use an engine of that name")
+            stop("Cannot change the ", sQuote("Sweave"), " engine or use an engine of that name")
         }
 
         key <- engineKey(name, package)
