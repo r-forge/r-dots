@@ -8,12 +8,12 @@ tangle <- engine$tangle
 
 # Register vignettes
 vignetteEngine("knitr", weave=weave, tangle=tangle, package="knitr")
-vignetteEngine("rsp", weave=weave, tangle=tangle, package="knitr")
-vignetteEngine("R.rsp::rsp", weave=weave, tangle=tangle)
+vignetteEngine("R.rsp::rsp", weave=weave, tangle=tangle, pattern="[.]rsp$")
+vignetteEngine("rsp", weave=weave, tangle=tangle, pattern="[.]rsp$", package="knitr")
 # Clear
 vignetteEngine("rsp", weave=NULL, package="R.rsp")
 # Register again
-vignetteEngine("R.rsp::rsp", weave=weave, tangle=tangle)
+vignetteEngine("R.rsp::rsp", weave=weave, tangle=tangle, pattern="[.]rsp$")
 
 # Automagically look up default value for 'package'
 local({

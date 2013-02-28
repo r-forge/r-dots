@@ -76,7 +76,11 @@ vignetteEngine <- local({
                 stop("Argument ", sQuote("weave"), " must be a function and not ", sQuote(class(weave)[1L]))
             if (!is.function(tangle))
                 stop("Argument ", sQuote("tangle"), " must be a function and not ", sQuote(class(tangle)[1L]))
-  
+            if (is.null(pattern))
+                pattern <- c("[.][rRsS](nw|tex)$", "[.]Rmd$")
+            else if (!is.character(pattern))
+                stop("Argument ", sQuote("pattern"), " must be a character vector or NULL and not ", sQuote(class(tangle)[1L]))
+
             result <- list(name = key[2L], package = key[1L], pattern = pattern, weave = weave, tangle = tangle)
             assign(rname, result, registry)
         }
