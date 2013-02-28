@@ -2717,13 +2717,16 @@ processing the vignette.  As @code{Sweave} is the only engine supplied
 with @R{}, the package providing any other engine must be specified in
 the @samp{VignetteBuilder} field of the package @file{DESCRIPTION}
 file, and also specified in the @samp{Suggests}, @samp{Imports} or
-@samp{Depends} field in the @file{DESCRIPTION} file (since its
+@samp{Depends} field (since its
 namespace must be available to build or check your package).
+If more than one package is specified as a builder, they will be searched
+in the order given there.  The @pkg{utils} package is always implicitly
+appended to the list of builder packages.
 
-If the vignette source has the @file{.Rmd} extension  then it is
-assumed that the weaving procedure produces @file{.html} output
-directly.  Otherwise, the weaver is assumed to produce @file{.tex}
-output, and @R{} handles the conversion to @file{.pdf} files.
+The vignette engine can produce @file{.tex}, @file{.pdf}, or @file{.html}
+files as output.  If it produces @file{.tex} files, @R{} will 
+call @command{pdflatex} to convert them to @file{.pdf} for display
+to the user.
 
 Package writers who would like to supply vignette engines need
 to register those engines in the package @code{.onLoad} function.
@@ -2732,10 +2735,8 @@ For example, that function could make the call
 tools::vignetteEngine("knitr", weave = vweave, tangle = vtangle)
 @end example
 @noindent
-The @code{weave} and @code{tangle} arguments specify functions with
-headers compatible with @code{Sweave} and @code{Stangle} respectively.
-These will be called by @R{} when processing vignettes.  See
-the @code{?tools::vignetteEngine} help topic for more details.
+See the @code{?tools::vignetteEngine} help topic for details
+on engine registration.
 
 @node Submitting a package to CRAN, Package namespaces, Writing package vignettes, Creating R packages
 @section Submitting a package to @acronym{CRAN}
