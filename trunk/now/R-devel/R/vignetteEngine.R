@@ -87,11 +87,11 @@ vignetteEngine <- local({
     setEngine(name = "Sweave", package = "utils", pattern = NULL, 
         weave = function(file, ...) {
             utils::Sweave(file, ...)
-            output_file_default(file)
+            vignette_output_default(file)
         },
         tangle = function(file, ...) {
             utils::Stangle(file, ...)
-            output_file_default(file)
+            vignette_output_default(file)
         }
     )
 

@@ -1,4 +1,4 @@
-output_file_default <- function(file) {
+vignette_output_default <- function(file) {
     patterns <- c(".tex"="[.][rRsS](nw|tex)$", ".html"="[.]Rmd$")
     sapply(file, FUN=function(file) {
         for (ext in names(patterns)) {
