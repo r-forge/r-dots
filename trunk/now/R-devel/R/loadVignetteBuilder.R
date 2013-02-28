@@ -6,7 +6,9 @@ function(pkgdir)
         pkgs <- unlist(strsplit(pkgs, ","))
         pkgs <- gsub('[[:space:]]', '', pkgs)
         for (pkg in pkgs)
-            loadNamespace(pkg)
+    	    loadNamespace(pkg)
+    } else {
+      pkgs <- NULL
     }
-    pkgs
+    unique(c(pkgs, "utils"))
 }
