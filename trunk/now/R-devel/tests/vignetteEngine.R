@@ -74,13 +74,14 @@ for (name in names)
 
 
 
-# Get Sweave engine (special case)
+# Assert that the default Sweave engine exists
 engine <- vignetteEngine("Sweave")
 stopifnot(all.equal(engine, engines[["utils::Sweave"]]))
 engine <- vignetteEngine("Sweave", package="utils")
 stopifnot(all.equal(engine, engines[["utils::Sweave"]]))
-engine <- vignetteEngine("Sweave", package="WhatEver")
-stopifnot(all.equal(engine, engines[["utils::Sweave"]]))
+# Should give an error
+engine <- try(vignetteEngine("Sweave", package="WhatEver"), silent=TRUE)
+stopifnot(inherits(engine, "try-error"))
 
 
 
