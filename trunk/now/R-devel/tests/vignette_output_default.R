@@ -1,3 +1,5 @@
+library("tools")
+
 exts <- outer(c("R", "r", "S", "s"), c("nw", "tex"), FUN=paste0)
 files <- sprintf("foo.%s", exts)
 for (file in files) {

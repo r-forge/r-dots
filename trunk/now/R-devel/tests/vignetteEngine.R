@@ -1,3 +1,5 @@
+library("tools")
+
 # Reuse Sweave's weave() and tangle() wrappers below
 engine <- vignetteEngine("Sweave")
 weave <- engine$weave
