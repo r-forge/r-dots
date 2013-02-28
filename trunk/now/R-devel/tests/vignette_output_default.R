@@ -14,6 +14,11 @@ stopifnot(output == "foo.html")
 outputs <- vignette_output_default(files)
 stopifnot(all(outputs == "foo.tex"))
 
+# Assert pathname
+files <- file.path("path", "to", files)
+outputs <- vignette_output_default(files)
+stopifnot(all(outputs == "path/to/foo.tex"))
+
 # Should give errors
 output <- try(vignette_output_default("foo.rsp"), silent=TRUE)
 stopifnot(inherits(output, "try-error"))
