@@ -698,7 +698,7 @@ vignetteEngine <- local({
         },
         tangle = function(file, ...) {
             utils::Stangle(file, ...)
-            vignette_output_default(file)
+            vignette_source(file)
         }
     )
 
