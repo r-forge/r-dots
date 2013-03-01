@@ -513,17 +513,22 @@ function(dir, outDir, encoding = "")
         ind <- file_test("-f", vignetteOutfiles)
         vignetteIndex$PDF[ind] <- vignetteOutfiles[ind]
         
-	buildPkgs <- loadVignetteBuilder(dir)
+	loadVignetteBuilder(dir, mustwork = FALSE)
 
-        ## install tangled versions of all vignettes
+        ## install tangled versions of Sweave vignettes.  FIXME:  Custom
+        ## engine vignettes should have been included when the package was built,
+        ## but in the interim before they are all built with the new code,
+        ## this is needed for all packages.
+        
         for(srcfile in vignetteIndex$File) {
             enc <- getVignetteEncoding(srcfile, TRUE)
             if(enc %in% c("non-ASCII", "unknown")) enc <- encoding
             cat("  ", sQuote(basename(srcfile)),
                 if(nzchar(enc)) paste("using", sQuote(enc)), "\n")
-	    engine <- vignetteEngine(vignetteInfo(srcfile)$engine, package=buildPkgs)
-            engine[["tangle"]](srcfile, quiet = TRUE, encoding = enc)
-       }
+	    engine <- try(vignetteEngine(vignetteInfo(srcfile)$engine), silent = TRUE)
+	    if (!inherits(engine, "try-error"))
+            	engine[["tangle"]](srcfile, quiet = TRUE, encoding = enc)
+        }
         Rfiles <- vignette_source(basename(vignetteIndex$File))
         ## remove any files with no R code (they will have header comments).
         ## if not correctly declared they might not be in the current encoding
@@ -611,7 +616,7 @@ function(dir, outDir, keep.source = TRUE)
     on.exit(setwd(cwd))
     setwd(buildDir)
 
-    buildPkgs <- loadVignetteBuilder(vigns$pkgdir)
+    loadVignetteBuilder(vigns$pkgdir)
     
     srcfiles <- vigns$docs[!upToDate]
     HTMLout <- vignette_is_HTML(srcfiles)
@@ -620,7 +625,7 @@ function(dir, outDir, keep.source = TRUE)
         base <- basename(file_path_sans_ext(srcfile))
         message(gettextf("processing %s", sQuote(basename(srcfile))),
                 domain = NA)
-        engine <- vignetteEngine(vignetteInfo(srcfile)$engine, package=buildPkgs)
+        engine <- vignetteEngine(vignetteInfo(srcfile)$engine)
         tryCatch(engine[["weave"]](srcfile, pdf = TRUE, eps = FALSE,
                                quiet = TRUE, keep.source = keep.source,
                                stylepath = FALSE),
