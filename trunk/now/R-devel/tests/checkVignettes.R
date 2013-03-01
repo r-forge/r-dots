@@ -1,11 +1,13 @@
 library("tools")
+vignette_output_default <- tools:::vignette_output_default
+vignette_source_default <- tools:::vignette_source_default
 
 pkgs <- getOption("checkVigettes/packages", NULL)
 
 # base (no vignettes)
 cat("base...\n")
-vign <- pkgVignettes("base")
-str(vign)
+vigns <- pkgVignettes("base")
+str(vigns)
 result <- checkVignettes("base")
 print(result)
 cat("base...done\n")
@@ -14,8 +16,8 @@ cat("base...done\n")
 # xtable (no explicitly registered engines)
 if (is.element("xtable", pkgs) && require("xtable")) {
     cat("xtable...\n")
-    vign <- pkgVignettes("xtable")
-    str(vign)
+    vigns <- pkgVignettes("xtable")
+    str(vigns)
     result <- checkVignettes("xtable", latex=TRUE, workdir="cur")
     print(result)
     cat("xtable...done\n")
@@ -25,8 +27,8 @@ if (is.element("xtable", pkgs) && require("xtable")) {
 if (is.element("knitr", pkgs) && require("knitr")) {
     cat("knitr...\n")
     vignetteEngine("knitr", weave=knitr:::vweave, tangle=knitr:::vtangle, package="knitr")
-    vign <- pkgVignettes("knitr")
-    str(vign)
+    vigns <- pkgVignettes("knitr")
+    str(vigns)
     result <- checkVignettes("knitr", latex=TRUE, workdir="cur")
     print(result)
     # Close plots opened by 'knitr' vignettes
@@ -47,8 +49,8 @@ if (is.element("noweb", pkgs) && require("noweb")) {
           vignette_source_default(file)
         }
     )
-    vign <- pkgVignettes("noweb")
-    str(vign)
+    vigns <- pkgVignettes("noweb")
+    str(vigns)
     file <- "noweb.sty"
     if (!file_test("-f", file)) {
         src <- system.file("include", file, package="noweb", mustWork=TRUE)
@@ -63,10 +65,10 @@ if (is.element("noweb", pkgs) && require("noweb")) {
 if (is.element("R.rsp", pkgs) && require("R.rsp")) {
     cat("R.rsp...\n")
     # Ignore *.Rnw files
-    vignetteEngine("Rnw", weave=NA, pattern="[.]Rnw", package="R.rsp")
-    vignetteEngine("rsp", weave=rspWeave, tangle=rspTangle, pattern="[.]rsp$", package="R.rsp")
-    vign <- pkgVignettes("R.rsp")
-    str(vign)
+    vignetteEngine("ignore", weave=NA, pattern="[.]Rnw", package="R.rsp")
+    vignetteEngine("rsp", weave=rspWeave, tangle=rspTangle, pattern="(|[.][^.]*)[.]rsp$", package="R.rsp")
+    vigns <- pkgVignettes("R.rsp")
+    str(vigns)
     result <- checkVignettes("R.rsp", latex=TRUE, workdir="cur")
     print(result)
     cat("R.rsp...done\n")
