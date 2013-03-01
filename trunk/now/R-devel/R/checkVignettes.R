@@ -40,20 +40,20 @@ function(package, dir, lib.loc = NULL,
 
     startdir <- getwd()
     for(i in seq_along(vigns$docs)) {
-        f <- vigns$docs[i]
+        file <- vigns$docs[i]
     	engine <- vignetteEngine(vigns$engine[i])
 
         if(tangle)
             .eval_with_capture({
-                result$tangle[[f]] <- tryCatch({
-                    output <- engine$tangle(f, quiet = TRUE)
+                result$tangle[[file]] <- tryCatch({
+                    output <- engine$tangle(file, quiet = TRUE)
                     vignette_source_assert(output)
                 }, error = function(e) e)
             })
         if(weave)
             .eval_with_capture({
-                result$weave[[f]] <- tryCatch({
-                    output <- engine$weave(f, quiet = TRUE)
+                result$weave[[file]] <- tryCatch({
+                    output <- engine$weave(file, quiet = TRUE)
                     output <- vignette_output_assert(output)
                 }, error = function(e) e)
             })
@@ -65,10 +65,18 @@ function(package, dir, lib.loc = NULL,
         resultsT <- result[[name]]
         if (length(resultsT) <= 1L)
             next
+
         for (i in 1L:(length(resultsT)-1L)) {
-            outputsI <- normalizePath(resultsT[[i]])
+            outputsI <- resultsT[[i]]
+            if (inherits(outputsI, "error"))
+                next;
+            outputsI <- normalizePath(outputsI)
+
             for (j in (i+1L):length(resultsT)) {
-                 outputsJ <- normalizePath(resultsT[[j]])
+                 outputsJ <- resultsT[[j]]
+                 if (inherits(outputsJ, "error"))
+                     next;
+                 outputsJ <- normalizePath(outputsJ)
                  bad <- intersect(outputsJ, outputsI)
                  if (length(bad) > 0L) {
                      stop("Vignette ", sQuote(basename(names(resultsT)[j])), " overwrites the following ", sQuote(name), " output by vignette ", sQuote(basename(names(resultsT)[i])), ": ", paste(basename(bad), collapse=", "))
@@ -90,10 +98,12 @@ function(package, dir, lib.loc = NULL,
             if (inherits(sources, "error"))
                 next
             sources <- sources[file_test("-nt", sources, ".check.timestamp")]
-            for(f in sources) {
-                .eval_with_capture(tryCatch({
-                    source(f)
-                }, error = function(e) result$source[[f]] <<- conditionMessage(e)))
+            for(file in sources) {
+                .eval_with_capture({
+                    result$source[[file]] <- tryCatch({
+                        source(file)
+                    }, error = function(e) e)
+                })
                 setwd(startdir)
             }
         }
@@ -117,15 +127,17 @@ function(package, dir, lib.loc = NULL,
             ## additional diagnostics ...)
             ## </NOTE>
             for (i in seq_along(result$weave)) {
+                file <- names(result$weave)[i]
                 output <- result$weave[i]
                 if (inherits(output, "error"))
                     next
                 if (regexpr("[.]tex$", output, ignore.case = TRUE) == -1L)
                     next
-                .eval_with_capture(tryCatch({
-                    res <- texi2pdf(file = output, clean = FALSE, quiet = TRUE)
-                    result$latex[[f]] <- res
-                }, error = function(e) result$latex[[f]] <<- e))
+                .eval_with_capture({
+                    result$latex[[file]] <- tryCatch({
+                       texi2pdf(file = output, clean = FALSE, quiet = TRUE)
+                    }, error = function(e) e)
+                })
             }
         }
     }

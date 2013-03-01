@@ -15,6 +15,8 @@ stopifnot(all(outputs == "foo.R"))
 # Assert pathname
 files <- file.path("path", "to", files)
 outputs <- vignette_source_default(files)
+stopifnot(all(outputs == "foo.R"))
+outputs <- vignette_source_default(files, workdir="src")
 stopifnot(all(outputs == "path/to/foo.R"))
 
 # Should give errors
