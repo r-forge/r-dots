@@ -1,7 +1,8 @@
 ### * pkgVignettes
 ###
-### Get an object of class pkgVignettes which contains a list of Sweave
-### files and the name of the directory which contains them.
+### Get an object of class pkgVignettes which contains a list of
+### vignette source files, the registered vignette engine for
+### each of them, and the name of the directory which contains them.
 
 pkgVignettes <-
 function(package, dir, lib.loc = NULL)
@@ -43,8 +44,10 @@ function(package, dir, lib.loc = NULL)
             for (pattern in patterns) {
                 idxs <- grep(pattern, allFiles)
                 if (length(idxs) > 0L) {
-                    docs <- c(docs, allFiles[idxs])
-                    engines <- c(engines, rep(name, times = length(idxs)))
+                    if (!is.na(engine$weave)) {
+                        docs <- c(docs, allFiles[idxs])
+                        engines <- c(engines, rep(name, times = length(idxs)))
+                    }
                     allFiles <- allFiles[-idxs]
                     if (length(allFiles) == 0L)
                         break

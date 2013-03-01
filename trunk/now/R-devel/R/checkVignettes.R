@@ -47,14 +47,14 @@ function(package, dir, lib.loc = NULL,
             .eval_with_capture({
                 result$tangle[[file]] <- tryCatch({
                     output <- engine$tangle(file, quiet = TRUE)
-                    vignette_source_assert(output)
+                    vignette_source_assert(output, file = file)
                 }, error = function(e) e)
             })
         if(weave)
             .eval_with_capture({
                 result$weave[[file]] <- tryCatch({
                     output <- engine$weave(file, quiet = TRUE)
-                    output <- vignette_output_assert(output)
+                    output <- vignette_output_assert(output, file = file)
                 }, error = function(e) e)
             })
         setwd(startdir) # in case a vignette changes the working dir
@@ -131,7 +131,7 @@ function(package, dir, lib.loc = NULL,
                 output <- result$weave[i]
                 if (inherits(output, "error"))
                     next
-                if (regexpr("[.]tex$", output, ignore.case = TRUE) == -1L)
+                if (vignette_is_tex(output))
                     next
                 .eval_with_capture({
                     result$latex[[file]] <- tryCatch({

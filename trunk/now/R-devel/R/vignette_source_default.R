@@ -13,15 +13,14 @@ vignette_source_default <- function(file, workdir=c("cur", "src")) {
     file
 }
 
-
-vignette_source_assert <- function(file) {
+vignette_source_assert <- function(output, file) {
     patterns <- "[.][rRsS]$"
-    sapply(file, FUN=function(file) {
-        ok <- (sapply(patterns, FUN=regexpr, file, ignore.case = TRUE) != -1)
+    sapply(output, FUN=function(output) {
+        ok <- (sapply(patterns, FUN=regexpr, output, ignore.case = TRUE) != -1)
         if (!any(ok))
-            stop("Vignette tangle output ", sQuote(file), " has an unknown filename extension")
-        if (!file_test("-f", file))
-            stop("Vignette tangle output ", sQuote(file), " is not an existing file")
+            stop("Tangle output ", sQuote(output), " for vignette ", sQuote(file), " has an unknown filename extension")
+        if (!file_test("-f", output))
+            stop("Tangle output ", sQuote(output), " for vignette ", sQuote(file), " is not an existing file")
     })
-    file
+    output
 }

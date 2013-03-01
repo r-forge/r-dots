@@ -1,12 +1,12 @@
 library("tools")
 
-pkgs <- getOption("checkVigettes/packages", NULL)
+pkgs <- getOption("buildVigettes/packages", NULL)
 
 # base (no vignettes)
 cat("base...\n")
 vign <- pkgVignettes("base")
 str(vign)
-result <- checkVignettes("base")
+result <- buildVignettes("base")
 print(result)
 cat("base...done\n")
 
@@ -16,8 +16,8 @@ if (is.element("xtable", pkgs) && require("xtable")) {
     cat("xtable...\n")
     vign <- pkgVignettes("xtable")
     str(vign)
-    result <- checkVignettes("xtable", latex=TRUE, workdir="cur")
-    print(result)
+    result <- buildVignettes("xtable", tangle=TRUE)
+    str(result)
     cat("xtable...done\n")
 }
 
@@ -27,10 +27,10 @@ if (is.element("knitr", pkgs) && require("knitr")) {
     vignetteEngine("knitr", weave=knitr:::vweave, tangle=knitr:::vtangle, package="knitr")
     vign <- pkgVignettes("knitr")
     str(vign)
-    result <- checkVignettes("knitr", latex=TRUE, workdir="cur")
-    print(result)
+    result <- buildVignettes("knitr", tangle=TRUE)
+    str(result)
     # Close plots opened by 'knitr' vignettes
-    graphics.off()
+#    graphics.off()
     cat("knitr...done\n")
 }
 
@@ -54,8 +54,8 @@ if (is.element("noweb", pkgs) && require("noweb")) {
         src <- system.file("include", file, package="noweb", mustWork=TRUE)
         file.copy(src, file)
     }
-    result <- checkVignettes("noweb", latex=TRUE, workdir="cur")
-    print(result)
+    result <- buildVignettes("noweb", tangle=TRUE)
+    str(result)
     cat("noweb...done\n")
 }
 
@@ -67,7 +67,7 @@ if (is.element("R.rsp", pkgs) && require("R.rsp")) {
     vignetteEngine("rsp", weave=rspWeave, tangle=rspTangle, pattern="[.]rsp$", package="R.rsp")
     vign <- pkgVignettes("R.rsp")
     str(vign)
-    result <- checkVignettes("R.rsp", latex=TRUE, workdir="cur")
-    print(result)
+    result <- buildVignettes("R.rsp", tangle=TRUE)
+    str(result)
     cat("R.rsp...done\n")
 }

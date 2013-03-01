@@ -1,5 +1,5 @@
-getVignetteBuilder <-
-function(pkgdir)
+loadVignetteBuilder <-
+function(pkgdir, mustwork = TRUE)
 {
     pkgs <- .get_package_metadata(pkgdir)["VignetteBuilder"]
     if (is.na(pkgs))
@@ -8,14 +8,8 @@ function(pkgdir)
         pkgs <- unlist(strsplit(pkgs, ","))
         pkgs <- gsub('[[:space:]]', '', pkgs)
     }
-    unique(c(pkgs, "utils"))
-}
+    pkgs <- unique(c(pkgs, "utils"))
 
-
-loadVignetteBuilder <-
-function(pkgdir, mustwork = TRUE)
-{
-    pkgs <- getVignetteBuilder(pkgdir)
     for (pkg in pkgs) {
         res <- try(loadNamespace(pkg), silent = TRUE)
         if (mustwork && inherits(res, "try-error")) 

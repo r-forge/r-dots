@@ -14,15 +14,21 @@ vignette_output_default <- function(file, workdir=c("cur", "src")) {
     file
 }
 
+vignette_output_assert <- function(output, file) {
+    if (length(output) == 0L) {
+        tryCatch({
+            output <- vignette_output_default(file)
+        }, error = function(ex) {
+            stop("Vignette ", sQuote(file), " did not generate an output.")
+        })
+    } else if (length(output) != 1L)
+        stop("Vignette weave output must be exactly one file: ", paste(sQuote(output), collapse=", "))
 
-vignette_output_assert <- function(file) {
     patterns <- c("[.]tex$", "[.]html$", "[.]pdf$")
-    sapply(file, FUN=function(file) {
-        ok <- (sapply(patterns, FUN=regexpr, file, ignore.case = TRUE) != -1)
-        if (!any(ok))
-            stop("Vignette weave output ", sQuote(file), " has an unknown filename extension")
-        if (!file_test("-f", file))
-            stop("Vignette weave output ", sQuote(file), " is not an existing file")
-    })
-    file
+    ok <- (sapply(patterns, FUN=regexpr, output, ignore.case = TRUE) != -1)
+    if (!any(ok))
+        stop("Weave output ", sQuote(output), " for vignette ", sQuote(file), " has an unknown filename extension")
+    if (!file_test("-f", output))
+        stop("Weave output ", sQuote(output), " for vignette ", sQuote(file), " is not an existing file")
+    output
 }

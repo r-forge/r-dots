@@ -72,7 +72,7 @@ vignetteEngine <- local({
             if (exists(rname, envir = registry))
                 rm(list = rname, envir = registry)
         } else {
-            if (!is.function(weave))
+            if (!is.na(weave) && !is.function(weave))
                 stop("Argument ", sQuote("weave"), " must be a function and not ", sQuote(class(weave)[1L]))
             if (!is.function(tangle))
                 stop("Argument ", sQuote("tangle"), " must be a function and not ", sQuote(class(tangle)[1L]))
@@ -99,7 +99,7 @@ vignetteEngine <- local({
         }
     )
 
-    function(name, weave, tangle, pattern = NULL, package = utils::packageName(parent.frame())) {
+    function(name, weave, tangle = function(...) NULL, pattern = NULL, package = utils::packageName(parent.frame())) {
         if (missing(weave)) { # we're getting the engine
             getEngine(name, package)
         } else { # we're setting a new engine
