@@ -2258,6 +2258,7 @@ setRlibs <-
         ## Do PDFs or HTML files exist for all package vignettes?
         ## A base source package need not have PDFs to avoid
         ## frequently-changing binary files in the SVN archive.
+        ## HB: This passage also needs to be updated for custom engines.
         if (!is_base_pkg) {
             outfiles <- file.path(pkgdir, "inst", "doc",
                               vignette_output(basename(vf)))
@@ -2292,9 +2293,11 @@ setRlibs <-
 
         ## Do any of the .R files which will be generated
         ## exist in inst/doc?  If so the latter will be ignored,
+        ## HB: This passage also needs to be updated for custom engines.
         sources <-
             basename(list_files_with_exts(file.path(pkgdir, "inst/doc"), "R"))
-        if (length(sources)) {
+        custom <- !is.na(desc["VignetteBuilder"])
+        if (length(sources) && !custom) {
             new_sources <- vignette_source(basename(vf))
             dups <- sources[sources %in% new_sources]
             if(nb <- length(dups)) {
