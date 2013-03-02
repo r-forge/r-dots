@@ -350,7 +350,6 @@ get_exclude_patterns <- function()
                 # vignettes are likely to be rare, and this is simpler
                 
                 custom <- !is.na(desc["VignetteBuilder"])
-custom <- TRUE
                 cmd <- file.path(R.home("bin"), "Rscript")
                 code <- paste0("tools::buildVignettes(dir = '.', tangle=", custom, ")")
                 args <- c("--vanilla",
@@ -367,13 +366,17 @@ custom <- TRUE
                     printLog(Log, paste(c(res$stdout, ""),  collapse = "\n"))
                     do_exit(1L)
                 } else {
-                    # Update, by rescan for weave and tangle output files
+                    # Rescan for weave and tangle output files
                     vigns <- pkgVignettes(dir = '.', output = TRUE, source = TRUE)
                     stopifnot(!is.null(vigns))
 
                     if (!custom) {
 			## Do any of the .R files which will be generated at install time
 			## exist in inst/doc?  If so the latter should be removed.
+                        ## HB: This relies on pre-R 3.0.0 assumptions on vignette filenames.
+                        ## This is ok here because custom == FALSE, which means that
+                        ## we are dealing with such filenames here.  However, it would
+                        ## be safer to retire those assumption completely.
 			sources <- basename(list_files_with_exts(doc_dir, "R"))
 			if (length(sources)) {
 			    vf <- basename(list_files_with_type(doc_dir, "vignette"))

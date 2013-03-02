@@ -628,18 +628,16 @@ function(dir, outDir, keep.source = TRUE)
     
     for(i in seq_along(vigns$docs)[!upToDate]) {
         file <- vigns$docs[i]
-        pattern <- vigns$patterns[i]
+        name <- vigns$names[i]
         engine <- vignetteEngine(vigns$engines[i])
 
-        ## HB: This passage also needs to be updated for custom 3.0.0 engines.
-        base <- basename(file_path_sans_ext(file))
         message(gettextf("processing %s", sQuote(basename(file))),
                 domain = NA)
 
         output <- tryCatch({
             engine$weave(file, pdf = TRUE, eps = FALSE, quiet = TRUE, 
                         keep.source = keep.source, stylepath = FALSE)
-            output <- vignette_find(file, pattern = pattern, what = "weave")
+            output <- vignette_find(name, what = "weave")
             vignette_source_assert(output, file = file)
         }, error = function(e) {
             stop(gettextf("running %s on vignette '%s' failed with message:\n%s",

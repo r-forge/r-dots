@@ -1646,7 +1646,7 @@ setRlibs <-
         ## How about any pdf files which look like figures files from vignettes?
         vigns <- pkgVignettes(dir = pkgdir)
         if (!is.null(vigns) && length(vigns$docs)) {
-            vf <- sub("[.][RSrs](nw|tex)", "",  basename(vigns$docs))
+            vf <- vigns$names
             pat <- paste(vf, collapse="|")
             pat <- paste0("^(", pat, ")-[0-9]+[.]pdf")
             bad <- bad | grepl(pat, files)
@@ -2240,7 +2240,7 @@ setRlibs <-
     {
         vigns <- pkgVignettes(dir = pkgdir)
         if (is.null(vigns) || !length(vigns$docs)) return()
-        vf <- vigns$docs
+
         if(do_install && !spec_install && !is_base_pkg && !extra_arch) {
             ## fake installs don't install inst/doc
             checkingLog(Log, "for unstated dependencies in vignettes")
@@ -2259,22 +2259,30 @@ setRlibs <-
         ## A base source package need not have PDFs to avoid
         ## frequently-changing binary files in the SVN archive.
         ## HB: This passage also needs to be updated for custom engines.
+        vf <- vigns$docs
         if (!is_base_pkg) {
-            outfiles <- file.path(pkgdir, "inst", "doc",
-                              vignette_output(basename(vf)))
-            bad_vignettes <- vf[!file.exists(outfiles)]
-            if(nb <- length(bad_vignettes)) {
-                any <- TRUE
+            dir <- file.path(pkgdir, "inst", "doc")
+            outputs <- character(length(vigns$docs))
+            for (i in seq_along(vigns$docs)) {
+                file <- vigns$docs[i]
+                name <- vigns$names[i]
+                outputs[i] <- tryCatch({
+                    vignette_find(name, dir=dir, what="weave")
+                }, error = function(ex) NA)
+            }
+            if (nb <- sum(is.na(outputs))) {
+                any <- FALSE
                 warningLog(Log)
                 msg <- ngettext(nb,
-                                "Package vignette without corresponding PDF/HTML:\n",
-                                "Package vignettes without corresponding PDF/HTML:\n", domain = NA)
+                    "Package vignette without corresponding PDF/HTML:\n",
+                    "Package vignettes without corresponding PDF/HTML:\n",
+                    domain = NA)
                 printLog(Log, msg)
-                printLog(Log,
-                         paste(c(paste("  ",
-                                       sQuote(basename(bad_vignettes))),
-                                 "", ""), collapse = "\n"))
+                printLog(Log, paste(c(paste("  ",
+                              sQuote(basename(bad_vignettes))),
+                              "", ""), collapse = "\n"))
             }
+
             encs <- vapply(vf, getVignetteEncoding, "")
             bad_vignettes <- vf[encs == "non-ASCII"]
             if(nb <- length(bad_vignettes)) {
@@ -2298,7 +2306,7 @@ setRlibs <-
             basename(list_files_with_exts(file.path(pkgdir, "inst/doc"), "R"))
         custom <- !is.na(desc["VignetteBuilder"])
         if (length(sources) && !custom) {
-            new_sources <- vignette_source(basename(vf))
+            new_sources <- vignette_source(vigns$names)
             dups <- sources[sources %in% new_sources]
             if(nb <- length(dups)) {
                 if(!any) warningLog(Log)

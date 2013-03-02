@@ -2653,10 +2653,9 @@ function(dir, force_suggests = TRUE)
     ## FIXME: is this still needed now we do dependency analysis?
     ## Are all vignette dependencies at least suggested or equal to
     ## the package name?
-    ## HB: This passage also needs to be updated for custom 3.0.0 engines.
-    vignette_dir <- file.path(dir, "inst", "doc")
-    if(file_test("-d", vignette_dir)
-       && length(list_files_with_type(vignette_dir, "vignette"))) {
+    vigns <- pkgVignettes(dir=dir, subdirs=file.path("inst", "doc"))
+    if (!is.null(vigns) && length(vigns$docs) > 0L) {
+        vignette_dir <- vigns$dir
         reqs <- unique(unlist(.build_vignette_index(vignette_dir)$Depends))
         ## For the time being, ignore base packages missing from the
         ## DESCRIPTION dependencies even if explicitly given as vignette
