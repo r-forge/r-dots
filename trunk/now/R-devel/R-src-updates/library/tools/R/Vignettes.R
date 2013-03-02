@@ -63,72 +63,39 @@ vignette_prioritize_output <- function(files, ...) {
    files[order(idxs)]
 }
 
-vignette_find_output <- function(file, patterns, dir = ".", ...) {
+vignette_find <- function(file, pattern, dir = ".", what = c("weave", "tangle"), ...) {
     stopifnot(length(file) == 1L)
-    stopifnot(length(patterns) > 0L)
+    stopifnot(length(pattern) == 1L)
+    what <- match.arg(what)
 
     file <- basename(file)
-    allFiles0 <- list.files(path = dir, all.files = FALSE, full.names = TRUE, no..=TRUE)
-    allFiles0 <- allFiles0[file_test("-f", allFiles0)]
-    allFiles <- allFiles0[vignette_is_output(allFiles0)]
-    allFiles <- basename(allFiles)
 
-    output <- NULL
-    for (pattern in patterns) {
-        if (regexpr(pattern, file, ignore.case = TRUE) != -1L) {
-            fullname <- gsub(pattern, "", file, ignore.case = TRUE)
-            patternT <- sprintf("^%s[.]([^.]+)$", fullname)
-            output <- grep(patternT, allFiles, value = TRUE)
-            if (length(output) == 0L)
-                next
-            if (length(output) >= 1L)
-                output <- vignette_prioritize_output(output)[1L]
-            break
-        }
+    if (regexpr(pattern, file, ignore.case = TRUE) == -1L)
+        stop("The filename pattern ", sQuote(pattern), ") does not match the filename of the vignette source file ", sQuote(file))
+
+    fullname <- gsub(pattern, "", file, ignore.case = TRUE)
+    patternT <- sprintf("^%s[.]([^.]+)$", fullname)
+    output0 <- list.files(path = dir, pattern = patternT, all.files = FALSE, full.names = TRUE, no..=TRUE)
+    output0 <- output0[file_test("-f", output0)]
+
+    if (what == "weave") {
+        output <- output0[vignette_is_output(output0)]
+        if (length(output) == 0L)
+            stop("Failed to locate ", sQuote(what), " output file (using pattern ", sQuote(pattern), ") for vignette ", sQuote(file), ". The following files exists in directory ", sQuote(dir), ": ", paste(sQuote(basename(output0)), collapse=", "))
+        if (length(output) > 1L)
+            output <- vignette_prioritize_output(output)[1L]
+    } else if (what == "tangle") {
+        output <- output0[vignette_is_source(output0)]
     }
-    if (length(output) == 0L)
-        stop("Failed to locate weave output file (using patterns ", paste(sQuote(patterns), collapse=", "), ") for vignette ", sQuote(file), ". The following files exists in directory ", sQuote(dir), ": ", paste(sQuote(basename(allFiles0)), collapse=", "))
 
-    output <- file.path(dir, output)
-
-    # Assert
-    stopifnot(length(output) == 1L)
-    stopifnot(file_test("-f", output))
+    if (length(output) > 0L) {
+        output <- file.path(dir, basename(output))
+        stopifnot(all(file_test("-f", output)))
+    } else {
+      output <- NULL
+    }
 
     output
-}
-
-vignette_find_source <- function(file, patterns, dir = ".", ...) {
-    stopifnot(length(file) == 1L)
-    stopifnot(length(patterns) > 0L)
-
-    file <- basename(file)
-
-    allFiles0 <- list.files(path = dir, all.files = FALSE, full.names = TRUE, no..=TRUE)
-    allFiles0 <- allFiles0[file_test("-f", allFiles0)]
-    allFiles <- allFiles0[vignette_is_source(allFiles0)]
-    allFiles <- basename(allFiles)
-
-    outputs <- NULL
-    for (pattern in patterns) {
-        if (regexpr(pattern, file, ignore.case = TRUE) != -1L) {
-            fullname <- gsub(pattern, "", file, ignore.case = TRUE)
-            patternT <- sprintf("^%s[.]([^.]+)$", fullname)
-            outputs <- grep(patternT, allFiles, value = TRUE)
-            break
-        }
-    }
-
-    if (length(outputs) > 0L) {
-        outputs <- file.path(dir, outputs)
-    
-        # Assert
-        stopifnot(all(file_test("-f", outputs)))
-    } else {
-      outputs <- NULL
-    }
-
-    outputs
 }
 
 
@@ -242,13 +209,14 @@ function(package, dir, lib.loc = NULL,
     startdir <- getwd()
     for(i in seq_along(vigns$docs)) {
         file <- vigns$docs[i]
+        pattern <- vigns$patterns[i]
     	engine <- vignetteEngine(vigns$engine[i])
-        patterns <- engine$pattern
+
         if(tangle)
             .eval_with_capture({
                 result$tangle[[file]] <- tryCatch({
                     engine$tangle(file, quiet = TRUE)
-                    output <- vignette_find_source(file, patterns=patterns)
+                    output <- vignette_find(file, pattern = pattern, what = "tangle")
                     if (length(output) > 0L)
                         output <- basename(output)
                     vignette_source_assert(output, file = file)
@@ -258,7 +226,7 @@ function(package, dir, lib.loc = NULL,
             .eval_with_capture({
                 result$weave[[file]] <- tryCatch({
                     outputT <- engine$weave(file, quiet = TRUE)
-                    output <- vignette_find_output(file, patterns=patterns)
+                    output <- vignette_find(file, pattern = pattern, what = "weave")
                     output <- basename(output)
                     vignette_output_assert(output, file = file)
                 }, error = function(e) e)
@@ -429,17 +397,20 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = 
 
     docs <- NULL
     engines <- NULL
+    patterns <- NULL
     allFiles <- list.files(docdir, all.files = FALSE, full.names = TRUE)
     if (length(allFiles) > 0L) {
         for (name in names(engineList)) {
             engine <- engineList[[name]]
-            patterns <- engine$pattern
-            for (pattern in patterns) {
+            patternsT <- engine$pattern
+            for (pattern in patternsT) {
                 idxs <- grep(pattern, allFiles)
-                if (length(idxs) > 0L) {
+                nidxs <- length(idxs)
+                if (nidxs > 0L) {
                     if (is.function(engine$weave)) {
                         docs <- c(docs, allFiles[idxs])
-                        engines <- c(engines, rep(name, times = length(idxs)))
+                        engines <- c(engines, rep(name, times = nidxs))
+                        patterns <- c(patterns, rep(pattern, times = nidxs))
                     }
                     allFiles <- allFiles[-idxs]
                     if (length(allFiles) == 0L)
@@ -450,18 +421,19 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = 
     }
 
     # Assert
-    stopifnot(length(docs) == length(engines))
+    stopifnot(length(engines) == length(docs))
+    stopifnot(length(patterns) == length(docs))
     stopifnot(!any(duplicated(docs)))
 
-    z <- list(docs=docs, engines=engines, dir=docdir, pkgdir=dir)
+    z <- list(docs=docs, patterns=patterns, engines=engines, dir=docdir, pkgdir=dir)
 
     if (output) {
         outputs <- character(length(docs))
         for (i in seq_along(docs)) {
             file <- docs[i]
+            pattern <- patterns[i]
             engine <- vignetteEngine(engines[i])
-            patterns <- engine$pattern
-            outputI <- vignette_find_output(file, patterns=patterns, dir = docdir)
+            outputI <- vignette_find(file, pattern = pattern, dir = docdir, what = "weave")
             outputs[i] <- outputI
         }
         z$outputs <- outputs
@@ -471,9 +443,9 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = 
         sources <- list()
         for (i in seq_along(docs)) {
             file <- docs[i]
+            pattern <- patterns[i]
             engine <- vignetteEngine(engines[i])
-            patterns <- engine$pattern
-            sources[[file]] <- vignette_find_source(file, patterns=patterns, dir = docdir)
+            sources[[file]] <- vignette_find(file, pattern = pattern, dir = docdir, what = "tangle")
         }
         z$sources <- sources
     }
@@ -486,8 +458,8 @@ listOutputs.pkgVignettes <- function(vigns) {
    outputs <- NULL
    for (i in seq_along(vigns$docs)) {
       doc <- vigns$docs[i]
-      patterns <- vignetteEngine(vigns$engine[i])$pattern
-      output <- vignette_find_output(doc, patterns, dir = dirname(doc))
+      pattern <- vigns$patterns[i]
+      output <- vignette_find(doc, pattern = pattern, dir = dirname(doc), what = "weave")
       outputs <- c(outputs, output)
    }
 
@@ -540,12 +512,12 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
     startdir <- getwd()
     for(i in seq_along(vigns$docs)) {
         file <- vigns$docs[i]
+        pattern <- vigns$patterns[i]
     	engine <- vignetteEngine(vigns$engine[i])
-        patterns <- engine$pattern
-
+  
         output <- tryCatch({
             outputT <- engine$weave(file, quiet = quiet)
-            output <- vignette_find_output(file, patterns=patterns)
+            output <- vignette_find(file, pattern = pattern, what = "weave")
             output <- basename(output)
             vignette_output_assert(output, file = file)
         }, error = function(e) {
@@ -565,7 +537,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
         if (tangle) {  # This is set for custom engines
             output <- tryCatch({
                 engine$tangle(file, quiet = quiet)
-                output <- vignette_find_source(file, patterns=patterns)
+                output <- vignette_find(file, pattern = pattern, what = "tangle")
                 if (length(output) > 0L)
                     output <- basename(output)
                 vignette_source_assert(output, file = file)
