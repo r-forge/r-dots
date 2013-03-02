@@ -468,10 +468,10 @@ function(dir, outDir)
 function(dir, outDir, encoding = "")
 {
     dir <- file_path_as_absolute(dir)
-    subdirs <- c("vignettes", file.path("inst", "doc"))
+    subdirs <- c(file.path("inst", "doc"), "vignettes")
     ok <- file_test("-d", file.path(dir, subdirs))
     ## Create a vignette index only if the vignette dir exists.
-    if (any(ok))
+    if (!any(ok))
        return(invisible())
 
     subdir <- subdirs[ok][1L]
@@ -490,7 +490,7 @@ function(dir, outDir, encoding = "")
     hasHtmlIndex <- file_test("-f", file.path(vignetteDir, "index.html"))
     htmlIndex <- file.path(outDir, "doc", "index.html")
 
-    vigns <- pkgVignettes(dir=dir, subdir=subdir, output=TRUE, source=TRUE)
+    vigns <- pkgVignettes(dir=dir, subdirs=subdir)
 
     ## Write dummy HTML index if no vignettes are found and exit.
     if(length(vigns$docs) == 0L) {
@@ -506,6 +506,12 @@ function(dir, outDir, encoding = "")
         file.copy(vigns$docs, outVignetteDir)
     }
 
+    vigns <- tryCatch({
+        pkgVignettes(dir=dir, subdirs=subdir, output=TRUE, source=TRUE)
+    }, error = function(ex) {
+        pkgVignettes(dir=dir, subdirs=subdir)
+    })
+
     vignetteIndex <- .build_vignette_index(vigns)
     if(NROW(vignetteIndex) > 0L) {
         cwd <- getwd()
@@ -519,7 +525,6 @@ function(dir, outDir, encoding = "")
         ## engine vignettes should have been included when the package was built,
         ## but in the interim before they are all built with the new code,
         ## this is needed for all packages.
-        
         for(i in seq_along(vigns$docs)) {
             file <- vigns$docs[i]
             enc <- getVignetteEncoding(file, TRUE)
@@ -530,23 +535,39 @@ function(dir, outDir, encoding = "")
 
 	    engine <- try(vignetteEngine(vigns$engines[i]), silent = TRUE)
 	    if (!inherits(engine, "try-error"))
-            	engine[["tangle"]](file, quiet = TRUE, encoding = enc)
+            	engine$tangle(file, quiet = TRUE, encoding = enc)
         }
+        setwd(cwd)
+
+        # Update - now from the output directory
+        vigns <- pkgVignettes(dir=outDir, subdirs="doc", source=TRUE)
 
         ## remove any files with no R code (they will have header comments).
         ## if not correctly declared they might not be in the current encoding
         sources <- unlist(vigns$sources)
-        drop <- logical(length(sources))
-        for(i in seq_along(source)) {
+        for(i in seq_along(sources)) {
             file <- sources[i]
-            if(all(grepl("(^###|^[[:space:]]*$)",
-                         readLines(file, warn = FALSE)), useBytes = TRUE)) {
+            if (!file_test("-f", file)) next
+            bfr <- readLines(file, warn = FALSE)
+            if(all(grepl("(^###|^[[:space:]]*$)", bfr), useBytes = TRUE)) {
                 unlink(file)
-                drop[i] <- TRUE
             }
         }
-        vignetteIndex$R[drop] <- ""
-        setwd(cwd)
+
+        # Update
+        vigns <- pkgVignettes(dir=outDir, subdirs="doc", source=TRUE)
+
+        # Add tangle source files (*.R) to the vignette index
+        # HB: Only the first R file, because tangle can generate several.
+        sources <- character(length(vigns$docs))
+        for (i in seq_along(vigns$docs)) {
+           file <- vigns$docs[i]
+           source <- vigns$sources[[file]]
+           if (length(source) > 0L) {
+              sources[i] <- basename(source[1L])
+           }
+        }
+        vignetteIndex$R <- sources
     }
 
     if(!hasHtmlIndex)

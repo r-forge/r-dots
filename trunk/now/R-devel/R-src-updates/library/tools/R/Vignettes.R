@@ -426,7 +426,6 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = 
         for (i in seq_along(docs)) {
             file <- docs[i]
             name <- names[i]
-            engine <- vignetteEngine(engines[i])
             outputI <- vignette_find(name, dir = docdir, what = "weave")
             outputs[i] <- outputI
         }
@@ -438,8 +437,9 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = 
         for (i in seq_along(docs)) {
             file <- docs[i]
             name <- names[i]
-            engine <- vignetteEngine(engines[i])
-            sources[[file]] <- vignette_find(name, dir = docdir, what = "tangle")
+            sourcesI <- vignette_find(name, dir = docdir, what = "tangle")
+### str(list(i=i, file=file, name=name, sources=sourcesI, dir=docdir, files=list.files(path=docdir)))
+            sources[[file]] <- sourcesI
         }
         z$sources <- sources
     }
@@ -683,13 +683,18 @@ function(file)
          keywords = keywords, engine = engine)
 }
 
+## HB: The below contains an ad hoc/temporary solution for building
+##     vignette indices via 'pkgVignettes' objects.
 .build_vignette_index <-
 function(object)
 {
     if (inherits(object, "pkgVignettes")) {
         vignetteDir <- object$dir
         vignetteFiles <- object$docs
-        stopifnot(!is.null(object$outputs))
+        ## This is to cover a temporary package installation
+        ## by 'R CMD build' (via 'R CMD INSTALL -l <lib>)
+        ## which in case vignettes have not been built.
+        hasOutputs <- !is.null(object$outputs)
     } else {
         vignetteDir <- object
     }
@@ -721,9 +726,15 @@ function(object)
 
 
     if (inherits(object, "pkgVignettes")) {
-        vignetteOutfiles <- vigns$outputs
+        if (hasOutputs) {
+            vignetteOutfiles <- object$outputs
+        } else {
+            vignetteOutfiles <- character(length(object$docs))
+        }
+        names <- object$names
     } else {
         vignetteOutfiles <- vignette_output(vignetteFiles)
+        names <- file_path_sans_ext(vignetteFiles)
     }
     
     vignetteTitles <- unlist(contents[, "Title"])
@@ -738,8 +749,7 @@ function(object)
                                         # names
                       stringsAsFactors = FALSE)
 
-    ## HB: This passage also needs to be updated for custom 3.0.0 engines.
-    if (any(dups <- duplicated(names <- file_path_sans_ext(vignetteOutfiles)))) {
+    if (any(dups <- duplicated(names))) {
     	dup <- out$File[dups][1]
     	dupname <- names[dups][1]
     	orig <- out$File[ names == dupname ][1]
@@ -883,24 +893,47 @@ function(vig_name, docDir, encoding = "", pkgdir)
     dir.create(td)
     file.copy(docDir, td, recursive = TRUE)
     setwd(file.path(td, basename(docDir)))
-    result <- NULL
 
-    buildPkgs <- loadVignetteBuilder(pkgdir)
+    subdir <- gsub(pkgdir, "", docDir, fixed=TRUE)
+    vigns <- pkgVignettes(dir=pkgdir, subdirs=subdir)
+    if (is.null(vigns)) {
+       cat("\n  When running vignette ", sQuote(vig_name), ":\n", sep="")
+       stop("No vignettes available", call. = FALSE, domain = NA)
+    }
 
-    engine <- vignetteEngine(vignetteInfo(vig_name)$engine, package = buildPkgs)
-    tryCatch(engine[["tangle"]](vig_name, quiet = TRUE, encoding = encoding),
-             error = function(e) result <<- capture.output(e))
-    if(length(result)) {
-        cat("\n  When tangling ", sQuote(vig_name), ":\n", sep="")
-        stop(result, call. = FALSE, domain = NA)
+    i <- which(basename(vigns$docs) == vig_name)
+    if (length(i) == 0L) {
+       cat("\n  When running vignette ", sQuote(vig_name), ":\n", sep="")
+       stop("No such vignette ", sQuote(vig_name), call. = FALSE, domain = NA)
     }
-    f <- vignette_source(vig_name)
-    tryCatch(source(f, echo = TRUE),
-             error = function(e) result <<- capture.output(e))
-    if(length(result)) {
-        cat("\n  When sourcing ", sQuote(f), ":\n", sep="")
-        stop(result, call. = FALSE, domain = NA)
+    stopifnot(length(i) == 1L)
+
+    loadVignetteBuilder(pkgdir)
+    file <- vigns$docs[i]
+    name <- vigns$names[i]
+    engine <- vignetteEngine(vigns$engines[i])
+
+    outputs <- tryCatch({
+        engine$tangle(file, quiet = TRUE, encoding = encoding)
+        output <- vignette_find(name, what = "tangle")
+        if (length(output) > 0L)
+            output <- basename(output)
+        vignette_source_assert(output, file = file) 
+    }, error = function(e) {
+        cat("\n  When tangling ", sQuote(file), ":\n", sep="")
+        stop(capture.output(e), call. = FALSE, domain = NA)
+    })
+
+    if(length(outputs) > 0L) {
+        source1 <- outputs[1L]
+        res <- tryCatch({
+            source(source1, echo = TRUE)
+        }, error = function(e) {
+            cat("\n  When sourcing ", sQuote(source1), ":\n", sep="")
+            stop(capture.output(e), call. = FALSE, domain = NA)
+        })
     }
+
     cat("\n *** Run successfully completed ***\n")
 }
 

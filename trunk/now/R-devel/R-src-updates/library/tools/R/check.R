@@ -2306,7 +2306,7 @@ setRlibs <-
             basename(list_files_with_exts(file.path(pkgdir, "inst/doc"), "R"))
         custom <- !is.na(desc["VignetteBuilder"])
         if (length(sources) && !custom) {
-            new_sources <- vignette_source(vigns$names)
+            new_sources <- paste0(vigns$names, ".R")
             dups <- sources[sources %in% new_sources]
             if(nb <- length(dups)) {
                 if(!any) warningLog(Log)
@@ -2359,13 +2359,15 @@ setRlibs <-
         ## If the vignettes declare an encoding, are they actually in it?
         ## (We don't check the .tex, though)
         bad_vignettes <- character()
-        for (v in vigns$docs) {
-            enc <- getVignetteEncoding(v, TRUE)
+        for (i in seq_along(vigns$docs)) {
+            file <- vigns$docs[i]
+
+            enc <- getVignetteEncoding(file, TRUE)
             if (enc %in% c("", "non-ASCII", "unknown")) next
-            lines <- readLines(v, warn = FALSE) # some miss final NA
+            lines <- readLines(file, warn = FALSE) # some miss final NA
             lines2 <- iconv(lines, enc, "UTF-16LE", toRaw = TRUE)
             if(any(vapply(lines2, is.null, TRUE)))
-                bad_vignettes <- c(bad_vignettes, v)
+                bad_vignettes <- c(bad_vignettes, file)
             if(nb <- length(bad_vignettes)) {
                 if(!any) warningLog(Log)
                 any <- TRUE
@@ -2396,18 +2398,22 @@ setRlibs <-
             def_enc <- desc["Encoding"]
             if( (is.na(def_enc))) def_enc <- ""
             t1 <- proc.time()
-            for(v in vigns$docs) {
-                enc <- getVignetteEncoding(v, TRUE)
+            for (i in seq_along(vigns$docs)) {
+                file <- vigns$docs[i]
+                name <- vigns$names[i]
+                source1 <- paste0(name, ".R")
+
+                enc <- getVignetteEncoding(file, TRUE)
                 if(enc %in% c("non-ASCII", "unknown")) enc <- def_enc
-                cat("  ", sQuote(basename(v)),
+                cat("  ", sQuote(basename(file)),
                     if(nzchar(enc)) paste("using", sQuote(enc)),
                     "...")
                 Rcmd <- paste0("options(warn=1)\ntools:::.run_one_vignette('",
-                               basename(v), "', '", vigns$dir, "'",
+                               basename(file), "', '", vigns$dir, "'",
                                if (nzchar(enc))
                                    paste0(", encoding = '", enc, "'"),
                                ", pkgdir='", vigns$pkgdir, "')")
-                outfile <- paste0(basename(v), ".log")
+                outfile <- paste0(basename(file), ".log")
                 t1b <- proc.time()
                 status <- R_runR(Rcmd,
                                  if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2,
@@ -2417,12 +2423,14 @@ setRlibs <-
                                  stdout = outfile, stderr = outfile)
                 t2b <- proc.time()
                 out <- readLines(outfile, warn = FALSE)
-                savefile <- sub("\\.R$", ".Rout.save", vignette_source(v)) # change ext to .Rout.save
-                if(length(grep("^  When (tangling|sourcing)", out,
+                ## HB: This assumes that the source file extension
+                ##     is an upper-case R, not *.r or *.s etc. OK?
+                savefile <- sub("\\.R$", ".Rout.save", source1) # change ext to .Rout.save
+                if(length(grep("^  When (running|tangling|sourcing)", out,
                                useBytes = TRUE))) {
                     cat(" failed\n")
                     res <- c(res,
-                             paste("when running code in", sQuote(basename(v))),
+                             paste("when running code in", sQuote(basename(file))),
                              "  ...",
                              utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10))))
                 } else if(status || ! " *** Run successfully completed ***" %in% out) {
@@ -2430,7 +2438,7 @@ setRlibs <-
                     cat(" failed to complete the test\n")
                     out <- c(out, "", "... incomplete output.  Crash?")
                     res <- c(res,
-                             paste("when running code in", sQuote(basename(v))),
+                             paste("when running code in", sQuote(basename(file))),
                              "  ...",
                              utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10))))
                 } else if (file.exists(savefile)) {
