@@ -1,6 +1,4 @@
 library("tools")
-vignette_output_default <- tools:::vignette_output_default
-vignette_source_default <- tools:::vignette_source_default
 
 pkgs <- getOption("buildVigettes/packages", NULL)
 

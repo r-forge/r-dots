@@ -1,5 +1,4 @@
 library("tools")
-vignette_source_default <- tools:::vignette_source_default
 
 exts <- outer(c("R", "r", "S", "s"), c("nw", "tex"), FUN=paste0)
 exts <- c(exts, "Rmd")

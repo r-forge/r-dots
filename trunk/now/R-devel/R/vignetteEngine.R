@@ -1,8 +1,6 @@
 vignetteEngine <- local({
     registry <- new.env(parent = emptyenv())
 
-    ## HB: Should local functions be avoided?  Makes it harder to 
-    ##     troubleshoot/retrieve source for end user.
     engineKey <- function(name, package) {
         key <- strsplit(name, split = "::", fixed = TRUE)[[1L]]
         if (length(key) == 1L) {

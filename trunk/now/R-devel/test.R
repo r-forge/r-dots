@@ -1,5 +1,5 @@
 # Load source?
-if (FALSE) {
+if (T) {
   source("R/001.hacks.R")
   source("R-src-updates/library/tools/R/Vignettes.R")
 ##  for (file in list.files(path="R/", pattern="[.]R$", full.names=TRUE))
