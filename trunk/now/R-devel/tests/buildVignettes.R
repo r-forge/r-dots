@@ -37,16 +37,7 @@ if (is.element("knitr", pkgs) && require("knitr")) {
 # noweb
 if (is.element("noweb", pkgs) && require("noweb")) {
     cat("noweb...\n")
-    vignetteEngine("noweb", package="noweb",
-        weave = function(file, ...) {
-          noweave(file, ...)
-          vignette_output_default(file)
-        }, 
-        tangle = function(file, ...) {
-          notangle(file, ...)
-          vignette_source_default(file)
-        }
-    )
+    vignetteEngine("noweb", package="noweb", weave = noweave, tangle = notangle)
     vigns <- pkgVignettes("noweb")
     str(vigns)
     file <- "noweb.sty"
