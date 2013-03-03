@@ -2655,8 +2655,7 @@ function(dir, force_suggests = TRUE)
     ## the package name?
     vigns <- pkgVignettes(dir=dir, subdirs=file.path("inst", "doc"))
     if (!is.null(vigns) && length(vigns$docs) > 0L) {
-        vignette_dir <- vigns$dir
-        reqs <- unique(unlist(.build_vignette_index(vignette_dir)$Depends))
+        reqs <- unique(unlist(.build_vignette_index(vigns)$Depends))
         ## For the time being, ignore base packages missing from the
         ## DESCRIPTION dependencies even if explicitly given as vignette
         ## dependencies.

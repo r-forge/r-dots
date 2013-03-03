@@ -558,14 +558,14 @@ function(dir, outDir, encoding = "")
         vigns <- pkgVignettes(dir=outDir, subdirs="doc", source=TRUE)
 
         # Add tangle source files (*.R) to the vignette index
-        # HB: Only the first R file, because tangle can generate several.
+        # Only the "main" R file, because tangle may also split
+        # output into multiple files
         sources <- character(length(vigns$docs))
         for (i in seq_along(vigns$docs)) {
-           file <- vigns$docs[i]
-           source <- vigns$sources[[file]]
-           if (length(source) > 0L) {
-              sources[i] <- basename(source[1L])
-           }
+           name <- vigns$names[i]
+           source <- find_vignette_product(name, by = "tangle", main = TRUE, dir = vigns$dir)
+           if (length(source) > 0L)
+              sources[i] <- basename(source)
         }
         vignetteIndex$R <- sources
     }
@@ -658,8 +658,7 @@ function(dir, outDir, keep.source = TRUE)
         output <- tryCatch({
             engine$weave(file, pdf = TRUE, eps = FALSE, quiet = TRUE, 
                         keep.source = keep.source, stylepath = FALSE)
-            output <- vignette_find(name, what = "weave")
-            vignette_source_assert(output, file = file)
+            find_vignette_product(name, by = "weave")
         }, error = function(e) {
             stop(gettextf("running %s on vignette '%s' failed with message:\n%s",
                  engine[["name"]], file, capture.output(e)),
@@ -671,9 +670,11 @@ function(dir, outDir, keep.source = TRUE)
         if (vignette_is_tex(output)) {
 	    ## <FIXME>
 	    ## What if this fails?
-            ## At least added a more informative error message.
+            ## HB: Now gives a more informative error texi2pdf fails
+            ##     or if it does not produce a <name>.pdf.
             tryCatch({
                 texi2pdf(file = output, quiet = TRUE, texinputs = vigns$dir)
+                output <- find_vignette_product(name, by = "texi2pdf")
             }, error = function(e) {
                 stop(gettextf("compiling TeX file %s failed with message:\n%s",
                  sQuote(output), capture.output(e)),
@@ -681,10 +682,7 @@ function(dir, outDir, keep.source = TRUE)
             })
 	    ## </FIXME>
 	}
-        ## HB: Should never happend, because asserted above
-        if(!file.exists(output))
-            stop(gettextf("file '%s' was not created", output),
-                 domain = NA)
+
         if(!file.copy(output, outVignetteDir, overwrite = TRUE))
             stop(gettextf("cannot copy '%s' to '%s'",
                           output,

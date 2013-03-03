@@ -2267,7 +2267,7 @@ setRlibs <-
                 file <- vigns$docs[i]
                 name <- vigns$names[i]
                 outputs[i] <- tryCatch({
-                    vignette_find(name, dir=dir, what="weave")
+                    find_vignette_product(name, what="weave", final=TRUE, dir=dir)
                 }, error = function(ex) NA)
             }
             if (nb <- sum(is.na(outputs))) {
@@ -2401,7 +2401,7 @@ setRlibs <-
             for (i in seq_along(vigns$docs)) {
                 file <- vigns$docs[i]
                 name <- vigns$names[i]
-                source1 <- paste0(name, ".R")
+                source1 <- find_vignette_product(name, by = "tangle", main = TRUE)
 
                 enc <- getVignetteEncoding(file, TRUE)
                 if(enc %in% c("non-ASCII", "unknown")) enc <- def_enc
@@ -2423,9 +2423,7 @@ setRlibs <-
                                  stdout = outfile, stderr = outfile)
                 t2b <- proc.time()
                 out <- readLines(outfile, warn = FALSE)
-                ## HB: This assumes that the source file extension
-                ##     is an upper-case R, not *.r or *.s etc. OK?
-                savefile <- sub("\\.R$", ".Rout.save", source1) # change ext to .Rout.save
+                savefile <- sprintf("%s.Rout.save", name)
                 if(length(grep("^  When (running|tangling|sourcing)", out,
                                useBytes = TRUE))) {
                     cat(" failed\n")
