@@ -662,6 +662,10 @@ function(dir, outDir, keep.source = TRUE)
         message(gettextf("processing %s", sQuote(basename(file))),
                 domain = NA)
 
+        ## Note that contrary to all other weave/tangle calls, here
+        ## 'file' is not a file in the current directory [hence no
+        ## file <- basename(file) above]. However, weave should/must
+        ## always create a file ('output') in the current directory.
         output <- tryCatch({
             engine$weave(file, pdf = TRUE, eps = FALSE, quiet = TRUE, 
                         keep.source = keep.source, stylepath = FALSE)
