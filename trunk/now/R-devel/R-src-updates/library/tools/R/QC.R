@@ -3971,11 +3971,12 @@ function(dir, doDelete = FALSE)
         }
     }
 
-    vigns <- pkgVignettes(dir=dir, subdirs=file.path("inst", "doc"))
+    subdir <- file.path("inst", "doc")
+    vigns <- pkgVignettes(dir=dir, subdirs=subdir)
     if (!is.null(vigns) && length(vigns$docs) > 0L) {
         vignettes <- basename(vigns$docs)
 
-        # Add vignette output files, if they exists
+        # Add vignette output files, if they exist
         tryCatch({
             vigns <- pkgVignettes(dir=dir, subdirs=subdir, output=TRUE)
             vignettes <- c(vignettes, basename(vigns$outputs))
