@@ -638,12 +638,34 @@ setRlibs <-
     {
         checkingLog(Log, "top-level files")
         topfiles <- Sys.glob(c("install.R", "R_PROFILE.R"))
+        any <- FALSE
         if (length(topfiles)) {
+            any <- TRUE
             warningLog(Log)
             printLog(Log, .format_lines_with_indent(topfiles), "\n")
             wrapLog("These files are defunct.",
                     "See manual 'Writing R Extensions'.\n")
-        } else resultLog(Log, "OK")
+        }
+        topfiles <- Sys.glob(c("LICENCE", "LICENSE"))
+        if (length(topfiles)) {
+            ## Are these mentioned in DESCRIPTION?
+            lic <- desc["License"]
+            if(!is.na(lic)) {
+                found <- sapply(topfiles,  function(x) grepl(x, lic, fixed = TRUE))
+                topfiles <- topfiles[!found]
+                if (length(topfiles)) {
+                    any <- TRUE
+                    noteLog(Log)
+                    printLog(Log, .format_lines_with_indent(topfiles), "\n")
+                    printLog(Log,
+                             if(length(topfiles) > 1L)
+                             "are not mentioned in the DESCRIPTION file.\n"
+                             else
+                             "is not mentioned in the DESCRIPTION file.\n")
+                }
+            }
+        }
+        if (!any) resultLog(Log, "OK")
     }
 
     check_detritus <- function()
@@ -1685,7 +1707,7 @@ setRlibs <-
         ## Have already checked that inst/doc exists and qpdf can be found
         pdfs <- dir('inst/doc', pattern="\\.pdf",
                     recursive = TRUE, full.names = TRUE)
-        pdfs <- pdfs %w/o% "inst/doc/Rplots.pdf"
+        pdfs <- setdiff(pdfs, "inst/doc/Rplots.pdf")
         if (length(pdfs)) {
             checkingLog(Log, "sizes of PDF files under 'inst/doc'")
             any <- FALSE
@@ -2258,8 +2280,6 @@ setRlibs <-
         ## Do PDFs or HTML files exist for all package vignettes?
         ## A base source package need not have PDFs to avoid
         ## frequently-changing binary files in the SVN archive.
-        ## HB: This passage also needs to be updated for custom engines.
-        vf <- vigns$docs
         if (!is_base_pkg) {
             dir <- file.path(pkgdir, "inst", "doc")
             outputs <- character(length(vigns$docs))
@@ -2270,21 +2290,21 @@ setRlibs <-
                     find_vignette_product(name, what="weave", final=TRUE, dir=dir)
                 }, error = function(ex) NA)
             }
-            if (nb <- sum(is.na(outputs))) {
-                any <- FALSE
+            bad_vignettes <- vigns$docs[is.na(outputs)]
+            if (nb <- length(bad_vignettes)) {
+                any <- TRUE
                 warningLog(Log)
                 msg <- ngettext(nb,
-                    "Package vignette without corresponding PDF/HTML:\n",
-                    "Package vignettes without corresponding PDF/HTML:\n",
-                    domain = NA)
+                                "Package vignette without corresponding PDF/HTML:\n",
+                                "Package vignettes without corresponding PDF/HTML:\n", domain = NA)
                 printLog(Log, msg)
-                printLog(Log, paste(c(paste("  ",
-                              sQuote(basename(bad_vignettes))),
-                              "", ""), collapse = "\n"))
+                printLog(Log,
+                         paste(c(paste("  ",
+                                       sQuote(basename(bad_vignettes))),
+                                 "", ""), collapse = "\n"))
             }
-
-            encs <- vapply(vf, getVignetteEncoding, "")
-            bad_vignettes <- vf[encs == "non-ASCII"]
+            encs <- vapply(vigns$docs, getVignetteEncoding, "")
+            bad_vignettes <- vigns$docs[encs == "non-ASCII"]
             if(nb <- length(bad_vignettes)) {
                 if(!any) warningLog(Log)
                 any <- TRUE
@@ -2301,7 +2321,6 @@ setRlibs <-
 
         ## Do any of the .R files which will be generated
         ## exist in inst/doc?  If so the latter will be ignored,
-        ## HB: This passage also needs to be updated for custom engines.
         sources <-
             basename(list_files_with_exts(file.path(pkgdir, "inst/doc"), "R"))
         custom <- !is.na(desc["VignetteBuilder"])
@@ -2359,15 +2378,13 @@ setRlibs <-
         ## If the vignettes declare an encoding, are they actually in it?
         ## (We don't check the .tex, though)
         bad_vignettes <- character()
-        for (i in seq_along(vigns$docs)) {
-            file <- vigns$docs[i]
-
-            enc <- getVignetteEncoding(file, TRUE)
+        for (v in vigns$docs) {
+            enc <- getVignetteEncoding(v, TRUE)
             if (enc %in% c("", "non-ASCII", "unknown")) next
-            lines <- readLines(file, warn = FALSE) # some miss final NA
+            lines <- readLines(v, warn = FALSE) # some miss final NA
             lines2 <- iconv(lines, enc, "UTF-16LE", toRaw = TRUE)
             if(any(vapply(lines2, is.null, TRUE)))
-                bad_vignettes <- c(bad_vignettes, file)
+                bad_vignettes <- c(bad_vignettes, v)
             if(nb <- length(bad_vignettes)) {
                 if(!any) warningLog(Log)
                 any <- TRUE
@@ -2401,8 +2418,6 @@ setRlibs <-
             for (i in seq_along(vigns$docs)) {
                 file <- vigns$docs[i]
                 name <- vigns$names[i]
-                source1 <- find_vignette_product(name, by = "tangle", main = TRUE)
-
                 enc <- getVignetteEncoding(file, TRUE)
                 if(enc %in% c("non-ASCII", "unknown")) enc <- def_enc
                 cat("  ", sQuote(basename(file)),
@@ -2423,7 +2438,7 @@ setRlibs <-
                                  stdout = outfile, stderr = outfile)
                 t2b <- proc.time()
                 out <- readLines(outfile, warn = FALSE)
-                savefile <- sprintf("%s.Rout.save", name)
+                savefile <- paste0(name, ".Rout.save")
                 if(length(grep("^  When (running|tangling|sourcing)", out,
                                useBytes = TRUE))) {
                     cat(" failed\n")
@@ -3185,7 +3200,7 @@ setRlibs <-
                          paste(strwrap(paste(of, collapse = " "),
                                        indent = 2L, exdent = 2L),
                                collapse = "\n"),
-                         "Object files/libraries should not be included in a source package.\n")
+                         "\nObject files/libraries should not be included in a source package.\n")
                 ini <- ""
             }
             ## A submission had src-i386 etc from multi-arch builds

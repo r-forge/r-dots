@@ -127,7 +127,6 @@ httpd <- function(path, query, ...)
 			    	vigDB <- readRDS(vigfile)
 			    	vigfile0 <- vigfile
 			    }
-                            ## HB: This passage also needs to be updated for custom 3.0.0 engines.
 			    vignette <- vigDB[topic == file_path_sans_ext(vigDB$PDF),]
 			    # There should be exactly one row in the result, but
 			    # bad packages might have more, e.g. vig.Snw and vig.Rnw
@@ -257,7 +256,6 @@ httpd <- function(path, query, ...)
             fp <- file.path(paths, "Meta", "Rd.rds")
             tp <- basename(file)
             titles <- tp
-            ## HB: This passage also needs to be updated for custom 3.0.0 engines.
             for (i in seq_along(fp)) {
                 tmp <- try(readRDS(fp[i]))
                 titles[i] <- if(inherits(tmp, "try-error"))

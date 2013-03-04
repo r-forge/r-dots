@@ -16,26 +16,11 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-hbcat <- function(..., append=TRUE) {
-  cat(..., "\n", sep="", file="x:/_R-FORGE/tmp.log", append=append)
-}
-
-
-## Some vignettes produce HTML output, not PDF output.  These functions support that.
-
-vignette_is_HTML <- function(filenames) 
-   file_ext(filenames) == "Rmd"
-
 vignette_source <- function(filenames) {
    outfiles <- sub("\\.[RrSs](nw|tex)$", ".R", filenames)
    sub("\\.Rmd$", ".R", outfiles)
 }
    
-vignette_output <- function(filenames) {
-   outfiles <- sub("\\.[RrSs](nw|tex)$", ".pdf", filenames)
-   sub("\\.Rmd$", ".html", outfiles)
-}
-
 vignette_is_tex <- function(file, ...) {
     (regexpr("[.]tex$", file, ignore.case = TRUE) != -1L)
 }
@@ -198,6 +183,7 @@ function(package, dir, lib.loc = NULL,
     startdir <- getwd()
     for(i in seq_along(vigns$docs)) {
         file <- vigns$docs[i]
+        file <- basename(file)
         name <- vigns$names[i]
     	engine <- vignetteEngine(vigns$engine[i])
 
@@ -377,7 +363,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = 
     if(!file_test("-d", docdir)) return(NULL)
 
     # Locate all vignette files
-    buildPkgs <- loadVignetteBuilder(dir)
+    buildPkgs <- loadVignetteBuilder(dir, mustwork = FALSE)
     engineList <- vignetteEngine(package=buildPkgs)
 
     docs <- names <- engines <- patterns <- NULL
@@ -489,6 +475,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
     startdir <- getwd()
     for(i in seq_along(vigns$docs)) {
         file <- vigns$docs[i]
+        file <- basename(file)
         name <- vigns$names[i]
     	engine <- vignetteEngine(vigns$engine[i])
 
@@ -542,12 +529,13 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
 
         keep <- c(outputs, unlist(sourceList))
         if(clean) {
-            f <- list.files(all.files = TRUE, no.. = TRUE) %w/o% keep
+            f <- setdiff(list.files(all.files = TRUE, no.. = TRUE), keep)
             newer <- file_test("-nt", f, ".build.timestamp")
             ## some packages, e.g. SOAR, create directories
             unlink(f[newer], recursive = TRUE)
         }
-        f <- list.files(all.files = TRUE, no.. = TRUE) %w/o% c(keep, origfiles)
+        f <- setdiff(list.files(all.files = TRUE, no.. = TRUE), 
+                     c(keep, origfiles))
         f <- f[file_test("-f", f)]
         file.remove(f)
     }
@@ -661,8 +649,7 @@ function(file)
          keywords = keywords, engine = engine)
 }
 
-## HB: The below contains an ad hoc/temporary solution for building
-##     vignette indices via 'pkgVignettes' objects.
+## The below builds vignette indices via 'pkgVignettes' objects.
 .build_vignette_index <-
 function(vigns)
 {
@@ -755,8 +742,7 @@ function(x, ...)
     if(length(x)) {
         writeLines(paste("Vignettes with missing or empty",
                          "\\VignetteIndexEntry:"))
-        ## HB: This passage also needs to be updated for custom 3.0.0 engines.
-        print(basename(file_path_sans_ext(unclass(x))), ...)
+        print(basename(unclass(x)), ...)
     }
     invisible(x)
 }
@@ -876,6 +862,7 @@ function(vig_name, docDir, encoding = "", pkgdir)
 
     loadVignetteBuilder(pkgdir)
     file <- vigns$docs[i]
+    file <- basename(file)
     name <- vigns$names[i]
     engine <- vignetteEngine(vigns$engines[i])
 

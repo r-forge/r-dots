@@ -251,7 +251,7 @@ function(dir, outDir)
         }
         ## See which files are listed in the collation spec but don't
         ## exist.
-        badFiles <- codeFilesInCspec %w/o% codeFiles
+        badFiles <- setdiff(codeFilesInCspec, codeFiles)
         if(length(badFiles)) {
             out <- gettextf("\nfiles in '%s' field missing from '%s':",
                             collationField,
@@ -264,7 +264,7 @@ function(dir, outDir)
         ## See which files exist but are missing from the collation
         ## spec.  Note that we do not want the collation spec to use
         ## only a subset of the available code files.
-        badFiles <- codeFiles %w/o% codeFilesInCspec
+        badFiles <- setdiff(codeFiles, codeFilesInCspec)
         if(length(badFiles)) {
             out <- gettextf("\nfiles in '%s' missing from '%s' field:",
                             codeDir,
@@ -527,6 +527,7 @@ function(dir, outDir, encoding = "")
         ## this is needed for all packages.
         for(i in seq_along(vigns$docs)) {
             file <- vigns$docs[i]
+            file <- basename(file)
             enc <- getVignetteEncoding(file, TRUE)
             if(enc %in% c("non-ASCII", "unknown")) enc <- encoding
 
@@ -618,7 +619,7 @@ function(src_dir, out_dir, packages)
 function(dir, outDir, keep.source = TRUE)
 {
     dir <- file_path_as_absolute(dir)
-    vigns <- pkgVignettes(dir = dir, output = TRUE, source = TRUE)
+    vigns <- pkgVignettes(dir = dir)
     if(is.null(vigns) || !length(vigns$docs)) return(invisible())
 
     outDir <- file_path_as_absolute(outDir)
@@ -627,9 +628,15 @@ function(dir, outDir, keep.source = TRUE)
         stop(gettextf("cannot open directory '%s'", outVignetteDir),
              domain = NA)
 
-    vignetteOutfiles <- file.path(outVignetteDir, basename(vigns$outputs))
-    
-    upToDate <- file_test("-nt", vignetteOutfiles, vigns$docs)
+    # By default, update everything
+    upToDate <- logical(length(vigns$docs))
+
+    # Unless vignette weave products already exists
+    tryCatch({
+        vigns <- pkgVignettes(dir = dir, output = TRUE)
+        vignetteOutfiles <- file.path(outVignetteDir, basename(vigns$outputs))
+        upToDate <- file_test("-nt", vignetteOutfiles, vigns$docs)
+    }, error = function(ex) {})
 
     ## The primary use of this function is to build and install PDF
     ## vignettes in base packages.
@@ -670,8 +677,8 @@ function(dir, outDir, keep.source = TRUE)
         if (vignette_is_tex(output)) {
 	    ## <FIXME>
 	    ## What if this fails?
-            ## HB: Now gives a more informative error texi2pdf fails
-            ##     or if it does not produce a <name>.pdf.
+            ## Now gives a more informative error texi2pdf fails
+            ## or if it does not produce a <name>.pdf.
             tryCatch({
                 texi2pdf(file = output, quiet = TRUE, texinputs = vigns$dir)
                 output <- find_vignette_product(name, by = "texi2pdf")

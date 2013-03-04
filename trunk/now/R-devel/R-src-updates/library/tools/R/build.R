@@ -351,10 +351,9 @@ get_exclude_patterns <- function()
                 
                 custom <- !is.na(desc["VignetteBuilder"])
                 cmd <- file.path(R.home("bin"), "Rscript")
-                code <- paste0("tools::buildVignettes(dir = '.', tangle=", custom, ")")
                 args <- c("--vanilla",
                           "--default-packages=", # some vignettes assume methods
-                          "-e", shQuote(code))
+                          "-e", shQuote(paste0("tools::buildVignettes(dir = '.', tangle=", custom, ")")))
                 ## since so many people use 'R CMD' in Makefiles,
                 oPATH <- Sys.getenv("PATH")
                 Sys.setenv(PATH = paste(R.home("bin"), oPATH,
@@ -367,20 +366,15 @@ get_exclude_patterns <- function()
                     do_exit(1L)
                 } else {
                     # Rescan for weave and tangle output files
-                    vigns <- pkgVignettes(dir = '.', output = TRUE, source = TRUE)
+                    vigns <- pkgVignettes(dir = '.', subdirs = doc_dir, output = TRUE, source = TRUE)
                     stopifnot(!is.null(vigns))
 
                     if (!custom) {
 			## Do any of the .R files which will be generated at install time
 			## exist in inst/doc?  If so the latter should be removed.
-                        ## HB: This relies on pre-R 3.0.0 assumptions on vignette filenames.
-                        ## This is ok here because custom == FALSE, which means that
-                        ## we are dealing with such filenames here.  However, it would
-                        ## be safer to retire those assumption completely.
 			sources <- basename(list_files_with_exts(doc_dir, "R"))
 			if (length(sources)) {
-			    vf <- basename(list_files_with_type(doc_dir, "vignette"))
-			    new_sources <- vignette_source(vf)
+			    new_sources <- unlist(vigns$sources)
 			    dups <- sources[sources %in% new_sources]
 			    if(length(dups)) {
 				warningLog(Log)
