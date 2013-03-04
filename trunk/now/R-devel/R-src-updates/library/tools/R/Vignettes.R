@@ -16,11 +16,6 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-vignette_source <- function(filenames) {
-   outfiles <- sub("\\.[RrSs](nw|tex)$", ".R", filenames)
-   sub("\\.Rmd$", ".R", outfiles)
-}
-   
 vignette_is_tex <- function(file, ...) {
     (regexpr("[.]tex$", file, ignore.case = TRUE) != -1L)
 }
@@ -166,7 +161,7 @@ function(package, dir, lib.loc = NULL,
         setwd(startdir) # in case a vignette changes the working dir
     }
 
-    # Assert that output files where not overwritten
+    # Assert that output files were not overwritten
     for (name in c("weave", "tangle")) {
         resultsT <- result[[name]]
         if (length(resultsT) <= 1L)
@@ -228,7 +223,6 @@ function(package, dir, lib.loc = NULL,
             ## * Catch texi2dvi() errors similar to the above.
             ## * Do *not* immediately show texi2dvi() output as part of
             ##   running checkVignettes().
-            ## * Do not run it on vignettes with the .Rmd extension
             ## (For the future, maybe keep this output and provide it as
             ## additional diagnostics ...)
             ## </NOTE>
@@ -313,7 +307,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = 
         else {
             dir <- file_path_as_absolute(dir)
             if (is.null(subdirs))
-                subdirs <- c("vignettes", file.path("inst", "doc"), "doc")
+                subdirs <- c("vignettes", file.path("inst", "doc"))
             for (subdir in subdirs) {
                 docdir <- file.path(dir, subdir)
                 if(file_test("-d", docdir))
@@ -399,8 +393,8 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
     vigns <- pkgVignettes(package = package, dir = dir, lib.loc = lib.loc)
     if(is.null(vigns)) return(invisible())
 
-    ## Assert that duplicated vignette names does not exist, e.g. 
-    ## 'vig' and 'vig' from 'vig.Rnw' and 'vig.Rmd'.
+    ## Assert that duplicated vignette names do not exist, e.g. 
+    ## 'vig' and 'vig' from 'vig.Rnw' and 'vig.Snw'.
     dups <- duplicated(vigns$names)
     if (any(dups)) {
         names <- unique(vigns$names[dups])
@@ -925,7 +919,7 @@ vignetteEngine <- local({
             if (!is.function(tangle))
                 stop("Argument ", sQuote("tangle"), " must be a function and not ", sQuote(class(tangle)[1L]))
             if (is.null(pattern))
-                pattern <- c("[.][rRsS](nw|tex)$", "[.]Rmd$")
+                pattern <- "[.][rRsS](nw|tex)$"
             else if (!is.character(pattern))
                 stop("Argument ", sQuote("pattern"), " must be a character vector or NULL and not ", sQuote(class(tangle)[1L]))
 
@@ -940,7 +934,7 @@ vignetteEngine <- local({
               weave = utils::Sweave, tangle = utils::Stangle)
 
 
-    function(name, weave, tangle = function(...) NULL, pattern = NULL, package = NULL) {
+    function(name, weave, tangle, pattern = NULL, package = NULL) {
         if (missing(weave)) { # we're getting the engine
             getEngine(name, package)
         } else { # we're setting a new engine
