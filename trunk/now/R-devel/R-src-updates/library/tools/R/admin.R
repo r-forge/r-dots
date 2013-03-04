@@ -468,7 +468,7 @@ function(dir, outDir)
 function(dir, outDir, encoding = "")
 {
     dir <- file_path_as_absolute(dir)
-    subdirs <- c(file.path("inst", "doc"), "vignettes")
+    subdirs <- c("vignettes", file.path("inst", "doc"))
     ok <- file_test("-d", file.path(dir, subdirs))
     ## Create a vignette index only if the vignette dir exists.
     if (!any(ok))
