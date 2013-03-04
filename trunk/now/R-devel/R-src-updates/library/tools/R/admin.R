@@ -507,9 +507,9 @@ function(dir, outDir, encoding = "")
     }
 
     vigns <- tryCatch({
-        pkgVignettes(dir=dir, subdirs=subdir, output=TRUE, source=TRUE)
+        pkgVignettes(dir=outDir, subdirs="doc", output=TRUE, source=TRUE)
     }, error = function(ex) {
-        pkgVignettes(dir=dir, subdirs=subdir)
+        pkgVignettes(dir=outDir, subdirs="doc")
     })
 
     vignetteIndex <- .build_vignette_index(vigns)
@@ -564,7 +564,7 @@ function(dir, outDir, encoding = "")
         sources <- character(length(vigns$docs))
         for (i in seq_along(vigns$docs)) {
            name <- vigns$names[i]
-           source <- find_vignette_product(name, by = "tangle", main = TRUE, dir = vigns$dir)
+           source <- find_vignette_product(name, by = "tangle", main = TRUE, dir = vigns$dir, engine = engine)
            if (length(source) > 0L)
               sources[i] <- basename(source)
         }
@@ -633,7 +633,7 @@ function(dir, outDir, keep.source = TRUE)
 
     # Unless vignette weave products already exists
     tryCatch({
-        vigns <- pkgVignettes(dir = dir, output = TRUE)
+        vigns <- pkgVignettes(dir = dir, subdirs = "doc", output = TRUE)
         vignetteOutfiles <- file.path(outVignetteDir, basename(vigns$outputs))
         upToDate <- file_test("-nt", vignetteOutfiles, vigns$docs)
     }, error = function(ex) {})
@@ -669,7 +669,7 @@ function(dir, outDir, keep.source = TRUE)
         output <- tryCatch({
             engine$weave(file, pdf = TRUE, eps = FALSE, quiet = TRUE, 
                         keep.source = keep.source, stylepath = FALSE)
-            find_vignette_product(name, by = "weave")
+            find_vignette_product(name, by = "weave", engine = engine)
         }, error = function(e) {
             stop(gettextf("running %s on vignette '%s' failed with message:\n%s",
                  engine[["name"]], file, capture.output(e)),
@@ -685,7 +685,7 @@ function(dir, outDir, keep.source = TRUE)
             ## or if it does not produce a <name>.pdf.
             tryCatch({
                 texi2pdf(file = output, quiet = TRUE, texinputs = vigns$dir)
-                output <- find_vignette_product(name, by = "texi2pdf")
+                output <- find_vignette_product(name, by = "texi2pdf", engine = engine)
             }, error = function(e) {
                 stop(gettextf("compiling TeX file %s failed with message:\n%s",
                  sQuote(output), capture.output(e)),
