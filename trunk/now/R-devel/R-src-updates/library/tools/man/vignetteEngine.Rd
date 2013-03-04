@@ -11,8 +11,8 @@ packages to register their engines, and internally by \R{} to retrieve
 them.
 }
 \usage{
-vignetteEngine(name, weave, tangle, pattern = NULL, 
-	       package = utils::packageName(parent.frame()))
+vignetteEngine(name, weave, tangle = function(...) NULL, pattern = NULL, 
+	       package = NULL)
 }
 \arguments{
   \item{name}{
@@ -29,7 +29,7 @@ A regular expression pattern for the filenames handled by this engine,
 or \code{NULL} for the default pattern.
 }
   \item{package}{
-The package registering the engine.
+The package registering the engine.  By default, this is the package calling \code{vignetteEngine}.
 }
 }
 \details{
