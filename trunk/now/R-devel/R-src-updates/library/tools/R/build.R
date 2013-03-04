@@ -366,7 +366,7 @@ get_exclude_patterns <- function()
                     do_exit(1L)
                 } else {
                     # Rescan for weave and tangle output files
-                    vigns <- pkgVignettes(dir = '.', subdirs = doc_dir, output = TRUE, source = TRUE)
+                    vigns <- pkgVignettes(dir = '.', output = TRUE, source = TRUE)
                     stopifnot(!is.null(vigns))
 
                     if (!custom) {
