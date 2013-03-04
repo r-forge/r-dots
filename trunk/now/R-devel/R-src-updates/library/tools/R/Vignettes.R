@@ -38,7 +38,7 @@ vignette_type <- function(file) {
 # found, it will be returned).  For tangle, main = TRUE will look <name>.R,
 # whereas main = FALSE will look for <name><anything>*.R.
 # For texipdf, <name>.pdf is located.
-find_vignette_product <- function(name, by = c("weave", "tangle", "texi2pdf"), final=FALSE, main=TRUE, dir = ".", ...) {
+find_vignette_product <- function(name, by = c("weave", "tangle", "texi2pdf"), final=FALSE, main=TRUE, dir = ".", engine, ...) {
     stopifnot(length(name) == 1L)
     by <- match.arg(by)
     stopifnot(file_test("-d", dir))
@@ -63,10 +63,10 @@ find_vignette_product <- function(name, by = c("weave", "tangle", "texi2pdf"), f
 
     if (by == "weave") {
         if (length(output) == 0L)
-            stop("Failed to locate the ", sQuote(by), " output file for vignette with name ", sQuote(name), ". The following files exists in directory ", sQuote(dir), ": ", paste(sQuote(output0), collapse=", "))
+            stop("Failed to locate the ", sQuote(by), " output file (by engine ", sQuote(sprintf("%s::%s", engine$package, engine$name)), ") for vignette with name ", sQuote(name), ". The following files exists in directory ", sQuote(dir), ": ", paste(sQuote(output0), collapse=", "))
         if (length(output) > 1L) {
             if (final)
-                stop("Located more than one ", sQuote(by), " output file for vignette with name ", sQuote(name), ": ", paste(sQuote(output), collapse=", "))
+                stop("Located more than one ", sQuote(by), " output file (by engine ", sQuote(sprintf("%s::%s", engine$package, engine$name)), ") for vignette with name ", sQuote(name), ": ", paste(sQuote(output), collapse=", "))
             # If weave produced a TeX and then a PDF without cleaning out
             # the TeX, consider PDF as the weave product
             idxs <- match(tolower(file_ext(output)), exts)
@@ -78,9 +78,9 @@ find_vignette_product <- function(name, by = c("weave", "tangle", "texi2pdf"), f
             stopifnot(length(output) <= 1L)
     } else if (by == "texi2pdf") {
         if (length(output) == 0L)
-            stop("Failed to locate the ", sQuote(by), " output file for vignette with name ", sQuote(name), ". The following files exists in directory ", sQuote(dir), ": ", paste(sQuote(output0), collapse=", "))
+            stop("Failed to locate the ", sQuote(by), " output file (by engine ", sQuote(sprintf("%s::%s", engine$package, engine$name)), ") for vignette with name ", sQuote(name), ". The following files exists in directory ", sQuote(dir), ": ", paste(sQuote(output0), collapse=", "))
         if (length(output) > 1L)
-            stop("Located more than one ", sQuote(by), " output file for vignette with name ", sQuote(name), ": ", paste(sQuote(output), collapse=", "))
+            stop("Located more than one ", sQuote(by), " output file (by engine ", sQuote(sprintf("%s::%s", engine$package, engine$name)), ") for vignette with name ", sQuote(name), ": ", paste(sQuote(output), collapse=", "))
     }
 
     if (length(output) > 0L) {
@@ -142,20 +142,20 @@ function(package, dir, lib.loc = NULL,
         file <- vigns$docs[i]
         file <- basename(file)
         name <- vigns$names[i]
-    	engine <- vignetteEngine(vigns$engine[i])
+    	engine <- vignetteEngine(vigns$engines[i])
 
         if(tangle)
             .eval_with_capture({
                 result$tangle[[file]] <- tryCatch({
                     engine$tangle(file, quiet = TRUE)
-                    find_vignette_product(name, by = "tangle", main = FALSE)
+                    find_vignette_product(name, by = "tangle", main = FALSE, engine = engine)
                 }, error = function(e) e)
             })
         if(weave)
             .eval_with_capture({
                 result$weave[[file]] <- tryCatch({
                     engine$weave(file, quiet = TRUE)
-                    find_vignette_product(name, by = "weave")
+                    find_vignette_product(name, by = "weave", engine = engine)
                 }, error = function(e) e)
             })
         setwd(startdir) # in case a vignette changes the working dir
@@ -236,7 +236,7 @@ function(package, dir, lib.loc = NULL,
                 .eval_with_capture({
                     result$latex[[file]] <- tryCatch({
                        texi2pdf(file = output, clean = FALSE, quiet = TRUE)
-                       find_vignette_product(name, by = "texi2pdf")
+                       find_vignette_product(name, by = "texi2pdf", engine = engine)
                     }, error = function(e) e)
                 })
             }
@@ -360,7 +360,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = 
         for (i in seq_along(docs)) {
             file <- docs[i]
             name <- names[i]
-            outputI <- find_vignette_product(name, by = "weave", dir = docdir)
+            outputI <- find_vignette_product(name, by = "weave", dir = docdir, engine = engine)
             outputs[i] <- outputI
         }
         z$outputs <- outputs
@@ -371,7 +371,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = 
         for (i in seq_along(docs)) {
             file <- docs[i]
             name <- names[i]
-            sourcesI <- find_vignette_product(name, by = "tangle", main = FALSE, dir = docdir)
+            sourcesI <- find_vignette_product(name, by = "tangle", main = FALSE, dir = docdir, engine = engine)
             sources[[file]] <- sourcesI
         }
         z$sources <- sources
@@ -437,7 +437,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
 
         output <- tryCatch({
             engine$weave(file, quiet = quiet)
-            find_vignette_product(name, by = "weave")
+            find_vignette_product(name, by = "weave", engine = engine)
         }, error = function(e) {
             stop(gettextf("processing vignette '%s' failed with diagnostics:\n%s",
                  file, capture.output(e)), domain = NA, call. = FALSE)
@@ -447,14 +447,14 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
         ## This can fail if run in a directory whose path contains spaces.
         if(!have.makefile && vignette_is_tex(output)) {
             texi2pdf(file = output, clean = FALSE, quiet = quiet)
-            output <- find_vignette_product(name, by = "texi2pdf")
+            output <- find_vignette_product(name, by = "texi2pdf", engine = engine)
         }
         outputs <- c(outputs, output)
 
         if (tangle) {  # This is set for custom engines
             output <- tryCatch({
                 engine$tangle(file, quiet = quiet)
-                find_vignette_product(name, by = "tangle", main = FALSE)
+                find_vignette_product(name, by = "tangle", main = FALSE, engine = engine)
             }, error = function(e) {
                 stop(gettextf("tangling vignette '%s' failed with diagnostics:\n%s",
                      file, capture.output(e)), domain = NA, call. = FALSE)
@@ -820,11 +820,11 @@ function(vig_name, docDir, encoding = "", pkgdir)
     file <- vigns$docs[i]
     file <- basename(file)
     name <- vigns$names[i]
-    engine <- vignetteEngine(vigns$engines[i])
+    engine <- vignetteEngine(vigns$engine[i])
 
     output <- tryCatch({
         engine$tangle(file, quiet = TRUE, encoding = encoding)
-        find_vignette_product(name, by = "tangle")
+        find_vignette_product(name, by = "tangle", engine = engine)
     }, error = function(e) {
         cat("\n  When tangling ", sQuote(file), ":\n", sep="")
         stop(capture.output(e), call. = FALSE, domain = NA)
@@ -914,14 +914,19 @@ vignetteEngine <- local({
             if (exists(rname, envir = registry))
                 rm(list = rname, envir = registry)
         } else {
-            if (!is.function(weave) && !is.na(weave))
-                stop("Argument ", sQuote("weave"), " must be a function and not ", sQuote(class(weave)[1L]))
-            if (!is.function(tangle))
-                stop("Argument ", sQuote("tangle"), " must be a function and not ", sQuote(class(tangle)[1L]))
+            if (!is.function(weave) && is.na(weave)) {
+                if (missing(tangle))
+                    tangle <- NA
+            } else {
+                if (!is.function(weave))
+                    stop("Argument ", sQuote("weave"), " must be a function and not ", sQuote(class(weave)[1L]))
+                if (!is.function(tangle))
+                    stop("Argument ", sQuote("tangle"), " must be a function and not ", sQuote(class(tangle)[1L]))
+            }
             if (is.null(pattern))
                 pattern <- "[.][rRsS](nw|tex)$"
             else if (!is.character(pattern))
-                stop("Argument ", sQuote("pattern"), " must be a character vector or NULL and not ", sQuote(class(tangle)[1L]))
+                stop("Argument ", sQuote("pattern"), " must be a character vector or NULL and not ", sQuote(class(pattern)[1L]))
 
             result <- list(name = key[2L], package = key[1L], pattern = pattern, weave = weave, tangle = tangle)
             assign(rname, result, registry)
@@ -931,7 +936,8 @@ vignetteEngine <- local({
     }
 
     setEngine(name = "Sweave", package = "utils", pattern = NULL, 
-              weave = utils::Sweave, tangle = utils::Stangle)
+              weave = function(...) utils::Sweave(...),
+              tangle = function(...) utils::Stangle(...))
 
 
     function(name, weave, tangle, pattern = NULL, package = NULL) {

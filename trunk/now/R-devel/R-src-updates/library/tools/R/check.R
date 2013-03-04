@@ -2293,7 +2293,7 @@ setRlibs <-
                 file <- vigns$docs[i]
                 name <- vigns$names[i]
                 outputs[i] <- tryCatch({
-                    find_vignette_product(name, what="weave", final=TRUE, dir=dir)
+                    find_vignette_product(name, what="weave", final=TRUE, dir=dir, engine = engine)
                 }, error = function(ex) NA)
             }
             bad_vignettes <- vigns$docs[is.na(outputs)]
