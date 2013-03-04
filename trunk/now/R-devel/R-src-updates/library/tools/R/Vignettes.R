@@ -101,45 +101,7 @@ find_vignette_product <- function(name, by = c("weave", "tangle", "texi2pdf"), f
 }
 
 
-# Returns the (non-final) weave product based on the vignette source file
-# HB: This may be dropped, if we relax the requirement that weave/tangle
-#     must return their product filenames.
-default_vignette_weave_product <- function(file, workdir=c("cur", "src")) {
-    workdir <- match.arg(workdir)
-    patterns <- c(".tex"="[.][rRsS](nw|tex)$", ".html"="[.]Rmd$")
-    file <- sapply(file, FUN=function(file) {
-        for (i in seq_along(patterns)) {
-            if (regexpr(patterns[i], file) != -1L) {
-                return(gsub(patterns[i], names(patterns)[i], file))
-            }
-        }
-        stop("Vignette source ", sQuote(file), " has an unknown filename extension")
-    })
-    if (workdir == "cur")
-      file <- basename(file)
-    file
-}
 
-# Returns the (main) tangle product based on the vignette source file
-# HB: This may be dropped, if we relax the requirement that weave/tangle
-#     must return their product filenames.
-default_vignette_tangle_product <- function(file, workdir=c("cur", "src")) {
-    workdir <- match.arg(workdir)
-    patterns <- c(".R"="[.][rRsS](nw|tex)$", ".R"="[.]Rmd$")
-    file <- sapply(file, FUN=function(file) {
-        for (i in seq_along(patterns)) {
-            if (regexpr(patterns[i], file) != -1L)
-                return(gsub(patterns[i], names(patterns)[i], file))
-        }
-        stop("Vignette source ", sQuote(file), " has an unknown filename extension")
-    })
-    if (workdir == "cur")
-      file <- basename(file)
-    file
-}
-
-
-   
 ### * checkVignettes
 ###
 ### Run a tangle+source and a weave on all vignettes of a package.
@@ -975,15 +937,8 @@ vignetteEngine <- local({
     }
 
     setEngine(name = "Sweave", package = "utils", pattern = NULL, 
-        weave = function(file, ...) {
-            utils::Sweave(file, ...)
-            default_vignette_weave_product(file)
-        },
-        tangle = function(file, ...) {
-            utils::Stangle(file, ...)
-            default_vignette_tangle_product(file)
-        }
-    )
+              weave = utils::Sweave, tangle = utils::Stangle)
+
 
     function(name, weave, tangle = function(...) NULL, pattern = NULL, package = NULL) {
         if (missing(weave)) { # we're getting the engine
