@@ -633,9 +633,12 @@ function(dir, outDir, keep.source = TRUE)
 
     # Unless vignette weave products already exists
     tryCatch({
-        vigns <- pkgVignettes(dir = dir, subdirs = "doc", output = TRUE)
-        vignetteOutfiles <- file.path(outVignetteDir, basename(vigns$outputs))
-        upToDate <- file_test("-nt", vignetteOutfiles, vigns$docs)
+        vignsT <- pkgVignettes(dir = dir, subdirs = "doc", output = TRUE)
+        if (!is.null(vignsT)) {
+          vigns <- vignsT
+          vignetteOutfiles <- file.path(outVignetteDir, basename(vigns$outputs))
+          upToDate <- file_test("-nt", vignetteOutfiles, vigns$docs)
+       }
     }, error = function(ex) {})
 
     ## The primary use of this function is to build and install PDF
