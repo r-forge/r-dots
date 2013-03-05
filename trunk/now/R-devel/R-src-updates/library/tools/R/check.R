@@ -618,18 +618,6 @@ setRlibs <-
                 printLog(Log, paste(out, collapse = "\n"), "\n")
             }
         }
-        if(!is.na(vb <- db["VignetteBuilder"])) {
-            depends <- .get_requires_from_package_db(db, "Depends")
-            imports <- .get_requires_from_package_db(db, "Imports")
-            if (!vb %in% c(pkgname, imports, depends)) {
-                if(!any) noteLog(Log)
-                any <- TRUE
-                wrapLog(sprintf("Package %s is specified in field VignetteBuilder",
-                                sQuote(vb)),
-                        "but is in neither Imports nor Depends.",
-                        "\n")
-          }
-       }
 
         if (!any) resultLog(Log, "OK")
     }
@@ -2292,6 +2280,7 @@ setRlibs <-
             for (i in seq_along(vigns$docs)) {
                 file <- vigns$docs[i]
                 name <- vigns$names[i]
+                engine <- vignetteEngine(vigns$engines[i])
                 outputs[i] <- tryCatch({
                     find_vignette_product(name, what="weave", final=TRUE, dir=dir, engine = engine)
                 }, error = function(ex) NA)
