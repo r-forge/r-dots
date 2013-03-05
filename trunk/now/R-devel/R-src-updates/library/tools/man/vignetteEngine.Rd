@@ -5,13 +5,13 @@ Set or get a vignette processing engine.
 }
 \description{
 Vignettes are normally processed by \code{\link{Sweave}}, but package
-writers may choose to use a different engine (e.g. \code{knitr},
-\code{noweb} or \code{R.rsp}).  This function is used by those
-packages to register their engines, and internally by \R{} to retrieve
-them.
+writers may choose to use a different engine (e.g. one provided by the
+\pkg{knitr}, \pkg{noweb} or \pkg{R.rsp} packages).  This function
+is used by those packages to register their engines, and internally by
+\R{} to retrieve them.
 }
 \usage{
-vignetteEngine(name, weave, tangle = function(...) NULL, pattern = NULL, 
+vignetteEngine(name, weave, tangle, pattern = NULL, 
 	       package = NULL)
 }
 \arguments{
@@ -47,18 +47,20 @@ the documentation for \code{\link{Sweave}} and \code{\link{Stangle}}.
 
 The \code{weave} and \code{tangle} functions should return the
 filename of the output file that has been produced. Currently the
-\code{weave} function must produce a file with extension \file{.tex},
-\file{.pdf} or \file{.html}.  The \file{.tex} files will be processed
-by \command{pdflatex} to produce \file{.pdf} output for display to the
-user; the others will be displayed as produced.  The \code{tangle}
-function must produce a file with the \file{.R} extension containing
-executable \R{} code.
+\code{weave} function, when operating on a file named \file{<name>
+<pattern>} must produce a file named \file{<name>[.](tex|pdf|html)}.
+The \file{.tex} files will be processed by \command{pdflatex} to
+produce \file{.pdf} output for display to the user; the others will be
+displayed as produced.  The \code{tangle} function must produce a file
+named \file{<name>[.][rRsS]} containing the executable \R{} code from
+the vignette.  The \code{tangle} function may support a \code{split =
+TRUE} argument, and then it should produce files named
+\file{<name>.*[.][rRsS]}.
 
-The \code{pattern} argument gives a regular expression to match files
-which are to be processed as vignette input files.  If set to
-\code{NULL}, the default pattern \code{"[.][RrSs](nw|tex)$"} is used.
-
-
+The \code{pattern} argument gives a regular expression to match the
+extensions of files which are to be processed as vignette input files.
+If set to \code{NULL}, the default pattern \code{"[.][RrSs](nw|tex)$"}
+is used.
 }
 \value{
 If the engine is being deleted, \code{NULL}.  Otherwise a list containing components
