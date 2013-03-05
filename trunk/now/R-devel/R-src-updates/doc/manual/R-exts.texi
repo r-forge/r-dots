@@ -386,6 +386,8 @@ were @samp{0.1-0}.  It is @strong{not} a decimal number, so for example
 @code{0.9 < 0.75} since @code{9 < 75}.
 
 @c DESCRIPTION field License
+@c DESCRIPTION field License_is_FOSS
+@c DESCRIPTION field License_restricts_use
 The mandatory @samp{License} field should specify the license of the
 package in a standardized form.  Alternatives are indicated @emph{via}
 vertical bars.  Individual specifications must be one of
@@ -421,7 +423,7 @@ The string @samp{Unlimited}, meaning that there are no restrictions on
 distribution or use other than those imposed by relevant laws (including
 copyright laws).
 @end itemize
-If a package license restricts a base license (where permitted, e.g.,
+If a package license @emph{restricts} a base license (where permitted, e.g.,
 using GPL-3 or AGPL-3 with an attribution clause), the additional terms
 should be placed in file @file{LICENSE} (or @file{LICENCE}), and the
 string @samp{+ file LICENSE} (or @samp{+ file LICENCE}, respectively)
@@ -448,6 +450,14 @@ Please ensure that the license you choose also covers any dependencies
 (including system dependencies) of your package: it is particularly
 important that any restrictions on the use of such dependencies are
 evident to people reading your @file{DESCRIPTION} file.
+
+Fields @samp{License_is_FOSS} and @samp{License_restricts_use} may be
+added by repositories where information cannot be computed from the name
+of the license.  @samp{License_is_FOSS: yes} is used for licenses which
+are known to be FOSS, and @samp{License_restricts_use} can have values
+@samp{yes} or @samp{no} if the @file{LICENSE} file is known to restrict
+users or usage, or known not to.  These are used by, e.g.@:, the
+@code{available.packages} filters.
 
 @c DESCRIPTION field Description
 The mandatory @samp{Description} field should give a comprehensive
@@ -720,13 +730,13 @@ portable.  If a package has a specified encoding, you should run
 @command{R CMD build} etc in a locale using that encoding.)
 
 @c DESCRIPTION NeedsCompilation
-This should be set to @code{"yes"} if the package contains code which
-needs to be compiled, otherwise @code{"no"} (when the package would be
-able to be installed from source on any platform without additional
-tools).  This is used by @code{install.packages(type = "both")} in @R{}
->= 2.15.2 on platforms where binary packages are the norm: it is
-normally set by the repository assuming compilation is required if and
-only if the package has a @file{src} directory.
+The @samp{NeedsCompilation} field should be set to @code{"yes"} if the
+package contains code which to be compiled, otherwise @code{"no"} (when
+the package could be installed from source on any platform without
+additional tools).  This is used by @code{install.packages(type =
+"both")} in @R{} >= 2.15.2 on platforms where binary packages are the
+norm: it is normally set by the repository assuming compilation is
+required if and only if the package has a @file{src} directory.
 
 @c DESCRIPTION field OS_type
 The @samp{OS_type} field specifies the OS(es) for which the
@@ -1003,8 +1013,11 @@ in the installed package.
 
 @findex CITATION
 @cindex citation
-One thing you might like to add to @file{inst} is a @file{CITATION} file
-for use by the @code{citation} function.
+@findex NEWS.Rd
+@cindex news
+Things you might like to add to @file{inst} are a @file{CITATION} file
+for use by the @code{citation} function, and a @file{NEWS.Rd} file for
+use by the @code{news} function.
 
 @findex AUTHORS
 @findex COPYRIGHTS
@@ -3645,8 +3658,8 @@ PKG_CPPFLAGS = `gsl-config --cflags`
 
 @noindent
 which works in all versions of @command{make} known@footnote{GNU make,
-BSD make as in FreeBSD and @command{bsdmake} on Darwin, AT&T make as
-implemented on Solaris.} to be used with @R{}.
+BSD make as in FreeBSD, AT&T make as implemented on Solaris.} to be used
+with @R{}.
 
 If you really must assume GNU make, declare it in the @file{DESCRIPTON}
 file by
@@ -10568,11 +10581,11 @@ for example numerical linear algebra computations and special functions.
 
 The header files @file{R_ext/BLAS.h}, @file{R_ext/Lapack.h} and
 @file{R_ext/Linpack.h} contains declarations of the BLAS, LAPACK and
-LINPACK/EISPACK linear algebra functions included in @R{}.  These
-are expressed as calls to FORTRAN subroutines, and they will also be
-usable from users' FORTRAN code.  Although not part of the official
-@acronym{API}, this set of subroutines is unlikely to change (but might
-be supplemented).
+LINPACK linear algebra functions included in @R{}.  These are expressed
+as calls to FORTRAN subroutines, and they will also be usable from
+users' FORTRAN code.  Although not part of the official @acronym{API},
+this set of subroutines is unlikely to change (but might be
+supplemented).
 
 The header file @file{Rmath.h} lists many other functions that are
 available and documented in the following subsections. Many of these are
