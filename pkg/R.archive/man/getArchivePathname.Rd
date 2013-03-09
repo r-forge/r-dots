@@ -16,13 +16,15 @@
  Generates the pathname in the archive for a file based on its filename.
 }
 
-\usage{\method{getArchivePathname}{default}(filename, ..., mustNotExist=TRUE)}
+\usage{
+\method{getArchivePathname}{default}(filename, ..., mustNotExist=TRUE)
+}
 
 \arguments{
   \item{filename}{A \code{\link[base]{character}} string specifying the filename/pathname
      of the file to be archived, and on which the archived filename
      will be based on.}
-  \item{...}{Additional arguments passed to \code{\link{getArchivePath}}
+  \item{...}{Additional arguments passed to \code{\link{getArchivePath}}()
      and \code{\link{getArchiveFilename}}.}
   \item{mustNotExist}{If \code{\link[base:logical]{TRUE}} and there already exists a file with
      the same archive pathname, then an exception is thrown.}
@@ -32,7 +34,7 @@
   Returns the archive pathname as a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
  \code{\link{archiveFile}}().

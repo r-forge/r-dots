@@ -16,7 +16,9 @@
  Gets the path to the file archive directory.
 }
 
-\usage{\method{getArchivePath}{default}(dirs=NULL, ...)}
+\usage{
+\method{getArchivePath}{default}(dirs=NULL, ...)
+}
 
 \arguments{
   \item{dirs}{A \code{\link[base]{character}} \code{\link[base]{vector}} constituting the path to the
@@ -29,7 +31,7 @@
   Returns the archive path as a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link{getArchiveOption}}().

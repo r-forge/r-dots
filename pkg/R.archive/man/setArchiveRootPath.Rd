@@ -16,7 +16,9 @@
  Sets the root path to the file archive directory.
 }
 
-\usage{\method{setArchiveRootPath}{default}(path="~/.Rarchive", ...)}
+\usage{
+\method{setArchiveRootPath}{default}(path="~/.Rarchive", ...)
+}
 
 \arguments{
   \item{path}{The path.}
@@ -27,7 +29,7 @@
   Returns (invisibly) the old root path.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
  \code{\link{getArchiveRootPath}}().

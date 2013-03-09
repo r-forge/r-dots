@@ -16,7 +16,9 @@
  Generates a filename in the archive for a file based on an existing filename.
 }
 
-\usage{\method{getArchiveFilename}{default}(filename, ...)}
+\usage{
+\method{getArchiveFilename}{default}(filename, ...)
+}
 
 \arguments{
   \item{filename}{A \code{\link[base]{character}} string specifying the filename/pathname
@@ -29,7 +31,7 @@
   Returns the archive filename as a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link{getArchiveOption}}().

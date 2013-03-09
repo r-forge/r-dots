@@ -16,7 +16,9 @@
  Gets the root path to the file archive directory.
 }
 
-\usage{\method{getArchiveRootPath}{default}(defaultPath="~/.Rarchive", ...)}
+\usage{
+\method{getArchiveRootPath}{default}(defaultPath="~/.Rarchive", ...)
+}
 
 \arguments{
   \item{defaultPath}{The default path, if no user-specified directory
@@ -28,7 +30,7 @@
   Returns the archive root path as a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
  Too set the directory where archived files are stored,
