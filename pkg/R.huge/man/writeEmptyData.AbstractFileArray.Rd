@@ -9,9 +9,7 @@
 \name{writeEmptyData.AbstractFileArray}
 \alias{writeEmptyData.AbstractFileArray}
 \alias{AbstractFileArray.writeEmptyData}
-\alias{writeEmptyData.AbstractFileArray}
 \alias{writeEmptyData,AbstractFileArray-method}
-
 
 \title{Writes an empty data section to the data file of a file array}
 
@@ -19,7 +17,9 @@
  Writes an empty data section to the data file of a file array.
 }
 
-\usage{\method{writeEmptyData}{AbstractFileArray}(this, ...)}
+\usage{
+\method{writeEmptyData}{AbstractFileArray}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns nothing.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{AbstractFileArray}}.

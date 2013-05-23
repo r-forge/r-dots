@@ -9,9 +9,7 @@
 \name{writeAllValues.AbstractFileArray}
 \alias{writeAllValues.AbstractFileArray}
 \alias{AbstractFileArray.writeAllValues}
-\alias{writeAllValues.AbstractFileArray}
 \alias{writeAllValues,AbstractFileArray-method}
-
 
 \title{Writes all values to a file array}
 
@@ -19,7 +17,10 @@
  Writes all values to a file array.
 }
 
-\usage{\method{writeAllValues}{AbstractFileArray}(this, values, mode=getStorageMode(this), size=getBytesPerCell(this), offset=getDataOffset(this), ...)}
+\usage{
+\method{writeAllValues}{AbstractFileArray}(this, values, mode=getStorageMode(this), size=getBytesPerCell(this),
+  offset=getDataOffset(this), ...)
+}
 
 \arguments{
   \item{values}{A \code{\link[base]{numeric}} \code{\link[base]{vector}} of values to be assigned.}
@@ -33,7 +34,7 @@
   Returns nothing.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.huge:writeValues.AbstractFileArray]{*writeValues}()}.

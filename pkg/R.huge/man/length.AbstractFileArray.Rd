@@ -9,9 +9,7 @@
 \name{length.AbstractFileArray}
 \alias{length.AbstractFileArray}
 \alias{AbstractFileArray.length}
-\alias{length.AbstractFileArray}
 \alias{length,AbstractFileArray-method}
-
 
 \title{Gets the number of elements in a file array}
 
@@ -19,7 +17,9 @@
  Gets the number of elements in a file array.
 }
 
-\usage{\method{length}{AbstractFileArray}(x)}
+\usage{
+\method{length}{AbstractFileArray}(x)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns a \code{\link[base]{double}} (since the largest \code{\link[base]{integer}} is only 2147483648-1).
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.huge:dim.AbstractFileArray]{*dim}()}.

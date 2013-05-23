@@ -9,9 +9,7 @@
 \name{[< -.FileMatrix}
 \alias{[<-.FileMatrix}
 \alias{FileMatrix.[<-}
-\alias{[<-.FileMatrix}
 \alias{[<-,FileMatrix-method}
-
 
 \title{Assigns values to a subset of elements of a file matrix}
 
@@ -19,7 +17,9 @@
  Assigns values to a subset of elements of a file matrix.
 }
 
-\usage{\method{[}{FileMatrix}(this, i, j) <- value}
+\usage{
+\method{[}{FileMatrix}(this, i, j) <- value
+}
 
 \arguments{
   \item{i}{A \code{\link[base]{numeric}} \code{\link[base]{vector}} or row indices.}
@@ -31,7 +31,7 @@
  Returns itself.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.huge:000-LB-.FileMatrix]{*[}()}.

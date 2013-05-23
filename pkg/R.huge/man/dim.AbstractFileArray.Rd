@@ -9,9 +9,7 @@
 \name{dim.AbstractFileArray}
 \alias{dim.AbstractFileArray}
 \alias{AbstractFileArray.dim}
-\alias{dim.AbstractFileArray}
 \alias{dim,AbstractFileArray-method}
-
 
 \title{Gets the dimension of the file array}
 
@@ -19,13 +17,15 @@
  Gets the dimension of the file array.
 }
 
-\usage{\method{dim}{AbstractFileArray}(x)}
+\usage{
+\method{dim}{AbstractFileArray}(x)
+}
 
 \value{
  Returns a \code{\link[base]{double}} \code{\link[base]{vector}} of length two.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{AbstractFileArray}}.

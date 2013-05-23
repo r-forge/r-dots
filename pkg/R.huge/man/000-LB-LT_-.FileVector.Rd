@@ -9,9 +9,7 @@
 \name{[< -.FileVector}
 \alias{[<-.FileVector}
 \alias{FileVector.[<-}
-\alias{[<-.FileVector}
 \alias{[<-,FileVector-method}
-
 
 \title{Assigns values to a subset of elements of a file vector}
 
@@ -19,7 +17,9 @@
  Assigns values to a subset of elements of a file vector.
 }
 
-\usage{\method{[}{FileVector}(this, i=NULL) <- value}
+\usage{
+\method{[}{FileVector}(this, i=NULL) <- value
+}
 
 \arguments{
   \item{i}{A \code{\link[base]{numeric}} \code{\link[base]{vector}} or element indices.}
@@ -30,7 +30,7 @@
  Returns itself.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.huge:000-LB-.FileVector]{*[}()}.

@@ -9,9 +9,7 @@
 \name{getPath.AbstractFileArray}
 \alias{getPath.AbstractFileArray}
 \alias{AbstractFileArray.getPath}
-\alias{getPath.AbstractFileArray}
 \alias{getPath,AbstractFileArray-method}
-
 
 \title{Gets the path (directory) where the data file lives}
 
@@ -19,7 +17,9 @@
  Gets the path (directory) where the data file lives.
 }
 
-\usage{\method{getPath}{AbstractFileArray}(this, ...)}
+\usage{
+\method{getPath}{AbstractFileArray}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
   Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.huge:getPathname.AbstractFileArray]{*getPathname}()}.

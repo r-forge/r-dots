@@ -9,9 +9,7 @@
 \name{as.matrix.FileMatrix}
 \alias{as.matrix.FileMatrix}
 \alias{FileMatrix.as.matrix}
-\alias{as.matrix.FileMatrix}
 \alias{as.matrix,FileMatrix-method}
-
 
 \title{Returns the elements of a file matrix as an R matrix}
 
@@ -19,7 +17,9 @@
  Returns the elements of a file matrix as an R matrix, that is, imported into memory (if possible).
 }
 
-\usage{\method{as.matrix}{FileMatrix}(x, ...)}
+\usage{
+\method{as.matrix}{FileMatrix}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns a \code{\link[base]{matrix}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{FileMatrix}}.

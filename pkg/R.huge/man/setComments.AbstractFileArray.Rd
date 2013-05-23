@@ -9,9 +9,7 @@
 \name{setComments.AbstractFileArray}
 \alias{setComments.AbstractFileArray}
 \alias{AbstractFileArray.setComments}
-\alias{setComments.AbstractFileArray}
 \alias{setComments,AbstractFileArray-method}
-
 
 \title{Sets the comments for this file array}
 
@@ -19,7 +17,9 @@
  Sets the comments for this file array.
 }
 
-\usage{\method{setComments}{AbstractFileArray}(this, comments=NULL, ...)}
+\usage{
+\method{setComments}{AbstractFileArray}(this, comments=NULL, ...)
+}
 
 \arguments{
   \item{comments}{A \code{\link[base]{character}} \code{\link[base]{vector}} of new comments.}
@@ -30,7 +30,7 @@
   Returns (invisibly) the old comments.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.huge:getComments.AbstractFileArray]{*getComments}()}.

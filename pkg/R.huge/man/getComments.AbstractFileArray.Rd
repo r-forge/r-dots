@@ -9,9 +9,7 @@
 \name{getComments.AbstractFileArray}
 \alias{getComments.AbstractFileArray}
 \alias{AbstractFileArray.getComments}
-\alias{getComments.AbstractFileArray}
 \alias{getComments,AbstractFileArray-method}
-
 
 \title{Gets the comments for this file array}
 
@@ -19,7 +17,9 @@
  Gets the comments for this file array.
 }
 
-\usage{\method{getComments}{AbstractFileArray}(this, ...)}
+\usage{
+\method{getComments}{AbstractFileArray}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
   Returns a \code{\link[base]{character}} \code{\link[base]{vector}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.huge:setComments.AbstractFileArray]{*setComments}()}.

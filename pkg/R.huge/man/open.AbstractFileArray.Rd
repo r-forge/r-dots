@@ -9,9 +9,7 @@
 \name{open.AbstractFileArray}
 \alias{open.AbstractFileArray}
 \alias{AbstractFileArray.open}
-\alias{open.AbstractFileArray}
 \alias{open,AbstractFileArray-method}
-
 
 \title{Opens a connection to the data file of the file array}
 
@@ -19,7 +17,9 @@
  Opens a connection to the data file of the file array.
 }
 
-\usage{\method{open}{AbstractFileArray}(con, ...)}
+\usage{
+\method{open}{AbstractFileArray}(con, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns (invisibly) itself.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.huge:isOpen.AbstractFileArray]{*isOpen}()}.

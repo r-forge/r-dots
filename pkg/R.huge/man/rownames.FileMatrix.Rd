@@ -9,9 +9,7 @@
 \name{rownames.FileMatrix}
 \alias{rownames.FileMatrix}
 \alias{FileMatrix.rownames}
-\alias{rownames.FileMatrix}
 \alias{rownames,FileMatrix-method}
-
 
 \title{Gets the row names of a file matrix}
 
@@ -19,7 +17,9 @@
  Gets the row names of a file matrix.
 }
 
-\usage{\method{rownames}{FileMatrix}(this, ...)}
+\usage{
+\method{rownames}{FileMatrix}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns a \code{\link[base]{character}} \code{\link[base]{vector}}, or \code{\link[base]{NULL}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.huge:colnames.FileMatrix]{*colnames}()}.

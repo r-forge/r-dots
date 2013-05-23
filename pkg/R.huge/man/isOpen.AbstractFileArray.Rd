@@ -9,9 +9,7 @@
 \name{isOpen.AbstractFileArray}
 \alias{isOpen.AbstractFileArray}
 \alias{AbstractFileArray.isOpen}
-\alias{isOpen.AbstractFileArray}
 \alias{isOpen,AbstractFileArray-method}
-
 
 \title{Checks whether the data file of the file array is open or not}
 
@@ -19,7 +17,9 @@
  Checks whether the data file of the file array is open or not.
 }
 
-\usage{\method{isOpen}{AbstractFileArray}(this, ...)}
+\usage{
+\method{isOpen}{AbstractFileArray}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns nothing.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.huge:open.AbstractFileArray]{*open}()}.

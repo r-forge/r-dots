@@ -9,9 +9,7 @@
 \name{getStorageMode.AbstractFileArray}
 \alias{getStorageMode.AbstractFileArray}
 \alias{AbstractFileArray.getStorageMode}
-\alias{getStorageMode.AbstractFileArray}
 \alias{getStorageMode,AbstractFileArray-method}
-
 
 \title{Gets the storage mode of the file array}
 
@@ -19,7 +17,9 @@
  Gets the storage mode of the file array.
 }
 
-\usage{\method{getStorageMode}{AbstractFileArray}(this, ...)}
+\usage{
+\method{getStorageMode}{AbstractFileArray}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{AbstractFileArray}}.

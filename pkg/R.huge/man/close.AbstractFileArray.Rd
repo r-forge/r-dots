@@ -9,9 +9,7 @@
 \name{close.AbstractFileArray}
 \alias{close.AbstractFileArray}
 \alias{AbstractFileArray.close}
-\alias{close.AbstractFileArray}
 \alias{close,AbstractFileArray-method}
-
 
 \title{Closes a connection to the data file of the file array}
 
@@ -19,7 +17,9 @@
  Closes a connection to the data file of the file array.
 }
 
-\usage{\method{close}{AbstractFileArray}(con, ...)}
+\usage{
+\method{close}{AbstractFileArray}(con, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -30,7 +30,7 @@
  an exception is thrown.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.huge:isOpen.AbstractFileArray]{*isOpen}()}.

@@ -9,9 +9,7 @@
 \name{writeHeader.AbstractFileArray}
 \alias{writeHeader.AbstractFileArray}
 \alias{AbstractFileArray.writeHeader}
-\alias{writeHeader.AbstractFileArray}
 \alias{writeHeader,AbstractFileArray-method}
-
 
 \title{Writes the header of a file array to file}
 
@@ -19,7 +17,9 @@
  Writes the header of a file array to file.
 }
 
-\usage{\method{writeHeader}{AbstractFileArray}(this, ...)}
+\usage{
+\method{writeHeader}{AbstractFileArray}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns nothing.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.huge:writeHeader.AbstractFileArray]{*writeHeader}()}.

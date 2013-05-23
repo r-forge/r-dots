@@ -9,9 +9,7 @@
 \name{readHeader.AbstractFileArray}
 \alias{readHeader.AbstractFileArray}
 \alias{AbstractFileArray.readHeader}
-\alias{readHeader.AbstractFileArray}
 \alias{readHeader,AbstractFileArray-method}
-
 
 \title{Read the header of a file array data file}
 
@@ -19,7 +17,9 @@
  Read the header of a file array data file.
 }
 
-\usage{\method{readHeader}{AbstractFileArray}(this, ...)}
+\usage{
+\method{readHeader}{AbstractFileArray}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns \code{\link[base]{list}} structure.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.huge:writeHeader.AbstractFileArray]{*writeHeader}()}.

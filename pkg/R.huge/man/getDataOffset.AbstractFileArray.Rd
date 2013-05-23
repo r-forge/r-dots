@@ -9,9 +9,7 @@
 \name{getDataOffset.AbstractFileArray}
 \alias{getDataOffset.AbstractFileArray}
 \alias{AbstractFileArray.getDataOffset}
-\alias{getDataOffset.AbstractFileArray}
 \alias{getDataOffset,AbstractFileArray-method}
-
 
 \title{Gets file position of the data section in a file array}
 
@@ -19,7 +17,9 @@
  Gets file position of the data section in a file array.
 }
 
-\usage{\method{getDataOffset}{AbstractFileArray}(this, ...)}
+\usage{
+\method{getDataOffset}{AbstractFileArray}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns a \code{\link[base]{double}} (since the largest \code{\link[base]{integer}} is only 2147483648-1).
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{AbstractFileArray}}.

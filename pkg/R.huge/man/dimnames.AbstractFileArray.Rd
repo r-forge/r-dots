@@ -9,9 +9,7 @@
 \name{dimnames.AbstractFileArray}
 \alias{dimnames.AbstractFileArray}
 \alias{AbstractFileArray.dimnames}
-\alias{dimnames.AbstractFileArray}
 \alias{dimnames,AbstractFileArray-method}
-
 
 \title{Gets the dimension names of a file array}
 
@@ -19,7 +17,9 @@
  Gets the dimension names of a file array.
 }
 
-\usage{\method{dimnames}{AbstractFileArray}(x)}
+\usage{
+\method{dimnames}{AbstractFileArray}(x)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns a \code{\link[base]{character}} \code{\link[base]{vector}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{AbstractFileArray}}.

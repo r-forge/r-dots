@@ -9,9 +9,7 @@
 \name{names.FileVector}
 \alias{names.FileVector}
 \alias{FileVector.names}
-\alias{names.FileVector}
 \alias{names,FileVector-method}
-
 
 \title{Gets the element names of a file vector}
 
@@ -19,7 +17,9 @@
  Gets the element names of a file vector.
 }
 
-\usage{\method{names}{FileVector}(x, ...)}
+\usage{
+\method{names}{FileVector}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns a \code{\link[base]{character}} \code{\link[base]{vector}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{FileVector}}.

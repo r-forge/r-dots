@@ -35,7 +35,11 @@ extends \link[R.oo]{Object}\cr
  For a matrix data type, see \code{\link{FileMatrix}}.
 }
 
-\usage{AbstractFileArray(filename=NULL, path=NULL, storageMode=c("integer", "double"), bytesPerCell=1, dim=NULL, dimnames=NULL, dimOrder=NULL, comments=NULL, nbrOfFreeBytes=4096)}
+\usage{
+AbstractFileArray(filename=NULL, path=NULL, storageMode=c("integer", "double"),
+  bytesPerCell=1, dim=NULL, dimnames=NULL, dimOrder=NULL, comments=NULL,
+  nbrOfFreeBytes=4096)
+}
 
 \arguments{
  \item{filename}{The name of the file storing the data.}
@@ -98,6 +102,7 @@ extends \link[R.oo]{Object}\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
+
 }
 
 \details{
@@ -143,7 +148,7 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCa
   4GB (2GB?).  On Windows NTFS the limit is in practice ~16TB.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \references{
  [1] New Technology File System (NTFS), Wikipedia, 2006

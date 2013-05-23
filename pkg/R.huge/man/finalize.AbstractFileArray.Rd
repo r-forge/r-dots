@@ -9,9 +9,7 @@
 \name{finalize.AbstractFileArray}
 \alias{finalize.AbstractFileArray}
 \alias{AbstractFileArray.finalize}
-\alias{finalize.AbstractFileArray}
 \alias{finalize,AbstractFileArray-method}
-
 
 \title{Internal: Clean up when file array is deallocated from memory}
 
@@ -19,7 +17,9 @@
  Internal: Clean up when file array is deallocated from memory.
 }
 
-\usage{\method{finalize}{AbstractFileArray}(this, ...)}
+\usage{
+\method{finalize}{AbstractFileArray}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -34,7 +34,7 @@
   if it is open.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{AbstractFileArray}}.

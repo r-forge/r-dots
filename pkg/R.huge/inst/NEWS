@@ -1,6 +1,10 @@
 Package: R.huge
 ===============
 
+Version: 0.4.3 [2013-05-20]
+o CRAN POLICY: Now all Rd \usage{} lines are at most 90 characters long.
+
+
 Version: 0.4.2 [2012-10-16]
 o ROBUSTNESS/BUG FIX: No longer passing '...' to NextMethod(), cf.
   R-devel thread 'Do *not* pass '...' to NextMethod() - it'll do it 

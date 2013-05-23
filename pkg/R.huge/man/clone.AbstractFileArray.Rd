@@ -9,9 +9,7 @@
 \name{clone.AbstractFileArray}
 \alias{clone.AbstractFileArray}
 \alias{AbstractFileArray.clone}
-\alias{clone.AbstractFileArray}
 \alias{clone,AbstractFileArray-method}
-
 
 \title{Clones a file array}
 
@@ -19,7 +17,9 @@
  Clones a file array including the file on the file system.
 }
 
-\usage{\method{clone}{AbstractFileArray}(con, copyData=TRUE, ...)}
+\usage{
+\method{clone}{AbstractFileArray}(con, copyData=TRUE, ...)
+}
 
 \arguments{
   \item{copyData}{If \code{\link[base:logical]{TRUE}}, also the data file is copied, otherwise not.}
@@ -30,7 +30,7 @@
   Returns the new \code{\link{AbstractFileArray}} object.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{AbstractFileArray}}.

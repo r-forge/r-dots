@@ -9,9 +9,7 @@
 \name{getBytesPerCell.AbstractFileArray}
 \alias{getBytesPerCell.AbstractFileArray}
 \alias{AbstractFileArray.getBytesPerCell}
-\alias{getBytesPerCell.AbstractFileArray}
 \alias{getBytesPerCell,AbstractFileArray-method}
-
 
 \title{Gets the number of bytes per element in a file array}
 
@@ -19,7 +17,9 @@
  Gets the number of bytes per element in a file array.
 }
 
-\usage{\method{getBytesPerCell}{AbstractFileArray}(this, ...)}
+\usage{
+\method{getBytesPerCell}{AbstractFileArray}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -33,7 +33,7 @@
  In \R, an \code{\link[base]{integer}}
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{AbstractFileArray}}.

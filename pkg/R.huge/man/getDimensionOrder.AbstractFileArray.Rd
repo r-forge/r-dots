@@ -9,9 +9,7 @@
 \name{getDimensionOrder.AbstractFileArray}
 \alias{getDimensionOrder.AbstractFileArray}
 \alias{AbstractFileArray.getDimensionOrder}
-\alias{getDimensionOrder.AbstractFileArray}
 \alias{getDimensionOrder,AbstractFileArray-method}
-
 
 \title{Gets the order of dimension}
 
@@ -19,7 +17,9 @@
  Gets the order of dimension.
 }
 
-\usage{\method{getDimensionOrder}{AbstractFileArray}(this, ...)}
+\usage{
+\method{getDimensionOrder}{AbstractFileArray}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns an \code{\link[base]{numeric}} \code{\link[base]{vector}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{AbstractFileArray}}.

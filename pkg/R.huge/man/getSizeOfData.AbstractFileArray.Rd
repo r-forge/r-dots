@@ -9,9 +9,7 @@
 \name{getSizeOfData.AbstractFileArray}
 \alias{getSizeOfData.AbstractFileArray}
 \alias{AbstractFileArray.getSizeOfData}
-\alias{getSizeOfData.AbstractFileArray}
 \alias{getSizeOfData,AbstractFileArray-method}
-
 
 \title{Gets the size of the data section in bytes}
 
@@ -19,7 +17,9 @@
  Gets the size of the data section in bytes.
 }
 
-\usage{\method{getSizeOfData}{AbstractFileArray}(this, ...)}
+\usage{
+\method{getSizeOfData}{AbstractFileArray}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns a \code{\link[base]{double}} (since the largest \code{\link[base]{integer}} is only 2147483648-1).
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.huge:getBytesPerCell.AbstractFileArray]{*getBytesPerCell}()}.

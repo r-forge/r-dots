@@ -9,9 +9,7 @@
 \name{getCloneNumber.AbstractFileArray}
 \alias{getCloneNumber.AbstractFileArray}
 \alias{AbstractFileArray.getCloneNumber}
-\alias{getCloneNumber.AbstractFileArray}
 \alias{getCloneNumber,AbstractFileArray-method}
-
 
 \title{Gets the clone number of the file array}
 
@@ -19,7 +17,9 @@
  Gets the clone number of the file array.
 }
 
-\usage{\method{getCloneNumber}{AbstractFileArray}(this, ...)}
+\usage{
+\method{getCloneNumber}{AbstractFileArray}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
   Returns an \code{\link[base]{integer}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{AbstractFileArray}}.

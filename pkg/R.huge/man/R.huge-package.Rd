@@ -18,7 +18,7 @@
   \emph{This package has been deprecated. Do not start building new
   projects based on it.}
 
-  THIS PACKAGE HAS BEEN DEPRECATED. Do not start building new projects based on it. Cross-platform alternatives are the following packages: bigmemory (CRAN), ff (CRAN), BufferedMatrix (BioConductor).  The main usage of it was inside the aroma.affymetrix package. (The package currently provides a class representing a matrix where the actual data is stored in a binary format on the local file system.  This way the size limit of the data is set by the file system and not the memory.)
+  THIS PACKAGE HAS BEEN DEPRECATED. Do not start building         new projects based on it. Cross-platform alternatives are the         following packages: bigmemory (CRAN), ff (CRAN), BufferedMatrix         (BioConductor).  The main usage of it was inside the         aroma.affymetrix package. (The package currently provides a         class representing a matrix where the actual data is stored in         a binary format on the local file system.  This way the size         limit of the data is set by the file system and not the         memory.)
 }
 
 \section{Requirements}{
@@ -43,7 +43,7 @@
   Please cite [1] below.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \section{License}{
   The releases of this package is licensed under

@@ -9,9 +9,7 @@
 \name{getPathname.AbstractFileArray}
 \alias{getPathname.AbstractFileArray}
 \alias{AbstractFileArray.getPathname}
-\alias{getPathname.AbstractFileArray}
 \alias{getPathname,AbstractFileArray-method}
-
 
 \title{Gets the full pathname to the data file}
 
@@ -19,7 +17,9 @@
  Gets the full pathname to the data file.
 }
 
-\usage{\method{getPathname}{AbstractFileArray}(this, ...)}
+\usage{
+\method{getPathname}{AbstractFileArray}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
   Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.huge:getPath.AbstractFileArray]{*getPath}()}.

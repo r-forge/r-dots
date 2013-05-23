@@ -9,9 +9,7 @@
 \name{ncol.FileMatrix}
 \alias{ncol.FileMatrix}
 \alias{FileMatrix.ncol}
-\alias{ncol.FileMatrix}
 \alias{ncol,FileMatrix-method}
-
 
 \title{Gets the number of columns of the matrix}
 
@@ -19,7 +17,9 @@
  Gets the number of columns of the matrix.
 }
 
-\usage{\method{ncol}{FileMatrix}(this, ...)}
+\usage{
+\method{ncol}{FileMatrix}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns a \code{\link[base]{double}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{FileMatrix}}.

@@ -9,9 +9,7 @@
 \name{as.character.AbstractFileArray}
 \alias{as.character.AbstractFileArray}
 \alias{AbstractFileArray.as.character}
-\alias{as.character.AbstractFileArray}
 \alias{as.character,AbstractFileArray-method}
-
 
 \title{Returns a short string describing the file array}
 
@@ -19,7 +17,9 @@
  Returns a short string describing the file array.
 }
 
-\usage{\method{as.character}{AbstractFileArray}(x, ...)}
+\usage{
+\method{as.character}{AbstractFileArray}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{AbstractFileArray}}.

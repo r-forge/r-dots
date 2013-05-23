@@ -9,9 +9,7 @@
 \name{getBasename.AbstractFileArray}
 \alias{getBasename.AbstractFileArray}
 \alias{AbstractFileArray.getBasename}
-\alias{getBasename.AbstractFileArray}
 \alias{getBasename,AbstractFileArray-method}
-
 
 \title{Gets the basename (filename) of the data file}
 
@@ -19,7 +17,9 @@
  Gets the basename (filename) of the data file.
 }
 
-\usage{\method{getBasename}{AbstractFileArray}(this, ...)}
+\usage{
+\method{getBasename}{AbstractFileArray}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
   Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.huge:getPathname.AbstractFileArray]{*getPathname}()}.

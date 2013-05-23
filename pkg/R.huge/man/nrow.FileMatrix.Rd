@@ -9,9 +9,7 @@
 \name{nrow.FileMatrix}
 \alias{nrow.FileMatrix}
 \alias{FileMatrix.nrow}
-\alias{nrow.FileMatrix}
 \alias{nrow,FileMatrix-method}
-
 
 \title{Gets the number of rows of the matrix}
 
@@ -19,7 +17,9 @@
  Gets the number of rows of the matrix.
 }
 
-\usage{\method{nrow}{FileMatrix}(this, ...)}
+\usage{
+\method{nrow}{FileMatrix}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns a \code{\link[base]{double}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{FileMatrix}}.

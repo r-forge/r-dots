@@ -9,9 +9,7 @@
 \name{rowMeans.FileMatrix}
 \alias{rowMeans.FileMatrix}
 \alias{FileMatrix.rowMeans}
-\alias{rowMeans.FileMatrix}
 \alias{rowMeans,FileMatrix-method}
-
 
 \title{Calculates the means for each row}
 
@@ -19,7 +17,9 @@
  Calculates the means for each row.
 }
 
-\usage{\method{rowMeans}{FileMatrix}(x, ..., doCount=FALSE)}
+\usage{
+\method{rowMeans}{FileMatrix}(x, ..., doCount=FALSE)
+}
 
 \arguments{
   \item{...}{Arguments passed to \code{\link[R.huge:rowSums.FileMatrix]{*rowSums}()}.}
@@ -31,7 +31,7 @@
  Returns a \code{\link[base]{numeric}} \code{\link[base]{vector}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.huge:rowSums.FileMatrix]{*rowSums}()}.

@@ -9,9 +9,7 @@
 \name{readAllValues.AbstractFileArray}
 \alias{readAllValues.AbstractFileArray}
 \alias{AbstractFileArray.readAllValues}
-\alias{readAllValues.AbstractFileArray}
 \alias{readAllValues,AbstractFileArray-method}
-
 
 \title{Reads all values in the file array}
 
@@ -19,7 +17,10 @@
  Reads all values in the file array.
 }
 
-\usage{\method{readAllValues}{AbstractFileArray}(this, mode=getStorageMode(this), size=getBytesPerCell(this), offset=getDataOffset(this), ..., .checkArgs=FALSE)}
+\usage{
+\method{readAllValues}{AbstractFileArray}(this, mode=getStorageMode(this), size=getBytesPerCell(this),
+  offset=getDataOffset(this), ..., .checkArgs=FALSE)
+}
 
 \arguments{
   \item{mode}{The storage mode to read.}
@@ -33,7 +34,7 @@
  Returns a \code{\link[base]{numeric}} \code{\link[base]{vector}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link{readValues}}().

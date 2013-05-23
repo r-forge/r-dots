@@ -9,9 +9,7 @@
 \name{rowSums.FileMatrix}
 \alias{rowSums.FileMatrix}
 \alias{FileMatrix.rowSums}
-\alias{rowSums.FileMatrix}
 \alias{rowSums,FileMatrix-method}
-
 
 \title{Calculates the sum for each row}
 
@@ -19,7 +17,9 @@
  Calculates the sum for each row.
 }
 
-\usage{\method{rowSums}{FileMatrix}(x, na.rm=FALSE, doCount=FALSE, rows=NULL, columns=NULL, ...)}
+\usage{
+\method{rowSums}{FileMatrix}(x, na.rm=FALSE, doCount=FALSE, rows=NULL, columns=NULL, ...)
+}
 
 \arguments{
   \item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link[base]{NA}} values are excluded.}
@@ -36,7 +36,7 @@
  Returns a \code{\link[base]{numeric}} \code{\link[base]{vector}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.huge:rowMeans.FileMatrix]{*rowMeans}()}.

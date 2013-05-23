@@ -9,9 +9,7 @@
 \name{writeValues.AbstractFileArray}
 \alias{writeValues.AbstractFileArray}
 \alias{AbstractFileArray.writeValues}
-\alias{writeValues.AbstractFileArray}
 \alias{writeValues,AbstractFileArray-method}
-
 
 \title{Writes values to a file array}
 
@@ -19,7 +17,10 @@
  Writes values to a file array.
 }
 
-\usage{\method{writeValues}{AbstractFileArray}(this, indices=NULL, values, mode=getStorageMode(this), size=getBytesPerCell(this), offset=getDataOffset(this), order=FALSE, ...)}
+\usage{
+\method{writeValues}{AbstractFileArray}(this, indices=NULL, values, mode=getStorageMode(this),
+  size=getBytesPerCell(this), offset=getDataOffset(this), order=FALSE, ...)
+}
 
 \arguments{
   \item{indices}{An \code{\link[base]{integer}} \code{\link[base]{vector}} of indices to be updated.
@@ -36,7 +37,7 @@
   Returns nothing.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.huge:writeAllValues.AbstractFileArray]{*writeAllValues}()}.

@@ -37,7 +37,9 @@ extends \link[R.huge]{AbstractFileArray}\cr
 
 }
 
-\usage{FileMatrix(..., nrow=NULL, ncol=NULL, rownames=NULL, colnames=NULL, byrow=FALSE)}
+\usage{
+FileMatrix(..., nrow=NULL, ncol=NULL, rownames=NULL, colnames=NULL, byrow=FALSE)
+}
 
 \arguments{
  \item{...}{Arguments passed to \code{\link{AbstractFileArray}}.}
@@ -65,8 +67,8 @@ extends \link[R.huge]{AbstractFileArray}\cr
  \tab \code{readFullMatrix} \tab  -\cr
  \tab \code{readValues} \tab  -\cr
  \tab \code{\link[R.huge:rowMeans.FileMatrix]{rowMeans}} \tab Calculates the means for each row.\cr
- \tab \code{\link[R.huge:rownames.FileMatrix]{rownames}} \tab Gets the row names of a file matrix.\cr
  \tab \code{\link[R.huge:rowSums.FileMatrix]{rowSums}} \tab Calculates the sum for each row.\cr
+ \tab \code{\link[R.huge:rownames.FileMatrix]{rownames}} \tab Gets the row names of a file matrix.\cr
  \tab \code{writeValues} \tab  -\cr
 }
 
@@ -76,6 +78,7 @@ as.character, as.vector, clone, close, delete, dim, dimnames, finalize, flush, g
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+
 
 
 }
@@ -190,7 +193,7 @@ delete(X);
 gc();
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

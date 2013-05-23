@@ -9,9 +9,7 @@
 \name{as.character.FileMatrix}
 \alias{as.character.FileMatrix}
 \alias{FileMatrix.as.character}
-\alias{as.character.FileMatrix}
 \alias{as.character,FileMatrix-method}
-
 
 \title{Returns a short string describing the file matrix}
 
@@ -19,7 +17,9 @@
  Returns a short string describing the file matrix.
 }
 
-\usage{\method{as.character}{FileMatrix}(x, ...)}
+\usage{
+\method{as.character}{FileMatrix}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{FileMatrix}}.

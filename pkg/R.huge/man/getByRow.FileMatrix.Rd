@@ -9,9 +9,7 @@
 \name{getByRow.FileMatrix}
 \alias{getByRow.FileMatrix}
 \alias{FileMatrix.getByRow}
-\alias{getByRow.FileMatrix}
 \alias{getByRow,FileMatrix-method}
-
 
 \title{Checks if elements are stored row by row or not}
 
@@ -19,7 +17,9 @@
  Checks if elements are stored row by row or not.
 }
 
-\usage{\method{getByRow}{FileMatrix}(this, ...)}
+\usage{
+\method{getByRow}{FileMatrix}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns \code{\link[base:logical]{TRUE}} if the elements are stored row by row, otherwise \code{\link[base:logical]{FALSE}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{FileMatrix}}.

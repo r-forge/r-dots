@@ -9,9 +9,7 @@
 \name{delete.AbstractFileArray}
 \alias{delete.AbstractFileArray}
 \alias{AbstractFileArray.delete}
-\alias{delete.AbstractFileArray}
 \alias{delete,AbstractFileArray-method}
-
 
 \title{Deletes the file array from the file system}
 
@@ -20,7 +18,9 @@
  If the file array is open, it is first closed.
 }
 
-\usage{\method{delete}{AbstractFileArray}(this, ...)}
+\usage{
+\method{delete}{AbstractFileArray}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -31,7 +31,7 @@
   not exist in the first place), otherwise \code{\link[base:logical]{FALSE}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{AbstractFileArray}}.

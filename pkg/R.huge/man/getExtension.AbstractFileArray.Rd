@@ -9,9 +9,7 @@
 \name{getExtension.AbstractFileArray}
 \alias{getExtension.AbstractFileArray}
 \alias{AbstractFileArray.getExtension}
-\alias{getExtension.AbstractFileArray}
 \alias{getExtension,AbstractFileArray-method}
-
 
 \title{Gets the filename extension of the file array}
 
@@ -19,7 +17,9 @@
  Gets the filename extension of the file array.
 }
 
-\usage{\method{getExtension}{AbstractFileArray}(this, ...)}
+\usage{
+\method{getExtension}{AbstractFileArray}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
   Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.huge:getName.AbstractFileArray]{*getName}()}.

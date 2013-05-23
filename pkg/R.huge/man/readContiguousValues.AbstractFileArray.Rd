@@ -9,9 +9,7 @@
 \name{readContiguousValues.AbstractFileArray}
 \alias{readContiguousValues.AbstractFileArray}
 \alias{AbstractFileArray.readContiguousValues}
-\alias{readContiguousValues.AbstractFileArray}
 \alias{readContiguousValues,AbstractFileArray-method}
-
 
 \title{Reads sets of contiguous values in the file array}
 
@@ -22,7 +20,10 @@
  each value separately.
 }
 
-\usage{\method{readContiguousValues}{AbstractFileArray}(this, indices, lengths=1, mode=getStorageMode(this), size=getBytesPerCell(this), offset=getDataOffset(this), ..., .checkArgs=TRUE)}
+\usage{
+\method{readContiguousValues}{AbstractFileArray}(this, indices, lengths=1, mode=getStorageMode(this),
+  size=getBytesPerCell(this), offset=getDataOffset(this), ..., .checkArgs=TRUE)
+}
 
 \arguments{
   \item{indices}{A \code{\link[base]{numeric}} \code{\link[base]{vector}} of start (first) indices in each of
@@ -40,7 +41,7 @@
  Returns a \code{\link[base]{numeric}} \code{\link[base]{vector}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.huge:readAllValues.AbstractFileArray]{*readAllValues}()} and \code{\link{readValues}}().

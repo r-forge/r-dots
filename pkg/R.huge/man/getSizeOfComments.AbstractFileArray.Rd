@@ -9,9 +9,7 @@
 \name{getSizeOfComments.AbstractFileArray}
 \alias{getSizeOfComments.AbstractFileArray}
 \alias{AbstractFileArray.getSizeOfComments}
-\alias{getSizeOfComments.AbstractFileArray}
 \alias{getSizeOfComments,AbstractFileArray-method}
-
 
 \title{Gets the number of bytes the comments occupies}
 
@@ -19,7 +17,9 @@
  Gets the number of bytes the comments occupies.
 }
 
-\usage{\method{getSizeOfComments}{AbstractFileArray}(this, comments=this$header$comments, ...)}
+\usage{
+\method{getSizeOfComments}{AbstractFileArray}(this, comments=this$header$comments, ...)
+}
 
 \arguments{
   \item{comments}{The comments to be measured.}
@@ -30,7 +30,7 @@
   Returns an \code{\link[base]{integer}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{AbstractFileArray}}.
