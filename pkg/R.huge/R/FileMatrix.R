@@ -18,7 +18,7 @@
 #  \item{...}{Arguments passed to @see "AbstractFileArray".}
 #  \item{nrow, ncol}{The number of rows and columns of the matrix.}
 #  \item{rownames, colnames}{Optional row and column names.}
-#  \item{byrow}{If @TRUE, data are stored row by row, otherwise column 
+#  \item{byrow}{If @TRUE, data are stored row by row, otherwise column
 #      by column.}
 # }
 #
@@ -28,7 +28,7 @@
 # }
 #
 # \details{
-#   The purpose of this class is to be able to work with large matrices 
+#   The purpose of this class is to be able to work with large matrices
 #   in \R without being limited by the amount of memory available.
 #   Matrices are kept on the file system and elements are read and written
 #   whenever queried.  The purpose of the class is \emph{not} to provide
@@ -46,9 +46,9 @@
 # \section{Supported data types}{
 #   The following subclasses implement support for various data types:
 #   \itemize{
-#    \item \code{FileByteMatrix} (1 byte per element), 
-#    \item \code{FileShortMatrix} (2 bytes per element), 
-#    \item \code{FileIntegerMatrix} (4 bytes per element), 
+#    \item \code{FileByteMatrix} (1 byte per element),
+#    \item \code{FileShortMatrix} (2 bytes per element),
+#    \item \code{FileIntegerMatrix} (4 bytes per element),
 #    \item \code{FileFloatMatrix} (4 bytes per element), and
 #    \item \code{FileDoubleMatrix} (8 bytes per element).
 #   }
@@ -59,7 +59,7 @@
 # @author
 #
 # @visibility public
-#*/########################################################################### 
+#*/###########################################################################
 setConstructorS3("FileMatrix", function(..., nrow=NULL, ncol=NULL, rownames=NULL, colnames=NULL, byrow=FALSE) {
 
   dim <- c(nrow, ncol);
@@ -325,7 +325,7 @@ setMethodS3("getOffset", "FileMatrix", function(this, rows, cols, offset=getData
 setMethodS3("writeValues", "FileMatrix", function(this, rows, cols, values, order=FALSE, ...) {
   con <- this$con;
 
-  # Transform values to correct storage mode  
+  # Transform values to correct storage mode
   storage.mode(values) <- getStorageMode(this);
 
   # Get offsets for each of the values
@@ -513,7 +513,7 @@ setMethodS3("[", "FileMatrix", function(this, i, j, drop=FALSE) {
   nrow <- res$nrow;
   byrow <- res$byrow;
   size <- res$bytesPerCell;
-  rm(res);
+  res <- NULL; # Not needed anymore
 
   if (byrow) {
     i <- (i-as.integer(1))*ncol;
@@ -524,14 +524,14 @@ setMethodS3("[", "FileMatrix", function(this, i, j, drop=FALSE) {
   # Get the location of all cells to be read
   idxs <- outer(i, j, FUN="+");
   idxs <- as.vector(idxs);
-  rm(i, j);
+  i <- j <- NULL; # Not needed anymore
 
   # Move to the data section
   con <- this$con;
   seek(con=con, where=getDataOffset(this), rw="read");
 
   mode <- getStorageMode(this);
-  res <- readBinFragments(con=con, what=mode, size=size, 
+  res <- readBinFragments(con=con, what=mode, size=size,
                           idxs=idxs, origin="current");
   dim(res) <- c(ni, nj);
 
@@ -549,8 +549,8 @@ setMethodS3("[", "FileMatrix", function(this, i, j, drop=FALSE) {
   if (drop) {
     if (ni <= 1 || nj <= 1)
       dim(res) <- NULL;
-  } 
-  
+  }
+
   res;
 }) # "["()
 
@@ -631,7 +631,7 @@ setMethodS3("[<-", "FileMatrix", function(this, i, j, value) {
   nrow <- res$nrow;
   byrow <- res$byrow;
   size <- res$bytesPerCell;
-  rm(res);
+  res <- NULL; # Not needed anymore
 
   if (byrow) {
     i <- (i-as.integer(1))*ncol;
@@ -642,7 +642,7 @@ setMethodS3("[<-", "FileMatrix", function(this, i, j, value) {
   # Get the location of all cells to be read
   idxs <- outer(i, j, FUN="+");
   idxs <- as.vector(idxs);
-  rm(i, j);
+  i <- j <- NULL; # Not needed anymore
 
   # Coerce input data
   storage.mode(value) <- getStorageMode(this);
@@ -726,7 +726,7 @@ setMethodS3("rowSums", "FileMatrix", function(x, na.rm=FALSE, doCount=FALSE, row
     sums <- rep(NA, length=nrow);
     counts <- rep(0, length=nrow);
     if (na.rm) {
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Remove NAs before summing
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       for (rr in rows) {
@@ -735,12 +735,12 @@ setMethodS3("rowSums", "FileMatrix", function(x, na.rm=FALSE, doCount=FALSE, row
         if (doCount)
           counts[rr] <- sum(ok);
         sums[rr] <- sum(values[ok], na.rm=FALSE);
-        rm(values);
+        values <- NULL; # Not needed anymore
       } # for (rr in ...)
     } else {
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Sum with NAs
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       for (rr in rows) {
         sums[rr] <- sum(this[rr,columns,drop=TRUE], na.rm=FALSE);
       } # for (rr in ...)
@@ -748,7 +748,7 @@ setMethodS3("rowSums", "FileMatrix", function(x, na.rm=FALSE, doCount=FALSE, row
   } else {
     sums <- NULL;
     if (na.rm) {
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Remove NAs before summing
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       for (cc in columns) {
@@ -761,25 +761,25 @@ setMethodS3("rowSums", "FileMatrix", function(x, na.rm=FALSE, doCount=FALSE, row
         } else {
           # NAs in current
           newNAs <- is.na(values);
-  
+
           # (i) Sum elements with NAs can be assign with the new values
           sums[currNAs] <- values[currNAs];
-  
+
           # NAs after adding this column
           currNAs <- (currNAs & newNAs);
-  
+
           # (ii) Remaining non-NAs elements can be added
           sums[!currNAs] <- sums[!currNAs] + values[!currNAs];
-  
+
           if (doCount)
             counts <- counts + as.integer(!newNAs);
         }
-        rm(values);
+        values <- NULL; # Not needed anymore
       } # for (cc in ...)
     } else {
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Sum with NAs
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       for (cc in columns) {
         values <- this[rows,cc,drop=TRUE];
         if (cc == columns[1]) {
@@ -787,11 +787,11 @@ setMethodS3("rowSums", "FileMatrix", function(x, na.rm=FALSE, doCount=FALSE, row
         } else {
           sums <- sums + values;
         }
-        rm(values);
+        values <- NULL; # Not needed anymore
       } # for (cc in ...)
     } # if (na.rm)
   } # if (getByRow(this))
-  
+
   # Return counts too?
   if (doCount) {
     if (!na.rm)
@@ -869,7 +869,7 @@ setMethodS3("rowMeans", "FileMatrix", function(x, ..., doCount=FALSE) {
 #   only by the file system.
 # o Added some Rdoc comments.
 # 2006-01-23
-# o First benchmarking: 
+# o First benchmarking:
 #    a) Reading 90 Affymetrix Xba SNP chips, each with 2,500,000 probes,
 #       takes approximately 15.0 minutes.
 #    b) Then quantile normalizing (returning a copy) takes approximately
@@ -880,9 +880,9 @@ setMethodS3("rowMeans", "FileMatrix", function(x, ..., doCount=FALSE) {
 # o Now clone() identifies the clone number, and searches for the first
 #   non-used clone number above that.
 # o Added some simple Rdoc comments with example code.
-# o TO DO: If 'j' is not ordered for X[i,j] <- ... with byrow=TRUE, wrong 
+# o TO DO: If 'j' is not ordered for X[i,j] <- ... with byrow=TRUE, wrong
 #   columns are assigned.
 # o Most works now.
 # 2006-01-22
 # o Created.
-############################################################################ 
+############################################################################
