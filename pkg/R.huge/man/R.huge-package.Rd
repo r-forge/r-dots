@@ -18,17 +18,17 @@
   \emph{This package has been deprecated. Do not start building new
   projects based on it.}
 
-  THIS PACKAGE HAS BEEN DEPRECATED. Do not start building         new projects based on it. Cross-platform alternatives are the         following packages: bigmemory (CRAN), ff (CRAN), BufferedMatrix         (BioConductor).  The main usage of it was inside the         aroma.affymetrix package. (The package currently provides a         class representing a matrix where the actual data is stored in         a binary format on the local file system.  This way the size         limit of the data is set by the file system and not the         memory.)
+  THIS PACKAGE HAS BEEN DEPRECATED. Do not start building new projects based on it. Cross-platform alternatives are the following packages: bigmemory (CRAN), ff (CRAN), BufferedMatrix (BioConductor).  The main usage of it was inside the aroma.affymetrix package. (The package currently provides a class representing a matrix where the actual data is stored in a binary format on the local file system.  This way the size limit of the data is set by the file system and not the memory.)
 }
 
 \section{Requirements}{
-  This package requires the \pkg{R.oo} package [1] and the
-  \pkg{R.utils} package.
+  This package requires the following CRAN packages:
+  \pkg{R.methodsS3}, \pkg{R.oo} and \pkg{R.utils}.
 }
 
 \section{Installation and updates}{
 
-  To install this package, see \url{http://www.braju.com/R/}.
+  To install this package, use \code{install.packages("R.huge")}.
 }
 
 \section{To get started}{

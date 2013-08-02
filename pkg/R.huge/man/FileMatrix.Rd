@@ -111,6 +111,7 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCa
 }
 
 \examples{
+library("R.utils");
 verbose <- Arguments$getVerbose(TRUE);
 
 pathname <- "example.Rmatrix";

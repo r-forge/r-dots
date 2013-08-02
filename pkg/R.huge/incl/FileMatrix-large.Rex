@@ -1,3 +1,4 @@
+library("R.utils");
 verbose <- Arguments$getVerbose(TRUE);
 
 pathname <- "large.Rmatrix";

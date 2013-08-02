@@ -1,4 +1,5 @@
 library("R.huge");
+library("R.utils");
 
 for (byrow in c(FALSE, TRUE)) {
   pathname <- "example.Rmatrix";

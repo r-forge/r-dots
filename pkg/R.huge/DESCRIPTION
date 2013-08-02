@@ -1,8 +1,9 @@
 Package: R.huge
-Version: 0.4.4
-Depends: R (>= 2.10.0), R.utils (>= 1.12.1)
-Imports: R.methodsS3 (>= 1.4.2), R.oo (>= 1.10.1)
-Date: 2013-05-25
+Version: 0.5.0
+Depends: R (>= 2.10.0)
+Imports: R.methodsS3 (>= 1.4.4), R.oo (>= 1.13.9), R.utils (>= 1.26.2)
+Suggests: R.utils (>= 1.26.2)
+Date: 2013-08-02
 Title: Methods for accessing huge amounts of data [DEPRECATED]
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))

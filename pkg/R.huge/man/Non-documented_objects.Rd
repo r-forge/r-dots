@@ -12,8 +12,10 @@
 
 
 % AbstractFileArray
+\alias{clone}
 \alias{close}
 \alias{delete}
+\alias{finalize}
 \alias{flush}
 \alias{getBasename}
 \alias{getBytesPerCell}
@@ -23,6 +25,8 @@
 \alias{getDimensionOrder}
 \alias{getExtension}
 \alias{getFileSize}
+\alias{getName}
+\alias{getPath}
 \alias{getPathname}
 \alias{getSizeOfComments}
 \alias{getSizeOfData}

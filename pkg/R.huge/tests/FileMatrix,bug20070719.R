@@ -1,4 +1,5 @@
 library("R.huge");
+library("R.utils");
 
 pathname <- "example.Rmatrix";
 if (isFile(pathname)) {
