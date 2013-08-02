@@ -3,7 +3,12 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 importFrom("R.methodsS3", "setMethodS3")
 importFrom("R.methodsS3", "throw")
+
 import("R.oo")
+## importFrom("R.oo", "Package")
+## importFrom("R.oo", "getPosition")
+## importFrom("R.oo", "startupMessage")
+
 import("R.utils")
 ## importFrom("R.utils", "Arguments")
 ## importFrom("R.utils", "isFile")

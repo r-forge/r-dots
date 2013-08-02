@@ -1,9 +1,13 @@
 Package: R.huge
 ===============
 
+Version: 0.5.1 [2013-08-02]
+o Utilizing new startupMessage() of R.oo.
+
+
 Version: 0.5.0 [2013-08-02]
 o CLEANUP: Package no longer attaches/loads R.utils (only imports it).
-  However, it will attach ("load") R.utils dynamically, when certain 
+  However, it will attach ("load") R.utils dynamically, when certain
   methods are called.
 
 
@@ -17,8 +21,8 @@ o CRAN POLICY: Now all Rd \usage{} lines are at most 90 characters long.
 
 Version: 0.4.2 [2012-10-16]
 o ROBUSTNESS/BUG FIX: No longer passing '...' to NextMethod(), cf.
-  R-devel thread 'Do *not* pass '...' to NextMethod() - it'll do it 
-  for you; missing documentation, a bug or just me?' on Oct 16, 2012. 
+  R-devel thread 'Do *not* pass '...' to NextMethod() - it'll do it
+  for you; missing documentation, a bug or just me?' on Oct 16, 2012.
 
 
 Version: 0.4.1 [2012-06-29]
@@ -28,7 +32,7 @@ o Updated package requirements.
 Version: 0.4.0 [2012-04-12]
 o Updated package requirements.
 o CLEANUP: Package no longer call .Internal() functions.  This will
-  cause a slowdown, because we now have to deal with overhead in 
+  cause a slowdown, because we now have to deal with overhead in
   functions such as seek(), readBin() and writeBin().
 o CLEANUP: Package no longer creates new generic functions for
   as.vector() and as.matrix() such that R CMD check no longer complaints.
@@ -54,7 +58,7 @@ o CLEANUP: Removed some defunct Rd aliases.
 
 
 Version: 0.2.0 [2009-10-16]
-o Some cleanup of Rd files to meet the stricter requirements. 
+o Some cleanup of Rd files to meet the stricter requirements.
 
 
 Version: 0.1.9 [2009-09-22]
@@ -91,8 +95,8 @@ o Now the startup message when loading the package is generated with
 o BUG FIX: Argument 'dimOrder' of the AbstractFileArray constructor was
   not recognized causing weird results if it was intended to be in a
   non-increasing order, e.g. FileMatrix(..., byrow=TRUE).
-o BUG FIX: Reading/writing data from and to a FileMatrix via 
-  "["()/"[<-"() was broken. Thanks Jens Oehlschlägel for troubleshooting 
+o BUG FIX: Reading/writing data from and to a FileMatrix via
+  "["()/"[<-"() was broken. Thanks Jens Oehlschlägel for troubleshooting
   and reporting this.
 o Added private readBinFragments() and writeBinFragments().
 o Added tests/ scripts.
@@ -110,7 +114,7 @@ o Added more Rdoc comments.
 
 Version: 0.1.2 [2006-03-14]
 o Added getComments() and setComments() to AbstractFileArray.
-o Added a default buffer of free bytes after the header comments.  
+o Added a default buffer of free bytes after the header comments.
   This will make it easier to update the comments.  Had to change
   the file format.
 
