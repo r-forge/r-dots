@@ -6,7 +6,7 @@ Date: 2013-09-21
 Title: Methods for accessing huge amounts of data [DEPRECATED]
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))
-Author: Henrik Bengtsson
+Author: Henrik Bengtsson [aut, cre, cph]
 Maintainer: Henrik Bengtsson <henrikb@braju.com>
 Description: THIS PACKAGE HAS BEEN DEPRECATED. Do not start building new projects based on it. Cross-platform alternatives are the following packages: bigmemory (CRAN), ff (CRAN), BufferedMatrix (Bioconductor).  The main usage of it was inside the aroma.affymetrix package. (The package currently provides a class representing a matrix where the actual data is stored in a binary format on the local file system.  This way the size limit of the data is set by the file system and not the memory.)
 License: LGPL (>= 2.1)
