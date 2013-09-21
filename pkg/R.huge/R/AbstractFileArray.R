@@ -88,11 +88,6 @@
 # @visibility public
 #*/###########################################################################
 setConstructorS3("AbstractFileArray", function(filename=NULL, path=NULL, storageMode=c("integer", "double"), bytesPerCell=1, dim=NULL, dimnames=NULL, dimOrder=NULL, comments=NULL, nbrOfFreeBytes=4096) {
-  # WORKAROUND: Until Arguments$...() can be called without
-  # attaching R.utils. /HB 2013-07-03
-  pkgName <- "R.utils";
-  require(pkgName, character.only=TRUE) || throw("Package not loaded: R.utils");
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -288,11 +283,6 @@ setMethodS3("isOpen", "AbstractFileArray", function(this, ...) {
 # @keyword programming
 #*/###########################################################################
 setMethodS3("open", "AbstractFileArray", function(con, ...) {
-  # WORKAROUND: Until Arguments$...() can be called without
-  # attaching R.utils. /HB 2013-07-03
-  pkgName <- "R.utils";
-  require(pkgName, character.only=TRUE) || throw("Package not loaded: R.utils");
-
   # To please R CMD check
   this <- con;
 
@@ -461,11 +451,6 @@ setMethodS3("finalize", "AbstractFileArray", function(this, ...) {
 # @keyword programming
 #*/###########################################################################
 setMethodS3("delete", "AbstractFileArray", function(this, ...) {
-  # WORKAROUND: Until Arguments$...() can be called without
-  # attaching R.utils. /HB 2013-07-03
-  pkgName <- "R.utils";
-  require(pkgName, character.only=TRUE) || throw("Package not loaded: R.utils");
-
   if (isOpen(this))
     close(this);
 
@@ -551,12 +536,6 @@ setMethodS3("flush", "AbstractFileArray", function(con, ...) {
 # @keyword programming
 #*/###########################################################################
 setMethodS3("clone", "AbstractFileArray", function(con, copyData=TRUE, ...) {
-  # WORKAROUND: Until Arguments$...() can be called without
-  # attaching R.utils. /HB 2013-07-03
-  pkgName <- "R.utils";
-  require(pkgName, character.only=TRUE) || throw("Package not loaded: R.utils");
-
-
   # To please R CMD check
   this <- con;
 
@@ -995,12 +974,9 @@ setMethodS3("getComments", "AbstractFileArray", function(this, ...) {
 # @keyword programming
 #*/###########################################################################
 setMethodS3("setComments", "AbstractFileArray", function(this, comments=NULL, ...) {
-  # WORKAROUND: Until Arguments$...() can be called without
-  # attaching R.utils. /HB 2013-07-03
-  pkgName <- "R.utils";
-  require(pkgName, character.only=TRUE) || throw("Package not loaded: R.utils");
-
-
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'comments':
   comments <- Arguments$getCharacter(comments);
 
@@ -1800,16 +1776,12 @@ setMethodS3("readAllValues", "AbstractFileArray", function(this, mode=getStorage
 # @keyword programming
 #*/###########################################################################
 setMethodS3("readContiguousValues", "AbstractFileArray", function(this, indices, lengths=1, mode=getStorageMode(this), size=getBytesPerCell(this), offset=getDataOffset(this), ..., .checkArgs=TRUE) {
-  # WORKAROUND: Until Arguments$...() can be called without
-  # attaching R.utils. /HB 2013-07-03
-  pkgName <- "R.utils";
-  require(pkgName, character.only=TRUE) || throw("Package not loaded: R.utils");
-
-
   con <- this$con;
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   n <- length(this);
-
   if (.checkArgs) {
     # Argument 'indices':
     # (Allow double indices as well in case the 32-bit integer are to short)
@@ -1908,12 +1880,6 @@ setMethodS3("readContiguousValues", "AbstractFileArray", function(this, indices,
 # @keyword programming
 #*/###########################################################################
 setMethodS3("readValues", "AbstractFileArray", function(this, indices=NULL, mode=getStorageMode(this), size=getBytesPerCell(this), offset=getDataOffset(this), order=FALSE, ..., .checkArgs=TRUE) {
-  # WORKAROUND: Until Arguments$...() can be called without
-  # attaching R.utils. /HB 2013-07-03
-  pkgName <- "R.utils";
-  require(pkgName, character.only=TRUE) || throw("Package not loaded: R.utils");
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -2046,12 +2012,6 @@ setMethodS3("writeAllValues", "AbstractFileArray", function(this, values, mode=g
 # @keyword programming
 #*/###########################################################################
 setMethodS3("writeValues", "AbstractFileArray", function(this, indices=NULL, values, mode=getStorageMode(this), size=getBytesPerCell(this), offset=getDataOffset(this), order=FALSE, ...) {
-  # WORKAROUND: Until Arguments$...() can be called without
-  # attaching R.utils. /HB 2013-07-03
-  pkgName <- "R.utils";
-  require(pkgName, character.only=TRUE) || throw("Package not loaded: R.utils");
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -2066,6 +2026,10 @@ setMethodS3("writeValues", "AbstractFileArray", function(this, indices=NULL, val
     return(writeAllValues(this, values=values, mode=mode, size=size, offset=offset, ...));
   }
 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'size':
   size <- Arguments$getInteger(size, range=c(1,8));
 

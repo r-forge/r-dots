@@ -3,6 +3,8 @@ Package: R.huge
 
 Version: 0.6.0 [2013-09-21]
 o CLEANUP: Package no longer utilizes import(), only importFrom():s.
+o CLEANUP: Removed fallback attachments of 'R.utils' as these are no
+  longer needed with R.oo (>= 1.15.1).
 o ROBUSTNESS: Now declaring all S3 methods in NAMESPACE.
 o ROBUSTNESS/WORKAROUND: For now, package attaches the 'R.oo' package.
   This is needed due to what appears to be a bug in how R.oo
