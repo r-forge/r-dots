@@ -240,15 +240,17 @@ setMethodS3("isOpen", "AbstractFileArray", function(this, ...) {
   if (is.null(this$con))
     return(FALSE);
 
+  # Why the tryCatch()? /HB 2013-09-21
   res <- FALSE;
   tryCatch({
     res <- isOpen(this$con);
+##    res <- base::isOpen(this$con);
   }, error = function(ex) {
     this$con <- NULL;
   })
 
   res;
-})
+}, createGeneric=FALSE)
 
 
 
@@ -370,6 +372,7 @@ setMethodS3("close", "AbstractFileArray", function(con, ...) {
 
   con <- this$con;
   if (!is.null(con) && isOpen(con)) {
+##  if (!is.null(con) && base::isOpen(con)) {
     flush(con);
     close(con);
     con <- NULL;
