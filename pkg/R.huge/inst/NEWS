@@ -1,6 +1,15 @@
 Package: R.huge
 ===============
 
+Version: 0.6.0 [2013-09-21]
+o CLEANUP: Package no longer utilizes import(), only importFrom():s.
+o ROBUSTNESS: Now declaring all S3 methods in NAMESPACE.
+o ROBUSTNESS/WORKAROUND: For now, package attaches the 'R.oo' package.
+  This is needed due to what appears to be a bug in how R.oo
+  finalizes Object:s assuming R.oo is/can be attached.  Until that
+  is resolved, we make sure R.oo is attached.
+
+
 Version: 0.5.1 [2013-08-02]
 o Utilizing new startupMessage() of R.oo.
 
