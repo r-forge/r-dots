@@ -17,7 +17,6 @@ importFrom("R.oo", "finalize")
 importFrom("R.oo", "getName")
 importFrom("R.oo", "getPath")
 
-## import("R.utils")
 importFrom("R.utils", "Arguments")
 importFrom("R.utils", "isFile")
 importFrom("R.utils", "isOpen")
