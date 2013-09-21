@@ -246,6 +246,7 @@ setMethodS3("isOpen", "AbstractFileArray", function(this, ...) {
     res <- isOpen(this$con);
 ##    res <- base::isOpen(this$con);
   }, error = function(ex) {
+    print(ex)
     this$con <- NULL;
   })
 

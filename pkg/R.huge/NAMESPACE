@@ -25,6 +25,10 @@ importFrom("R.utils", "readBinFragments")
 importFrom("R.utils", "writeBinFragments")
 
 
+# WORKAROUND: Until R.utils (>= 1.27.2) is available
+importFrom("R.utils", "isOpen.default")
+
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # EXPORTS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
