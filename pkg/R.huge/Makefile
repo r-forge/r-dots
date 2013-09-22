@@ -51,7 +51,7 @@ R_CHECK_OUTDIR := $(R_OUTDIR)/$(PKG_NAME).Rcheck
 R_CHECK_OPTS = --as-cran --timings
 R_CRAN_OUTDIR := $(R_OUTDIR)/$(PKG_NAME)_$(PKG_VERSION).CRAN
 
-HAS_ASPELL := $(shell $(R_SCRIPT) -e "cat(!is.na(utils:::aspell_find_program()))")
+HAS_ASPELL := $(shell $(R_SCRIPT) -e "cat(!is.na(utils:::aspell_find_program('aspell')))")
 
 all: build install check
 
