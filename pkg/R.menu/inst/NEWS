@@ -2,6 +2,11 @@
 Package: R.menu
 ================
 
+Version: 0.3.0 [2012-10-24]
+o User queries are now done via standard error.
+o Now package only imports other package, not depends on them.
+
+
 Version: 0.2.1 [2012-09-27]
 o Now launchMenu() defaults to launching only R scripts.
 o Now argument 'pattern' for textChooseFile() filters only files and

@@ -1,7 +1,8 @@
 Package: R.menu
-Version: 0.2.1
-Depends: R (>= 2.10.0), R.methodsS3 (>= 1.4.2), R.oo (>= 1.9.9), R.utils (>= 1.16.2)
-Date: 2012-09-27
+Version: 0.3.0
+Depends: R (>= 2.10.0)
+Imports: R.methodsS3 (>= 1.5.2), R.oo (>= 1.15.8), R.utils (>= 1.27.1)
+Date: 2013-10-24
 Title: A text based menu system
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))

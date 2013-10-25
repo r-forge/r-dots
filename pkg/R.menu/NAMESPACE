@@ -1,20 +1,39 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # IMPORTS
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-# Packages to be imported
-# import(R.oo)
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Used in almost all our packages
+importFrom("R.methodsS3", "setMethodS3")
+importFrom("R.oo", "Package")
+importFrom("R.oo", "startupMessage")
 
-# importFrom(R.utils, cat)
-import(R.utils)
+## Importing generics
+
+## Importing functions
+importFrom("R.oo", "getPath")
+importFrom("R.oo", "trim")
+importFrom("R.utils", "cat") ## Multi-sources: R.utils, base
+importFrom("R.utils", "enter")
+importFrom("R.utils", "exit")
+importFrom("R.utils", "filePath")
+importFrom("R.utils", "getAbsolutePath")
+importFrom("R.utils", "isDirectory")
+importFrom("R.utils", "isFile")
+importFrom("R.utils", "popState")
+importFrom("R.utils", "pushState")
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # EXPORTS
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-# Object that must exported explicitly
-export(.conflicts.OK) 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Export all public methods, that is, those without a preceeding dot
 # in their names.
 exportPattern("^[^\\.]")
 
+# default
+S3method("launchMenu", "default")
+
+# Package
+S3method("getLaunchPath", "Package")
+S3method("launchMenu", "Package")
+S3method("setLaunchPath", "Package")

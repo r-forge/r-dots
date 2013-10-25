@@ -1,7 +1,11 @@
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Generic user interface
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 textMenu <- function(choices, title="", prompt="Selection: ", value=FALSE) {
+  msg <- function(...) {
+    cat(..., file=stderr());
+  } # msg()
+
   nc <- length(choices);
   keys <- names(choices);
   if (is.null(keys))
@@ -18,8 +22,8 @@ textMenu <- function(choices, title="", prompt="Selection: ", value=FALSE) {
   }
 
   if (length(title) && nchar(title[1]))
-    cat(title[1], "\n");
-  cat("", op, "", sep="\n");
+    msg(title[1], "\n");
+  msg("", op, "", sep="\n");
 
   keys <- trim(keys);
   repeat {
@@ -29,7 +33,7 @@ textMenu <- function(choices, title="", prompt="Selection: ", value=FALSE) {
     idx <- pmatch(ans, keys);
     if (is.finite(idx))
       break;
-    cat(gettext("Enter an item from the menu.\n"))
+    msg(gettext("Enter an item from the menu.\n"))
   } # repeat()
 
   if (value) {
@@ -42,7 +46,9 @@ textMenu <- function(choices, title="", prompt="Selection: ", value=FALSE) {
 } # textMenu()
 
 ############################################################################
-# HISTORY: 
+# HISTORY:
+# 2013-10-24
+# Now textMenu() outputs messages and do user queries via standard error.
 # 2009-02-20
 # o Added argument 'value=FALSE' to textMenu().
 # 2009-02-12
