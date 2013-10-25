@@ -3,8 +3,11 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Used in almost all our packages
 importFrom("R.methodsS3", "setMethodS3")
-importFrom("R.oo", "Package")
 importFrom("R.oo", "startupMessage")
+
+## Importing Class:es
+importFrom("R.oo", "Package")
+importFrom("R.utils", "Arguments")
 
 ## Importing generics
 
