@@ -1,20 +1,11 @@
-# Allows conflicts. For more information, see library() and
-# conflicts() in [R] base.
-.conflicts.OK <- TRUE;
-
-
-##.First.lib <- function(libname, pkgname) {
-.onAttach <- function(libname, pkgname) { 
+.onLoad <- function(libname, pkgname) {
+  ns <- getNamespace(pkgname);
   pkg <- Package(pkgname);
-  pos <- getPosition(pkg);
-  assign(pkgname, pkg, pos=pos);
+  assign(pkgname, pkg, envir=ns);
+} # .onLoad()
 
-  packageStartupMessage(getName(pkg), " v", getVersion(pkg), " (", 
-    getDate(pkg), ") successfully loaded. See ?", pkgname, " for help.");
+
+.onAttach <- function(libname, pkgname) {
+  pkg <- get(pkgname, envir=getNamespace(pkgname));
+  startupMessage(pkg);
 }
-
-############################################################################
-# HISTORY: 
-# 2011-03-10
-# o Created.
-############################################################################

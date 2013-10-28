@@ -2,6 +2,16 @@
 Package: R.archive
 ==================
 
+Version: 0.3.0 [2013-10-28]
+o Updated package dependencies.
+o Package requires R (>= 3.0.2).
+o ROBUSTNESS: Now importing only what needs to be imported and
+  formally declaring all S3 methods in NAMESPACE.
+o CLEANUP: Now package attaches no other package when loaded, i.e.
+  they're only imported.
+o CLEANUP: Dropped obsolete usage of autoload().
+
+
 Version: 0.2.0 [2012-11-22]
 o DOCUMENTATION: Minor clarifications and fixed a broken cross link.
 o ROBUSTNESS: Explicitly declaring S3 methods.
