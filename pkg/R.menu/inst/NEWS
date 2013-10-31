@@ -1,6 +1,6 @@
 
 Package: R.menu
-================
+===============
 
 Version: 0.3.0 [2012-10-24]
 o User queries are now done via standard error.
