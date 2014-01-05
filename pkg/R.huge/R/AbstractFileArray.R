@@ -88,12 +88,12 @@
 # @visibility public
 #*/###########################################################################
 setConstructorS3("AbstractFileArray", function(filename=NULL, path=NULL, storageMode=c("integer", "double"), bytesPerCell=1, dim=NULL, dimnames=NULL, dimOrder=NULL, comments=NULL, nbrOfFreeBytes=4096) {
-  # ROBUSTNESS/WORKAROUND: For now, package attaches the 'R.oo' package.
-  # This is needed due to what appears to be a bug in how R.oo
-  # finalizes Object:s assuming R.oo is/can be attached.  Until that
-  # is resolved, we make sure R.oo is attached. /HB 2013-09-21
-  pkg <- "R.oo";
-  suppressPackageStartupMessages(require(pkg, character.only=TRUE, quietly=TRUE)) || throw("Package not loaded: ", pkg);
+##   # ROBUSTNESS/WORKAROUND: For now, package attaches the 'R.oo' package.
+##   # This is needed due to what appears to be a bug in how R.oo
+##   # finalizes Object:s assuming R.oo is/can be attached.  Until that
+##   # is resolved, we make sure R.oo is attached. /HB 2013-09-21
+##   pkg <- "R.oo";
+##   suppressPackageStartupMessages(require(pkg, character.only=TRUE, quietly=TRUE)) || throw("Package not loaded: ", pkg);
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
