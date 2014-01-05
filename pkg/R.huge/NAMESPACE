@@ -10,7 +10,6 @@ importFrom("R.oo", "Object")
 importFrom("R.oo", "extend")
 importFrom("R.oo", "clone")
 importFrom("R.oo", "Package")
-importFrom("R.oo", "getPosition")
 importFrom("R.oo", "startupMessage")
 # ...and just so below S3method() works
 importFrom("R.oo", "finalize")
@@ -25,16 +24,9 @@ importFrom("R.utils", "readBinFragments")
 importFrom("R.utils", "writeBinFragments")
 
 
-# WORKAROUND: Until R.utils (>= 1.27.2) is available
-importFrom("R.utils", "isOpen.default")
-
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # EXPORTS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Object that must exported explicitly
-export(.conflicts.OK)
-
 # Export all public methods, that is, those without a preceeding dot
 # in their names.
 exportPattern("^[^\\.]")

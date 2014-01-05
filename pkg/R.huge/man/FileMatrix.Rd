@@ -77,7 +77,7 @@ FileMatrix(..., nrow=NULL, ncol=NULL, rownames=NULL, colnames=NULL, byrow=FALSE)
 as.character, as.vector, clone, close, delete, dim, dimnames, finalize, flush, getBasename, getBytesPerCell, getCloneNumber, getComments, getDataOffset, getDimensionOrder, getExtension, getFileSize, getName, getPath, getPathname, getSizeOfComments, getSizeOfData, getStorageMode, isOpen, length, open, readAllValues, readContiguousValues, readHeader, readValues, setComments, writeAllValues, writeEmptyData, writeHeader, writeHeaderComments, writeValues
 
  \bold{Methods inherited from Object}:\cr
-$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
 
 
@@ -111,62 +111,63 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCa
 }
 
 \examples{
-library("R.utils");
-verbose <- Arguments$getVerbose(TRUE);
+library("R.utils")
+verbose <- Arguments$getVerbose(TRUE)
 
-pathname <- "example.Rmatrix";
+pathname <- "example.Rmatrix"
 if (isFile(pathname)) {
-  file.remove(pathname);
+  file.remove(pathname)
   if (isFile(pathname)) {
-    stop("File not deleted: ", pathname);
+    stop("File not deleted: ", pathname)
   }
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Create a new file matrix
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-verbose && enter(verbose, "Creating new matrix");
+verbose && enter(verbose, "Creating new matrix")
 # The dimensions of the matrix
-nrow <- 20;
-ncol <- 5;
-X <- FileByteMatrix(pathname, nrow=nrow, ncol=ncol, byrow=TRUE);
-verbose && exit(verbose);
+nrow <- 20
+ncol <- 5
+X <- FileByteMatrix(pathname, nrow=nrow, ncol=ncol, byrow=TRUE)
+verbose && exit(verbose)
 
-verbose && enter(verbose, "Filling it with data");
-rows <- c(1:4,7:10);
-cols <- c(1);
-x <- 1:length(rows);
-writeValues(X, rows=rows, cols=cols, values=x);
-verbose && exit(verbose);
+verbose && enter(verbose, "Filling it with data")
+rows <- c(1:4,7:10)
+cols <- c(1)
+x <- 1:length(rows)
+writeValues(X, rows=rows, cols=cols, values=x)
+verbose && exit(verbose)
 
-verbose && enter(verbose, "Getting data again");
-y <- readValues(X, rows=rows, cols=cols);
-verbose && exit(verbose);
-stopifnot(all.equal(x,y));
+verbose && enter(verbose, "Getting data again")
+y <- readValues(X, rows=rows, cols=cols)
+verbose && exit(verbose)
+stopifnot(all.equal(x,y))
 
-verbose && enter(verbose, "Setting data using [i,j]");
-i <- c(20:18, 13:15); j <- c(3:2, 4:5);
-n <- length(i) * length(j);
-values <- 1:n;
-X[i,j] <- values;
-verbose && enter(verbose, "Validating");
-print(X);
+verbose && enter(verbose, "Setting data using [i,j]")
+i <- c(20:18, 13:15)
+j <- c(3:2, 4:5)
+n <- length(i) * length(j)
+values <- 1:n
+X[i,j] <- values
+verbose && enter(verbose, "Validating")
+print(X)
 print(X[])
-print(X[i,j]);
+print(X[i,j])
 stopifnot(all.equal(as.vector(X[i,j]), values))
-verbose && exit(verbose);
-verbose && exit(verbose);
+verbose && exit(verbose)
+verbose && exit(verbose)
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Open an already existing file matrix
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-verbose && enter(verbose, "Getting existing matrix");
-Y <- FileByteMatrix(pathname);
-verbose && exit(verbose);
+verbose && enter(verbose, "Getting existing matrix")
+Y <- FileByteMatrix(pathname)
+verbose && exit(verbose)
 
 print(Y[])
-Y[5,1] <- 55;
+Y[5,1] <- 55
 print(Y[])
 print(X[])  # Note, X and Y refers to the same instance
 
@@ -175,23 +176,21 @@ print(X[])  # Note, X and Y refers to the same instance
 # Clone a matrix
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Z <- clone(X)
-Z[5,1] <- 66;
+Z[5,1] <- 66
 print(Z[])
 print(Y[])
 
 # Remove clone again
-delete(Z);
+delete(Z)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Close all matrices
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-close(X);
-close(Y);
+close(X)
+close(Y)
 
 # Remove original matrix too
-delete(X);
-
-gc();
+delete(X)
 }
 
 \author{Henrik Bengtsson}

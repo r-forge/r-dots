@@ -60,7 +60,7 @@ FileVector(..., length=NULL, names=NULL)
 as.character, as.vector, clone, close, delete, dim, dimnames, finalize, flush, getBasename, getBytesPerCell, getCloneNumber, getComments, getDataOffset, getDimensionOrder, getExtension, getFileSize, getName, getPath, getPathname, getSizeOfComments, getSizeOfData, getStorageMode, isOpen, length, open, readAllValues, readContiguousValues, readHeader, readValues, setComments, writeAllValues, writeEmptyData, writeHeader, writeHeaderComments, writeValues
 
  \bold{Methods inherited from Object}:\cr
-$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
 
 
@@ -87,50 +87,48 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCa
 }
 
 \examples{
-library("R.utils");
-verbose <- Arguments$getVerbose(TRUE);
+library("R.utils")
+verbose <- Arguments$getVerbose(TRUE)
 
-pathname <- "example.Rvector";
+pathname <- "example.Rvector"
 if (isFile(pathname)) {
-  file.remove(pathname);
+  file.remove(pathname)
   if (isFile(pathname)) {
-    stop("File not deleted: ", pathname);
+    stop("File not deleted: ", pathname)
   }
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Create a new file vector
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-verbose && enter(verbose, "Creating new vector");
+verbose && enter(verbose, "Creating new vector")
 # The length of the vector
-length <- 1e6;
-X <- FileDoubleVector(pathname, length=length);
-verbose && exit(verbose);
-print(X);
+length <- 1e6
+X <- FileDoubleVector(pathname, length=length)
+verbose && exit(verbose)
+print(X)
 
-verbose && enter(verbose, "Filling it with data");
-idxs <- c(1:4,7:10);
-x <- 1:length(idxs);
-writeValues(X, indices=idxs, values=x);
-verbose && exit(verbose);
+verbose && enter(verbose, "Filling it with data")
+idxs <- c(1:4,7:10)
+x <- 1:length(idxs)
+writeValues(X, indices=idxs, values=x)
+verbose && exit(verbose)
 
-verbose && enter(verbose, "Getting data again");
-y <- readValues(X, indices=idxs);
-verbose && exit(verbose);
-stopifnot(all.equal(x,y));
+verbose && enter(verbose, "Getting data again")
+y <- readValues(X, indices=idxs)
+verbose && exit(verbose)
+stopifnot(all.equal(x,y))
 
-verbose && enter(verbose, "Getting and setting data using [i,j]");
+verbose && enter(verbose, "Getting and setting data using [i,j]")
 print(X[1:20])
-i <- 13:15;
-X[i] <- 99:98;
+i <- 13:15
+X[i] <- 99:98
 print(X[1:20])
-verbose && exit(verbose);
+verbose && exit(verbose)
 
-delete(X);
+delete(X)
 
-rm(X);
-
-gc();
+rm(X)
 }
 
 \author{Henrik Bengtsson}

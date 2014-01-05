@@ -1,6 +1,13 @@
 Package: R.huge
 ===============
 
+Version: 0.6.1 [2014-01-05]
+o Now the 'R.huge' Package object is also available when the
+  package is only loaded (but not attached).
+o CLEANUP: Bumped package requirements and no-longer needed
+  import statements from NAMESPACE.
+
+
 Version: 0.6.0 [2013-09-21]
 o CLEANUP: Package no longer utilizes import(), only importFrom():s.
 o CLEANUP: Removed fallback attachments of 'R.utils' as these are no
