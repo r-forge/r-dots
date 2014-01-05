@@ -1,6 +1,10 @@
 Package: R.huge
 ===============
 
+Version: 0.7.0 [2014-01-05]
+o CLEANUP: Package no longer attaches R.oo - only imports it.
+
+
 Version: 0.6.1 [2014-01-05]
 o Now the 'R.huge' Package object is also available when the
   package is only loaded (but not attached).
