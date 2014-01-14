@@ -3,6 +3,7 @@ Package: R.huge
 
 Version: 0.7.0 [2014-01-05]
 o CLEANUP: Package no longer attaches R.oo - only imports it.
+o Bumped package dependencies.
 
 
 Version: 0.6.1 [2014-01-05]
