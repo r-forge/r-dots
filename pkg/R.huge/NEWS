@@ -1,6 +1,12 @@
 Package: R.huge
 ===============
 
+Version: 0.8.0 [2014-02-21]
+o ROBUSTNESS: Now the package runs the garbage collector if unloaded
+  in order to make sure finalize() is called on any deleted
+  AbstractFileArray objects.
+
+
 Version: 0.7.0 [2014-01-05]
 o CLEANUP: Package no longer attaches R.oo - only imports it.
 o Bumped package dependencies.
