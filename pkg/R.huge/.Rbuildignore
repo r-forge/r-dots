@@ -1,3 +1,4 @@
 ^Makefile$
 ^incl
 ^inst/doc/[.].*[.]rsp$
+^nohup
