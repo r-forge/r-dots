@@ -1,6 +1,6 @@
 Package: R.synchronize
-Version: 0.0.3
-Date: 2009-05-30
+Version: 0.0.4
+Date: 2014-05-04
 Title: Synchronious locking mechanisms
 Author: Henrik Bengtsson <henrikb@braju.com>
 Maintainer: Henrik Bengtsson <henrikb@braju.com>
